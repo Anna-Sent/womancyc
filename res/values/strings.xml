@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="nextMonth">Next month</string>
+    <string name="prevMonth">Previous month</string>
+    <string name="app_name">WomanCyc: Calendar Of Woman Cycles</string>
+
+</resources>
