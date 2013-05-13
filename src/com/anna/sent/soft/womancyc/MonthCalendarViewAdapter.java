@@ -7,28 +7,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class MonthCalendarViewAdapter extends BaseAdapter implements
-		OnClickListener {
-	public interface OnClickCalendarItemListener {
-		public void onClickCalendarItem(Calendar calendar);
-	}
-
-	private OnClickCalendarItemListener mListener = null;
-
-	public void setOnClickCalendarItemListener(
-			OnClickCalendarItemListener listener) {
-		mListener = listener;
-	}
-
+public class MonthCalendarViewAdapter extends BaseAdapter {
 	private final Context mContext;
 	private final List<Calendar> mMonthCalendarValues = new ArrayList<Calendar>();
 	private List<Integer> mDayOfWeekValues = new ArrayList<Integer>();
@@ -38,7 +23,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 		super();
 		mContext = context;
 		Calendar today = Calendar.getInstance();
-		zeroDate(today);
+		Utils.zeroDate(today);
 		if (today.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
 			mDayOfWeekValues.add(Calendar.MONDAY);
@@ -59,8 +44,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 
 		mDayOfCurrentMonth = today.get(Calendar.DAY_OF_MONTH);
 		mCurrentMonth = today.get(Calendar.MONTH);
-
-		Log.d("moo", "days per week " + mDayOfWeekValues.size());
 	}
 
 	public void updateMonthCalendar(int month, int year) {
@@ -71,11 +54,16 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 
 	@Override
 	public Object getItem(int position) {
-		if (position < mMonthCalendarValues.size()) {
-			return mMonthCalendarValues.get(position);
+		if (position >= mDayOfWeekValues.size()) {
+			return mMonthCalendarValues.get(position - mDayOfWeekValues.size());
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
 	}
 
 	@Override
@@ -88,7 +76,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 
 		Calendar current = Calendar.getInstance();
 		current.set(year, month, 1);
-		zeroDate(current);
+		Utils.zeroDate(current);
 
 		Calendar prevMonth = (Calendar) current.clone();
 		prevMonth.add(Calendar.MONTH, -1);
@@ -104,7 +92,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 			item.set(prevMonth.get(Calendar.YEAR),
 					prevMonth.get(Calendar.MONTH), daysInPrevMonth - trailing
 							+ i);
-			zeroDate(item);
+			Utils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -113,7 +101,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 		for (int i = 1; i <= daysInCurrentMonth; ++i) {
 			Calendar item = Calendar.getInstance();
 			item.set(year, month, i);
-			zeroDate(item);
+			Utils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -122,100 +110,101 @@ public class MonthCalendarViewAdapter extends BaseAdapter implements
 			Calendar item = Calendar.getInstance();
 			item.set(nextMonth.get(Calendar.YEAR),
 					nextMonth.get(Calendar.MONTH), i);
-			zeroDate(item);
+			Utils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View cell = null;
 
-		if (position < 7) {
-			if (convertView != null && convertView.getId() == R.id.dayOfWeek) {
+		if (position < mDayOfWeekValues.size()) {
+			if (convertView != null
+					&& convertView.getId() == getDayOfWeekViewId()) {
 				cell = convertView;
 			}
 
 			if (cell == null) {
 				LayoutInflater inflater = (LayoutInflater) mContext
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				cell = inflater.inflate(R.layout.day_of_week, parent, false);
+				cell = inflater.inflate(getDayOfWeekLayoutResource(), parent,
+						false);
 			}
 
-			DateFormatSymbols symbols = new DateFormatSymbols();
-			String[] dayNames = symbols.getShortWeekdays();
-			TextView dayOfWeekTextView = (TextView) cell
-					.findViewById(R.id.dayOfWeekTextView);
-			dayOfWeekTextView.setText(dayNames[mDayOfWeekValues.get(position)]);
+			initDayOfWeekItem(cell, position);
 		} else if (mMonthCalendarValues.size() > 0) {
-			if (convertView != null && convertView.getId() == R.id.dayOfMonth) {
+			if (convertView != null
+					&& convertView.getId() == getDayOfMonthViewId()) {
 				cell = convertView;
 			}
 
 			if (cell == null) {
 				LayoutInflater inflater = (LayoutInflater) mContext
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				cell = inflater.inflate(R.layout.day_of_month, parent, false);
+				cell = inflater.inflate(getDayOfMonthLayoutResource(), parent,
+						false);
 			}
 
-			Calendar item = mMonthCalendarValues.get(position - 7);
-			Log.d("moo", position + " "
-					+ DateFormat.getDateFormat(mContext).format(item.getTime()));
-
-			Calendar begin = Calendar.getInstance();
-			begin.set(2013, Calendar.MAY, 1);
-			zeroDate(begin);
-			long dayOfCycle = (item.getTimeInMillis() - begin.getTimeInMillis())
-					/ (3600 * 1000 * 24);
-
-			View view = cell.findViewById(R.id.dayOfMonth);
-			view.setOnClickListener(this);
-			view.setTag(item);
-
-			TextView dayOfCycleTextView = (TextView) cell
-					.findViewById(R.id.dayOfCycleTextView);
-			dayOfCycleTextView.setText(String.valueOf(dayOfCycle));
-
-			TextView dayOfMonthTextView = (TextView) cell
-					.findViewById(R.id.dayOfMonthTextView);
-			dayOfMonthTextView.setText(String.valueOf(item
-					.get(Calendar.DAY_OF_MONTH)));
-
-			if (item.get(Calendar.MONTH) != mCurrentMonth) {
-				dayOfMonthTextView.setTextColor(Color.LTGRAY);
-			} else {
-				dayOfMonthTextView.setTextColor(Color.WHITE);
-			}
-
-			if (item.get(Calendar.DAY_OF_MONTH) == mDayOfCurrentMonth) {
-				dayOfMonthTextView.setTextColor(Color.BLUE);
-			}
+			Calendar item = mMonthCalendarValues.get(position
+					- mDayOfWeekValues.size());
+			initDayOfMonth(cell, position, item);
 		}
 
 		return cell;
 	}
 
-	@Override
-	public void onClick(View v) {
-		if (mListener != null) {
-			Calendar calendar = (Calendar) v.getTag();
-			Log.d("moo",
-					DateFormat.getDateFormat(mContext).format(
-							calendar.getTime()));
-			mListener.onClickCalendarItem(calendar);
-		}
+	private int getDayOfWeekLayoutResource() {
+		return R.layout.day_of_week;
 	}
 
-	private static void zeroDate(Calendar date) {
-		date.set(Calendar.HOUR, 0);
-		date.set(Calendar.MINUTE, 0);
-		date.set(Calendar.SECOND, 0);
-		date.set(Calendar.MILLISECOND, 0);
-		date.set(Calendar.AM_PM, Calendar.AM);
+	private int getDayOfWeekViewId() {
+		return R.id.dayOfWeek;
+	}
+
+	private void initDayOfWeekItem(View cell, int position) {
+		DateFormatSymbols symbols = new DateFormatSymbols();
+		String[] dayNames = symbols.getShortWeekdays();
+		TextView dayOfWeekTextView = (TextView) cell
+				.findViewById(R.id.dayOfWeekTextView);
+		dayOfWeekTextView.setText(dayNames[mDayOfWeekValues.get(position)]);
+	}
+
+	protected int getDayOfMonthLayoutResource() {
+		return R.layout.day_of_month;
+	}
+
+	protected int getDayOfMonthViewId() {
+		return R.id.dayOfMonth;
+	}
+
+	protected void initDayOfMonth(View cell, int position, Calendar item) {
+		Calendar begin = Calendar.getInstance();
+		begin.set(2013, Calendar.MAY, 1);
+		Utils.zeroDate(begin);
+		long dayOfCycle = (item.getTimeInMillis() - begin.getTimeInMillis())
+				/ (3600 * 1000 * 24);
+
+		View view = cell.findViewById(R.id.dayOfMonth);
+		view.setTag(item);
+
+		TextView dayOfCycleTextView = (TextView) cell
+				.findViewById(R.id.dayOfCycleTextView);
+		dayOfCycleTextView.setText(String.valueOf(dayOfCycle));
+
+		TextView dayOfMonthTextView = (TextView) cell
+				.findViewById(R.id.dayOfMonthTextView);
+		dayOfMonthTextView.setText(String.valueOf(item
+				.get(Calendar.DAY_OF_MONTH)));
+
+		if (item.get(Calendar.MONTH) != mCurrentMonth) {
+			dayOfMonthTextView.setTextColor(Color.LTGRAY);
+		} else {
+			dayOfMonthTextView.setTextColor(Color.WHITE);
+		}
+
+		if (item.get(Calendar.DAY_OF_MONTH) == mDayOfCurrentMonth) {
+			dayOfMonthTextView.setTextColor(Color.BLUE);
+		}
 	}
 }
