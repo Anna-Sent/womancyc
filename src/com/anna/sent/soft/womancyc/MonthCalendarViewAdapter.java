@@ -199,8 +199,10 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 		if (item.get(Calendar.MONTH) != mCurrentMonth) {
 			dayOfMonthTextView.setTextColor(Color.DKGRAY);
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 		} else {
 			dayOfMonthTextView.setTextColor(Color.WHITE);
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
 		}
 
 		if (item.get(Calendar.DAY_OF_MONTH) == mDayOfCurrentMonth) {
