@@ -27,11 +27,15 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								mListener
+										.onDialogPositiveClick(CalendarItemEditorDialogFragment.this);
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								mListener
+										.onDialogNegativeClick(CalendarItemEditorDialogFragment.this);
 							}
 						});
 		return builder.create();
@@ -44,7 +48,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 			mListener = (DialogListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement NoticeDialogListener");
+					+ " must implement " + DialogListener.class.getSimpleName());
 		}
 	}
 }

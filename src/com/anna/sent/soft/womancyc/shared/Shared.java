@@ -10,4 +10,6 @@ public class Shared {
 		return context.getApplicationContext().getSharedPreferences(
 				SETTINGS_FILE, Context.MODE_PRIVATE);
 	}
+
+	public static final String DATE_TO_SHOW = "com.anna.sent.soft.womancyc.datetoshow";
 }

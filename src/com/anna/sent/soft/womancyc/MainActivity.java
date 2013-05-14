@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,17 +15,20 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
+import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 import com.anna.sent.soft.womancyc.utils.StateSaver;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MainActivity extends FragmentActivity implements OnClickListener,
-		OnItemClickListener, StateSaver, DialogListener {
+		OnItemClickListener, StateSaver, DialogListener, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -45,7 +49,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 	private MonthCalendarViewAdapter adapter;
 	private Calendar mDateToShow = null;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
-	private static final String DATE_TO_SHOW = "com.anna.sent.soft.womancyc.datetoshow";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +108,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 	@Override
 	public void restoreState(Bundle state) {
-		mDateToShow = (Calendar) state.getSerializable(DATE_TO_SHOW);
+		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
 		log("restore " + DateUtils.toString(this, mDateToShow));
 		updateMonthCalendar();
 	}
@@ -113,7 +116,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 	@Override
 	public void saveState(Bundle state) {
 		log("save " + DateUtils.toString(this, mDateToShow));
-		state.putSerializable(DATE_TO_SHOW, mDateToShow);
+		state.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
 	}
 
 	@Override
@@ -154,8 +157,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 		} else if (v == nextMonth) {
 			toNextDate();
 		} else if (v == currentMonth) {
-			toCurrentDate();
+			Bundle args = new Bundle();
+			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+			DialogFragment dialog = new DatePickerFragment();
+			dialog.setArguments(args);
+			dialog.show(getSupportFragmentManager(), "datePicker");
 		}
+	}
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int month, int day) {
+		mDateToShow.set(year, month, day);
+		updateMonthCalendar();
 	}
 
 	@Override
@@ -170,17 +183,36 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 			DialogFragment dialog = new CalendarItemEditorDialogFragment();
 			dialog.setArguments(args);
-			dialog.show(getSupportFragmentManager(), dialog.getClass()
-					.getSimpleName());
+			dialog.show(getSupportFragmentManager(),
+					CalendarItemEditorDialogFragment.class.getSimpleName());
 		}
 	}
 
+	/*
+	 * public void showDialog() { FragmentManager fragmentManager =
+	 * getSupportFragmentManager(); CustomDialogFragment newFragment = new
+	 * CustomDialogFragment();
+	 * 
+	 * if (mIsLargeLayout) { // The device is using a large layout, so show the
+	 * fragment as a dialog newFragment.show(fragmentManager, "dialog"); } else
+	 * { // The device is smaller, so show the fragment fullscreen
+	 * FragmentTransaction transaction = fragmentManager.beginTransaction(); //
+	 * For a little polish, specify a transition animation
+	 * transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); //
+	 * To make it fullscreen, use the 'content' root view as the container //
+	 * for the fragment, which is always the root view for the activity
+	 * transaction.add(android.R.id.content, newFragment)
+	 * .addToBackStack(null).commit(); } }
+	 */
+
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
+		Toast.makeText(this, "positive", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
+		Toast.makeText(this, "negative", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
