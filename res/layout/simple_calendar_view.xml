@@ -16,7 +16,7 @@
             android:layout_weight="0.2"
             android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/prevMonth"
-            android:drawableLeft="?attr/prevItemIcon" >
+            android:drawableRight="?attr/prevItemIcon" >
         </Button>
 
         <Button
@@ -26,7 +26,8 @@
             android:layout_weight="0.6"
             android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/currentMonth"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" >
         </Button>
 
         <Button
@@ -36,7 +37,7 @@
             android:layout_weight="0.2"
             android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/nextMonth"
-            android:drawableRight="?attr/nextItemIcon" >
+            android:drawableLeft="?attr/nextItemIcon" >
         </Button>
     </LinearLayout>
 

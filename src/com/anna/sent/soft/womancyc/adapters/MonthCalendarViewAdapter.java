@@ -202,25 +202,24 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 				.get(Calendar.DAY_OF_MONTH)));
 
 		if (item.get(Calendar.MONTH) != mCurrentMonth) {
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			if (ThemeUtils.getThemeId(mContext) == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
-				dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			} else {
 				dayOfMonthTextView.setTextColor(Color.LTGRAY);
-				dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			}
 		} else {
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
 			if (ThemeUtils.getThemeId(mContext) == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
-				dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
-				dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
 			}
 		}
 
 		if (item.get(Calendar.DAY_OF_MONTH) == mDayOfCurrentMonth) {
-			dayOfMonthTextView.setTextColor(Color.BLUE);
+			dayOfMonthTextView.setTextColor(mContext.getResources().getColor(
+					R.color.blue));
 		}
 	}
 }
