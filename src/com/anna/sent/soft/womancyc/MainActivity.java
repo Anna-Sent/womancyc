@@ -161,7 +161,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
 			DialogFragment dialog = new DatePickerFragment();
 			dialog.setArguments(args);
-			dialog.show(getSupportFragmentManager(), "datePicker");
+			dialog.show(getSupportFragmentManager(),
+					DatePickerFragment.class.getSimpleName());
 		}
 	}
 
@@ -179,7 +180,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 			String title = DateUtils.toString(this, calendar);
 			Bundle args = new Bundle();
-			args.putString("title", title);
+			args.putString(Shared.DATE_TO_SHOW, title);
 
 			DialogFragment dialog = new CalendarItemEditorDialogFragment();
 			dialog.setArguments(args);
