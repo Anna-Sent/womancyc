@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +18,54 @@ import android.widget.Button;
 import android.widget.GridView;
 
 public class MainActivity extends Activity implements OnClickListener,
-		OnItemClickListener {
+		OnItemClickListener, StateSaver {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = true;
+
+	private String wrapMsg(String msg) {
+		return getClass().getSimpleName() + ": " + msg;
+	}
+
+	private void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	private Button currentMonth;
 	private Button prevMonth;
 	private Button nextMonth;
 	private GridView calendarView;
 	private MonthCalendarViewAdapter adapter;
-	private Calendar mDateToShow;
+	private Calendar mDateToShow = null;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
+	private static final String DATE_TO_SHOW = "com.anna.sent.soft.womancyc.datetoshow";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.onActivityCreateSetTheme(this);
 		super.onCreate(savedInstanceState);
+
+		setViews(savedInstanceState);
+
+		if (savedInstanceState != null) {
+			log("restore 1");
+			restoreState(savedInstanceState);
+		} else {
+			savedInstanceState = getIntent().getExtras();
+			if (savedInstanceState != null) {
+				log("restore 2");
+				restoreState(savedInstanceState);
+			}
+		}
+
+		if (mDateToShow == null) {
+			toCurrentDate();
+		}
+	}
+
+	@Override
+	public void setViews(Bundle savedInstanceState) {
 		setContentView(R.layout.simple_calendar_view);
 
 		prevMonth = (Button) this.findViewById(R.id.prevMonth);
@@ -59,8 +95,26 @@ public class MainActivity extends Activity implements OnClickListener,
 				return true;
 			}
 		});
+	}
 
-		toCurrentDate();
+	@Override
+	public void restoreState(Bundle state) {
+		mDateToShow = (Calendar) state.getSerializable(DATE_TO_SHOW);
+		log("restore " + Utils.toString(this, mDateToShow));
+		updateMonthCalendar();
+	}
+
+	@Override
+	public void saveState(Bundle state) {
+		log("save " + Utils.toString(this, mDateToShow));
+		state.putSerializable(DATE_TO_SHOW, mDateToShow);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		log("onSaveInstanceState");
+		saveState(outState);
+		super.onSaveInstanceState(outState);
 	}
 
 	private void updateMonthCalendar() {
@@ -103,8 +157,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		Object item = arg0.getAdapter().getItem(arg2);
 		if (item != null) {
 			Calendar calendar = (Calendar) item;
-			String title = DateFormat.getDateFormat(this).format(
-					calendar.getTime());
+			String title = Utils.toString(this, calendar);
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(title)
 					.setMessage("message")

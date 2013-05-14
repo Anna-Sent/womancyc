@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 
 public class ThemeUtils {
 	private static final String EXTRA_GUI_THEME_ID = "com.anna.sent.soft.childbirthdate.themeid";
@@ -29,16 +30,14 @@ public class ThemeUtils {
 			editor.putInt(EXTRA_GUI_THEME_ID, themeId);
 			editor.commit();
 
-			/*
-			 * Bundle state = new Bundle(); StateSaverActivity
-			 * stateSaverActivity = (StateSaverActivity) activity; if (activity
-			 * != null) { stateSaverActivity.saveState(state); }
-			 */
+			Bundle state = new Bundle();
+			StateSaver stateSaverActivity = (StateSaver) activity;
+			stateSaverActivity.saveState(state);
 
 			activity.finish();
 
 			Intent intent = new Intent(activity, activity.getClass());
-			// intent.putExtras(state);
+			intent.putExtras(state);
 			activity.startActivity(intent);
 		}
 	}
