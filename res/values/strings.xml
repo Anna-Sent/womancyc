@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="nextMonth">Next month</string>
-    <string name="prevMonth">Previous month</string>
-    <string name="app_name">WomanCyc: Calendar Of Woman Cycles</string>
+    <string name="nextMonth">Следующий месяц</string>
+    <string name="prevMonth">Предыдущий месяц</string>
+    <string name="currentMonth">Текущий месяц</string>
+    <string name="app_name">WomanCyc: Календарь женских циклов</string>
+    <string name="lighttheme">Светлая тема</string>
+    <string name="darktheme">Темная тема</string>
+    <string name="help">Справка</string>
 
 </resources>

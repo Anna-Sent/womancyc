@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <declare-styleable name="AppTheme">
+        <attr name="helpIcon" format="reference" />
+        <attr name="nextItemIcon" format="reference" />
+        <attr name="prevItemIcon" format="reference" />
+    </declare-styleable>
+
+    <style name="AppBaseTheme" parent="android:Theme">
+
+        <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
+        <item name="helpIcon">@drawable/help_light</item>
+    </style>
+
+    <style name="AppBaseThemeLight" parent="android:Theme.Light">
+
+        <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
+        <item name="helpIcon">@drawable/help_light</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="nextItemIcon">@drawable/next_item_dark</item>
+        <item name="prevItemIcon">@drawable/previous_item_dark</item>
+    </style>
+    <style name="AppThemeLight" parent="AppBaseThemeLight">
+        <item name="nextItemIcon">@drawable/next_item_light</item>
+        <item name="prevItemIcon">@drawable/previous_item_light</item>
+    </style>
+
+    <style name="DialogBaseTheme" parent="android:Theme.Dialog">
+        <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
+    </style>
+
+    <style name="DialogBaseThemeLight" parent="android:Theme.Dialog">
+        <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
+    </style>
+
+    <style name="DialogTheme" parent="DialogBaseTheme" />
+
+    <style name="DialogThemeLight" parent="DialogBaseThemeLight" />
+
+</resources>

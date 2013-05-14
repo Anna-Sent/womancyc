@@ -9,33 +9,36 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <ImageView
+        <Button
             android:id="@+id/prevMonth"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
+            android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/prevMonth"
-            android:src="@drawable/widget_bg" >
-        </ImageView>
+            android:drawableLeft="?attr/prevItemIcon" >
+        </Button>
 
         <Button
             android:id="@+id/currentMonth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6"
-            android:background="@drawable/widget_bg"
+            android:background="@drawable/selector_transparent_button"
+            android:contentDescription="@string/currentMonth"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" >
         </Button>
 
-        <ImageView
+        <Button
             android:id="@+id/nextMonth"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
+            android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/nextMonth"
-            android:src="@drawable/widget_bg" >
-        </ImageView>
+            android:drawableRight="?attr/nextItemIcon" >
+        </Button>
     </LinearLayout>
 
     <GridView
