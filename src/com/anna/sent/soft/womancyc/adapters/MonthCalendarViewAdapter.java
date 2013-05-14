@@ -1,9 +1,13 @@
-package com.anna.sent.soft.womancyc;
+package com.anna.sent.soft.womancyc.adapters;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,7 +27,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		super();
 		mContext = context;
 		Calendar today = Calendar.getInstance();
-		Utils.zeroDate(today);
+		DateUtils.zeroDate(today);
 		if (today.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
 			mDayOfWeekValues.add(Calendar.MONDAY);
@@ -76,7 +80,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 		Calendar current = Calendar.getInstance();
 		current.set(year, month, 1);
-		Utils.zeroDate(current);
+		DateUtils.zeroDate(current);
 
 		Calendar prevMonth = (Calendar) current.clone();
 		prevMonth.add(Calendar.MONTH, -1);
@@ -92,7 +96,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			item.set(prevMonth.get(Calendar.YEAR),
 					prevMonth.get(Calendar.MONTH), daysInPrevMonth - trailing
 							+ i);
-			Utils.zeroDate(item);
+			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -101,7 +105,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		for (int i = 1; i <= daysInCurrentMonth; ++i) {
 			Calendar item = Calendar.getInstance();
 			item.set(year, month, i);
-			Utils.zeroDate(item);
+			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -110,7 +114,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			Calendar item = Calendar.getInstance();
 			item.set(nextMonth.get(Calendar.YEAR),
 					nextMonth.get(Calendar.MONTH), i);
-			Utils.zeroDate(item);
+			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 	}
@@ -181,7 +185,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
 		Calendar begin = Calendar.getInstance();
 		begin.set(2013, Calendar.MAY, 1);
-		Utils.zeroDate(begin);
+		DateUtils.zeroDate(begin);
 		long dayOfCycle = (item.getTimeInMillis() - begin.getTimeInMillis())
 				/ (3600 * 1000 * 24);
 

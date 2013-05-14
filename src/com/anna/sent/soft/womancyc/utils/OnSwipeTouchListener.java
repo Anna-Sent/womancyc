@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc;
+package com.anna.sent.soft.womancyc.utils;
 
 import android.content.Context;
 import android.view.GestureDetector;
@@ -8,13 +8,14 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnTouchListener;
 
 public class OnSwipeTouchListener implements OnTouchListener {
-	OnSwipeTouchListener(Context context) {
+	public OnSwipeTouchListener(Context context) {
 		gestureDetector = new GestureDetector(context.getApplicationContext(),
 				new GestureListener());
 	}
 
 	private final GestureDetector gestureDetector;
 
+	@Override
 	public boolean onTouch(final View v, final MotionEvent event) {
 		return gestureDetector.onTouchEvent(event);
 	}

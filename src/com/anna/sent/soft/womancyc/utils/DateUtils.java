@@ -1,11 +1,11 @@
-package com.anna.sent.soft.womancyc;
+package com.anna.sent.soft.womancyc.utils;
 
 import java.util.Calendar;
 
 import android.content.Context;
 import android.text.format.DateFormat;
 
-public class Utils {
+public class DateUtils {
 	public static void zeroDate(Calendar date) {
 		date.set(Calendar.HOUR, 0);
 		date.set(Calendar.MINUTE, 0);

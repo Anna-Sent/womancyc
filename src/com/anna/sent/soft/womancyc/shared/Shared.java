@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc;
+package com.anna.sent.soft.womancyc.shared;
 
 import android.content.Context;
 import android.content.SharedPreferences;

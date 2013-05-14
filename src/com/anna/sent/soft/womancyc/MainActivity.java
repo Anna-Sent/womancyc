@@ -17,6 +17,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
+import com.anna.sent.soft.womancyc.utils.StateSaver;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
+
 public class MainActivity extends Activity implements OnClickListener,
 		OnItemClickListener, StateSaver {
 	private static final String TAG = "moo";
@@ -100,13 +106,13 @@ public class MainActivity extends Activity implements OnClickListener,
 	@Override
 	public void restoreState(Bundle state) {
 		mDateToShow = (Calendar) state.getSerializable(DATE_TO_SHOW);
-		log("restore " + Utils.toString(this, mDateToShow));
+		log("restore " + DateUtils.toString(this, mDateToShow));
 		updateMonthCalendar();
 	}
 
 	@Override
 	public void saveState(Bundle state) {
-		log("save " + Utils.toString(this, mDateToShow));
+		log("save " + DateUtils.toString(this, mDateToShow));
 		state.putSerializable(DATE_TO_SHOW, mDateToShow);
 	}
 
@@ -157,7 +163,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		Object item = arg0.getAdapter().getItem(arg2);
 		if (item != null) {
 			Calendar calendar = (Calendar) item;
-			String title = Utils.toString(this, calendar);
+			String title = DateUtils.toString(this, calendar);
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(title)
 					.setMessage("message")
