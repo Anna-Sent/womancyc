@@ -26,8 +26,7 @@
             android:layout_weight="0.6"
             android:background="@drawable/selector_transparent_button"
             android:contentDescription="@string/currentMonth"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF" >
+            android:textAppearance="?android:attr/textAppearanceMedium" >
         </Button>
 
         <Button
