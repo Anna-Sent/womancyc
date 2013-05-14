@@ -2,10 +2,9 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -17,14 +16,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.anna.sent.soft.womancyc.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 import com.anna.sent.soft.womancyc.utils.StateSaver;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MainActivity extends Activity implements OnClickListener,
-		OnItemClickListener, StateSaver {
+public class MainActivity extends FragmentActivity implements OnClickListener,
+		OnItemClickListener, StateSaver, DialogListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -163,29 +163,28 @@ public class MainActivity extends Activity implements OnClickListener,
 		Object item = arg0.getAdapter().getItem(arg2);
 		if (item != null) {
 			Calendar calendar = (Calendar) item;
+
 			String title = DateUtils.toString(this, calendar);
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(title)
-					.setMessage("message")
-					.setPositiveButton(android.R.string.ok,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
-			builder.create().show();
+			Bundle args = new Bundle();
+			args.putString("title", title);
+
+			DialogFragment dialog = new CalendarItemEditorDialogFragment();
+			dialog.setArguments(args);
+			dialog.show(getSupportFragmentManager(), dialog.getClass()
+					.getSimpleName());
 		}
 	}
 
 	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		switch (ThemeUtils.getThemeId(this)) {
 		case ThemeUtils.LIGHT_THEME:
