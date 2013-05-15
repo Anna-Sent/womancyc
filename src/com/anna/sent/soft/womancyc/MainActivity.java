@@ -19,8 +19,10 @@ import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.anna.sent.soft.womancyc.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
+import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment;
+import com.anna.sent.soft.womancyc.fragments.DatePickerFragment;
+import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;

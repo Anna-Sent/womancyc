@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc;
+package com.anna.sent.soft.womancyc.fragments;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
+import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.shared.Shared;
 
 public class DatePickerFragment extends DialogFragment implements
