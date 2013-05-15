@@ -6,6 +6,8 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -21,8 +23,8 @@ import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
 import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment;
-import com.anna.sent.soft.womancyc.fragments.DatePickerFragment;
 import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment.DialogListener;
+import com.anna.sent.soft.womancyc.fragments.DatePickerFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
@@ -51,11 +53,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 	private MonthCalendarViewAdapter adapter;
 	private Calendar mDateToShow = null;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
+	private boolean mIsLargeLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.onActivityCreateSetTheme(this);
 		super.onCreate(savedInstanceState);
+
+		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
 		setViews(savedInstanceState);
 
@@ -184,33 +189,40 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 			Bundle args = new Bundle();
 			args.putString(Shared.DATE_TO_SHOW, title);
 
-			DialogFragment dialog = new CalendarItemEditorDialogFragment();
-			dialog.setArguments(args);
-			dialog.show(getSupportFragmentManager(),
+			showCalendarItemEditor();
+		}
+	}
+
+	public void showCalendarItemEditor() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
+		Bundle args = new Bundle();
+		args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+
+		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
+		newFragment.setArguments(args);
+
+		if (mIsLargeLayout) {
+			FragmentTransaction transaction = fragmentManager
+					.beginTransaction();
+			transaction
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+			transaction.add(android.R.id.content, newFragment)
+					.addToBackStack(null).commit();
+		} else {
+			newFragment.show(fragmentManager,
 					CalendarItemEditorDialogFragment.class.getSimpleName());
 		}
 	}
 
-	/*
-	 * public void showDialog() { FragmentManager fragmentManager =
-	 * getSupportFragmentManager(); CustomDialogFragment newFragment = new
-	 * CustomDialogFragment();
-	 * 
-	 * if (mIsLargeLayout) { // The device is using a large layout, so show the
-	 * fragment as a dialog newFragment.show(fragmentManager, "dialog"); } else
-	 * { // The device is smaller, so show the fragment fullscreen
-	 * FragmentTransaction transaction = fragmentManager.beginTransaction(); //
-	 * For a little polish, specify a transition animation
-	 * transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); //
-	 * To make it fullscreen, use the 'content' root view as the container //
-	 * for the fragment, which is always the root view for the activity
-	 * transaction.add(android.R.id.content, newFragment)
-	 * .addToBackStack(null).commit(); } }
-	 */
-
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		Toast.makeText(this, "positive", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onDialogNeutralClick(DialogFragment dialog) {
+		Toast.makeText(this, "neutral", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
