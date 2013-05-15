@@ -8,5 +8,21 @@
     <string name="lighttheme">Светлая тема</string>
     <string name="darktheme">Темная тема</string>
     <string name="help">Справка</string>
+    <string name="clear">Очистить</string>
+    <string name="today">Сегодня</string>
+    <string name="menstruation">Менструация</string>
+    <string name="sex">Секс</string>
+
+    <string-array name="menstruationTypes">
+        <item>\?</item>
+        <item>Скудные выделения</item>
+        <item>Нормальные выделения</item>
+        <item>Обильные выделения</item>
+    </string-array>
+    <string-array name="sexTypes">
+        <item>\?</item>
+        <item>Защищенный</item>
+        <item>Незащищенный</item>
+    </string-array>
 
 </resources>

@@ -9,64 +9,52 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <CheckBox
-            android:id="@+id/isMenstruationCheckBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Менструация" />
+            android:orientation="horizontal" >
 
-        <RadioGroup
+            <CheckBox
+                android:id="@+id/isMenstruationCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/menstruation" />
+
+            <Spinner
+                android:id="@+id/spinnerMenstruation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp" >
+            android:orientation="horizontal" >
 
-            <RadioButton
-                android:layout_width="match_parent"
+            <CheckBox
+                android:id="@+id/hadSex"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="\?" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/sex" />
 
-            <RadioButton
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spinnerSex"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Обильные выделения" />
+                android:layout_weight="1" />
+        </LinearLayout>
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Нормальные выделения" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Скудные выделения" />
-        </RadioGroup>
-
-        <CheckBox
-            android:id="@+id/isSex"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Секс" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp" >
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\?" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Защищенный" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Незащищенный" />
-        </RadioGroup>
+            android:layout_gravity="center"
+            android:text="@string/clear" />
     </LinearLayout>
 
 </ScrollView>
