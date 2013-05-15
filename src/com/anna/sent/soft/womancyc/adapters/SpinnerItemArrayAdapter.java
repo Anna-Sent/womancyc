@@ -45,6 +45,15 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 
 	@Override
 	public View getView(int position, View contentView, ViewGroup viewGroup) {
+		return getView(position, contentView, false);
+	}
+
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+		return getView(position, convertView, true);
+	}
+
+	private View getView(int position, View contentView, boolean isDropDownView) {
 		View view;
 		ViewHolder viewHolder = null;
 		if (contentView == null) {
@@ -60,15 +69,10 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 
-		viewHolder.textView.setText(mStrings[position]);
+		viewHolder.textView.setText(isDropDownView ? mStrings[position] : "");
 		viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
 				R.drawable.help_light, 0, 0, 0);
 
 		return view;
-	}
-
-	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		return getView(position, convertView, parent);
 	}
 }
