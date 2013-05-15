@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
-		setContentView(R.layout.simple_calendar_view);
+		setContentView(R.layout.month_calendar_view);
 
 		prevMonth = (Button) this.findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
