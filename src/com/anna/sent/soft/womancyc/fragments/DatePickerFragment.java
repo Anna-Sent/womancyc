@@ -17,6 +17,10 @@ public class DatePickerFragment extends DialogFragment implements
 		DialogInterface.OnClickListener {
 	private OnDateSetListener mListener = null;
 
+	public DatePickerFragment() {
+		super();
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final Calendar c = (Calendar) getArguments().getSerializable(
