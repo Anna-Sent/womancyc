@@ -21,14 +21,15 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	private final Context mContext;
 	private final List<Calendar> mMonthCalendarValues = new ArrayList<Calendar>();
 	private List<Integer> mDayOfWeekValues = new ArrayList<Integer>();
-	private int mDayOfCurrentMonth, mCurrentMonth;
+	private String[] mDayOfWeekNames;
+	protected int mMonth, mYear;
+	private Calendar mSelectedDate, mToday;
 
 	public MonthCalendarViewAdapter(Context context) {
 		super();
 		mContext = context;
-		Calendar today = Calendar.getInstance();
-		DateUtils.zeroDate(today);
-		if (today.getFirstDayOfWeek() == Calendar.SUNDAY) {
+		mToday = Calendar.getInstance();
+		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
 			mDayOfWeekValues.add(Calendar.MONDAY);
 			mDayOfWeekValues.add(Calendar.TUESDAY);
@@ -46,15 +47,48 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
 		}
 
-		mDayOfCurrentMonth = today.get(Calendar.DAY_OF_MONTH);
-		mCurrentMonth = today.get(Calendar.MONTH);
+		DateFormatSymbols symbols = new DateFormatSymbols();
+		mDayOfWeekNames = symbols.getShortWeekdays();
+
+		mSelectedDate = (Calendar) mToday.clone();
+		int month = mToday.get(Calendar.MONTH);
+		int year = mToday.get(Calendar.YEAR);
+		initMonthCalendar(month, year);
 	}
 
-	public void updateMonthCalendar(int month, int year) {
-		mCurrentMonth = month;
-		initMonthCalendar(month, year);
+	public void setSelectedDate(Calendar value) {
+		int year = value.get(Calendar.YEAR);
+		int month = value.get(Calendar.MONTH);
+		int day = value.get(Calendar.DAY_OF_MONTH);
+		mSelectedDate.set(Calendar.YEAR, year);
+		mSelectedDate.set(Calendar.MONTH, month);
+		mSelectedDate.set(Calendar.DAY_OF_MONTH, day);
+		if (mYear != year || mMonth != month) {
+			initMonthCalendar(month, year);
+		}
+
 		notifyDataSetChanged();
 	}
+
+	public Calendar getSelectedDate() {
+		return mSelectedDate;
+	}
+
+	/*
+	 * public void navigateToNextMonth() {
+	 * mSelectedDate.set(Calendar.DAY_OF_MONTH, 1);
+	 * mSelectedDate.add(Calendar.MONTH, 1); int month =
+	 * mSelectedDate.get(Calendar.MONTH); int year =
+	 * mSelectedDate.get(Calendar.YEAR); initMonthCalendar(month, year);
+	 * notifyDataSetChanged(); }
+	 * 
+	 * public void navigateToPrevMonth() {
+	 * mSelectedDate.set(Calendar.DAY_OF_MONTH, 1);
+	 * mSelectedDate.add(Calendar.MONTH, 11); int month =
+	 * mSelectedDate.get(Calendar.MONTH); int year =
+	 * mSelectedDate.get(Calendar.YEAR); initMonthCalendar(month, year);
+	 * notifyDataSetChanged(); }
+	 */
 
 	@Override
 	public Object getItem(int position) {
@@ -76,11 +110,12 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	}
 
 	private void initMonthCalendar(int month, int year) {
+		mYear = year;
+		mMonth = month;
 		mMonthCalendarValues.clear();
 
 		Calendar current = Calendar.getInstance();
 		current.set(year, month, 1);
-		DateUtils.zeroDate(current);
 
 		Calendar prevMonth = (Calendar) current.clone();
 		prevMonth.add(Calendar.MONTH, -1);
@@ -96,7 +131,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			item.set(prevMonth.get(Calendar.YEAR),
 					prevMonth.get(Calendar.MONTH), daysInPrevMonth - trailing
 							+ i);
-			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -105,7 +139,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		for (int i = 1; i <= daysInCurrentMonth; ++i) {
 			Calendar item = Calendar.getInstance();
 			item.set(year, month, i);
-			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 
@@ -114,7 +147,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			Calendar item = Calendar.getInstance();
 			item.set(nextMonth.get(Calendar.YEAR),
 					nextMonth.get(Calendar.MONTH), i);
-			DateUtils.zeroDate(item);
 			mMonthCalendarValues.add(item);
 		}
 	}
@@ -167,11 +199,10 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	}
 
 	private void initDayOfWeekItem(View cell, int position) {
-		DateFormatSymbols symbols = new DateFormatSymbols();
-		String[] dayNames = symbols.getShortWeekdays();
 		TextView dayOfWeekTextView = (TextView) cell
 				.findViewById(R.id.dayOfWeekTextView);
-		dayOfWeekTextView.setText(dayNames[mDayOfWeekValues.get(position)]);
+		dayOfWeekTextView.setText(mDayOfWeekNames[mDayOfWeekValues
+				.get(position)]);
 	}
 
 	protected int getDayOfMonthLayoutResource() {
@@ -185,9 +216,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
 		Calendar begin = Calendar.getInstance();
 		begin.set(2013, Calendar.MAY, 1);
-		DateUtils.zeroDate(begin);
-		long dayOfCycle = (item.getTimeInMillis() - begin.getTimeInMillis())
-				/ (3600 * 1000 * 24);
+		int dayOfCycle = DateUtils.getDifferenceInDays(item, begin);
 
 		View view = cell.findViewById(R.id.dayOfMonth);
 		view.setTag(item);
@@ -201,7 +230,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		dayOfMonthTextView.setText(String.valueOf(item
 				.get(Calendar.DAY_OF_MONTH)));
 
-		if (item.get(Calendar.MONTH) != mCurrentMonth) {
+		if (item.get(Calendar.MONTH) != mMonth) {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			if (ThemeUtils.getThemeId(mContext) == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
@@ -217,9 +246,15 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			}
 		}
 
-		if (item.get(Calendar.DAY_OF_MONTH) == mDayOfCurrentMonth) {
-			dayOfMonthTextView.setTextColor(mContext.getResources().getColor(
+		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
+			cell.setBackgroundColor(mContext.getResources().getColor(
 					R.color.blue));
+		} else {
+			cell.setBackgroundColor(0);
+		}
+
+		if (DateUtils.datesAreEqual(item, mToday)) {
+			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
 	}
 }

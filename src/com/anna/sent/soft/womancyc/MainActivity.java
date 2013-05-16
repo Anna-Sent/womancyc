@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
@@ -32,7 +33,8 @@ import com.anna.sent.soft.womancyc.utils.StateSaver;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MainActivity extends FragmentActivity implements OnClickListener,
-		OnItemClickListener, StateSaver, DialogListener, OnDateSetListener {
+		OnItemClickListener, OnItemLongClickListener, StateSaver,
+		DialogListener, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -51,7 +53,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 	private Button nextMonth;
 	private GridView calendarView;
 	private MonthCalendarViewAdapter adapter;
-	private Calendar mDateToShow = null;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
 	private boolean mIsLargeLayout;
 
@@ -74,30 +75,29 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 				restoreState(savedInstanceState);
 			}
 		}
-
-		if (mDateToShow == null) {
-			toCurrentDate();
-		}
 	}
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		setContentView(R.layout.month_calendar_view);
 
+		adapter = new MonthCalendarViewAdapter(this);
+
 		prevMonth = (Button) this.findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
 
 		currentMonth = (Button) this.findViewById(R.id.currentMonth);
 		currentMonth.setOnClickListener(this);
+		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE, adapter
+				.getSelectedDate().getTime()));
 
 		nextMonth = (Button) this.findViewById(R.id.nextMonth);
 		nextMonth.setOnClickListener(this);
 
-		adapter = new MonthCalendarViewAdapter(this);
-
 		calendarView = (GridView) this.findViewById(R.id.calendar);
 		calendarView.setAdapter(adapter);
 		calendarView.setOnItemClickListener(this);
+		calendarView.setOnItemLongClickListener(this);
 		calendarView.setOnTouchListener(new OnSwipeTouchListener(this) {
 			@Override
 			public boolean onSwipeRight() {
@@ -115,15 +115,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 	@Override
 	public void restoreState(Bundle state) {
-		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(this, mDateToShow));
-		updateMonthCalendar();
+		Calendar dateToShow = (Calendar) state
+				.getSerializable(Shared.DATE_TO_SHOW);
+		log("restore " + DateUtils.toString(this, dateToShow));
+		updateMonthCalendar(dateToShow);
 	}
 
 	@Override
 	public void saveState(Bundle state) {
-		log("save " + DateUtils.toString(this, mDateToShow));
-		state.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+		log("save " + DateUtils.toString(this, adapter.getSelectedDate()));
+		state.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 	}
 
 	@Override
@@ -133,28 +134,24 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 		super.onSaveInstanceState(outState);
 	}
 
-	private void updateMonthCalendar() {
+	private void updateMonthCalendar(Calendar dateToShow) {
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
-				mDateToShow.getTime()));
-		int month = mDateToShow.get(Calendar.MONTH);
-		int year = mDateToShow.get(Calendar.YEAR);
-		adapter.updateMonthCalendar(month, year);
+				dateToShow.getTime()));
+		adapter.setSelectedDate(dateToShow);
 	}
 
 	private void toPrevDate() {
-		mDateToShow.add(Calendar.MONTH, -1);
-		updateMonthCalendar();
-	}
-
-	private void toCurrentDate() {
-		mDateToShow = Calendar.getInstance();
-		mDateToShow.set(Calendar.DAY_OF_MONTH, 1);
-		updateMonthCalendar();
+		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
+		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
+		dateToShow.add(Calendar.MONTH, -1);
+		updateMonthCalendar(dateToShow);
 	}
 
 	private void toNextDate() {
-		mDateToShow.add(Calendar.MONTH, 1);
-		updateMonthCalendar();
+		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
+		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
+		dateToShow.add(Calendar.MONTH, 1);
+		updateMonthCalendar(dateToShow);
 	}
 
 	@Override
@@ -165,7 +162,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 			toNextDate();
 		} else if (v == currentMonth) {
 			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+			args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 			DialogFragment dialog = new DatePickerFragment();
 			dialog.setArguments(args);
 			dialog.show(getSupportFragmentManager(),
@@ -175,29 +172,44 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int month, int day) {
-		mDateToShow.set(year, month, day);
-		updateMonthCalendar();
+		Calendar dateToShow = Calendar.getInstance();
+		dateToShow.set(year, month, day);
+		updateMonthCalendar(dateToShow);
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Object item = arg0.getAdapter().getItem(arg2);
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+		Object item = adapter.getItem(position);
 		if (item != null) {
-			Calendar calendar = (Calendar) item;
+			Calendar date = (Calendar) item;
 
-			String title = DateUtils.toString(this, calendar);
+			updateMonthCalendar(date);
+		}
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+			int position, long arg3) {
+		Object item = adapter.getItem(position);
+		if (item != null) {
+			Calendar date = (Calendar) item;
+
+			String title = DateUtils.toString(this, date);
 			Bundle args = new Bundle();
 			args.putString(Shared.DATE_TO_SHOW, title);
 
 			showCalendarItemEditor();
 		}
+
+		return true;
 	}
 
 	public void showCalendarItemEditor() {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
 		Bundle args = new Bundle();
-		args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+		args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 
 		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
 		newFragment.setArguments(args);
