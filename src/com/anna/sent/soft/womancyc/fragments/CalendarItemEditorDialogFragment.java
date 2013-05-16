@@ -133,8 +133,10 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 
 	private void fillSpinner(int stringArrayResourceId, Spinner spinner) {
 		String[] data = getResources().getStringArray(stringArrayResourceId);
+		int[] images = new int[] { R.drawable.unknown,
+				R.drawable.protected_sex, R.drawable.unprotected_sex };
 		ArrayAdapter<String> adapter = new SpinnerItemArrayAdapter(
-				getActivity(), data);
+				getActivity(), data, images);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);

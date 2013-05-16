@@ -26,16 +26,19 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 	}
 
 	private String[] mStrings;
+	private int[] mImageResourceIds;
 	private int mCount;
 
 	private static class ViewHolder {
 		private TextView textView;
 	}
 
-	public SpinnerItemArrayAdapter(Context context, String[] strings) {
+	public SpinnerItemArrayAdapter(Context context, String[] strings,
+			int[] imageResourceIds) {
 		super(context, R.layout.spinner_item, R.id.spinnerItemTextView, strings);
 		mStrings = strings;
-		mCount = mStrings.length;
+		mImageResourceIds = imageResourceIds;
+		mCount = Math.min(mStrings.length, mImageResourceIds.length);
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 
 		viewHolder.textView.setText(isDropDownView ? mStrings[position] : "");
 		viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
-				R.drawable.help_light, 0, 0, 0);
+				mImageResourceIds[position], 0, 0, 0);
 
 		return view;
 	}
