@@ -99,6 +99,10 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 						return true;
 					}
 				});
+
+		if (mIsLargeLayout) {
+			showAsEmbeddedFragment();
+		}
 	}
 
 	@Override
@@ -167,6 +171,10 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 			Calendar date = (Calendar) item;
 
 			updateMonthCalendar(date);
+
+			if (mIsLargeLayout) {
+				showAsEmbeddedFragment();
+			}
 		}
 	}
 
@@ -181,31 +189,35 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 			Bundle args = new Bundle();
 			args.putString(Shared.DATE_TO_SHOW, title);
 
-			showCalendarItemEditor();
+			if (!mIsLargeLayout) {
+				showAsDialogFragment();
+			}
 		}
 
 		return true;
 	}
 
-	public void showCalendarItemEditor() {
+	public void showAsDialogFragment() {
 		FragmentManager fragmentManager = getFragmentManager();
+		createEditorFragment().show(fragmentManager,
+				CalendarItemEditorDialogFragment.class.getSimpleName());
+	}
 
+	public void showAsEmbeddedFragment() {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		transaction.add(R.id.editor, createEditorFragment())
+				.addToBackStack(null).commit();
+	}
+
+	private DialogFragment createEditorFragment() {
 		Bundle args = new Bundle();
 		args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 
 		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
 		newFragment.setArguments(args);
 
-		if (mIsLargeLayout) {
-			FragmentTransaction transaction = fragmentManager
-					.beginTransaction();
-			transaction
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-			transaction.add(R.id.editor, newFragment).addToBackStack(null)
-					.commit();
-		} else {
-			newFragment.show(fragmentManager,
-					CalendarItemEditorDialogFragment.class.getSimpleName());
-		}
+		return newFragment;
 	}
 }
