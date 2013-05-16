@@ -7,15 +7,14 @@
     <fragment
         android:id="@+id/calendar"
         android:layout_width="0px"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         class="com.anna.sent.soft.womancyc.fragments.MonthCalendarViewFragment" />
 
-    <fragment
+    <FrameLayout
         android:id="@+id/editor"
         android:layout_width="0px"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        class="com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment" />
+        android:layout_weight="1" />
 
 </LinearLayout>
