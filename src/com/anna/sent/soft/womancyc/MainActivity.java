@@ -94,7 +94,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener,
 		nextMonth = (Button) this.findViewById(R.id.nextMonth);
 		nextMonth.setOnClickListener(this);
 
-		calendarView = (GridView) this.findViewById(R.id.calendar);
+		calendarView = (GridView) this.findViewById(R.id.calendarGridView);
 		calendarView.setAdapter(adapter);
 		calendarView.setOnItemClickListener(this);
 		calendarView.setOnItemLongClickListener(this);

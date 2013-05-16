@@ -3,4 +3,6 @@
 
     <bool name="isLargeLayout">false</bool>
 
+    <item name="activity_main" type="layout">@layout/activity_main_one_pane</item>
+
 </resources>
