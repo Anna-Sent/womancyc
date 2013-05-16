@@ -5,8 +5,8 @@ import java.util.Calendar;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,8 +38,15 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
+	private void log(String msg, boolean debug) {
+		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
@@ -109,14 +116,15 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	public void restoreState(Bundle state) {
 		Calendar dateToShow = (Calendar) state
 				.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(getActivity(), dateToShow));
+		log("restore " + DateUtils.toString(getActivity(), dateToShow), false);
 		updateMonthCalendar(dateToShow);
 	}
 
 	@Override
 	public void saveState(Bundle state) {
 		log("save "
-				+ DateUtils.toString(getActivity(), adapter.getSelectedDate()));
+				+ DateUtils.toString(getActivity(), adapter.getSelectedDate()),
+				false);
 		state.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 	}
 
@@ -205,10 +213,14 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 	public void showAsEmbeddedFragment() {
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		transaction.add(R.id.editor, createEditorFragment())
-				.addToBackStack(null).commit();
+
+		Fragment details = fragmentManager.findFragmentById(R.id.editor);
+		if (details != null) {
+			fragmentManager.beginTransaction().remove(details).commit();
+		}
+
+		fragmentManager.beginTransaction()
+				.add(R.id.editor, createEditorFragment()).commit();
 	}
 
 	private DialogFragment createEditorFragment() {

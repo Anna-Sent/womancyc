@@ -2,6 +2,8 @@ package com.anna.sent.soft.womancyc;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +31,15 @@ public class MainActivity extends StateSaverActivity implements DialogListener {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_main);
+	}
+
+	@Override
+	public void beforeOnSaveInstanceState() {
+		FragmentManager fm = getSupportFragmentManager();
+		Fragment details = fm.findFragmentById(R.id.editor);
+		if (details != null) {
+			fm.beginTransaction().remove(details).commit();
+		}
 	}
 
 	@Override

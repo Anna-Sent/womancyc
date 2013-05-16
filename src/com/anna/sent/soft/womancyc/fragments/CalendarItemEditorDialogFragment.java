@@ -83,6 +83,12 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		log("onDestroy");
+	}
+
+	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		log("onCreateDialog");
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
