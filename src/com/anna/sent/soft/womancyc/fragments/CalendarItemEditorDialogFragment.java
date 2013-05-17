@@ -11,16 +11,20 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class CalendarItemEditorDialogFragment extends DialogFragment {
+public class CalendarItemEditorDialogFragment extends DialogFragment implements
+		OnClickListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -42,7 +46,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 		public void onDialogNegativeClick(DialogFragment dialog);
 	}
 
-	DialogListener mListener;
+	private DialogListener mListener;
+	private boolean mIsDialog;
 
 	public CalendarItemEditorDialogFragment() {
 		super();
@@ -54,6 +59,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 			Bundle savedInstanceState) {
 		View v = null;
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
+			mIsDialog = false;
 			v = createView();
 			log("onCreateView");
 		} else {
@@ -74,6 +80,9 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 	public void onPause() {
 		super.onPause();
 		log("onPause");
+		if (!mIsDialog) {
+			mListener.onDialogPositiveClick(this);
+		}
 	}
 
 	@Override
@@ -94,13 +103,10 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
-			Calendar dateToShow = (Calendar) getArguments().getSerializable(
-					Shared.DATE_TO_SHOW);
-			String title = DateUtils.toString(getActivity(), dateToShow);
-
+			mIsDialog = true;
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(createView())
-					.setTitle(title)
+					.setTitle(getTitle())
 					.setPositiveButton(android.R.string.ok,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
@@ -151,7 +157,31 @@ public class CalendarItemEditorDialogFragment extends DialogFragment {
 				(Spinner) v.findViewById(R.id.spinnerMenstruation));
 		fillSpinner(R.array.sexTypes, (Spinner) v.findViewById(R.id.spinnerSex));
 
+		Button clear = (Button) v.findViewById(R.id.buttonClear);
+		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
+		if (mIsDialog) {
+			// remove title text view and clear button
+			clear.setVisibility(View.GONE);
+			title.setVisibility(View.GONE);
+		} else {
+			clear.setOnClickListener(this);
+			title.setText(getTitle());
+		}
+
 		return v;
+	}
+
+	private String getTitle() {
+		Calendar dateToShow = (Calendar) getArguments().getSerializable(
+				Shared.DATE_TO_SHOW);
+		return DateUtils.toString(getActivity(), dateToShow);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.buttonClear) {
+			mListener.onDialogNeutralClick(this);
+		}
 	}
 
 	@Override
