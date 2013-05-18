@@ -251,4 +251,9 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		Toast.makeText(getActivity(), "negative", Toast.LENGTH_SHORT).show();
 	}
+
+	@Override
+	public void onDataChanged() {
+		adapter.notifyDataSetChanged();
+	}
 }

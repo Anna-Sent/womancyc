@@ -12,10 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
@@ -23,7 +27,7 @@ import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class CalendarItemEditorDialogFragment extends DialogFragment implements
-		OnClickListener {
+		OnClickListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -43,6 +47,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		public void onDialogNeutralClick(DialogFragment dialog);
 
 		public void onDialogNegativeClick(DialogFragment dialog);
+
+		public void onDataChanged();
 	}
 
 	private DialogListener mListener = null;
@@ -80,7 +86,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		super.onPause();
 		log("onPause");
 		if (!mIsDialog) {
-			mListener.onDialogPositiveClick(this);
+			onDialogPositiveClick();
 		}
 	}
 
@@ -110,8 +116,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									mListener
-											.onDialogPositiveClick(CalendarItemEditorDialogFragment.this);
+									onDialogPositiveClick();
 								}
 							})
 					.setNeutralButton(getString(R.string.clear),
@@ -119,16 +124,14 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
-									mListener
-											.onDialogNeutralClick(CalendarItemEditorDialogFragment.this);
+									onDialogNeutralClick();
 								}
 							})
 					.setNegativeButton(android.R.string.cancel,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									mListener
-											.onDialogNegativeClick(CalendarItemEditorDialogFragment.this);
+									onDialogNegativeClick();
 								}
 							});
 
@@ -145,6 +148,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 		spinner.setAdapter(adapter);
 		spinner.setSelection(0);
+
+		spinner.setOnItemSelectedListener(this);
 	}
 
 	private View createView() {
@@ -171,6 +176,12 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			title.setText(getTitle());
 		}
 
+		CheckBox checkBoxMenstruation = (CheckBox) v
+				.findViewById(R.id.isMenstruationCheckBox);
+		checkBoxMenstruation.setOnClickListener(this);
+		CheckBox checkBoxSex = (CheckBox) v.findViewById(R.id.hadSexCheckBox);
+		checkBoxSex.setOnClickListener(this);
+
 		return v;
 	}
 
@@ -182,12 +193,57 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.buttonClear) {
-			mListener.onDialogNeutralClick(this);
+		int id = v.getId();
+		if (id == R.id.buttonClear) {
+			onDialogNeutralClick();
+		} else if (id == R.id.isMenstruationCheckBox
+				|| id == R.id.hadSexCheckBox) {
+			Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
+			onDataChanged();
 		}
 	}
 
 	public void setDialogListener(DialogListener listener) {
 		mListener = listener;
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		Toast.makeText(getActivity(), "onItemSelected", Toast.LENGTH_SHORT)
+				.show();
+		onDataChanged();
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		Toast.makeText(getActivity(), "onNothingSelected", Toast.LENGTH_SHORT)
+				.show();
+		onDataChanged();
+	}
+
+	private void onDialogPositiveClick() {
+		if (mListener != null) {
+			mListener.onDialogPositiveClick(this);
+		}
+	}
+
+	private void onDialogNeutralClick() {
+		if (mListener != null) {
+			mListener.onDialogNeutralClick(this);
+		}
+	}
+
+	private void onDialogNegativeClick() {
+		if (mListener != null) {
+			mListener.onDialogNegativeClick(this);
+		}
+	}
+
+	private void onDataChanged() {
+		boolean isDataChanged = true;
+		if (isDataChanged && mListener != null) {
+			mListener.onDataChanged();
+		}
 	}
 }
