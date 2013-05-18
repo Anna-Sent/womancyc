@@ -136,10 +136,9 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	private void fillSpinner(int stringArrayResourceId, Spinner spinner) {
+	private void fillSpinner(int stringArrayResourceId, int[] images,
+			Spinner spinner) {
 		String[] data = getResources().getStringArray(stringArrayResourceId);
-		int[] images = new int[] { R.drawable.unknown,
-				R.drawable.protected_sex, R.drawable.unprotected_sex };
 		ArrayAdapter<String> adapter = new SpinnerItemArrayAdapter(
 				getActivity(), data, images);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -152,9 +151,14 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.calendar_item_editor, null);
 
-		fillSpinner(R.array.menstruationTypes,
+		int[] images = new int[] { R.drawable.unknown, R.drawable.one_drop,
+				R.drawable.two_drops, R.drawable.three_drops };
+		fillSpinner(R.array.menstruationTypes, images,
 				(Spinner) v.findViewById(R.id.spinnerMenstruation));
-		fillSpinner(R.array.sexTypes, (Spinner) v.findViewById(R.id.spinnerSex));
+		images = new int[] { R.drawable.unknown, R.drawable.protected_sex,
+				R.drawable.unprotected_sex };
+		fillSpinner(R.array.sexTypes, images,
+				(Spinner) v.findViewById(R.id.spinnerSex));
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
