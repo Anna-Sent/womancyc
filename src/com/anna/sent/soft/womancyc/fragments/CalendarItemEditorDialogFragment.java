@@ -53,6 +53,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private DialogListener mListener = null;
 	private boolean mIsDialog;
+	private CheckBox checkBoxIsMenstruation, checkBoxHadSex;
+	private Spinner spinnerHadMenstruation, spinnerHadSex;
 
 	public CalendarItemEditorDialogFragment() {
 		super();
@@ -159,12 +161,14 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		int[] images = new int[] { R.drawable.menstruation,
 				R.drawable.one_drop, R.drawable.two_drops,
 				R.drawable.three_drops };
-		fillSpinner(R.array.menstruationTypes, images,
-				(Spinner) v.findViewById(R.id.spinnerMenstruation));
+		spinnerHadMenstruation = (Spinner) v
+				.findViewById(R.id.spinnerMenstruation);
+		fillSpinner(R.array.menstruationTypes, images, spinnerHadMenstruation);
+
+		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
 		images = new int[] { R.drawable.unprotected_sex,
 				R.drawable.protected_sex };
-		fillSpinner(R.array.sexTypes, images,
-				(Spinner) v.findViewById(R.id.spinnerSex));
+		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
@@ -177,13 +181,20 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			title.setText(getTitle());
 		}
 
-		CheckBox checkBoxMenstruation = (CheckBox) v
+		checkBoxIsMenstruation = (CheckBox) v
 				.findViewById(R.id.isMenstruationCheckBox);
-		checkBoxMenstruation.setOnClickListener(this);
-		CheckBox checkBoxSex = (CheckBox) v.findViewById(R.id.hadSexCheckBox);
-		checkBoxSex.setOnClickListener(this);
+		checkBoxIsMenstruation.setOnClickListener(this);
+		checkBoxHadSex = (CheckBox) v.findViewById(R.id.hadSexCheckBox);
+		checkBoxHadSex.setOnClickListener(this);
+
+		checkVisibility(checkBoxIsMenstruation, spinnerHadMenstruation);
+		checkVisibility(checkBoxHadSex, spinnerHadSex);
 
 		return v;
+	}
+
+	private void checkVisibility(CheckBox checkBox, Spinner spinner) {
+		spinner.setEnabled(checkBox.isChecked());
 	}
 
 	private String getTitle() {
@@ -194,12 +205,15 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onClick(View v) {
-		int id = v.getId();
-		if (id == R.id.buttonClear) {
+		if (v.getId() == R.id.buttonClear) {
 			onDialogNeutralClick();
-		} else if (id == R.id.isMenstruationCheckBox
-				|| id == R.id.hadSexCheckBox) {
-			Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
+		} else if (checkBoxIsMenstruation == v) {
+			checkVisibility(checkBoxIsMenstruation, spinnerHadMenstruation);
+			Toast.makeText(getActivity(), "isMenst", Toast.LENGTH_SHORT).show();
+			onDataChanged();
+		} else if (checkBoxHadSex == v) {
+			checkVisibility(checkBoxHadSex, spinnerHadSex);
+			Toast.makeText(getActivity(), "hadSex", Toast.LENGTH_SHORT).show();
 			onDataChanged();
 		}
 	}
