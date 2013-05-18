@@ -1,19 +1,16 @@
 package com.anna.sent.soft.womancyc;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.utils.StateSaverActivity;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MainActivity extends StateSaverActivity implements DialogListener {
+public class MainActivity extends StateSaverActivity {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -40,21 +37,6 @@ public class MainActivity extends StateSaverActivity implements DialogListener {
 		if (details != null) {
 			fm.beginTransaction().remove(details).commit();
 		}
-	}
-
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		Toast.makeText(this, "positive", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onDialogNeutralClick(DialogFragment dialog) {
-		Toast.makeText(this, "neutral", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		Toast.makeText(this, "negative", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

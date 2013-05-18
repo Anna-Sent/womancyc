@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -46,7 +45,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		public void onDialogNegativeClick(DialogFragment dialog);
 	}
 
-	private DialogListener mListener;
+	private DialogListener mListener = null;
 	private boolean mIsDialog;
 
 	public CalendarItemEditorDialogFragment() {
@@ -184,14 +183,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		try {
-			mListener = (DialogListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement " + DialogListener.class.getSimpleName());
-		}
+	public void setDialogListener(DialogListener listener) {
+		mListener = listener;
 	}
 }

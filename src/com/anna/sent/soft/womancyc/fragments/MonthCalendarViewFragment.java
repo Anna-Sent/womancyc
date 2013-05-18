@@ -19,9 +19,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
+import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
@@ -30,7 +32,7 @@ import com.anna.sent.soft.womancyc.utils.StateSaverFragment;
 
 public class MonthCalendarViewFragment extends StateSaverFragment implements
 		OnClickListener, OnItemClickListener, OnItemLongClickListener,
-		StateSaver, OnDateSetListener {
+		StateSaver, OnDateSetListener, DialogListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -157,10 +159,11 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		} else if (v == currentMonth) {
 			Bundle args = new Bundle();
 			args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
-			DialogFragment dialog = new DatePickerFragment();
+			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
 			dialog.setArguments(args);
+			dialog.setOnDateSetListener(this);
 			dialog.show(getFragmentManager(),
-					DatePickerFragment.class.getSimpleName());
+					DatePickerDialogFragment.class.getSimpleName());
 		}
 	}
 
@@ -229,7 +232,23 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
 		newFragment.setArguments(args);
+		newFragment.setDialogListener(this);
 
 		return newFragment;
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		Toast.makeText(getActivity(), "positive", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onDialogNeutralClick(DialogFragment dialog) {
+		Toast.makeText(getActivity(), "neutral", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		Toast.makeText(getActivity(), "negative", Toast.LENGTH_SHORT).show();
 	}
 }

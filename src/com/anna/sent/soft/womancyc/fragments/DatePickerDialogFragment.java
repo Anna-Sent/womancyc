@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
@@ -13,11 +12,15 @@ import android.support.v4.app.DialogFragment;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.shared.Shared;
 
-public class DatePickerFragment extends DialogFragment implements
+public class DatePickerDialogFragment extends DialogFragment implements
 		DialogInterface.OnClickListener {
 	private OnDateSetListener mListener = null;
 
-	public DatePickerFragment() {
+	public void setOnDateSetListener(OnDateSetListener listener) {
+		mListener = listener;
+	}
+
+	public DatePickerDialogFragment() {
 		super();
 	}
 
@@ -36,25 +39,15 @@ public class DatePickerFragment extends DialogFragment implements
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		try {
-			mListener = (OnDateSetListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement "
-					+ OnDateSetListener.class.getSimpleName());
-		}
-	}
-
-	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_NEUTRAL) {
 			Calendar today = Calendar.getInstance();
 			int year = today.get(Calendar.YEAR);
 			int month = today.get(Calendar.MONTH);
 			int day = today.get(Calendar.DAY_OF_MONTH);
-			mListener.onDateSet(null, year, month, day);
+			if (mListener != null) {
+				mListener.onDateSet(null, year, month, day);
+			}
 		}
 	}
 }
