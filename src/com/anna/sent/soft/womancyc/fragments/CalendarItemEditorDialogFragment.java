@@ -53,7 +53,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private DialogListener mListener = null;
 	private boolean mIsDialog;
-	private CheckBox checkBoxIsMenstruation, checkBoxHadSex;
+	private CheckBox checkBoxHadMenstruation, checkBoxHadSex;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 
 	public CalendarItemEditorDialogFragment() {
@@ -162,7 +162,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 				R.drawable.one_drop, R.drawable.two_drops,
 				R.drawable.three_drops };
 		spinnerHadMenstruation = (Spinner) v
-				.findViewById(R.id.spinnerMenstruation);
+				.findViewById(R.id.spinnerHadMenstruation);
 		fillSpinner(R.array.menstruationTypes, images, spinnerHadMenstruation);
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
@@ -181,13 +181,13 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			title.setText(getTitle());
 		}
 
-		checkBoxIsMenstruation = (CheckBox) v
-				.findViewById(R.id.isMenstruationCheckBox);
-		checkBoxIsMenstruation.setOnClickListener(this);
+		checkBoxHadMenstruation = (CheckBox) v
+				.findViewById(R.id.hadMenstruationCheckBox);
+		checkBoxHadMenstruation.setOnClickListener(this);
 		checkBoxHadSex = (CheckBox) v.findViewById(R.id.hadSexCheckBox);
 		checkBoxHadSex.setOnClickListener(this);
 
-		checkVisibility(checkBoxIsMenstruation, spinnerHadMenstruation);
+		checkVisibility(checkBoxHadMenstruation, spinnerHadMenstruation);
 		checkVisibility(checkBoxHadSex, spinnerHadSex);
 
 		return v;
@@ -207,8 +207,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonClear) {
 			onDialogNeutralClick();
-		} else if (checkBoxIsMenstruation == v) {
-			checkVisibility(checkBoxIsMenstruation, spinnerHadMenstruation);
+		} else if (checkBoxHadMenstruation == v) {
+			checkVisibility(checkBoxHadMenstruation, spinnerHadMenstruation);
 			Toast.makeText(getActivity(), "isMenst", Toast.LENGTH_SHORT).show();
 			onDataChanged();
 		} else if (checkBoxHadSex == v) {

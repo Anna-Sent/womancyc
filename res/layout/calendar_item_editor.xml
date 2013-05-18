@@ -24,7 +24,7 @@
             android:orientation="horizontal" >
 
             <CheckBox
-                android:id="@+id/isMenstruationCheckBox"
+                android:id="@+id/hadMenstruationCheckBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -32,7 +32,7 @@
                 android:text="@string/menstruation" />
 
             <Spinner
-                android:id="@+id/spinnerMenstruation"
+                android:id="@+id/spinnerHadMenstruation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
