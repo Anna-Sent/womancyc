@@ -25,39 +25,45 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/hadMenstruationCheckBox"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/menstruation" />
+                android:orientation="vertical" >
 
-            <Spinner
-                android:id="@+id/spinnerHadMenstruation"
+                <CheckBox
+                    android:id="@+id/hadMenstruationCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/menstruation" />
+
+                <Spinner
+                    android:id="@+id/spinnerHadMenstruation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <CheckBox
-                android:id="@+id/hadSexCheckBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/sex" />
+                android:orientation="vertical" >
 
-            <Spinner
-                android:id="@+id/spinnerSex"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <CheckBox
+                    android:id="@+id/hadSexCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/sex" />
+
+                <Spinner
+                    android:id="@+id/spinnerSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
