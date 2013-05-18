@@ -73,6 +73,7 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 		}
 
 		viewHolder.textView.setText(isDropDownView ? mStrings[position] : "");
+		viewHolder.textView.setCompoundDrawablePadding(5);
 		viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
 				mImageResourceIds[position], 0, 0, 0);
 

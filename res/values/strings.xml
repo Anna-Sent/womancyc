@@ -14,15 +14,14 @@
     <string name="sex">Секс</string>
 
     <string-array name="menstruationTypes">
-        <item>\?</item>
+        <item>Без доп. пометок</item>
         <item>Скудные выделения</item>
         <item>Нормальные выделения</item>
         <item>Обильные выделения</item>
     </string-array>
     <string-array name="sexTypes">
-        <item>\?</item>
-        <item>Защищенный</item>
         <item>Незащищенный</item>
+        <item>Защищенный</item>
     </string-array>
 
 </resources>

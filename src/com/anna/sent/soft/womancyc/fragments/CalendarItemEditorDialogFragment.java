@@ -156,12 +156,13 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.calendar_item_editor, null);
 
-		int[] images = new int[] { R.drawable.unknown, R.drawable.one_drop,
-				R.drawable.two_drops, R.drawable.three_drops };
+		int[] images = new int[] { R.drawable.menstruation,
+				R.drawable.one_drop, R.drawable.two_drops,
+				R.drawable.three_drops };
 		fillSpinner(R.array.menstruationTypes, images,
 				(Spinner) v.findViewById(R.id.spinnerMenstruation));
-		images = new int[] { R.drawable.unknown, R.drawable.protected_sex,
-				R.drawable.unprotected_sex };
+		images = new int[] { R.drawable.unprotected_sex,
+				R.drawable.protected_sex };
 		fillSpinner(R.array.sexTypes, images,
 				(Spinner) v.findViewById(R.id.spinnerSex));
 
