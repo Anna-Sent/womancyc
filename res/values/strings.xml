@@ -12,6 +12,7 @@
     <string name="today">Сегодня</string>
     <string name="menstruation">Менструация</string>
     <string name="sex">Секс</string>
+    <string name="note">Заметка</string>
 
     <string-array name="menstruationTypes">
         <item>Без доп. пометок</item>
