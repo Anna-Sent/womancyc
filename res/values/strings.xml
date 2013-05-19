@@ -15,12 +15,14 @@
     <string name="note">Заметка</string>
 
     <string-array name="menstruationTypes">
-        <item>Без доп. пометок</item>
+        <item>Нет</item>
+        <item>Есть, без доп. пометок</item>
         <item>Скудные выделения</item>
         <item>Нормальные выделения</item>
         <item>Обильные выделения</item>
     </string-array>
     <string-array name="sexTypes">
+        <item>Нет</item>
         <item>Незащищенный</item>
         <item>Защищенный</item>
     </string-array>
