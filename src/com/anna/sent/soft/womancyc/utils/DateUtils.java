@@ -6,7 +6,7 @@ import android.content.Context;
 import android.text.format.DateFormat;
 
 public class DateUtils {
-	private static void zeroDate(Calendar date) {
+	public static void zeroTime(Calendar date) {
 		date.set(Calendar.HOUR, 0);
 		date.set(Calendar.MINUTE, 0);
 		date.set(Calendar.SECOND, 0);
@@ -28,8 +28,8 @@ public class DateUtils {
 	public static int getDifferenceInDays(Calendar date1, Calendar date2) {
 		Calendar tmp1 = (Calendar) date1.clone();
 		Calendar tmp2 = (Calendar) date2.clone();
-		zeroDate(tmp1);
-		zeroDate(tmp2);
+		zeroTime(tmp1);
+		zeroTime(tmp2);
 		return (int) ((tmp1.getTimeInMillis() - tmp2.getTimeInMillis()) / (3600 * 1000 * 24));
 	}
 }
