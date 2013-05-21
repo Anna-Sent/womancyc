@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
-import com.anna.sent.soft.womancyc.utils.ThemeUtils;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,6 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.data.CalendarData;
+import com.anna.sent.soft.womancyc.data.DataKeeper;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthCalendarViewAdapter extends BaseAdapter {
 	private final Context mContext;
@@ -25,9 +27,12 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
 
-	public MonthCalendarViewAdapter(Context context) {
+	private DataKeeper mDataKeeper = null;
+
+	public MonthCalendarViewAdapter(Context context, DataKeeper dataKeeper) {
 		super();
 		mContext = context;
+		mDataKeeper = dataKeeper;
 		mToday = Calendar.getInstance();
 		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
@@ -73,22 +78,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	public Calendar getSelectedDate() {
 		return mSelectedDate;
 	}
-
-	/*
-	 * public void navigateToNextMonth() {
-	 * mSelectedDate.set(Calendar.DAY_OF_MONTH, 1);
-	 * mSelectedDate.add(Calendar.MONTH, 1); int month =
-	 * mSelectedDate.get(Calendar.MONTH); int year =
-	 * mSelectedDate.get(Calendar.YEAR); initMonthCalendar(month, year);
-	 * notifyDataSetChanged(); }
-	 * 
-	 * public void navigateToPrevMonth() {
-	 * mSelectedDate.set(Calendar.DAY_OF_MONTH, 1);
-	 * mSelectedDate.add(Calendar.MONTH, 11); int month =
-	 * mSelectedDate.get(Calendar.MONTH); int year =
-	 * mSelectedDate.get(Calendar.YEAR); initMonthCalendar(month, year);
-	 * notifyDataSetChanged(); }
-	 */
 
 	@Override
 	public Object getItem(int position) {
@@ -214,6 +203,8 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 	}
 
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
+		List<CalendarData> data = mDataKeeper.getData();
+
 		Calendar begin = Calendar.getInstance();
 		begin.set(2013, Calendar.MAY, 1);
 		int dayOfCycle = DateUtils.getDifferenceInDays(item, begin);
@@ -246,9 +237,12 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			}
 		}
 
+		int index = new DateUtils().indexOf(data, item);
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
 			cell.setBackgroundColor(mContext.getResources().getColor(
 					R.color.blue));
+		} else if (index >= 0) {
+			cell.setBackgroundColor(Color.RED);
 		} else {
 			cell.setBackgroundColor(0);
 		}
@@ -256,5 +250,6 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		if (DateUtils.datesAreEqual(item, mToday)) {
 			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
+
 	}
 }

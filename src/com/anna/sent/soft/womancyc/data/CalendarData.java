@@ -1,16 +1,28 @@
 package com.anna.sent.soft.womancyc.data;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class CalendarData {
+public class CalendarData implements Serializable {
+	private static final long serialVersionUID = -4217182666477849206L;
+
 	private Calendar date;
-	private long menstruation;
-	private long sex;
-	private String note;
+	private long menstruation = 0;
+	private long sex = 0;
+	private String note = "";
+
+	public CalendarData() {
+		super();
+	}
+
+	public CalendarData(Calendar date) {
+		super();
+		this.date = date;
+	}
 
 	public long getId() {
 		DateUtils.zeroTime(date);
@@ -19,10 +31,6 @@ public class CalendarData {
 
 	public Calendar getDate() {
 		return date;
-	}
-
-	public void setDate(Calendar value) {
-		date = value;
 	}
 
 	public long getMenstruation() {
@@ -57,6 +65,6 @@ public class CalendarData {
 				+ getId()
 				+ ": "
 				+ menstruation
-				+ ", " + sex + ", " + note;
+				+ ", " + sex + ", \"" + note + "\"";
 	}
 }

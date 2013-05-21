@@ -1,7 +1,5 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import java.util.Calendar;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -22,7 +20,7 @@ import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
-import com.anna.sent.soft.womancyc.shared.Shared;
+import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class CalendarItemEditorDialogFragment extends DialogFragment implements
@@ -41,18 +39,19 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	}
 
 	public interface DialogListener {
-		public void onDialogPositiveClick(DialogFragment dialog);
+		public void insertOrUpdate(CalendarData value);
 
-		public void onDialogNeutralClick(DialogFragment dialog);
+		public void delete(CalendarData value);
 
-		public void onDialogNegativeClick(DialogFragment dialog);
-
-		public void onDataChanged();
+		public void cancel(CalendarData value);
 	}
 
 	private DialogListener mListener = null;
 	private boolean mIsDialog;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
+	private TextView textViewNote;
+
+	private CalendarData mValue;
 
 	public CalendarItemEditorDialogFragment() {
 		super();
@@ -147,12 +146,14 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
-		spinner.setSelection(0);
 
 		spinner.setOnItemSelectedListener(this);
 	}
 
 	private View createView() {
+		mValue = (CalendarData) getArguments().getSerializable(
+				CalendarData.class.getSimpleName());
+
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.calendar_item_editor, null);
 
@@ -162,16 +163,20 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		spinnerHadMenstruation = (Spinner) v
 				.findViewById(R.id.spinnerHadMenstruation);
 		fillSpinner(R.array.menstruationTypes, images, spinnerHadMenstruation);
+		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
 		images = new int[] { 0, R.drawable.unprotected_sex,
 				R.drawable.protected_sex };
 		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
+		spinnerHadSex.setSelection((int) mValue.getSex());
+
+		textViewNote = (TextView) v.findViewById(R.id.textViewNote);
+		textViewNote.setText(mValue.getNote());
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
 		if (mIsDialog) {
-			// remove title text view and clear button
 			clear.setVisibility(View.GONE);
 			title.setVisibility(View.GONE);
 		} else {
@@ -183,9 +188,9 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	}
 
 	private String getTitle() {
-		Calendar dateToShow = (Calendar) getArguments().getSerializable(
-				Shared.DATE_TO_SHOW);
-		return DateUtils.toString(getActivity(), dateToShow);
+		CalendarData value = (CalendarData) getArguments().getSerializable(
+				CalendarData.class.getSimpleName());
+		return DateUtils.toString(getActivity(), value.getDate());
 	}
 
 	@Override
@@ -216,26 +221,43 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private void onDialogPositiveClick() {
 		if (mListener != null) {
-			mListener.onDialogPositiveClick(this);
+			boolean isDataChanged = updateDataIfNeeded();
+			if (isDataChanged) {
+				mListener.insertOrUpdate(mValue);
+			}
 		}
 	}
 
 	private void onDialogNeutralClick() {
 		if (mListener != null) {
-			mListener.onDialogNeutralClick(this);
+			mListener.delete(mValue);
 		}
 	}
 
 	private void onDialogNegativeClick() {
 		if (mListener != null) {
-			mListener.onDialogNegativeClick(this);
+			mListener.cancel(mValue);
 		}
 	}
 
 	private void onDataChanged() {
-		boolean isDataChanged = true;
-		if (isDataChanged && mListener != null) {
-			mListener.onDataChanged();
+		if (!mIsDialog && mListener != null) {
+			boolean isDataChanged = updateDataIfNeeded();
+			if (isDataChanged) {
+				mListener.insertOrUpdate(mValue);
+			}
 		}
+	}
+
+	private boolean updateDataIfNeeded() {
+		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
+		int sex = spinnerHadSex.getSelectedItemPosition();
+		String note = textViewNote.getText().toString();
+		boolean isDataChanged = menstruation != mValue.getMenstruation()
+				|| sex != mValue.getSex() || note != mValue.getNote();
+		mValue.setMenstruation(menstruation);
+		mValue.setSex(sex);
+		mValue.setNote(note);
+		return isDataChanged;
 	}
 }
