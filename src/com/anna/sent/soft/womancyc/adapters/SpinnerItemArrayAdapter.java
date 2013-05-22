@@ -2,10 +2,12 @@ package com.anna.sent.soft.womancyc.adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
@@ -35,7 +37,8 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 
 	public SpinnerItemArrayAdapter(Context context, String[] strings,
 			int[] imageResourceIds) {
-		super(context, R.layout.spinner_item, R.id.spinnerItemTextView, strings);
+		super(context, R.layout.spinner_selected_item,
+				R.id.spinnerItemTextView, strings);
 		mStrings = strings;
 		mImageResourceIds = imageResourceIds;
 		mCount = Math.min(mStrings.length, mImageResourceIds.length);
@@ -62,7 +65,9 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 		if (contentView == null) {
 			LayoutInflater layoutInflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layoutInflater.inflate(R.layout.spinner_item, null);
+			view = layoutInflater.inflate(
+					isDropDownView ? R.layout.spinner_item
+							: R.layout.spinner_selected_item, null);
 			viewHolder = new ViewHolder();
 			viewHolder.textView = (TextView) view
 					.findViewById(R.id.spinnerItemTextView);
@@ -73,7 +78,6 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 		}
 
 		viewHolder.textView.setText(isDropDownView ? mStrings[position] : "");
-		viewHolder.textView.setCompoundDrawablePadding(5);
 		viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
 				mImageResourceIds[position], 0, 0, 0);
 
