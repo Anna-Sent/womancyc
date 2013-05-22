@@ -13,7 +13,7 @@ public class CalendarData implements Serializable {
 	private Calendar date;
 	private long menstruation = 0;
 	private long sex = 0;
-	private String note = "";
+	private String note = null;
 
 	public CalendarData() {
 		super();

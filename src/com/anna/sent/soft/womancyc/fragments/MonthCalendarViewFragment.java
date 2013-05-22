@@ -45,7 +45,6 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -128,6 +127,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 	@Override
 	public void onResume() {
+		super.onResume();
 		try {
 			mDataSource.open();
 			mValues = mDataSource.getAll();
@@ -137,12 +137,11 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 			Toast.makeText(getActivity(), "Can't open database",
 					Toast.LENGTH_LONG).show();
 		}
-
-		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
+		log("onPause");
 		super.onPause();
 		mDataSource.close();
 	}

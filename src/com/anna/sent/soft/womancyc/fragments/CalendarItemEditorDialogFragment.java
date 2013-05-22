@@ -82,8 +82,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onPause() {
-		super.onPause();
 		log("onPause");
+		super.onPause();
 		if (!mIsDialog) {
 			onDialogPositiveClick();
 		}
@@ -254,10 +254,21 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		int sex = spinnerHadSex.getSelectedItemPosition();
 		String note = textViewNote.getText().toString();
 		boolean isDataChanged = menstruation != mValue.getMenstruation()
-				|| sex != mValue.getSex() || note != mValue.getNote();
-		mValue.setMenstruation(menstruation);
-		mValue.setSex(sex);
-		mValue.setNote(note);
+				|| sex != mValue.getSex() || isEqual(note, mValue.getNote());
+		if (isDataChanged) {
+			mValue.setMenstruation(menstruation);
+			mValue.setSex(sex);
+			mValue.setNote(note);
+		}
+
 		return isDataChanged;
+	}
+
+	private boolean isEqual(String s1, String s2) {
+		if ((s1 == null && s2 == "") || (s1 == "" && s2 == null)) {
+			return true;
+		} else {
+			return s1 == s2;
+		}
 	}
 }
