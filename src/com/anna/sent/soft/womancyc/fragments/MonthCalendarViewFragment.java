@@ -35,19 +35,19 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		OnClickListener, OnItemClickListener, OnItemLongClickListener,
 		StateSaver, OnDateSetListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg, boolean debug) {
 		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
@@ -61,6 +61,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	private MonthCalendarViewAdapter adapter;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
 	private boolean mIsLargeLayout;
+	private Calendar mDateToShow = null;
 
 	public MonthCalendarViewFragment() {
 		super();
@@ -75,6 +76,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		log("onActivityCreated");
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
 		adapter = new MonthCalendarViewAdapter(getActivity(), mDataKeeper);
@@ -108,27 +110,28 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 						return true;
 					}
 				});
+	}
 
-		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE, adapter
-				.getSelectedDate().getTime()));
-		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(adapter.getSelectedDate());
-		}
+	@Override
+	public void onStart() {
+		log("onStart");
+		super.onStart();
+		updateMonthCalendar(mDateToShow == null ? adapter.getSelectedDate()
+				: mDateToShow);
+		mDateToShow = null;
 	}
 
 	@Override
 	public void restoreState(Bundle state) {
-		Calendar dateToShow = (Calendar) state
-				.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(getActivity(), dateToShow), false);
-		updateMonthCalendar(dateToShow);
+		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
+		log("restore " + DateUtils.toString(getActivity(), mDateToShow), true);
 	}
 
 	@Override
 	public void saveState(Bundle state) {
 		log("save "
 				+ DateUtils.toString(getActivity(), adapter.getSelectedDate()),
-				false);
+				true);
 		state.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 	}
 
