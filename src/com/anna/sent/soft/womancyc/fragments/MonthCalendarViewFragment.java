@@ -137,7 +137,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				dateToShow.getTime()));
 		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(adapter.getSelectedDate());
+			showAsEmbeddedFragment(dateToShow);
 		}
 	}
 
@@ -167,8 +167,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
 			dialog.setArguments(args);
 			dialog.setOnDateSetListener(this);
-			dialog.show(getFragmentManager(),
-					DatePickerDialogFragment.class.getSimpleName());
+			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
 		}
 	}
 
@@ -185,7 +184,6 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		Object item = adapter.getItem(position);
 		if (item != null) {
 			Calendar date = (Calendar) item;
-
 			updateMonthCalendar(date);
 		}
 	}
@@ -196,11 +194,6 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		Object item = adapter.getItem(position);
 		if (item != null) {
 			Calendar date = (Calendar) item;
-
-			String title = DateUtils.toString(getActivity(), date);
-			Bundle args = new Bundle();
-			args.putString(Shared.DATE_TO_SHOW, title);
-
 			if (!mIsLargeLayout) {
 				showAsDialogFragment(date);
 			}
@@ -211,16 +204,17 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 	public void showAsDialogFragment(Calendar date) {
 		FragmentManager fragmentManager = getFragmentManager();
-		createEditorFragment(date).show(fragmentManager,
-				CalendarItemEditorDialogFragment.class.getSimpleName());
+		DialogFragment newFragment = createEditorFragment(date);
+		newFragment.show(fragmentManager, newFragment.getClass()
+				.getSimpleName());
 	}
 
 	public void showAsEmbeddedFragment(Calendar date) {
 		FragmentManager fragmentManager = getFragmentManager();
 
-		Fragment details = fragmentManager.findFragmentById(R.id.editor);
-		if (details != null) {
-			fragmentManager.beginTransaction().remove(details).commit();
+		Fragment editor = fragmentManager.findFragmentById(R.id.editor);
+		if (editor != null) {
+			fragmentManager.beginTransaction().remove(editor).commit();
 		}
 
 		fragmentManager.beginTransaction()
@@ -237,7 +231,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		}
 
 		Bundle args = new Bundle();
-		args.putSerializable(CalendarData.class.getSimpleName(), value);
+		args.putSerializable(value.getClass().getSimpleName(), value);
 
 		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
 		newFragment.setArguments(args);

@@ -60,6 +60,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			v = createView();
 			log("onCreateView");
 		} else {
+			mIsDialog = true;
 			v = super.onCreateView(inflater, container, savedInstanceState);
 			log("onCreateView returns null");
 		}
@@ -77,21 +78,18 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	public void onPause() {
 		log("onPause");
 		super.onPause();
-		if (!mIsDialog) {
-			onDialogPositiveClick();
-		}
 	}
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		log("onResume");
+		super.onResume();
 	}
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		log("onDestroy");
+		super.onDestroy();
 	}
 
 	@Override
@@ -100,7 +98,6 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
-			mIsDialog = true;
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(createView())
 					.setTitle(getTitle())
