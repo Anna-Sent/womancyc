@@ -11,8 +11,8 @@ public class CalendarData implements Serializable {
 	private static final long serialVersionUID = -4217182666477849206L;
 
 	private Calendar date;
-	private long menstruation = 0;
-	private long sex = 0;
+	private int menstruation = 0;
+	private int sex = 0;
 	private String note = null;
 
 	public CalendarData() {
@@ -33,19 +33,19 @@ public class CalendarData implements Serializable {
 		return date;
 	}
 
-	public long getMenstruation() {
+	public int getMenstruation() {
 		return menstruation;
 	}
 
-	public void setMenstruation(long value) {
+	public void setMenstruation(int value) {
 		menstruation = value;
 	}
 
-	public long getSex() {
+	public int getSex() {
 		return sex;
 	}
 
-	public void setSex(long value) {
+	public void setSex(int value) {
 		sex = value;
 	}
 

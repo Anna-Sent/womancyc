@@ -92,8 +92,9 @@ public class CalendarDataSource {
 		Calendar date = Calendar.getInstance();
 		date.setTimeInMillis(cursor.getLong(CalendarHelper.COLUMN_INDEX_ID));
 		CalendarData calendar = new CalendarData(date);
-		calendar.setMenstruation(cursor.getLong(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
-		calendar.setSex(cursor.getLong(CalendarHelper.COLUMN_INDEX_SEX));
+		calendar.setMenstruation(cursor
+				.getInt(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
+		calendar.setSex(cursor.getInt(CalendarHelper.COLUMN_INDEX_SEX));
 		calendar.setNote(cursor.getString(CalendarHelper.COLUMN_INDEX_NOTE));
 		return calendar;
 	}

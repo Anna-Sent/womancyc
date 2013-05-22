@@ -267,7 +267,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		return isDataChanged;
 	}
 
-	private void printEquality(long value1, int value2) {
+	private void printEquality(int value1, int value2) {
 		if (value1 != value2) {
 			log(value1 + " != " + value2);
 		}
