@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
+import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class CalendarItemEditorDialogFragment extends DialogFragment implements
@@ -38,15 +40,6 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	public interface DialogListener {
-		public void insertOrUpdate(CalendarData value);
-
-		public void delete(CalendarData value);
-
-		public void cancel(CalendarData value);
-	}
-
-	private DialogListener mListener = null;
 	private boolean mIsDialog;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 	private TextView textViewNote;
@@ -200,10 +193,6 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	public void setDialogListener(DialogListener listener) {
-		mListener = listener;
-	}
-
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
@@ -220,31 +209,31 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	}
 
 	private void onDialogPositiveClick() {
-		if (mListener != null) {
+		if (mDataKeeper != null) {
 			boolean isDataChanged = updateDataIfNeeded();
 			if (isDataChanged) {
-				mListener.insertOrUpdate(mValue);
+				mDataKeeper.insertOrUpdate(mValue);
 			}
 		}
 	}
 
 	private void onDialogNeutralClick() {
-		if (mListener != null) {
-			mListener.delete(mValue);
+		if (mDataKeeper != null) {
+			mDataKeeper.delete(mValue);
 		}
 	}
 
 	private void onDialogNegativeClick() {
-		if (mListener != null) {
-			mListener.cancel(mValue);
+		if (mDataKeeper != null) {
+			mDataKeeper.cancel(mValue);
 		}
 	}
 
 	private void onDataChanged() {
-		if (!mIsDialog && mListener != null) {
+		if (!mIsDialog && mDataKeeper != null) {
 			boolean isDataChanged = updateDataIfNeeded();
 			if (isDataChanged) {
-				mListener.insertOrUpdate(mValue);
+				mDataKeeper.insertOrUpdate(mValue);
 			}
 		}
 	}
@@ -269,6 +258,16 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			return true;
 		} else {
 			return s1 == s2;
+		}
+	}
+
+	private DataKeeper mDataKeeper = null;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof DataKeeper) {
+			mDataKeeper = (DataKeeper) activity;
 		}
 	}
 }

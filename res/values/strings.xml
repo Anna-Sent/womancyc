@@ -27,4 +27,6 @@
         <item>Защищенный</item>
     </string-array>
 
+    <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
+
 </resources>

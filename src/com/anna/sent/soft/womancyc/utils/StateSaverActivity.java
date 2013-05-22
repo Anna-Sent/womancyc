@@ -109,7 +109,7 @@ public abstract class StateSaverActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public final void onAttachFragment(Fragment fragment) {
+	public void onAttachFragment(Fragment fragment) {
 		super.onAttachFragment(fragment);
 		log("attach " + fragment.toString());
 		// if (fragment instanceof DataClient) {

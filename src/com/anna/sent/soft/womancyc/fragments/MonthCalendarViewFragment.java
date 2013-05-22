@@ -1,10 +1,9 @@
 package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
-import java.util.List;
 
+import android.app.Activity;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,14 +20,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
-import com.anna.sent.soft.womancyc.database.CalendarDataSource;
-import com.anna.sent.soft.womancyc.fragments.CalendarItemEditorDialogFragment.DialogListener;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
@@ -37,7 +33,7 @@ import com.anna.sent.soft.womancyc.utils.StateSaverFragment;
 
 public class MonthCalendarViewFragment extends StateSaverFragment implements
 		OnClickListener, OnItemClickListener, OnItemLongClickListener,
-		StateSaver, OnDateSetListener, DialogListener, DataKeeper {
+		StateSaver, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -45,6 +41,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -61,8 +58,6 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	private Button prevMonth;
 	private Button nextMonth;
 	private GridView calendarView;
-	private CalendarDataSource mDataSource;
-	private List<CalendarData> mValues;
 	private MonthCalendarViewAdapter adapter;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
 	private boolean mIsLargeLayout;
@@ -82,19 +77,13 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	public void setViews(Bundle savedInstanceState) {
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
-		mDataSource = new CalendarDataSource(getActivity());
-		mDataSource.open();
-		mValues = mDataSource.getAll();
-
-		adapter = new MonthCalendarViewAdapter(getActivity(), this);
+		adapter = new MonthCalendarViewAdapter(getActivity(), mDataKeeper);
 
 		prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
 
 		currentMonth = (Button) getActivity().findViewById(R.id.currentMonth);
 		currentMonth.setOnClickListener(this);
-		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE, adapter
-				.getSelectedDate().getTime()));
 
 		nextMonth = (Button) getActivity().findViewById(R.id.nextMonth);
 		nextMonth.setOnClickListener(this);
@@ -102,7 +91,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		calendarView = (GridView) getActivity().findViewById(
 				R.id.calendarGridView);
 		calendarView.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
+
 		calendarView.setOnItemClickListener(this);
 		calendarView.setOnItemLongClickListener(this);
 		calendarView
@@ -120,30 +109,11 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 					}
 				});
 
+		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE, adapter
+				.getSelectedDate().getTime()));
 		if (mIsLargeLayout) {
 			showAsEmbeddedFragment(adapter.getSelectedDate());
 		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		try {
-			mDataSource.open();
-			mValues = mDataSource.getAll();
-			adapter.notifyDataSetChanged();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Toast.makeText(getActivity(), "Can't open database",
-					Toast.LENGTH_LONG).show();
-		}
-	}
-
-	@Override
-	public void onPause() {
-		log("onPause");
-		super.onPause();
-		mDataSource.close();
 	}
 
 	@Override
@@ -163,9 +133,12 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	}
 
 	private void updateMonthCalendar(Calendar dateToShow) {
+		adapter.setSelectedDate(dateToShow);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				dateToShow.getTime()));
-		adapter.setSelectedDate(dateToShow);
+		if (mIsLargeLayout) {
+			showAsEmbeddedFragment(adapter.getSelectedDate());
+		}
 	}
 
 	private void toPrevDate() {
@@ -214,10 +187,6 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 			Calendar date = (Calendar) item;
 
 			updateMonthCalendar(date);
-
-			if (mIsLargeLayout) {
-				showAsEmbeddedFragment(date);
-			}
 		}
 	}
 
@@ -259,10 +228,10 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	}
 
 	private DialogFragment createEditorFragment(Calendar date) {
-		int index = new DateUtils().indexOf(mValues, date);
+		int index = new DateUtils().indexOf(mDataKeeper.getData(), date);
 		CalendarData value;
 		if (index >= 0) {
-			value = mValues.get(index);
+			value = mDataKeeper.getData().get(index);
 		} else {
 			value = new CalendarData(date);
 		}
@@ -272,41 +241,21 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
 		newFragment.setArguments(args);
-		newFragment.setDialogListener(this);
 
 		return newFragment;
 	}
 
+	private DataKeeper mDataKeeper = null;
+
 	@Override
-	public List<CalendarData> getData() {
-		return mValues;
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof DataKeeper) {
+			mDataKeeper = (DataKeeper) activity;
+		}
 	}
 
-	@Override
-	public void insertOrUpdate(CalendarData value) {
-		int index = new DateUtils().indexOf(mValues, value);
-		if (index >= 0) {
-			mDataSource.update(value);
-			mValues.set(index, value);
-		} else {
-			mDataSource.insert(value);
-			mValues.add(-index - 1, value);
-		}
-
+	public void update() {
 		adapter.notifyDataSetChanged();
-	}
-
-	@Override
-	public void delete(CalendarData value) {
-		int index = new DateUtils().indexOf(mValues, value);
-		if (index >= 0) {
-			mDataSource.delete(value);
-			mValues.remove(index);
-		}
-	}
-
-	@Override
-	public void cancel(CalendarData value) {
-		Toast.makeText(getActivity(), "negative", Toast.LENGTH_SHORT).show();
 	}
 }
