@@ -70,14 +70,17 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onActivityCreated(Bundle arg0) {
-		super.onActivityCreated(arg0);
 		log("onActivityCreated");
+		super.onActivityCreated(arg0);
 	}
 
 	@Override
 	public void onPause() {
 		log("onPause");
 		super.onPause();
+		if (!mIsDialog) {
+			onDialogPositiveClick();
+		}
 	}
 
 	@Override
