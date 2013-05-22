@@ -65,6 +65,6 @@ public class CalendarData implements Serializable {
 				+ getId()
 				+ ": "
 				+ menstruation
-				+ ", " + sex + ", \"" + note == null ? "" : note + "\"";
+				+ ", " + sex + ", \"" + (note == null ? "" : note) + "\"";
 	}
 }
