@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
@@ -28,7 +27,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		OnClickListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -36,6 +35,12 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private void log(String msg) {
 		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
+	private void log(String msg, boolean debug) {
+		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
@@ -48,7 +53,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	public CalendarItemEditorDialogFragment() {
 		super();
-		log("create");
+		log("create", false);
 	}
 
 	@Override
@@ -58,11 +63,11 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
 			mIsDialog = false;
 			v = createView();
-			log("onCreateView");
+			log("onCreateView", false);
 		} else {
 			mIsDialog = true;
 			v = super.onCreateView(inflater, container, savedInstanceState);
-			log("onCreateView returns null");
+			log("onCreateView returns null", false);
 		}
 
 		return v;
@@ -70,13 +75,13 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onActivityCreated(Bundle arg0) {
-		log("onActivityCreated");
+		log("onActivityCreated", false);
 		super.onActivityCreated(arg0);
 	}
 
 	@Override
 	public void onPause() {
-		log("onPause");
+		log("onPause", false);
 		super.onPause();
 		if (!mIsDialog) {
 			onDialogPositiveClick();
@@ -85,19 +90,19 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	@Override
 	public void onResume() {
-		log("onResume");
+		log("onResume", false);
 		super.onResume();
 	}
 
 	@Override
 	public void onDestroy() {
-		log("onDestroy");
+		log("onDestroy", false);
 		super.onDestroy();
 	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		log("onCreateDialog");
+		log("onCreateDialog", false);
 		if (getResources().getBoolean(R.bool.isLargeLayout)) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
@@ -156,16 +161,13 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		spinnerHadMenstruation = (Spinner) v
 				.findViewById(R.id.spinnerHadMenstruation);
 		fillSpinner(R.array.menstruationTypes, images, spinnerHadMenstruation);
-		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
 		images = new int[] { 0, R.drawable.unprotected_sex,
 				R.drawable.protected_sex };
 		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
-		spinnerHadSex.setSelection((int) mValue.getSex());
 
 		textViewNote = (TextView) v.findViewById(R.id.textViewNote);
-		textViewNote.setText(mValue.getNote());
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
@@ -177,7 +179,15 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 			title.setText(getTitle());
 		}
 
+		fillWithData();
+
 		return v;
+	}
+
+	private void fillWithData() {
+		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
+		spinnerHadSex.setSelection((int) mValue.getSex());
+		textViewNote.setText(mValue.getNote());
 	}
 
 	private String getTitle() {
@@ -196,15 +206,11 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
-		Toast.makeText(getActivity(), "onItemSelected", Toast.LENGTH_SHORT)
-				.show();
 		onDataChanged();
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		Toast.makeText(getActivity(), "onNothingSelected", Toast.LENGTH_SHORT)
-				.show();
 		onDataChanged();
 	}
 
@@ -220,6 +226,8 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	private void onDialogNeutralClick() {
 		if (mDataKeeper != null) {
 			mDataKeeper.delete(mValue);
+			mValue.clear();
+			fillWithData();
 		}
 	}
 
@@ -242,22 +250,48 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		int sex = spinnerHadSex.getSelectedItemPosition();
 		String note = textViewNote.getText().toString();
+
+		printEquality(mValue.getMenstruation(), menstruation);
+		printEquality(mValue.getSex(), sex);
+		printEquality(mValue.getNote(), note);
+
 		boolean isDataChanged = menstruation != mValue.getMenstruation()
-				|| sex != mValue.getSex() || isEqual(note, mValue.getNote());
+				|| sex != mValue.getSex() || !isEqual(note, mValue.getNote());
 		if (isDataChanged) {
 			mValue.setMenstruation(menstruation);
 			mValue.setSex(sex);
 			mValue.setNote(note);
+			log("data is changed");
 		}
 
 		return isDataChanged;
 	}
 
+	private void printEquality(long value1, int value2) {
+		if (value1 != value2) {
+			log(value1 + " != " + value2);
+		}
+	}
+
+	private void printEquality(String s1, String s2) {
+		if (!isEqual(s1, s2)) {
+			log(toString(s1) + " != " + toString(s2));
+		}
+	}
+
+	private String toString(String s) {
+		return s == null ? "null" : "\"" + s + "\"";
+	}
+
 	private boolean isEqual(String s1, String s2) {
-		if ((s1 == null && s2 == "") || (s1 == "" && s2 == null)) {
+		if (s1 != null && s2 != null) {
+			return s1.equals(s2);
+		} else if (s1 == null && s2 == null) {
+			return true;
+		} else if (s1 == null && s2.equals("") || s1.equals("") && s2 == null) {
 			return true;
 		} else {
-			return s1 == s2;
+			return false;
 		}
 	}
 

@@ -76,6 +76,7 @@ public class CalendarDataSource {
 		Cursor cursor = mDatabase.query(CalendarHelper.TABLE_CALENDAR,
 				mAllColumns, null, null, null, null, CalendarHelper.COLUMN_ID);
 		cursor.moveToFirst();
+		log("Load data:");
 		while (!cursor.isAfterLast()) {
 			CalendarData row = cursorToCalendar(cursor);
 			list.add(row);

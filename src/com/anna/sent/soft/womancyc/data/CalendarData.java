@@ -57,6 +57,12 @@ public class CalendarData implements Serializable {
 		note = value;
 	}
 
+	public void clear() {
+		menstruation = 0;
+		sex = 0;
+		note = null;
+	}
+
 	@Override
 	public String toString() {
 		return new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())

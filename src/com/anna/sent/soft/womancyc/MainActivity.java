@@ -146,7 +146,6 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 
 	@Override
 	public void cancel(CalendarData value) {
-		Toast.makeText(this, "negative", Toast.LENGTH_SHORT).show();
 	}
 
 	private void updateCalendar() {
