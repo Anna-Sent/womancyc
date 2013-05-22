@@ -90,11 +90,11 @@ public class CalendarDataSource {
 
 	private CalendarData cursorToCalendar(Cursor cursor) {
 		Calendar date = Calendar.getInstance();
-		date.setTimeInMillis(cursor.getLong(0));
+		date.setTimeInMillis(cursor.getLong(CalendarHelper.COLUMN_INDEX_ID));
 		CalendarData calendar = new CalendarData(date);
-		calendar.setMenstruation(cursor.getLong(1));
-		calendar.setSex(cursor.getLong(2));
-		calendar.setNote(cursor.getString(3));
+		calendar.setMenstruation(cursor.getLong(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
+		calendar.setSex(cursor.getLong(CalendarHelper.COLUMN_INDEX_SEX));
+		calendar.setNote(cursor.getString(CalendarHelper.COLUMN_INDEX_NOTE));
 		return calendar;
 	}
 }
