@@ -6,7 +6,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -202,6 +204,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		return R.id.dayOfMonth;
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
 		List<CalendarData> data = mDataKeeper.getData();
 
@@ -238,14 +241,25 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 		}
 
 		int index = new DateUtils().indexOf(data, item);
+		Resources res = mContext.getResources();
+		Drawable shape = null;
+
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
-			cell.setBackgroundColor(mContext.getResources().getColor(
-					R.color.blue));
-		} else if (index >= 0) {
-			cell.setBackgroundColor(Color.RED);
+			if (index >= 0) {
+				shape = res
+						.getDrawable(R.drawable.selected_menstruation_day_of_month_bg);
+			} else {
+				shape = res.getDrawable(R.drawable.selected_day_of_month_bg);
+			}
 		} else {
-			cell.setBackgroundColor(0);
+			if (index >= 0) {
+				shape = res
+						.getDrawable(R.drawable.menstruation_day_of_month_bg);
+				cell.setBackgroundDrawable(shape);
+			}
 		}
+
+		cell.setBackgroundDrawable(shape);
 
 		if (DateUtils.datesAreEqual(item, mToday)) {
 			dayOfMonthTextView.setTextColor(Color.BLUE);

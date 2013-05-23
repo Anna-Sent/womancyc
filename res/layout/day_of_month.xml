@@ -3,7 +3,8 @@
     android:id="@+id/dayOfMonth"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="2dp" >
 
     <TextView
         android:id="@+id/dayOfMonthTextView"
