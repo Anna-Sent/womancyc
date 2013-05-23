@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private boolean mIsDialog;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
-	private TextView textViewNote;
+	private AutoCompleteTextView textViewNote;
 
 	private CalendarData mValue;
 
@@ -167,7 +168,10 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 				R.drawable.protected_sex };
 		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
 
-		textViewNote = (TextView) v.findViewById(R.id.textViewNote);
+		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
+		textViewNote.setAdapter(adapter);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
@@ -284,15 +288,15 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	}
 
 	private boolean isEqual(String s1, String s2) {
-		if (s1 != null && s2 != null) {
-			return s1.equals(s2);
-		} else if (s1 == null && s2 == null) {
-			return true;
-		} else if (s1 == null && s2.equals("") || s1.equals("") && s2 == null) {
-			return true;
-		} else {
-			return false;
+		if (s1 == null) {
+			s1 = "";
 		}
+
+		if (s2 == null) {
+			s2 = "";
+		}
+
+		return s1.equals(s2);
 	}
 
 	private DataKeeper mDataKeeper = null;

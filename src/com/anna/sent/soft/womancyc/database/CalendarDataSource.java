@@ -29,9 +29,6 @@ public class CalendarDataSource {
 
 	private SQLiteDatabase mDatabase;
 	private CalendarHelper mHelper;
-	private String[] mAllColumns = { CalendarHelper.COLUMN_ID,
-			CalendarHelper.COLUMN_MENSTRUATION, CalendarHelper.COLUMN_SEX,
-			CalendarHelper.COLUMN_NOTE };
 
 	public CalendarDataSource(Context context) {
 		mHelper = new CalendarHelper(context);
@@ -71,17 +68,36 @@ public class CalendarDataSource {
 		log("Update calendar: " + value.toString());
 	}
 
-	public List<CalendarData> getAll() {
+	public List<CalendarData> getAllRows() {
 		List<CalendarData> list = new ArrayList<CalendarData>();
 		Cursor cursor = mDatabase.query(CalendarHelper.TABLE_CALENDAR,
-				mAllColumns, null, null, null, null, CalendarHelper.COLUMN_ID);
+				CalendarHelper.AllColumns, null, null, null, null,
+				CalendarHelper.COLUMN_ID);
 		cursor.moveToFirst();
-		log("Load data:");
+		log("Load calendar data:");
 		while (!cursor.isAfterLast()) {
 			CalendarData row = cursorToCalendar(cursor);
 			list.add(row);
 			cursor.moveToNext();
 			log(row.toString());
+		}
+
+		cursor.close();
+		return list;
+	}
+
+	public List<String> getAllNotes() {
+		List<String> list = new ArrayList<String>();
+		Cursor cursor = mDatabase.query(true, CalendarHelper.TABLE_CALENDAR,
+				new String[] { CalendarHelper.COLUMN_NOTE }, null, null, null,
+				null, CalendarHelper.COLUMN_NOTE, null);
+		cursor.moveToFirst();
+		log("Load notes:");
+		while (!cursor.isAfterLast()) {
+			String row = cursorToNote(cursor);
+			list.add(row);
+			cursor.moveToNext();
+			log(row);
 		}
 
 		cursor.close();
@@ -97,5 +113,10 @@ public class CalendarDataSource {
 		calendar.setSex(cursor.getInt(CalendarHelper.COLUMN_INDEX_SEX));
 		calendar.setNote(cursor.getString(CalendarHelper.COLUMN_INDEX_NOTE));
 		return calendar;
+	}
+
+	private String cursorToNote(Cursor cursor) {
+		String result = cursor.getString(0);
+		return result;
 	}
 }

@@ -36,6 +36,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 
 	private CalendarDataSource mDataSource;
 	private List<CalendarData> mValues;
+	private List<String> mNotes;
 	private MonthCalendarViewFragment mCalendar;
 
 	@Override
@@ -44,14 +45,16 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 
 		mDataSource = new CalendarDataSource(this);
 		mDataSource.open();
-		mValues = mDataSource.getAll();
+		mValues = mDataSource.getAllRows();
+		updateNotes();
 	}
 
 	@Override
 	protected void onResume() {
 		try {
 			mDataSource.open();
-			mValues = mDataSource.getAll();
+			mValues = mDataSource.getAllRows();
+			updateNotes();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Toast.makeText(this,
@@ -121,6 +124,15 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 	}
 
 	@Override
+	public List<String> getNotes() {
+		return mNotes;
+	}
+
+	private void updateNotes() {
+		mNotes = mDataSource.getAllNotes();
+	}
+
+	@Override
 	public void insertOrUpdate(CalendarData value) {
 		int index = new DateUtils().indexOf(mValues, value);
 		if (index >= 0) {
@@ -140,6 +152,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 		if (index >= 0) {
 			mDataSource.delete(value);
 			mValues.remove(index);
+
 			updateCalendar();
 		}
 	}
@@ -149,6 +162,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 	}
 
 	private void updateCalendar() {
+		updateNotes();
 		if (mCalendar != null) {
 			mCalendar.update();
 		}

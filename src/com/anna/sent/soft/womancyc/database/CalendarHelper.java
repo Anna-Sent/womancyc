@@ -29,6 +29,10 @@ public class CalendarHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_NOTE = "note";
 	public static final int COLUMN_INDEX_NOTE = 3;
 
+	public static final String[] AllColumns = { CalendarHelper.COLUMN_ID,
+			CalendarHelper.COLUMN_MENSTRUATION, CalendarHelper.COLUMN_SEX,
+			CalendarHelper.COLUMN_NOTE };
+
 	private static final String DATABASE_NAME = "WomanCycCalendar.db";
 	private static final int DATABASE_VERSION = 1;
 
