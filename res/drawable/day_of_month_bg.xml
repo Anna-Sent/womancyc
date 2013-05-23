@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/layerOneDrop">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/one_drop" />
+    </item>
+    <item android:id="@+id/layerTwoDrops">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/two_drops" />
+    </item>
+    <item android:id="@+id/layerThreeDrops">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/three_drops" />
+    </item>
+    <item android:id="@+id/layerProtectedSex">
+        <bitmap
+            android:gravity="top"
+            android:src="@drawable/protected_sex" />
+    </item>
+    <item android:id="@+id/layerUnprotectedSex">
+        <bitmap
+            android:gravity="top"
+            android:src="@drawable/unprotected_sex" />
+    </item>
+    <item android:id="@+id/layerMenstruation">
+        <shape android:shape="rectangle" >
+            <solid android:color="#ff0000" />
+        </shape>
+    </item>
+    <item android:id="@+id/layerSelected">
+        <shape android:shape="rectangle" >
+            <solid android:color="#00000000" />
+
+            <stroke
+                android:width="2dip"
+                android:color="@color/blue" />
+        </shape>
+    </item>
+
+</layer-list>
