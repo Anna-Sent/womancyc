@@ -6,9 +6,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,20 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthCalendarViewAdapter extends BaseAdapter {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = true;
+
+	private String wrapMsg(String msg) {
+		return getClass().getSimpleName() + ": " + msg;
+	}
+
+	@SuppressWarnings("unused")
+	private void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	private final Context mContext;
 	private final List<Calendar> mMonthCalendarValues = new ArrayList<Calendar>();
 	private List<Integer> mDayOfWeekValues = new ArrayList<Integer>();
@@ -206,14 +221,9 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 	@SuppressWarnings("deprecation")
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
-		List<CalendarData> data = mDataKeeper.getData();
-
 		Calendar begin = Calendar.getInstance();
 		begin.set(2013, Calendar.MAY, 1);
 		int dayOfCycle = DateUtils.getDifferenceInDays(item, begin);
-
-		View view = cell.findViewById(R.id.dayOfMonth);
-		view.setTag(item);
 
 		TextView dayOfCycleTextView = (TextView) cell
 				.findViewById(R.id.dayOfCycleTextView);
@@ -240,30 +250,58 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			}
 		}
 
-		int index = new DateUtils().indexOf(data, item);
-		Resources res = mContext.getResources();
-		Drawable shape = null;
-
-		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
-			if (index >= 0) {
-				shape = res
-						.getDrawable(R.drawable.selected_menstruation_day_of_month_bg);
-			} else {
-				shape = res.getDrawable(R.drawable.selected_day_of_month_bg);
-			}
-		} else {
-			if (index >= 0) {
-				shape = res
-						.getDrawable(R.drawable.menstruation_day_of_month_bg);
-				cell.setBackgroundDrawable(shape);
-			}
-		}
-
-		cell.setBackgroundDrawable(shape);
-
 		if (DateUtils.datesAreEqual(item, mToday)) {
 			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
 
+		List<CalendarData> data = mDataKeeper.getData();
+		int index = new DateUtils().indexOf(data, item);
+		CalendarData cellData = null;
+		if (index >= 0) {
+			cellData = data.get(index);
+		}
+
+		List<Drawable> layers = new ArrayList<Drawable>();
+
+		if (cellData != null) {
+			switch (cellData.getMenstruation()) {
+			case 1:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.menstruation));
+				break;
+			case 2:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.one_drop));
+				break;
+			case 3:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.two_drops));
+				break;
+			case 4:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.three_drops));
+				break;
+			}
+
+			switch (cellData.getSex()) {
+			case 1:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.unprotected_sex));
+				break;
+			case 2:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.protected_sex));
+				break;
+			}
+		}
+
+		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
+			layers.add(mContext.getResources().getDrawable(
+					R.drawable.selected_day_of_month_bg));
+		}
+
+		LayerDrawable background = new LayerDrawable(
+				layers.toArray(new Drawable[] {}));
+		cell.setBackgroundDrawable(background);
 	}
 }
