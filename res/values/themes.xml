@@ -47,7 +47,7 @@
         <item name="three_drops_bg">@drawable/three_drops_bg_light</item>
         <item name="sex_bg">@drawable/sex_bg_light</item>
         <item name="protected_sex_bg">@drawable/protected_sex_bg_light</item>
-        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_dark</item>
+        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_light</item>
     </style>
 
     <style name="DialogBaseTheme" parent="android:Theme.Dialog">
