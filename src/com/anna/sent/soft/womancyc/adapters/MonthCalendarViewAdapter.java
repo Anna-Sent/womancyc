@@ -267,30 +267,30 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			switch (cellData.getMenstruation()) {
 			case 1:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.menstruation));
+						R.drawable.menstruation_bg));
 				break;
 			case 2:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.one_drop));
+						R.drawable.one_drop_bg));
 				break;
 			case 3:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.two_drops));
+						R.drawable.two_drops_bg));
 				break;
 			case 4:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.three_drops));
+						R.drawable.three_drops_bg));
 				break;
 			}
 
 			switch (cellData.getSex()) {
 			case 1:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.unprotected_sex));
+						R.drawable.unprotected_sex_bg));
 				break;
 			case 2:
 				layers.add(mContext.getResources().getDrawable(
-						R.drawable.protected_sex));
+						R.drawable.protected_sex_bg));
 				break;
 			}
 		}
