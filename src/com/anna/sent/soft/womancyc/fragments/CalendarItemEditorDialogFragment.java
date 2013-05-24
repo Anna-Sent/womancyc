@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -136,11 +138,22 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	private void fillSpinner(int stringArrayResourceId, int[] images,
-			Spinner spinner) {
-		String[] data = getResources().getStringArray(stringArrayResourceId);
+	private void fillSpinner(int stringsArray, int imagesArray, Spinner spinner) {
+		String[] strings = getResources().getStringArray(stringsArray);
+		TypedArray ta = getResources().obtainTypedArray(imagesArray);
+		Drawable[] drawables = new Drawable[strings.length];
+		for (int i = 0; i < strings.length; ++i) {
+			if (i == 0) {
+				drawables[i] = null;
+			} else {
+				drawables[i] = ta.getDrawable(i);
+			}
+		}
+
+		ta.recycle();
+
 		ArrayAdapter<String> adapter = new SpinnerItemArrayAdapter(
-				getActivity(), data, images);
+				getActivity(), strings, drawables);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
@@ -155,17 +168,13 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.calendar_item_editor, null);
 
-		int[] images = new int[] { 0, R.drawable.menstruation,
-				R.drawable.one_drop, R.drawable.two_drops,
-				R.drawable.three_drops };
 		spinnerHadMenstruation = (Spinner) v
 				.findViewById(R.id.spinnerHadMenstruation);
-		fillSpinner(R.array.menstruationTypes, images, spinnerHadMenstruation);
+		fillSpinner(R.array.menstruationTypes, R.array.menstruationDrawables,
+				spinnerHadMenstruation);
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
-		images = new int[] { 0, R.drawable.unprotected_sex_dark,
-				R.drawable.protected_sex_dark, R.drawable.sex_dark };
-		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
+		fillSpinner(R.array.sexTypes, R.array.sexDrawables, spinnerHadSex);
 
 		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),

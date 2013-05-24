@@ -1,6 +1,7 @@
 package com.anna.sent.soft.womancyc.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 	}
 
 	private String[] mStrings;
-	private int[] mImageResourceIds;
+	private Drawable[] mDrawables;
 	private int mCount;
 
 	private static class ViewHolder {
@@ -34,12 +35,12 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 	}
 
 	public SpinnerItemArrayAdapter(Context context, String[] strings,
-			int[] imageResourceIds) {
+			Drawable[] drawables) {
 		super(context, R.layout.spinner_selected_item,
 				R.id.spinnerItemTextView, strings);
 		mStrings = strings;
-		mImageResourceIds = imageResourceIds;
-		mCount = Math.min(mStrings.length, mImageResourceIds.length);
+		mDrawables = drawables;
+		mCount = Math.min(mStrings.length, mDrawables.length);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 
 		viewHolder.textView.setText(isDropDownView ? mStrings[position] : "");
 		viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
-				mImageResourceIds[position], 0, 0, 0);
+				mDrawables[position], null, null, null);
 
 		return view;
 	}

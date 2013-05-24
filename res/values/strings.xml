@@ -21,12 +21,28 @@
         <item>Нормальные выделения</item>
         <item>Обильные выделения</item>
     </string-array>
+
+    <array name="menstruationDrawables">
+        <item>0</item>
+        <item>@drawable/menstruation</item>
+        <item>@drawable/one_drop</item>
+        <item>@drawable/two_drops</item>
+        <item>@drawable/three_drops</item>
+    </array>
+
     <string-array name="sexTypes">
         <item>Нет</item>
         <item>Незащищенный</item>
         <item>Защищенный</item>
         <item>Есть</item>
     </string-array>
+
+    <array name="sexDrawables">
+        <item>0</item>
+        <item>@drawable/unprotected_sex_dark</item>
+        <item>@drawable/protected_sex_dark</item>
+        <item>@drawable/sex_dark</item>
+    </array>
 
     <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
 
