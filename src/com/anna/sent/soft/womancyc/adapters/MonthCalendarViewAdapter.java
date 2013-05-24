@@ -239,14 +239,14 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 				.get(Calendar.DAY_OF_MONTH)));
 
 		if (item.get(Calendar.MONTH) != mMonth) {
-			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
 			if (themeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.LTGRAY);
 			}
 		} else {
-			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			if (themeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
