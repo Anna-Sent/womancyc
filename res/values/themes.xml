@@ -12,6 +12,9 @@
         <attr name="sex_bg" format="reference" />
         <attr name="protected_sex_bg" format="reference" />
         <attr name="unprotected_sex_bg" format="reference" />
+        <attr name="sex" format="reference" />
+        <attr name="protected_sex" format="reference" />
+        <attr name="unprotected_sex" format="reference" />
     </declare-styleable>
 
     <style name="AppBaseTheme" parent="android:Theme">
@@ -36,6 +39,9 @@
         <item name="sex_bg">@drawable/sex_bg_dark</item>
         <item name="protected_sex_bg">@drawable/protected_sex_bg_dark</item>
         <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_dark</item>
+        <item name="sex">@drawable/sex_dark</item>
+        <item name="protected_sex">@drawable/protected_sex_dark</item>
+        <item name="unprotected_sex">@drawable/unprotected_sex_dark</item>
     </style>
 
     <style name="AppThemeLight" parent="AppBaseThemeLight">
@@ -48,6 +54,9 @@
         <item name="sex_bg">@drawable/sex_bg_light</item>
         <item name="protected_sex_bg">@drawable/protected_sex_bg_light</item>
         <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_light</item>
+        <item name="sex">@drawable/sex_light</item>
+        <item name="protected_sex">@drawable/protected_sex_light</item>
+        <item name="unprotected_sex">@drawable/unprotected_sex_light</item>
     </style>
 
     <style name="DialogBaseTheme" parent="android:Theme.Dialog">
