@@ -25,6 +25,7 @@
         <item>Нет</item>
         <item>Незащищенный</item>
         <item>Защищенный</item>
+        <item>Есть</item>
     </string-array>
 
     <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>

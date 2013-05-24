@@ -292,6 +292,10 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 				layers.add(mContext.getResources().getDrawable(
 						R.drawable.protected_sex_bg));
 				break;
+			case 3:
+				layers.add(mContext.getResources().getDrawable(
+						R.drawable.sex_bg));
+				break;
 			}
 		}
 

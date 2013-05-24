@@ -165,7 +165,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
 		images = new int[] { 0, R.drawable.unprotected_sex,
-				R.drawable.protected_sex };
+				R.drawable.protected_sex, R.drawable.sex };
 		fillSpinner(R.array.sexTypes, images, spinnerHadSex);
 
 		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
