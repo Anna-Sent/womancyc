@@ -5,6 +5,13 @@
         <attr name="helpIcon" format="reference" />
         <attr name="nextItemIcon" format="reference" />
         <attr name="prevItemIcon" format="reference" />
+        <attr name="note_bg" format="reference" />
+        <attr name="one_drop_bg" format="reference" />
+        <attr name="two_drops_bg" format="reference" />
+        <attr name="three_drops_bg" format="reference" />
+        <attr name="sex_bg" format="reference" />
+        <attr name="protected_sex_bg" format="reference" />
+        <attr name="unprotected_sex_bg" format="reference" />
     </declare-styleable>
 
     <style name="AppBaseTheme" parent="android:Theme">
@@ -22,10 +29,25 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="nextItemIcon">@drawable/next_item_dark</item>
         <item name="prevItemIcon">@drawable/previous_item_dark</item>
+        <item name="note_bg">@drawable/note_bg_dark</item>
+        <item name="one_drop_bg">@drawable/one_drop_bg_dark</item>
+        <item name="two_drops_bg">@drawable/two_drops_bg_dark</item>
+        <item name="three_drops_bg">@drawable/three_drops_bg_dark</item>
+        <item name="sex_bg">@drawable/sex_bg_dark</item>
+        <item name="protected_sex_bg">@drawable/protected_sex_bg_dark</item>
+        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_dark</item>
     </style>
-    <style name="AppThemeLight" parent="AppBaseThemeLight">
+
+    <style name="AppThemeLight" parent="AppBaseThemeLight">
         <item name="nextItemIcon">@drawable/next_item_light</item>
         <item name="prevItemIcon">@drawable/previous_item_light</item>
+        <item name="note_bg">@drawable/note_bg_light</item>
+        <item name="one_drop_bg">@drawable/one_drop_bg_light</item>
+        <item name="two_drops_bg">@drawable/two_drops_bg_light</item>
+        <item name="three_drops_bg">@drawable/three_drops_bg_light</item>
+        <item name="sex_bg">@drawable/sex_bg_light</item>
+        <item name="protected_sex_bg">@drawable/protected_sex_bg_light</item>
+        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_dark</item>
     </style>
 
     <style name="DialogBaseTheme" parent="android:Theme.Dialog">

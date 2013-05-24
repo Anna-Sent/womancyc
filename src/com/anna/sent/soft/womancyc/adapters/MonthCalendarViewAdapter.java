@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -222,6 +223,8 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 	@SuppressWarnings("deprecation")
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
+		int themeId = ThemeUtils.getThemeId(mContext);
+
 		Calendar begin = Calendar.getInstance();
 		begin.set(2013, Calendar.MAY, 1);
 		int dayOfCycle = DateUtils.getDifferenceInDays(item, begin);
@@ -237,14 +240,14 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 		if (item.get(Calendar.MONTH) != mMonth) {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
-			if (ThemeUtils.getThemeId(mContext) == ThemeUtils.DARK_THEME) {
+			if (themeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.LTGRAY);
 			}
 		} else {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0x66, 0x00));
-			if (ThemeUtils.getThemeId(mContext) == ThemeUtils.DARK_THEME) {
+			if (themeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
@@ -262,49 +265,60 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			cellData = data.get(index);
 		}
 
-		Resources resources = mContext.getResources();
 		List<Drawable> layers = new ArrayList<Drawable>();
 
 		if (cellData != null) {
 			switch (cellData.getMenstruation()) {
 			case 1:
-				layers.add(resources.getDrawable(R.drawable.menstruation_bg));
+				layers.add(getDrawable(R.drawable.menstruation_bg));
 				break;
 			case 2:
-				layers.add(resources.getDrawable(R.drawable.one_drop_bg));
+				layers.add(getDrawableFromTheme(R.attr.one_drop_bg));
 				break;
 			case 3:
-				layers.add(resources.getDrawable(R.drawable.two_drops_bg));
+				layers.add(getDrawableFromTheme(R.attr.two_drops_bg));
 				break;
 			case 4:
-				layers.add(resources.getDrawable(R.drawable.three_drops_bg));
+				layers.add(getDrawableFromTheme(R.attr.three_drops_bg));
 				break;
 			}
 
 			switch (cellData.getSex()) {
 			case 1:
-				layers.add(resources.getDrawable(R.drawable.unprotected_sex_bg));
+				layers.add(getDrawableFromTheme(R.attr.unprotected_sex_bg));
 				break;
 			case 2:
-				layers.add(resources.getDrawable(R.drawable.protected_sex_bg));
+				layers.add(getDrawableFromTheme(R.attr.protected_sex_bg));
 				break;
 			case 3:
-				layers.add(resources.getDrawable(R.drawable.sex_bg));
+				layers.add(getDrawableFromTheme(R.attr.sex_bg));
 				break;
 			}
 
 			if (cellData.getNote() != null && !cellData.getNote().equals("")) {
-				layers.add(resources.getDrawable(R.drawable.note_bg));
+				layers.add(getDrawableFromTheme(R.attr.note_bg));
 			}
 		}
 
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
-			layers.add(resources
-					.getDrawable(R.drawable.selected_day_of_month_bg));
+			layers.add(getDrawable(R.drawable.selected_day_of_month_bg));
 		}
 
 		LayerDrawable background = new LayerDrawable(
 				layers.toArray(new Drawable[] {}));
 		cell.setBackgroundDrawable(background);
+	}
+
+	private Drawable getDrawableFromTheme(int attribute) {
+		int[] attrs = new int[] { attribute };
+		TypedArray ta = mContext.obtainStyledAttributes(attrs);
+		Drawable drawableFromTheme = ta.getDrawable(0);
+		ta.recycle();
+		return drawableFromTheme;
+	}
+
+	private Drawable getDrawable(int drawable) {
+		Resources resources = mContext.getResources();
+		return resources.getDrawable(drawable);
 	}
 }
