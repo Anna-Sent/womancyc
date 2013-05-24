@@ -46,7 +46,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		}
 	}
 
-	private boolean mIsDialog;
+	private boolean mIsLargeLayout;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 	private AutoCompleteTextView textViewNote;
 
@@ -61,12 +61,11 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = null;
-		if (getResources().getBoolean(R.bool.isLargeLayout)) {
-			mIsDialog = false;
+		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+		if (mIsLargeLayout) {
 			v = createView();
 			log("onCreateView", false);
 		} else {
-			mIsDialog = true;
 			v = super.onCreateView(inflater, container, savedInstanceState);
 			log("onCreateView returns null", false);
 		}
@@ -84,7 +83,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	public void onPause() {
 		log("onPause", false);
 		super.onPause();
-		if (!mIsDialog) {
+		if (mIsLargeLayout) {
 			onDialogPositiveClick();
 		}
 	}
@@ -104,7 +103,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		log("onCreateDialog", false);
-		if (getResources().getBoolean(R.bool.isLargeLayout)) {
+		if (mIsLargeLayout) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -175,7 +174,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
-		if (mIsDialog) {
+		if (!mIsLargeLayout) {
 			clear.setVisibility(View.GONE);
 			title.setVisibility(View.GONE);
 		} else {
@@ -242,7 +241,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 	}
 
 	private void onDataChanged() {
-		if (!mIsDialog && mDataKeeper != null) {
+		if (mIsLargeLayout && mDataKeeper != null) {
 			boolean isDataChanged = updateDataIfNeeded();
 			if (isDataChanged) {
 				mDataKeeper.insertOrUpdate(mValue);
