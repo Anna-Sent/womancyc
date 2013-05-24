@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -261,47 +262,45 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 			cellData = data.get(index);
 		}
 
+		Resources resources = mContext.getResources();
 		List<Drawable> layers = new ArrayList<Drawable>();
 
 		if (cellData != null) {
 			switch (cellData.getMenstruation()) {
 			case 1:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.menstruation_bg));
+				layers.add(resources.getDrawable(R.drawable.menstruation_bg));
 				break;
 			case 2:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.one_drop_bg));
+				layers.add(resources.getDrawable(R.drawable.one_drop_bg));
 				break;
 			case 3:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.two_drops_bg));
+				layers.add(resources.getDrawable(R.drawable.two_drops_bg));
 				break;
 			case 4:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.three_drops_bg));
+				layers.add(resources.getDrawable(R.drawable.three_drops_bg));
 				break;
 			}
 
 			switch (cellData.getSex()) {
 			case 1:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.unprotected_sex_bg));
+				layers.add(resources.getDrawable(R.drawable.unprotected_sex_bg));
 				break;
 			case 2:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.protected_sex_bg));
+				layers.add(resources.getDrawable(R.drawable.protected_sex_bg));
 				break;
 			case 3:
-				layers.add(mContext.getResources().getDrawable(
-						R.drawable.sex_bg));
+				layers.add(resources.getDrawable(R.drawable.sex_bg));
 				break;
+			}
+
+			if (cellData.getNote() != null && !cellData.getNote().equals("")) {
+				layers.add(resources.getDrawable(R.drawable.note_bg));
 			}
 		}
 
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
-			layers.add(mContext.getResources().getDrawable(
-					R.drawable.selected_day_of_month_bg));
+			layers.add(resources
+					.getDrawable(R.drawable.selected_day_of_month_bg));
 		}
 
 		LayerDrawable background = new LayerDrawable(
