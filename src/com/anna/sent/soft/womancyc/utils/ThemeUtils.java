@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc.utils;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.shared.Shared;
+import com.anna.sent.soft.womancyc.superclasses.StateSaver;
 
 import android.app.Activity;
 import android.content.Context;

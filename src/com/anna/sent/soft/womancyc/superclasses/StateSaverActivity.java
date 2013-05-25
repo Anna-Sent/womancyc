@@ -1,6 +1,8 @@
-package com.anna.sent.soft.womancyc.utils;
+package com.anna.sent.soft.womancyc.superclasses;
 
 import java.util.ArrayList;
+
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

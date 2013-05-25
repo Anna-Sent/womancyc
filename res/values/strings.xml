@@ -4,6 +4,9 @@
     <string name="nextMonth">Следующий месяц</string>
     <string name="prevMonth">Предыдущий месяц</string>
     <string name="currentMonth">Текущий месяц</string>
+    <string name="nextDay">Следующий день</string>
+    <string name="prevDay">Предыдущий день</string>
+    <string name="currentDay">Текущий день</string>
     <string name="app_name">WomanCyc: Календарь женских циклов</string>
     <string name="lighttheme">Светлая тема</string>
     <string name="darktheme">Темная тема</string>

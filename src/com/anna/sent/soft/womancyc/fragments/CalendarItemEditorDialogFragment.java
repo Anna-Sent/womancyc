@@ -110,7 +110,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(createView())
-					.setTitle(getTitle())
+					.setTitle("")
 					.setPositiveButton(android.R.string.ok,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
@@ -182,13 +182,16 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		textViewNote.setAdapter(adapter);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
-		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
+		TextView currentDay = (TextView) v.findViewById(R.id.currentDay);
+		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
+		Button prevDay = (Button) v.findViewById(R.id.prevDay);
+		prevDay.setOnClickListener((OnClickListener) getActivity());
+		Button nextDay = (Button) v.findViewById(R.id.nextDay);
+		nextDay.setOnClickListener((OnClickListener) getActivity());
 		if (!mIsLargeLayout) {
 			clear.setVisibility(View.GONE);
-			title.setVisibility(View.GONE);
 		} else {
 			clear.setOnClickListener(this);
-			title.setText(getTitle());
 		}
 
 		fillWithData();
@@ -200,12 +203,6 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
 		spinnerHadSex.setSelection((int) mValue.getSex());
 		textViewNote.setText(mValue.getNote());
-	}
-
-	private String getTitle() {
-		CalendarData value = (CalendarData) getArguments().getSerializable(
-				CalendarData.class.getSimpleName());
-		return DateUtils.toString(getActivity(), value.getDate());
 	}
 
 	@Override
