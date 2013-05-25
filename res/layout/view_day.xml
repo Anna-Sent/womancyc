@@ -26,17 +26,17 @@
                 android:contentDescription="@string/prevDay"
                 android:drawableRight="?attr/prevItemIcon" />
 
-            <TextView
+            <Button
                 android:id="@+id/currentDay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.6"
+                android:background="@drawable/selector_transparent_button"
                 android:contentDescription="@string/currentDay"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/blue"
-                android:textIsSelectable="false" />
+                android:textColor="@color/blue" />
 
             <Button
                 android:id="@+id/nextDay"

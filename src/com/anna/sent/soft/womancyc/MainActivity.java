@@ -1,9 +1,7 @@
 package com.anna.sent.soft.womancyc;
 
-import java.util.Calendar;
 import java.util.List;
 
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,23 +9,17 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.database.CalendarDataSource;
-import com.anna.sent.soft.womancyc.fragments.DatePickerDialogFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
-import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.StateSaverActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MainActivity extends StateSaverActivity implements DataKeeper,
-		OnClickListener, OnDateSetListener {
+public class MainActivity extends StateSaverActivity implements DataKeeper {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -183,66 +175,5 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 		if (fragment instanceof MonthViewFragment) {
 			mMonthView = (MonthViewFragment) fragment;
 		}
-	}
-
-	private void toPrevMonth() {
-		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
-		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
-		dateToShow.add(Calendar.MONTH, -1);
-		mMonthView.setSelectedDate(dateToShow);
-	}
-
-	private void toNextMonth() {
-		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
-		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
-		dateToShow.add(Calendar.MONTH, 1);
-		mMonthView.setSelectedDate(dateToShow);
-	}
-
-	private void toPrevDay() {
-		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
-		mMonthView.setSelectedDate(dateToShow);
-	}
-
-	private void toNextDay() {
-		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
-		mMonthView.setSelectedDate(dateToShow);
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.prevMonth:
-			toPrevMonth();
-			break;
-		case R.id.nextMonth:
-			toNextMonth();
-			break;
-		case R.id.currentMonth:
-			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW,
-					mMonthView.getSelectedDate());
-			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-			dialog.setArguments(args);
-			dialog.setOnDateSetListener(this);
-			dialog.show(getSupportFragmentManager(), dialog.getClass()
-					.getSimpleName());
-			break;
-		case R.id.nextDay:
-			toNextDay();
-			break;
-		case R.id.prevDay:
-			toPrevDay();
-			break;
-		}
-	}
-
-	@Override
-	public void onDateSet(DatePicker view, int year, int month, int day) {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(year, month, day);
-		mMonthView.setSelectedDate(dateToShow);
 	}
 }

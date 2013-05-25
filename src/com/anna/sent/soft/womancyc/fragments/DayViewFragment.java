@@ -1,5 +1,7 @@
 package com.anna.sent.soft.womancyc.fragments;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
@@ -27,8 +28,8 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class DayViewFragment extends DialogFragment implements
-		OnClickListener, OnItemSelectedListener {
+public class DayViewFragment extends DialogFragment implements OnClickListener,
+		OnItemSelectedListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -182,12 +183,12 @@ public class DayViewFragment extends DialogFragment implements
 		textViewNote.setAdapter(adapter);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
-		TextView currentDay = (TextView) v.findViewById(R.id.currentDay);
+		Button currentDay = (Button) v.findViewById(R.id.currentDay);
 		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
 		Button prevDay = (Button) v.findViewById(R.id.prevDay);
-		prevDay.setOnClickListener((OnClickListener) getActivity());
+		prevDay.setOnClickListener(this);
 		Button nextDay = (Button) v.findViewById(R.id.nextDay);
-		nextDay.setOnClickListener((OnClickListener) getActivity());
+		nextDay.setOnClickListener(this);
 		if (!mIsLargeLayout) {
 			clear.setVisibility(View.GONE);
 		} else {
@@ -207,9 +208,40 @@ public class DayViewFragment extends DialogFragment implements
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.buttonClear) {
+		switch (v.getId()) {
+		case R.id.buttonClear:
 			onDialogNeutralClick();
+			break;
+		case R.id.currentDay:
+			/*
+			 * Bundle args = new Bundle();
+			 * args.putSerializable(Shared.DATE_TO_SHOW,
+			 * mMonthView.getSelectedDate()); DatePickerDialogFragment dialog =
+			 * new DatePickerDialogFragment(); dialog.setArguments(args);
+			 * dialog.setOnDateSetListener(this);
+			 * dialog.show(getSupportFragmentManager(), dialog.getClass()
+			 * .getSimpleName());
+			 */
+			break;
+		case R.id.nextDay:
+			toNextDay();
+			break;
+		case R.id.prevDay:
+			toPrevDay();
+			break;
 		}
+	}
+
+	private void toPrevDay() {
+		Calendar dateToShow = (Calendar) mValue.getDate().clone();
+		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
+		// mMonthView.setSelectedDate(dateToShow);
+	}
+
+	private void toNextDay() {
+		Calendar dateToShow = (Calendar) mValue.getDate().clone();
+		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
+		// mMonthView.setSelectedDate(dateToShow);
 	}
 
 	@Override
