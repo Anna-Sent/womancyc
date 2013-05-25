@@ -7,6 +7,6 @@
         android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.anna.sent.soft.womancyc.fragments.MonthCalendarViewFragment" />
+        class="com.anna.sent.soft.womancyc.fragments.MonthViewFragment" />
 
 </FrameLayout>

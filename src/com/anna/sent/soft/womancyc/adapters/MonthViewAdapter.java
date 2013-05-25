@@ -24,7 +24,7 @@ import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MonthCalendarViewAdapter extends BaseAdapter {
+public class MonthViewAdapter extends BaseAdapter {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -48,7 +48,7 @@ public class MonthCalendarViewAdapter extends BaseAdapter {
 
 	private DataKeeper mDataKeeper = null;
 
-	public MonthCalendarViewAdapter(Context context, DataKeeper dataKeeper) {
+	public MonthViewAdapter(Context context, DataKeeper dataKeeper) {
 		super();
 		mContext = context;
 		mDataKeeper = dataKeeper;

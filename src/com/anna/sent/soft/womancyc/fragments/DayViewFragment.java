@@ -27,7 +27,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class CalendarItemEditorDialogFragment extends DialogFragment implements
+public class DayViewFragment extends DialogFragment implements
 		OnClickListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
@@ -54,7 +54,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 
 	private CalendarData mValue;
 
-	public CalendarItemEditorDialogFragment() {
+	public DayViewFragment() {
 		super();
 		log("create", false);
 	}
@@ -166,7 +166,7 @@ public class CalendarItemEditorDialogFragment extends DialogFragment implements
 				CalendarData.class.getSimpleName());
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View v = inflater.inflate(R.layout.calendar_item_editor, null);
+		View v = inflater.inflate(R.layout.view_day, null);
 
 		spinnerHadMenstruation = (Spinner) v
 				.findViewById(R.id.spinnerHadMenstruation);

@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.adapters.MonthCalendarViewAdapter;
+import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Shared;
@@ -29,7 +29,7 @@ import com.anna.sent.soft.womancyc.superclasses.StateSaverFragment;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
-public class MonthCalendarViewFragment extends StateSaverFragment implements
+public class MonthViewFragment extends StateSaverFragment implements
 		OnItemClickListener, OnItemLongClickListener, StateSaver {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
@@ -55,19 +55,19 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	private Button prevMonth;
 	private Button nextMonth;
 	private GridView calendarView;
-	private MonthCalendarViewAdapter adapter;
+	private MonthViewAdapter adapter;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
 	private boolean mIsLargeLayout;
 	private Calendar mDateToShow = null;
 
-	public MonthCalendarViewFragment() {
+	public MonthViewFragment() {
 		super();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.month_calendar_view, null);
+		View v = inflater.inflate(R.layout.view_month, null);
 		return v;
 	}
 
@@ -76,7 +76,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		log("onActivityCreated");
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
-		adapter = new MonthCalendarViewAdapter(getActivity(), mDataKeeper);
+		adapter = new MonthViewAdapter(getActivity(), mDataKeeper);
 
 		prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener((OnClickListener) getActivity());
@@ -172,7 +172,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 
 	public void showAsDialogFragment(Calendar date) {
 		FragmentManager fragmentManager = getFragmentManager();
-		DialogFragment newFragment = createEditorFragment(date);
+		DialogFragment newFragment = createDayView(date);
 		newFragment.show(fragmentManager, newFragment.getClass()
 				.getSimpleName());
 	}
@@ -180,16 +180,16 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 	public void showAsEmbeddedFragment(Calendar date) {
 		FragmentManager fragmentManager = getFragmentManager();
 
-		Fragment editor = fragmentManager.findFragmentById(R.id.editor);
-		if (editor != null) {
-			fragmentManager.beginTransaction().remove(editor).commit();
+		Fragment dayView = fragmentManager.findFragmentById(R.id.dayView);
+		if (dayView != null) {
+			fragmentManager.beginTransaction().remove(dayView).commit();
 		}
 
 		fragmentManager.beginTransaction()
-				.add(R.id.editor, createEditorFragment(date)).commit();
+				.add(R.id.dayView, createDayView(date)).commit();
 	}
 
-	private DialogFragment createEditorFragment(Calendar date) {
+	private DialogFragment createDayView(Calendar date) {
 		int index = new DateUtils().indexOf(mDataKeeper.getData(), date);
 		CalendarData value;
 		if (index >= 0) {
@@ -201,7 +201,7 @@ public class MonthCalendarViewFragment extends StateSaverFragment implements
 		Bundle args = new Bundle();
 		args.putSerializable(value.getClass().getSimpleName(), value);
 
-		CalendarItemEditorDialogFragment newFragment = new CalendarItemEditorDialogFragment();
+		DayViewFragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
 
 		return newFragment;

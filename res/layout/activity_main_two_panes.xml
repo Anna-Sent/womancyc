@@ -5,14 +5,14 @@
     android:baselineAligned="false" >
 
     <fragment
-        android:id="@+id/calendar"
+        android:id="@+id/monthView"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        class="com.anna.sent.soft.womancyc.fragments.MonthCalendarViewFragment" />
+        class="com.anna.sent.soft.womancyc.fragments.MonthViewFragment" />
 
     <FrameLayout
-        android:id="@+id/editor"
+        android:id="@+id/dayView"
         android:layout_width="0px"
         android:layout_height="wrap_content"
         android:layout_weight="1" />

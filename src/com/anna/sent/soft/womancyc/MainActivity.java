@@ -20,7 +20,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.data.DataKeeper;
 import com.anna.sent.soft.womancyc.database.CalendarDataSource;
 import com.anna.sent.soft.womancyc.fragments.DatePickerDialogFragment;
-import com.anna.sent.soft.womancyc.fragments.MonthCalendarViewFragment;
+import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.StateSaverActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -45,7 +45,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 	private CalendarDataSource mDataSource;
 	private List<CalendarData> mValues;
 	private List<String> mNotes;
-	private MonthCalendarViewFragment mCalendar;
+	private MonthViewFragment mMonthView;
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 	@Override
 	public void beforeOnSaveInstanceState() {
 		FragmentManager fm = getSupportFragmentManager();
-		Fragment details = fm.findFragmentById(R.id.editor);
+		Fragment details = fm.findFragmentById(R.id.dayView);
 		if (details != null) {
 			fm.beginTransaction().remove(details).commit();
 		}
@@ -171,8 +171,8 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 
 	private void updateCalendar() {
 		updateNotes();
-		if (mCalendar != null) {
-			mCalendar.update();
+		if (mMonthView != null) {
+			mMonthView.update();
 		}
 	}
 
@@ -180,35 +180,35 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 	public void onAttachFragment(Fragment fragment) {
 		super.onAttachFragment(fragment);
 
-		if (fragment instanceof MonthCalendarViewFragment) {
-			mCalendar = (MonthCalendarViewFragment) fragment;
+		if (fragment instanceof MonthViewFragment) {
+			mMonthView = (MonthViewFragment) fragment;
 		}
 	}
 
 	private void toPrevMonth() {
-		Calendar dateToShow = (Calendar) mCalendar.getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, -1);
-		mCalendar.setSelectedDate(dateToShow);
+		mMonthView.setSelectedDate(dateToShow);
 	}
 
 	private void toNextMonth() {
-		Calendar dateToShow = (Calendar) mCalendar.getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, 1);
-		mCalendar.setSelectedDate(dateToShow);
+		mMonthView.setSelectedDate(dateToShow);
 	}
 
 	private void toPrevDay() {
-		Calendar dateToShow = (Calendar) mCalendar.getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
-		mCalendar.setSelectedDate(dateToShow);
+		mMonthView.setSelectedDate(dateToShow);
 	}
 
 	private void toNextDay() {
-		Calendar dateToShow = (Calendar) mCalendar.getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) mMonthView.getSelectedDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
-		mCalendar.setSelectedDate(dateToShow);
+		mMonthView.setSelectedDate(dateToShow);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 		case R.id.currentMonth:
 			Bundle args = new Bundle();
 			args.putSerializable(Shared.DATE_TO_SHOW,
-					mCalendar.getSelectedDate());
+					mMonthView.getSelectedDate());
 			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
 			dialog.setArguments(args);
 			dialog.setOnDateSetListener(this);
@@ -243,6 +243,6 @@ public class MainActivity extends StateSaverActivity implements DataKeeper,
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
-		mCalendar.setSelectedDate(dateToShow);
+		mMonthView.setSelectedDate(dateToShow);
 	}
 }
