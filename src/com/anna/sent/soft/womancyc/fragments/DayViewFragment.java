@@ -208,6 +208,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
 		currentDay = (Button) v.findViewById(R.id.currentDay);
+		currentDay.setOnClickListener(this);
 		Button prevDay = (Button) v.findViewById(R.id.prevDay);
 		prevDay.setOnClickListener(this);
 		Button nextDay = (Button) v.findViewById(R.id.nextDay);
@@ -270,6 +271,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
+		if (mListener != null) {
+			mListener.onCalendarItemChanged(dateToShow);
+		}
+
 		if (!DateUtils.datesAreEqual(dateToShow, mValue.getDate())) {
 			setDate(dateToShow);
 		}
