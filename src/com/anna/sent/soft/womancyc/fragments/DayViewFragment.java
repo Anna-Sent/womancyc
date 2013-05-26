@@ -3,6 +3,7 @@ package com.anna.sent.soft.womancyc.fragments;
 import java.util.Calendar;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -19,18 +20,20 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,
-		OnItemSelectedListener, DataKeeperClient {
+		OnItemSelectedListener, DataKeeperClient, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -234,15 +237,16 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			onDialogNeutralClick();
 			break;
 		case R.id.currentDay:
-			/*
-			 * Bundle args = new Bundle();
-			 * args.putSerializable(Shared.DATE_TO_SHOW,
-			 * mMonthView.getSelectedDate()); DatePickerDialogFragment dialog =
-			 * new DatePickerDialogFragment(); dialog.setArguments(args);
-			 * dialog.setOnDateSetListener(this);
-			 * dialog.show(getSupportFragmentManager(), dialog.getClass()
-			 * .getSimpleName());
-			 */
+			if (mIsLargeLayout) {
+				Bundle args = new Bundle();
+				args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
+				DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+				dialog.setArguments(args);
+				dialog.setOnDateSetListener(this);
+				dialog.show(getFragmentManager(), dialog.getClass()
+						.getSimpleName());
+			}
+
 			break;
 		case R.id.nextDay:
 			toNextDay();
@@ -250,6 +254,24 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		case R.id.prevDay:
 			toPrevDay();
 			break;
+		}
+	}
+
+	private void setDate(Calendar date) {
+		mValue = mDataKeeper.get(date);
+		if (mValue == null) {
+			mValue = new CalendarData(date);
+		}
+
+		fillWithData();
+	}
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int month, int day) {
+		Calendar dateToShow = Calendar.getInstance();
+		dateToShow.set(year, month, day);
+		if (!DateUtils.datesAreEqual(dateToShow, mValue.getDate())) {
+			setDate(dateToShow);
 		}
 	}
 
@@ -261,12 +283,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		if (!mIsLargeLayout) {
-			mValue = mDataKeeper.get(dateToShow);
-			if (mValue == null) {
-				mValue = new CalendarData(dateToShow);
-			}
-
-			fillWithData();
+			setDate(dateToShow);
 		}
 	}
 
@@ -278,12 +295,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		if (!mIsLargeLayout) {
-			mValue = mDataKeeper.get(dateToShow);
-			if (mValue == null) {
-				mValue = new CalendarData(dateToShow);
-			}
-
-			fillWithData();
+			setDate(dateToShow);
 		}
 	}
 
