@@ -1,10 +1,12 @@
-package com.anna.sent.soft.womancyc.data;
+package com.anna.sent.soft.womancyc.database;
 
+import java.util.Calendar;
 import java.util.List;
 
+import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public interface DataKeeper {
-	public List<CalendarData> getData();
+	public CalendarData get(Calendar date);
 
 	public void insertOrUpdate(CalendarData value);
 

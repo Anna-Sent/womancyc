@@ -1,25 +1,23 @@
 package com.anna.sent.soft.womancyc;
 
-import java.util.List;
+import java.util.Calendar;
 
-import android.database.SQLException;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.data.DataKeeper;
-import com.anna.sent.soft.womancyc.database.CalendarDataSource;
+import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
-import com.anna.sent.soft.womancyc.superclasses.StateSaverActivity;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MainActivity extends StateSaverActivity implements DataKeeper {
+public class MainActivity extends DataKeeperActivity implements
+		MonthViewFragment.Listener, DayViewFragment.Listener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -34,49 +32,38 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 		}
 	}
 
-	private CalendarDataSource mDataSource;
-	private List<CalendarData> mValues;
-	private List<String> mNotes;
 	private MonthViewFragment mMonthView;
+	private DayViewFragment mDayView;
+	private boolean mIsLargeLayout;
+
+	@Override
+	public void onAttachFragment(Fragment fragment) {
+		super.onAttachFragment(fragment);
+
+		if (fragment instanceof MonthViewFragment) {
+			mMonthView = (MonthViewFragment) fragment;
+			mMonthView.setListener(this);
+		}
+
+		if (fragment instanceof DayViewFragment) {
+			mDayView = (DayViewFragment) fragment;
+			mDayView.setListener(this);
+		}
+	}
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		mDataSource = new CalendarDataSource(this);
-		mDataSource.open();
-		mValues = mDataSource.getAllRows();
-		updateNotes();
-	}
-
-	@Override
-	protected void onResume() {
-		try {
-			mDataSource.open();
-			mValues = mDataSource.getAllRows();
-			updateNotes();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
-					Toast.LENGTH_LONG).show();
-		}
-
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mDataSource.close();
+		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 	}
 
 	@Override
 	public void beforeOnSaveInstanceState() {
 		FragmentManager fm = getSupportFragmentManager();
-		Fragment details = fm.findFragmentById(R.id.dayView);
-		if (details != null) {
-			fm.beginTransaction().remove(details).commit();
+		Fragment dayView = fm.findFragmentById(R.id.dayView);
+		if (dayView != null) {
+			fm.beginTransaction().remove(dayView).commit();
 		}
 	}
 
@@ -119,61 +106,62 @@ public class MainActivity extends StateSaverActivity implements DataKeeper {
 	}
 
 	@Override
-	public List<CalendarData> getData() {
-		return mValues;
-	}
-
-	@Override
-	public List<String> getNotes() {
-		return mNotes;
-	}
-
-	private void updateNotes() {
-		mNotes = mDataSource.getAllNotes();
-	}
-
-	@Override
-	public void insertOrUpdate(CalendarData value) {
-		int index = new DateUtils().indexOf(mValues, value);
-		if (index >= 0) {
-			mDataSource.update(value);
-			mValues.set(index, value);
-		} else {
-			mDataSource.insert(value);
-			mValues.add(-index - 1, value);
-		}
-
-		updateCalendar();
-	}
-
-	@Override
-	public void delete(CalendarData value) {
-		int index = new DateUtils().indexOf(mValues, value);
-		if (index >= 0) {
-			mDataSource.delete(value);
-			mValues.remove(index);
-
-			updateCalendar();
-		}
-	}
-
-	@Override
-	public void cancel(CalendarData value) {
-	}
-
-	private void updateCalendar() {
-		updateNotes();
+	protected void dataChanged() {
 		if (mMonthView != null) {
 			mMonthView.update();
 		}
 	}
 
-	@Override
-	public void onAttachFragment(Fragment fragment) {
-		super.onAttachFragment(fragment);
+	private void showAsDialogFragment(Calendar date) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		DialogFragment newFragment = createDayView(date);
+		newFragment.show(fragmentManager, newFragment.getClass()
+				.getSimpleName());
+	}
 
-		if (fragment instanceof MonthViewFragment) {
-			mMonthView = (MonthViewFragment) fragment;
+	private void showAsEmbeddedFragment(Calendar date) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
+		Fragment dayView = fragmentManager.findFragmentById(R.id.dayView);
+		if (dayView != null) {
+			fragmentManager.beginTransaction().remove(dayView).commit();
 		}
+
+		fragmentManager.beginTransaction()
+				.add(R.id.dayView, createDayView(date)).commit();
+	}
+
+	private DialogFragment createDayView(Calendar date) {
+		CalendarData value = get(date);
+		if (value == null) {
+			value = new CalendarData(date);
+		}
+
+		Bundle args = new Bundle();
+		args.putSerializable(value.getClass().getSimpleName(), value);
+
+		DialogFragment newFragment = new DayViewFragment();
+		newFragment.setArguments(args);
+
+		return newFragment;
+	}
+
+	@Override
+	public void onCalendarItemSelected(Calendar date) {
+		if (mIsLargeLayout) {
+			showAsEmbeddedFragment(date);
+		}
+	}
+
+	@Override
+	public void onCalendarItemLongClick(Calendar date) {
+		if (!mIsLargeLayout) {
+			showAsDialogFragment(date);
+		}
+	}
+
+	@Override
+	public void onCalendarItemChanged(Calendar date) {
+		mMonthView.setSelectedDate(date);
 	}
 }

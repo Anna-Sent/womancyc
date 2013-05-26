@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.data.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
@@ -46,7 +46,7 @@ public class MonthViewAdapter extends BaseAdapter {
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
 
-	private DataKeeper mDataKeeper = null;
+	private DataKeeper mDataKeeper;
 
 	public MonthViewAdapter(Context context, DataKeeper dataKeeper) {
 		super();
@@ -258,12 +258,8 @@ public class MonthViewAdapter extends BaseAdapter {
 			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
 
-		List<CalendarData> data = mDataKeeper.getData();
-		int index = new DateUtils().indexOf(data, item);
-		CalendarData cellData = null;
-		if (index >= 0) {
-			cellData = data.get(index);
-		}
+		CalendarData cellData = mDataKeeper == null ? null : mDataKeeper
+				.get(item);
 
 		List<Drawable> layers = new ArrayList<Drawable>();
 

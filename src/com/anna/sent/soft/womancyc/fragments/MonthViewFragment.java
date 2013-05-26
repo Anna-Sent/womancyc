@@ -2,12 +2,8 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,17 +19,16 @@ import android.widget.GridView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
-import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.data.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.superclasses.StateSaver;
+import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.superclasses.StateSaverFragment;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 public class MonthViewFragment extends StateSaverFragment implements
-		OnItemClickListener, OnItemLongClickListener, StateSaver,
-		OnClickListener, OnDateSetListener {
+		OnItemClickListener, OnItemLongClickListener, OnClickListener,
+		OnDateSetListener, DataKeeperClient {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -54,13 +49,29 @@ public class MonthViewFragment extends StateSaverFragment implements
 		}
 	}
 
+	public interface Listener {
+		public void onCalendarItemSelected(Calendar date);
+
+		public void onCalendarItemLongClick(Calendar date);
+	}
+
+	private Listener mListener = null;
+
+	public void setListener(Listener listener) {
+		mListener = listener;
+	}
+
+	private DataKeeper mDataKeeper = null;
+
+	@Override
+	public void setDataKeeper(DataKeeper dataKeeper) {
+		mDataKeeper = dataKeeper;
+	}
+
 	private Button currentMonth;
-	private Button prevMonth;
-	private Button nextMonth;
 	private GridView calendarView;
 	private MonthViewAdapter adapter;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
-	private boolean mIsLargeLayout;
 	private Calendar mDateToShow = null;
 
 	public MonthViewFragment() {
@@ -77,17 +88,15 @@ public class MonthViewFragment extends StateSaverFragment implements
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		log("onActivityCreated");
-		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
-
 		adapter = new MonthViewAdapter(getActivity(), mDataKeeper);
 
-		prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
+		Button prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
 
 		currentMonth = (Button) getActivity().findViewById(R.id.currentMonth);
 		currentMonth.setOnClickListener(this);
 
-		nextMonth = (Button) getActivity().findViewById(R.id.nextMonth);
+		Button nextMonth = (Button) getActivity().findViewById(R.id.nextMonth);
 		nextMonth.setOnClickListener(this);
 
 		calendarView = (GridView) getActivity().findViewById(
@@ -135,16 +144,12 @@ public class MonthViewFragment extends StateSaverFragment implements
 		state.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 	}
 
-	private Calendar getSelectedDate() {
-		return adapter.getSelectedDate();
-	}
-
-	private void setSelectedDate(Calendar dateToShow) {
-		adapter.setSelectedDate(dateToShow);
+	public void setSelectedDate(Calendar date) {
+		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
-				dateToShow.getTime()));
-		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(dateToShow);
+				date.getTime()));
+		if (mListener != null) {
+			mListener.onCalendarItemSelected(date);
 		}
 	}
 
@@ -165,59 +170,12 @@ public class MonthViewFragment extends StateSaverFragment implements
 		if (item != null) {
 			Calendar date = (Calendar) item;
 			setSelectedDate(date);
-			if (!mIsLargeLayout) {
-				showAsDialogFragment(date);
+			if (mListener != null) {
+				mListener.onCalendarItemLongClick(date);
 			}
 		}
 
 		return true;
-	}
-
-	private void showAsDialogFragment(Calendar date) {
-		FragmentManager fragmentManager = getFragmentManager();
-		DialogFragment newFragment = createDayView(date);
-		newFragment.show(fragmentManager, newFragment.getClass()
-				.getSimpleName());
-	}
-
-	private void showAsEmbeddedFragment(Calendar date) {
-		FragmentManager fragmentManager = getFragmentManager();
-
-		Fragment dayView = fragmentManager.findFragmentById(R.id.dayView);
-		if (dayView != null) {
-			fragmentManager.beginTransaction().remove(dayView).commit();
-		}
-
-		fragmentManager.beginTransaction()
-				.add(R.id.dayView, createDayView(date)).commit();
-	}
-
-	private DialogFragment createDayView(Calendar date) {
-		int index = new DateUtils().indexOf(mDataKeeper.getData(), date);
-		CalendarData value;
-		if (index >= 0) {
-			value = mDataKeeper.getData().get(index);
-		} else {
-			value = new CalendarData(date);
-		}
-
-		Bundle args = new Bundle();
-		args.putSerializable(value.getClass().getSimpleName(), value);
-
-		DayViewFragment newFragment = new DayViewFragment();
-		newFragment.setArguments(args);
-
-		return newFragment;
-	}
-
-	private DataKeeper mDataKeeper = null;
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		if (activity instanceof DataKeeper) {
-			mDataKeeper = (DataKeeper) activity;
-		}
 	}
 
 	public void update() {
@@ -225,14 +183,14 @@ public class MonthViewFragment extends StateSaverFragment implements
 	}
 
 	private void toPrevMonth() {
-		Calendar dateToShow = (Calendar) getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, -1);
 		setSelectedDate(dateToShow);
 	}
 
 	private void toNextMonth() {
-		Calendar dateToShow = (Calendar) getSelectedDate().clone();
+		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, 1);
 		setSelectedDate(dateToShow);
@@ -249,7 +207,7 @@ public class MonthViewFragment extends StateSaverFragment implements
 			break;
 		case R.id.currentMonth:
 			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, getSelectedDate());
+			args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
 			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
 			dialog.setArguments(args);
 			dialog.setOnDateSetListener(this);

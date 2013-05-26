@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -25,11 +24,12 @@ import android.widget.Spinner;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.data.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,
-		OnItemSelectedListener {
+		OnItemSelectedListener, DataKeeperClient {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -49,9 +49,27 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 	}
 
+	public interface Listener {
+		public void onCalendarItemChanged(Calendar date);
+	}
+
+	private Listener mListener = null;
+
+	public void setListener(Listener listener) {
+		mListener = listener;
+	}
+
+	private DataKeeper mDataKeeper = null;
+
+	@Override
+	public void setDataKeeper(DataKeeper dataKeeper) {
+		mDataKeeper = dataKeeper;
+	}
+
 	private boolean mIsLargeLayout;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 	private AutoCompleteTextView textViewNote;
+	private Button currentDay;
 
 	private CalendarData mValue;
 
@@ -83,18 +101,18 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	}
 
 	@Override
+	public void onResume() {
+		log("onResume", false);
+		super.onResume();
+	}
+
+	@Override
 	public void onPause() {
 		log("onPause", false);
 		super.onPause();
 		if (mIsLargeLayout) {
 			onDialogPositiveClick();
 		}
-	}
-
-	@Override
-	public void onResume() {
-		log("onResume", false);
-		super.onResume();
 	}
 
 	@Override
@@ -158,7 +176,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
-
 		spinner.setOnItemSelectedListener(this);
 	}
 
@@ -183,8 +200,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		textViewNote.setAdapter(adapter);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
-		Button currentDay = (Button) v.findViewById(R.id.currentDay);
-		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
+		currentDay = (Button) v.findViewById(R.id.currentDay);
 		Button prevDay = (Button) v.findViewById(R.id.prevDay);
 		prevDay.setOnClickListener(this);
 		Button nextDay = (Button) v.findViewById(R.id.nextDay);
@@ -201,6 +217,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	}
 
 	private void fillWithData() {
+		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
 		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
 		spinnerHadSex.setSelection((int) mValue.getSex());
 		textViewNote.setText(mValue.getNote());
@@ -235,13 +252,35 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	private void toPrevDay() {
 		Calendar dateToShow = (Calendar) mValue.getDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
-		// mMonthView.setSelectedDate(dateToShow);
+		if (mListener != null) {
+			mListener.onCalendarItemChanged(dateToShow);
+		}
+
+		if (!mIsLargeLayout) {
+			mValue = mDataKeeper.get(dateToShow);
+			if (mValue == null) {
+				mValue = new CalendarData(dateToShow);
+			}
+
+			fillWithData();
+		}
 	}
 
 	private void toNextDay() {
 		Calendar dateToShow = (Calendar) mValue.getDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
-		// mMonthView.setSelectedDate(dateToShow);
+		if (mListener != null) {
+			mListener.onCalendarItemChanged(dateToShow);
+		}
+
+		if (!mIsLargeLayout) {
+			mValue = mDataKeeper.get(dateToShow);
+			if (mValue == null) {
+				mValue = new CalendarData(dateToShow);
+			}
+
+			fillWithData();
+		}
 	}
 
 	@Override
@@ -334,15 +373,5 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		return s1.equals(s2);
-	}
-
-	private DataKeeper mDataKeeper = null;
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		if (activity instanceof DataKeeper) {
-			mDataKeeper = (DataKeeper) activity;
-		}
 	}
 }
