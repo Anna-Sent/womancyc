@@ -32,6 +32,9 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 	}
 
+	private final static String DAY_VIEW_TAG = DayViewFragment.class
+			.getSimpleName();
+
 	private MonthViewFragment mMonthView;
 	private DayViewFragment mDayView;
 	private boolean mIsLargeLayout;
@@ -61,10 +64,17 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public void beforeOnSaveInstanceState() {
 		FragmentManager fm = getSupportFragmentManager();
+
 		Fragment dayView = fm.findFragmentById(R.id.dayView);
 		if (dayView != null) {
 			fm.beginTransaction().remove(dayView).commit();
 		}
+
+		dayView = fm.findFragmentByTag(DAY_VIEW_TAG);
+		if (dayView != null) {
+			fm.beginTransaction().remove(dayView).commit();
+		}
+
 	}
 
 	@Override
@@ -115,8 +125,7 @@ public class MainActivity extends DataKeeperActivity implements
 	private void showAsDialogFragment(Calendar date) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogFragment newFragment = createDayView(date);
-		newFragment.show(fragmentManager, newFragment.getClass()
-				.getSimpleName());
+		newFragment.show(fragmentManager, DAY_VIEW_TAG);
 	}
 
 	private void showAsEmbeddedFragment(Calendar date) {
