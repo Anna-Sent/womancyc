@@ -27,6 +27,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,
 		OnItemSelectedListener, DataKeeperClient {
@@ -188,11 +189,14 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 		spinnerHadMenstruation = (Spinner) v
 				.findViewById(R.id.spinnerHadMenstruation);
-		fillSpinner(R.array.menstruationTypes, R.array.menstruationDrawables,
+		int drawablesId = R.array.menstruationDrawables;
+		fillSpinner(R.array.menstruationTypes, drawablesId,
 				spinnerHadMenstruation);
 
 		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
-		fillSpinner(R.array.sexTypes, R.array.sexDrawables, spinnerHadSex);
+		drawablesId = ThemeUtils.getThemeId(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
+				: R.array.sexDrawablesLight;
+		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 
 		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),

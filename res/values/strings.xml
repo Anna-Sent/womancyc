@@ -40,11 +40,17 @@
         <item>Есть</item>
     </string-array>
 
-    <array name="sexDrawables">
+    <array name="sexDrawablesDark">
         <item>0</item>
         <item>@drawable/unprotected_sex_dark</item>
         <item>@drawable/protected_sex_dark</item>
         <item>@drawable/sex_dark</item>
+    </array>
+    <array name="sexDrawablesLight">
+        <item>0</item>
+        <item>@drawable/unprotected_sex_light</item>
+        <item>@drawable/protected_sex_light</item>
+        <item>@drawable/sex_light</item>
     </array>
 
     <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
