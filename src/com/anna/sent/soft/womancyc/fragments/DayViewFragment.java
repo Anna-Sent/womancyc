@@ -47,6 +47,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg, boolean debug) {
 		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
@@ -79,7 +80,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	public DayViewFragment() {
 		super();
-		log("create", false);
+		log("create");
 	}
 
 	@Override
@@ -89,10 +90,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 		if (mIsLargeLayout) {
 			v = createView();
-			log("onCreateView", false);
+			log("onCreateView");
 		} else {
 			v = super.onCreateView(inflater, container, savedInstanceState);
-			log("onCreateView returns null", false);
+			log("onCreateView returns null");
 		}
 
 		return v;
@@ -100,19 +101,19 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	@Override
 	public void onActivityCreated(Bundle arg0) {
-		log("onActivityCreated", false);
+		log("onActivityCreated");
 		super.onActivityCreated(arg0);
 	}
 
 	@Override
 	public void onResume() {
-		log("onResume", false);
+		log("onResume");
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		log("onPause", false);
+		log("onPause");
 		super.onPause();
 		if (mIsLargeLayout) {
 			onDialogPositiveClick();
@@ -121,16 +122,17 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	@Override
 	public void onDestroy() {
-		log("onDestroy", false);
+		log("onDestroy");
 		super.onDestroy();
 	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		log("onCreateDialog", false);
 		if (mIsLargeLayout) {
+			log("onCreateDialog returns null");
 			return super.onCreateDialog(savedInstanceState);
 		} else {
+			log("onCreateDialog");
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(createView())
 					.setTitle("")
