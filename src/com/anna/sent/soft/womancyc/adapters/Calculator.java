@@ -37,12 +37,33 @@ public class Calculator {
 		if (firstDayOfCycle == null) {
 			dayOfCycle = 0;
 		} else {
-			int avgLen = getAverageLengthOfThreeLastMenstrualPeriods(firstDayOfCycle);
-			dayOfCycle = DateUtils
-					.getDifferenceInDays(current, firstDayOfCycle) % avgLen + 1;
+			int nextIndex = getLeftNeighborIndex(current);
+			CalendarData nextData;
+			do {
+				++nextIndex;
+				nextData = mDataKeeper.get(nextIndex);
+			} while (nextData != null && nextData.getMenstruation() == 0);
+
+			if (nextData == null) {
+				int avgLen = getAverageLengthOfThreeLastMenstrualPeriods(firstDayOfCycle);
+				dayOfCycle = DateUtils.getDifferenceInDays(current,
+						firstDayOfCycle) % avgLen + 1;
+			} else {
+				dayOfCycle = DateUtils.getDifferenceInDays(current,
+						firstDayOfCycle) + 1;
+			}
 		}
 
 		return dayOfCycle;
+	}
+
+	private int getLeftNeighborIndex(Calendar current) {
+		int currentIndex = mDataKeeper.indexOf(current);
+		if (currentIndex >= 0) {
+			return currentIndex;
+		} else {
+			return -currentIndex - 2;
+		}
 	}
 
 	private Calendar getFirstDayOfCycle(Calendar current) {
@@ -53,25 +74,8 @@ public class Calculator {
 		}
 
 		log("calculate value");
-		int currentIndex = mDataKeeper.indexOf(current);
-		CalendarData currentData;
-		if (currentIndex >= 0) {
-			currentData = mDataKeeper.get(currentIndex);
-		} else {
-			currentIndex = -currentIndex - 2;
-			if (currentIndex < 0) {
-				map.put(current, null);
-				return null;
-			}
-
-			currentData = mDataKeeper.get(currentIndex);
-		}
-
-		if (map.containsKey(currentData.getDate())
-				&& map.get(currentData.getDate()) == null) {
-			map.put(current, null);
-			return null;
-		}
+		int currentIndex = getLeftNeighborIndex(current);
+		CalendarData currentData = mDataKeeper.get(currentIndex);
 
 		while (currentData != null && currentData.getMenstruation() == 0) {
 			--currentIndex;
