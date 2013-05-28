@@ -8,6 +8,10 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 public interface DataKeeper {
 	public CalendarData get(Calendar date);
 
+	public int indexOf(Calendar date);
+
+	public CalendarData get(int index);
+
 	public void insertOrUpdate(CalendarData value);
 
 	public void delete(CalendarData value);

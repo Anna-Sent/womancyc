@@ -111,9 +111,19 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	private int indexOf(Calendar date) {
+	@Override
+	public int indexOf(Calendar date) {
 		return Collections.binarySearch(mValues, new CalendarData(date),
 				new CalendarDataComparator());
+	}
+
+	@Override
+	public CalendarData get(int index) {
+		if (index >= 0 && index < mValues.size()) {
+			return mValues.get(index);
+		} else {
+			return null;
+		}
 	}
 
 	private int indexOf(CalendarData value) {

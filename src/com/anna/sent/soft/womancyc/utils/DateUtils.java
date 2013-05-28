@@ -1,6 +1,8 @@
 package com.anna.sent.soft.womancyc.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -16,6 +18,11 @@ public class DateUtils {
 
 	public static String toString(Context context, Calendar date) {
 		return DateFormat.getDateFormat(context).format(date.getTime());
+	}
+
+	public static String toString(Calendar date) {
+		return new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+				.format(date.getTime());
 	}
 
 	public static boolean datesAreEqual(Calendar date1, Calendar date2) {

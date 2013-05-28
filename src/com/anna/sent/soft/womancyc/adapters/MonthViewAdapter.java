@@ -225,13 +225,15 @@ public class MonthViewAdapter extends BaseAdapter {
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
 		int themeId = ThemeUtils.getThemeId(mContext);
 
-		Calendar begin = Calendar.getInstance();
-		begin.set(2013, Calendar.MAY, 1);
-		int dayOfCycle = DateUtils.getDifferenceInDays(item, begin);
+		CalendarData cellData = mDataKeeper == null ? null : mDataKeeper
+				.get(item);
+		int dayOfCycle = mDataKeeper == null ? 0 : Calculator.getDayOfCycle(
+				item, mDataKeeper);
 
 		TextView dayOfCycleTextView = (TextView) cell
 				.findViewById(R.id.dayOfCycleTextView);
-		dayOfCycleTextView.setText(String.valueOf(dayOfCycle));
+		dayOfCycleTextView.setText(dayOfCycle <= 0 ? "" : String
+				.valueOf(dayOfCycle));
 
 		TextView dayOfMonthTextView = (TextView) cell
 				.findViewById(R.id.dayOfMonthTextView);
@@ -257,9 +259,6 @@ public class MonthViewAdapter extends BaseAdapter {
 		if (DateUtils.datesAreEqual(item, mToday)) {
 			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
-
-		CalendarData cellData = mDataKeeper == null ? null : mDataKeeper
-				.get(item);
 
 		List<Drawable> layers = new ArrayList<Drawable>();
 

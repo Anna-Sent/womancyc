@@ -1,9 +1,7 @@
 package com.anna.sent.soft.womancyc.data;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
@@ -65,12 +63,7 @@ public class CalendarData implements Serializable {
 
 	@Override
 	public String toString() {
-		return new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-				.format(date.getTime())
-				+ " = "
-				+ getId()
-				+ ": "
-				+ menstruation
+		return DateUtils.toString(date) + " = " + getId() + ": " + menstruation
 				+ ", " + sex + ", \"" + (note == null ? "" : note) + "\"";
 	}
 }
