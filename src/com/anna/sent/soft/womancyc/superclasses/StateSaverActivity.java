@@ -30,18 +30,11 @@ public abstract class StateSaverActivity extends FragmentActivity implements
 		}
 	}
 
-	// private DataImpl mConcreteData;
 	private ArrayList<StateSaver> mStateSavers = new ArrayList<StateSaver>();
-
-	// protected final Data getData() {
-	// return mConcreteData;
-	// }
 
 	@Override
 	protected final void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.onActivityCreateSetTheme(this);
-
-		// mConcreteData = new DataImpl(this);
 
 		super.onCreate(savedInstanceState);
 
@@ -98,26 +91,19 @@ public abstract class StateSaverActivity extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		log("resume, update data", true);
-		// mConcreteData.update();
+		log("resume", true);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		log("pause, save data", true);
-		// mConcreteData.save();
+		log("pause", true);
 	}
 
 	@Override
 	public void onAttachFragment(Fragment fragment) {
 		super.onAttachFragment(fragment);
 		log("attach " + fragment.toString());
-		// if (fragment instanceof DataClient) {
-		// DataClient dataClient = (DataClient) fragment;
-		// dataClient.setData(mConcreteData);
-		// log("set data");
-		// }
 
 		if (fragment instanceof StateSaver) {
 			StateSaver stateSaver = (StateSaver) fragment;
