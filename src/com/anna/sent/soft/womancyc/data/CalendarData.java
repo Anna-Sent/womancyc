@@ -19,11 +19,11 @@ public class CalendarData implements Serializable {
 
 	public CalendarData(Calendar date) {
 		super();
+		DateUtils.zeroTime(date);
 		this.date = date;
 	}
 
 	public long getId() {
-		DateUtils.zeroTime(date);
 		return date.getTimeInMillis();
 	}
 

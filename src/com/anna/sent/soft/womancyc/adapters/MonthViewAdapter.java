@@ -32,7 +32,6 @@ public class MonthViewAdapter extends BaseAdapter {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -47,11 +46,13 @@ public class MonthViewAdapter extends BaseAdapter {
 	private Calendar mSelectedDate, mToday;
 
 	private DataKeeper mDataKeeper;
+	private Calculator mCalculator;
 
 	public MonthViewAdapter(Context context, DataKeeper dataKeeper) {
 		super();
 		mContext = context;
 		mDataKeeper = dataKeeper;
+		mCalculator = new Calculator(mDataKeeper);
 		mToday = Calendar.getInstance();
 		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
@@ -227,8 +228,8 @@ public class MonthViewAdapter extends BaseAdapter {
 
 		CalendarData cellData = mDataKeeper == null ? null : mDataKeeper
 				.get(item);
-		int dayOfCycle = mDataKeeper == null ? 0 : Calculator.getDayOfCycle(
-				item, mDataKeeper);
+		int dayOfCycle = mDataKeeper == null ? 0 : mCalculator
+				.getDayOfCycle(item);
 
 		TextView dayOfCycleTextView = (TextView) cell
 				.findViewById(R.id.dayOfCycleTextView);
@@ -315,5 +316,11 @@ public class MonthViewAdapter extends BaseAdapter {
 	private Drawable getDrawable(int drawable) {
 		Resources resources = mContext.getResources();
 		return resources.getDrawable(drawable);
+	}
+
+	public void update() {
+		mCalculator = new Calculator(mDataKeeper);
+		log("update");
+		notifyDataSetChanged();
 	}
 }

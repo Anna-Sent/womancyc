@@ -179,7 +179,7 @@ public class MonthViewFragment extends StateSaverFragment implements
 	}
 
 	public void update() {
-		adapter.notifyDataSetChanged();
+		adapter.update();
 	}
 
 	private void toPrevMonth() {
