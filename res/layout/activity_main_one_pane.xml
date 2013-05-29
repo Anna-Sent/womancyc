@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a151a5351deb085"
+        ads:loadAdOnCreate="true"
+        android:gravity="center" />
 
     <fragment
         android:id="@+id/calendar"
@@ -9,4 +20,4 @@
         android:layout_height="match_parent"
         class="com.anna.sent.soft.womancyc.fragments.MonthViewFragment" />
 
-</FrameLayout>
+</LinearLayout>

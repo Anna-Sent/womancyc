@@ -11,7 +11,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class Calculator {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private static String wrapMsg(String msg) {
 		return Calculator.class.getSimpleName() + ": " + msg;
