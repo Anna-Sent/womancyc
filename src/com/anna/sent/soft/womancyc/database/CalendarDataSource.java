@@ -47,6 +47,7 @@ public class CalendarDataSource {
 		values.put(CalendarHelper.COLUMN_ID, value.getId());
 		values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
 		values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+		values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
 		values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
 		mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null, values);
 		log("Insert calendar: " + value.toString());
@@ -62,6 +63,7 @@ public class CalendarDataSource {
 		ContentValues values = new ContentValues();
 		values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
 		values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+		values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
 		values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
 		mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
 				CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
@@ -111,6 +113,8 @@ public class CalendarDataSource {
 		calendar.setMenstruation(cursor
 				.getInt(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
 		calendar.setSex(cursor.getInt(CalendarHelper.COLUMN_INDEX_SEX));
+		calendar.setTookPill(cursor
+				.getInt(CalendarHelper.COLUMN_INDEX_TOOK_PILL) != 0);
 		calendar.setNote(cursor.getString(CalendarHelper.COLUMN_INDEX_NOTE));
 		return calendar;
 	}

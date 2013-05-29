@@ -26,20 +26,23 @@ public class CalendarHelper extends SQLiteOpenHelper {
 	public static final int COLUMN_INDEX_MENSTRUATION = 1;
 	public static final String COLUMN_SEX = "sex";
 	public static final int COLUMN_INDEX_SEX = 2;
+	public static final String COLUMN_TOOK_PILL = "took_pill";
+	public static final int COLUMN_INDEX_TOOK_PILL = 3;
 	public static final String COLUMN_NOTE = "note";
-	public static final int COLUMN_INDEX_NOTE = 3;
+	public static final int COLUMN_INDEX_NOTE = 4;
 
 	public static final String[] AllColumns = { CalendarHelper.COLUMN_ID,
 			CalendarHelper.COLUMN_MENSTRUATION, CalendarHelper.COLUMN_SEX,
-			CalendarHelper.COLUMN_NOTE };
+			CalendarHelper.COLUMN_TOOK_PILL, CalendarHelper.COLUMN_NOTE };
 
 	private static final String DATABASE_NAME = "WomanCycCalendar.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_CALENDAR + "(" + COLUMN_ID + " integer primary key, "
 			+ COLUMN_MENSTRUATION + " integer null, " + COLUMN_SEX
-			+ " integer null, " + COLUMN_NOTE + " text null);";
+			+ " integer null, " + COLUMN_TOOK_PILL + " integer null, "
+			+ COLUMN_NOTE + " text null);";
 
 	public CalendarHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

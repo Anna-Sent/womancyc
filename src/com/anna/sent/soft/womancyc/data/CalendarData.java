@@ -11,6 +11,7 @@ public class CalendarData implements Serializable {
 	private Calendar date;
 	private int menstruation = 0;
 	private int sex = 0;
+	private boolean tookPill = false;
 	private String note = null;
 
 	public CalendarData() {
@@ -55,15 +56,25 @@ public class CalendarData implements Serializable {
 		note = value;
 	}
 
+	public boolean getTookPill() {
+		return tookPill;
+	}
+
+	public void setTookPill(boolean value) {
+		tookPill = value;
+	}
+
 	public void clear() {
 		menstruation = 0;
 		sex = 0;
+		tookPill = false;
 		note = null;
 	}
 
 	@Override
 	public String toString() {
 		return DateUtils.toString(date) + " = " + getId() + ": " + menstruation
-				+ ", " + sex + ", \"" + (note == null ? "" : note) + "\"";
+				+ ", " + sex + ", " + (tookPill ? "took pill" : " no pill")
+				+ ", \"" + (note == null ? "" : note) + "\"";
 	}
 }

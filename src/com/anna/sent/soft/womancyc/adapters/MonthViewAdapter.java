@@ -294,6 +294,10 @@ public class MonthViewAdapter extends BaseAdapter {
 			if (cellData.getNote() != null && !cellData.getNote().equals("")) {
 				layers.add(getDrawableFromTheme(R.attr.note_bg));
 			}
+
+			if (cellData.getTookPill()) {
+				layers.add(getDrawableFromTheme(R.attr.took_pill_bg));
+			}
 		}
 
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {

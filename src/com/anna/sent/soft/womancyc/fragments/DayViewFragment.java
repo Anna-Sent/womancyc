@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
@@ -73,6 +74,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	private boolean mIsLargeLayout;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
+	private CheckBox checkBoxTookPill;
 	private AutoCompleteTextView textViewNote;
 	private Button currentDay;
 
@@ -203,6 +205,9 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 				: R.array.sexDrawablesLight;
 		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 
+		checkBoxTookPill = (CheckBox) v.findViewById(R.id.checkBoxTookPill);
+		checkBoxTookPill.setOnClickListener(this);
+
 		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
@@ -230,6 +235,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
 		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
 		spinnerHadSex.setSelection((int) mValue.getSex());
+		checkBoxTookPill.setChecked(mValue.getTookPill());
 		textViewNote.setText(mValue.getNote());
 	}
 
@@ -238,6 +244,9 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.buttonClear:
 			onDialogNeutralClick();
+			break;
+		case R.id.checkBoxTookPill:
+			onDataChanged();
 			break;
 		case R.id.currentDay:
 			if (mIsLargeLayout) {
@@ -352,6 +361,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	private boolean updateDataIfNeeded() {
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		int sex = spinnerHadSex.getSelectedItemPosition();
+		boolean tookPill = checkBoxTookPill.isChecked();
 		String note = textViewNote.getText().toString();
 
 		printEquality(mValue.getMenstruation(), menstruation);
@@ -359,10 +369,12 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		printEquality(mValue.getNote(), note);
 
 		boolean isDataChanged = menstruation != mValue.getMenstruation()
-				|| sex != mValue.getSex() || !isEqual(note, mValue.getNote());
+				|| sex != mValue.getSex() || tookPill != mValue.getTookPill()
+				|| !isEqual(note, mValue.getNote());
 		if (isDataChanged) {
 			mValue.setMenstruation(menstruation);
 			mValue.setSex(sex);
+			mValue.setTookPill(tookPill);
 			mValue.setNote(note);
 			log("data is changed");
 		}

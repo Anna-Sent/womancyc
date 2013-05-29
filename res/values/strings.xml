@@ -16,6 +16,7 @@
     <string name="menstruation">Менструация</string>
     <string name="sex">Секс</string>
     <string name="note">Заметка</string>
+    <string name="tookPill">Таблетку приняла</string>
 
     <string-array name="menstruationTypes">
         <item>Нет</item>
