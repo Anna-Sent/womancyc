@@ -59,4 +59,8 @@ public class CalendarHelper extends SQLiteOpenHelper {
 		database.execSQL("drop table if exists " + TABLE_CALENDAR);
 		onCreate(database);
 	}
+
+	@Override
+	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	}
 }
