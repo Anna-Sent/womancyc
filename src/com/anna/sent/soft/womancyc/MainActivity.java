@@ -7,16 +7,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
-import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
-import com.anna.sent.soft.womancyc.utils.ThemeUtils;
+import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
 
-public class MainActivity extends DataKeeperActivity implements
+public class MainActivity extends ParentActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
@@ -75,44 +72,6 @@ public class MainActivity extends DataKeeperActivity implements
 			fm.beginTransaction().remove(dayView).commit();
 		}
 
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		switch (ThemeUtils.getThemeId(this)) {
-		case ThemeUtils.LIGHT_THEME:
-			menu.findItem(R.id.lighttheme).setChecked(true);
-			break;
-		case ThemeUtils.DARK_THEME:
-			menu.findItem(R.id.darktheme).setChecked(true);
-			break;
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.lighttheme:
-			ThemeUtils.changeToTheme(this, ThemeUtils.LIGHT_THEME);
-			return true;
-		case R.id.darktheme:
-			ThemeUtils.changeToTheme(this, ThemeUtils.DARK_THEME);
-			return true;
-		case R.id.help:
-			/*
-			 * Intent intent = new Intent(); intent.setClass(this,
-			 * HelpActivity.class);
-			 * 
-			 * MainActivityStateSaver.save(this, intent);
-			 * 
-			 * startActivity(intent); return true;
-			 */
-		default:
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 	@Override
