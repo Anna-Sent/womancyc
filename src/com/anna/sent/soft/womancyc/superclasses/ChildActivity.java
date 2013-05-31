@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
