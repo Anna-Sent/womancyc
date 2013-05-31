@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 public abstract class ChildActivity extends DataKeeperActivity {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
