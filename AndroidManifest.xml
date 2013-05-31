@@ -17,8 +17,8 @@
         android:allowBackup="true"
         android:label="@string/app_name" >
         <receiver
-            android:name=".widget.MyPregnancyWidgetSmall"
-            android:label="WomanCyc Widget Small" >
+            android:name=".widget.MyCycleWidgetSmall"
+            android:label="@string/widget_small_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
@@ -32,11 +32,11 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/my_pregnancy_widget_provider_info_small" />
+                android:resource="@xml/my_cycle_widget_provider_info_small" />
         </receiver>
         <receiver
-            android:name=".widget.MyPregnancyWidgetSimple"
-            android:label="WomanCyc Widget Simple" >
+            android:name=".widget.MyCycleWidgetMedium"
+            android:label="@string/widget_medium_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
@@ -50,7 +50,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/my_pregnancy_widget_provider_info_simple" />
+                android:resource="@xml/my_cycle_widget_provider_info_medium" />
         </receiver>
 
         <activity

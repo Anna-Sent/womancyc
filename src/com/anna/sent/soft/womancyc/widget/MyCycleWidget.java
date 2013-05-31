@@ -12,15 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-/**
- * Define a simple widget that shows a text.
- */
-public abstract class MyPregnancyWidget extends AppWidgetProvider {
+public abstract class MyCycleWidget extends AppWidgetProvider {
 	public static final String UPDATE_ACTION = "UPDATE_MY_PREGNANCY_WIDGET_ACTION";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// Manual or automatic widget update started
 		String action = intent.getAction();
 		if (action.equals(UPDATE_ACTION)
 				|| action.equals(Intent.ACTION_TIME_CHANGED)
@@ -32,14 +28,8 @@ public abstract class MyPregnancyWidget extends AppWidgetProvider {
 			int[] appWidgetIds = appWidgetManager
 					.getAppWidgetIds(new ComponentName(context, getClass()));
 			if (appWidgetIds.length > 0) {
-				/*
-				 * Log.d("moo", getClass().getSimpleName() + " got action " +
-				 * action);
-				 */
-
 				onUpdate(context, appWidgetManager, appWidgetIds);
 
-				// Need to reinstall alarm on this events
 				if (action.equals(Intent.ACTION_TIME_CHANGED)
 						|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
 						|| action.equals(Intent.ACTION_DATE_CHANGED)
@@ -55,7 +45,6 @@ public abstract class MyPregnancyWidget extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-		// Update each of the widgets with the remote adapter
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			RemoteViews views = getBuilder().buildViews(context,
 					appWidgetIds[i]);
@@ -68,13 +57,13 @@ public abstract class MyPregnancyWidget extends AppWidgetProvider {
 	protected abstract Builder getBuilder();
 
 	public static void updateAllWidgets(Context context) {
-		updateWidgets(context, MyPregnancyWidgetSmall.class);
-		updateWidgets(context, MyPregnancyWidgetSimple.class);
+		updateWidgets(context, MyCycleWidgetSmall.class);
+		updateWidgets(context, MyCycleWidgetMedium.class);
 	}
 
 	private static PendingIntent getPendingIntent(Context context, Class<?> cls) {
 		Intent updateWidget = new Intent(context, cls);
-		updateWidget.setAction(MyPregnancyWidget.UPDATE_ACTION);
+		updateWidget.setAction(MyCycleWidget.UPDATE_ACTION);
 		PendingIntent result = PendingIntent.getBroadcast(context, 0,
 				updateWidget, PendingIntent.FLAG_CANCEL_CURRENT);
 		return result;
@@ -84,7 +73,6 @@ public abstract class MyPregnancyWidget extends AppWidgetProvider {
 		try {
 			getPendingIntent(context, cls).send();
 		} catch (CanceledException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -97,9 +85,6 @@ public abstract class MyPregnancyWidget extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		/*
-		 * Log.d("moo", getClass().getSimpleName() + " cancel alarm");
-		 */
 		AlarmManager alarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(getPendingIntent(context, getClass()));

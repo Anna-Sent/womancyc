@@ -13,10 +13,6 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.shared.Shared;
 
 public abstract class Builder {
-	protected abstract boolean hasTV1();
-
-	protected abstract boolean hasTV3();
-
 	private void setOnClickPendingIntent(Context context, RemoteViews views) {
 		Intent detailsIntent = new Intent(context, DayViewActivity.class);
 		detailsIntent.putExtra(Shared.DATE_TO_SHOW, Calendar.getInstance());
@@ -30,7 +26,7 @@ public abstract class Builder {
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget_layout);
 		setOnClickPendingIntent(context, views);
-		views.setTextViewText(R.id.widgetTextView, "hello");
+		views.setTextViewText(R.id.widgetTextView, "23 (34)");
 		return views;
 	}
 }

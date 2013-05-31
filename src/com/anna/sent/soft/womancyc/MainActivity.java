@@ -12,6 +12,7 @@ import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
+import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public class MainActivity extends ParentActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
@@ -73,8 +74,7 @@ public class MainActivity extends ParentActivity implements
 	}
 
 	private void showAsDialogFragment(Calendar date) {
-		Intent intent = new Intent();
-		intent.setClass(this, DayViewActivity.class);
+		Intent intent = new Intent(this, DayViewActivity.class);
 		intent.putExtra(Shared.DATE_TO_SHOW, date);
 		startActivity(intent);
 	}
@@ -114,5 +114,11 @@ public class MainActivity extends ParentActivity implements
 	@Override
 	public void onCalendarItemChanged(Calendar date) {
 		mMonthView.setSelectedDate(date);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MyCycleWidget.updateAllWidgets(this);
 	}
 }

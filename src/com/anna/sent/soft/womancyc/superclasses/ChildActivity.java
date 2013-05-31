@@ -1,14 +1,30 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.view.MenuItem;
 
 public abstract class ChildActivity extends DataKeeperActivity {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = false;
+
+	private String wrapMsg(String msg) {
+		return getClass().getSimpleName() + ": " + msg;
+	}
+
+	@SuppressWarnings("unused")
+	private void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
@@ -34,8 +50,10 @@ public abstract class ChildActivity extends DataKeeperActivity {
 			} else {
 				NavUtils.navigateUpTo(this, upIntent);
 			}
+
 			return true;
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
 }

@@ -1,6 +1,6 @@
 package com.anna.sent.soft.womancyc.widget;
 
-public class MyPregnancyWidgetSmall extends MyPregnancyWidget {
+public class MyCycleWidgetSmall extends MyCycleWidget {
 	@Override
 	protected Builder getBuilder() {
 		return new BuilderSmall();
