@@ -2,15 +2,15 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
+import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
 
 public class MainActivity extends ParentActivity implements
@@ -28,9 +28,6 @@ public class MainActivity extends ParentActivity implements
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
-
-	private final static String DAY_VIEW_TAG = DayViewFragment.class
-			.getSimpleName();
 
 	private MonthViewFragment mMonthView;
 	private DayViewFragment mDayView;
@@ -66,12 +63,6 @@ public class MainActivity extends ParentActivity implements
 		if (dayView != null) {
 			fm.beginTransaction().remove(dayView).commit();
 		}
-
-		dayView = fm.findFragmentByTag(DAY_VIEW_TAG);
-		if (dayView != null) {
-			fm.beginTransaction().remove(dayView).commit();
-		}
-
 	}
 
 	@Override
@@ -82,9 +73,10 @@ public class MainActivity extends ParentActivity implements
 	}
 
 	private void showAsDialogFragment(Calendar date) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		DialogFragment newFragment = createDayView(date);
-		newFragment.show(fragmentManager, DAY_VIEW_TAG);
+		Intent intent = new Intent();
+		intent.setClass(this, DayViewActivity.class);
+		intent.putExtra(Shared.DATE_TO_SHOW, date);
+		startActivity(intent);
 	}
 
 	private void showAsEmbeddedFragment(Calendar date) {
@@ -95,23 +87,14 @@ public class MainActivity extends ParentActivity implements
 			fragmentManager.beginTransaction().remove(dayView).commit();
 		}
 
-		fragmentManager.beginTransaction()
-				.add(R.id.dayView, createDayView(date)).commit();
-	}
-
-	private DialogFragment createDayView(Calendar date) {
-		CalendarData value = get(date);
-		if (value == null) {
-			value = new CalendarData(date);
-		}
-
 		Bundle args = new Bundle();
-		args.putSerializable(value.getClass().getSimpleName(), value);
+		args.putSerializable(Shared.DATE_TO_SHOW, date);
 
-		DialogFragment newFragment = new DayViewFragment();
+		Fragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
 
-		return newFragment;
+		fragmentManager.beginTransaction().add(R.id.dayView, newFragment)
+				.commit();
 	}
 
 	@Override

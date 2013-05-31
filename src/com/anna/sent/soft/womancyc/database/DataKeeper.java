@@ -16,7 +16,5 @@ public interface DataKeeper {
 
 	public void delete(CalendarData value);
 
-	public void cancel(CalendarData value);
-
 	public List<String> getNotes();
 }

@@ -2,14 +2,11 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +30,7 @@ import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class DayViewFragment extends DialogFragment implements OnClickListener,
+public class DayViewFragment extends Fragment implements OnClickListener,
 		OnItemSelectedListener, DataKeeperClient, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
@@ -72,7 +69,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		mDataKeeper = dataKeeper;
 	}
 
-	private boolean mIsLargeLayout;
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 	private CheckBox checkBoxTookPill;
 	private AutoCompleteTextView textViewNote;
@@ -88,16 +84,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = null;
-		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
-		if (mIsLargeLayout) {
-			v = createView();
-			log("onCreateView");
-		} else {
-			v = super.onCreateView(inflater, container, savedInstanceState);
-			log("onCreateView returns null");
-		}
-
+		log("onCreateView");
+		View v = createView();
 		return v;
 	}
 
@@ -117,52 +105,13 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	public void onPause() {
 		log("onPause");
 		super.onPause();
-		if (mIsLargeLayout) {
-			onDialogPositiveClick();
-		}
+		onDialogPositiveClick();
 	}
 
 	@Override
 	public void onDestroy() {
 		log("onDestroy");
 		super.onDestroy();
-	}
-
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		if (mIsLargeLayout) {
-			log("onCreateDialog returns null");
-			return super.onCreateDialog(savedInstanceState);
-		} else {
-			log("onCreateDialog");
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setView(createView())
-					.setTitle("")
-					.setPositiveButton(android.R.string.ok,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									onDialogPositiveClick();
-								}
-							})
-					.setNeutralButton(getString(R.string.clear),
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									onDialogNeutralClick();
-								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									onDialogNegativeClick();
-								}
-							});
-
-			return builder.create();
-		}
 	}
 
 	private void fillSpinner(int stringsArray, int imagesArray, Spinner spinner) {
@@ -188,9 +137,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	}
 
 	private View createView() {
-		mValue = (CalendarData) getArguments().getSerializable(
-				CalendarData.class.getSimpleName());
-
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.view_day, null);
 
@@ -220,13 +166,11 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		prevDay.setOnClickListener(this);
 		Button nextDay = (Button) v.findViewById(R.id.nextDay);
 		nextDay.setOnClickListener(this);
-		if (!mIsLargeLayout) {
-			clear.setVisibility(View.GONE);
-		} else {
-			clear.setOnClickListener(this);
-		}
+		clear.setOnClickListener(this);
 
-		fillWithData();
+		Calendar date = (Calendar) getArguments().getSerializable(
+				Shared.DATE_TO_SHOW);
+		setDate(date);
 
 		return v;
 	}
@@ -249,16 +193,12 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			onDataChanged();
 			break;
 		case R.id.currentDay:
-			if (mIsLargeLayout) {
-				Bundle args = new Bundle();
-				args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
-				DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-				dialog.setArguments(args);
-				dialog.setOnDateSetListener(this);
-				dialog.show(getFragmentManager(), dialog.getClass()
-						.getSimpleName());
-			}
-
+			Bundle args = new Bundle();
+			args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
+			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+			dialog.setArguments(args);
+			dialog.setOnDateSetListener(this);
+			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
 			break;
 		case R.id.nextDay:
 			toNextDay();
@@ -298,9 +238,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mListener.onCalendarItemChanged(dateToShow);
 		}
 
-		if (!mIsLargeLayout) {
-			setDate(dateToShow);
-		}
+		setDate(dateToShow);
 	}
 
 	private void toNextDay() {
@@ -310,9 +248,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mListener.onCalendarItemChanged(dateToShow);
 		}
 
-		if (!mIsLargeLayout) {
-			setDate(dateToShow);
-		}
+		setDate(dateToShow);
 	}
 
 	@Override
@@ -343,14 +279,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 	}
 
-	private void onDialogNegativeClick() {
-		if (mDataKeeper != null) {
-			mDataKeeper.cancel(mValue);
-		}
-	}
-
 	private void onDataChanged() {
-		if (mIsLargeLayout && mDataKeeper != null) {
+		if (mDataKeeper != null) {
 			boolean isDataChanged = updateDataIfNeeded();
 			if (isDataChanged) {
 				mDataKeeper.insertOrUpdate(mValue);

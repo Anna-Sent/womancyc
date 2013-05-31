@@ -39,6 +39,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		super.setViews(savedInstanceState);
 		mDataSource = new CalendarDataSource(this);
 		mDataSource.open();
 		mValues = mDataSource.getAllRows();
@@ -142,10 +143,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 				return date1.after(date2) ? 1 : -1;
 			}
 		}
-	}
-
-	@Override
-	public void cancel(CalendarData value) {
 	}
 
 	@Override

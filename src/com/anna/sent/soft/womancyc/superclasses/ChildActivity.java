@@ -11,6 +11,7 @@ import android.view.MenuItem;
 public abstract class ChildActivity extends DataKeeperActivity {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		super.setViews(savedInstanceState);
 		setupActionBar();
 	}
 
