@@ -26,6 +26,7 @@ public class DayViewActivity extends ChildActivity implements
 		}
 	}
 
+	private boolean mIsLargeLayout;
 	private DayViewFragment mDayView;
 
 	@Override
@@ -42,24 +43,29 @@ public class DayViewActivity extends ChildActivity implements
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 
-		Calendar date = (Calendar) getIntent().getSerializableExtra(
-				Shared.DATE_TO_SHOW);
+		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
-		Bundle args = new Bundle();
-		args.putSerializable(Shared.DATE_TO_SHOW, date);
+		if (mIsLargeLayout) {
+			finish();
+			return;
+		}
 
-		Fragment newFragment = new DayViewFragment();
-		newFragment.setArguments(args);
+		if (savedInstanceState == null) {
+			Calendar date = (Calendar) getIntent().getSerializableExtra(
+					Shared.DATE_TO_SHOW);
 
-		getSupportFragmentManager().beginTransaction()
-				.add(android.R.id.content, newFragment).commit();
+			Bundle args = new Bundle();
+			args.putSerializable(Shared.DATE_TO_SHOW, date);
+
+			Fragment newFragment = new DayViewFragment();
+			newFragment.setArguments(args);
+
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, newFragment).commit();
+		}
 	}
 
 	@Override
 	public void onCalendarItemChanged(Calendar date) {
-	}
-
-	@Override
-	protected void dataChanged() {
 	}
 }

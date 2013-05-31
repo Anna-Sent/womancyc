@@ -9,7 +9,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
-public abstract class ChildActivity extends DataKeeperActivity {
+public class ChildActivity extends DataKeeperActivity {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -54,5 +54,9 @@ public abstract class ChildActivity extends DataKeeperActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void dataChanged() {
 	}
 }

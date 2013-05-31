@@ -32,9 +32,13 @@ public abstract class StateSaverActivity extends FragmentActivity implements
 
 	private ArrayList<StateSaver> mStateSavers = new ArrayList<StateSaver>();
 
+	protected void setupTheme() {
+		ThemeUtils.onActivityCreateSetTheme(this);
+	}
+
 	@Override
 	protected final void onCreate(Bundle savedInstanceState) {
-		ThemeUtils.onActivityCreateSetTheme(this);
+		setupTheme();
 
 		super.onCreate(savedInstanceState);
 
