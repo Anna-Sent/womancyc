@@ -27,12 +27,14 @@ public class ChildActivity extends DataKeeperActivity {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
-		setupActionBar();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			new ActionBarHelper().setupActionBar();
+		}
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+	private class ActionBarHelper {
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+		private void setupActionBar() {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}

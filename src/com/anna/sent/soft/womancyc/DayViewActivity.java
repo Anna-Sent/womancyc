@@ -8,9 +8,9 @@ import android.util.Log;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
+import com.anna.sent.soft.womancyc.superclasses.DialogActivity;
 
-public class DayViewActivity extends ChildActivity implements
+public class DayViewActivity extends DialogActivity implements
 		DayViewFragment.Listener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;

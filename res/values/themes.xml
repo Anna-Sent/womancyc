@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <declare-styleable name="AppTheme">
+    <declare-styleable name="Theme">
         <attr name="helpIcon" format="reference" />
         <attr name="nextItemIcon" format="reference" />
         <attr name="prevItemIcon" format="reference" />
@@ -70,8 +70,16 @@
         <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
     </style>
 
-    <style name="DialogTheme" parent="DialogBaseTheme" />
+    <style name="DialogTheme" parent="DialogBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="nextItemIcon">@drawable/next_item_dark</item>
+        <item name="prevItemIcon">@drawable/previous_item_dark</item>
+    </style>
 
-    <style name="DialogThemeLight" parent="DialogBaseThemeLight" />
+    <style name="DialogThemeLight" parent="DialogBaseThemeLight">
+        <item name="android:windowNoTitle">true</item>
+        <item name="nextItemIcon">@drawable/next_item_light</item>
+        <item name="prevItemIcon">@drawable/previous_item_light</item>
+    </style>
 
 </resources>
