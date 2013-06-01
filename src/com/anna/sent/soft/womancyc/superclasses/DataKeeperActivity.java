@@ -44,6 +44,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		mDataSource.open();
 		mValues = mDataSource.getAllRows();
 		mNotes = mDataSource.getAllNotes();
+		dataChanged();
 	}
 
 	@Override
@@ -52,6 +53,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			mDataSource.open();
 			mValues = mDataSource.getAllRows();
 			mNotes = mDataSource.getAllNotes();
+			dataChanged();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Toast.makeText(this,
