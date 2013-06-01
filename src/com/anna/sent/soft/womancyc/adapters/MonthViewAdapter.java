@@ -266,7 +266,7 @@ public class MonthViewAdapter extends BaseAdapter {
 		if (cellData != null) {
 			switch (cellData.getMenstruation()) {
 			case 1:
-				layers.add(getDrawable(R.drawable.menstruation_bg));
+				layers.add(getDrawable(R.drawable.menstruation_bg_src));
 				break;
 			case 2:
 				layers.add(getDrawableFromTheme(R.attr.one_drop_bg));
