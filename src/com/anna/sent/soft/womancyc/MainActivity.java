@@ -12,6 +12,7 @@ import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public class MainActivity extends ParentActivity implements
@@ -74,7 +75,10 @@ public class MainActivity extends ParentActivity implements
 	}
 
 	private void showAsDialogFragment(Calendar date) {
-		Intent intent = new Intent(this, DayViewActivity.class);
+		Intent intent = new Intent(
+				this,
+				ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(this) ? DayViewActivityDark.class
+						: DayViewActivityLight.class);
 		intent.putExtra(Shared.DATE_TO_SHOW, date);
 		startActivity(intent);
 	}

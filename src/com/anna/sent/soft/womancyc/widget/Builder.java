@@ -8,13 +8,19 @@ import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
-import com.anna.sent.soft.womancyc.DayViewActivity;
+import com.anna.sent.soft.womancyc.DayViewActivityDark;
+import com.anna.sent.soft.womancyc.DayViewActivityLight;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.shared.Shared;
+import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public abstract class Builder {
 	private void setOnClickPendingIntent(Context context, RemoteViews views) {
-		Intent detailsIntent = new Intent(context, DayViewActivity.class);
+		Intent detailsIntent = new Intent(
+				context,
+				ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(context) ? DayViewActivityDark.class
+						: DayViewActivityLight.class);
+
 		detailsIntent.putExtra(Shared.DATE_TO_SHOW, Calendar.getInstance());
 		PendingIntent pendingIntent = TaskStackBuilder.create(context)
 				.addNextIntentWithParentStack(detailsIntent)

@@ -118,8 +118,7 @@
             android:id="@+id/textViewNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearance" >
-        </AutoCompleteTextView>
+            android:textAppearance="?android:attr/textAppearance" />
 
         <Button
             android:id="@+id/buttonClear"

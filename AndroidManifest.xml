@@ -63,8 +63,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DayViewActivity"
-            android:parentActivityName=".MainActivity" >
+            android:name=".DayViewActivityLight"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/DialogThemeLight" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".DayViewActivityDark"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/DialogTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
