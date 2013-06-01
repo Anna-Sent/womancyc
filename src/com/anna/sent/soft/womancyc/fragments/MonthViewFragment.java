@@ -30,7 +30,7 @@ public class MonthViewFragment extends StateSaverFragment implements
 		OnItemClickListener, OnItemLongClickListener, OnClickListener,
 		OnDateSetListener, DataKeeperClient {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -72,7 +72,6 @@ public class MonthViewFragment extends StateSaverFragment implements
 	private GridView calendarView;
 	private MonthViewAdapter adapter;
 	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
-	private Calendar mDateToShow = null;
 
 	public MonthViewFragment() {
 		super();
@@ -122,29 +121,19 @@ public class MonthViewFragment extends StateSaverFragment implements
 	}
 
 	@Override
-	public void onStart() {
-		log("onStart");
-		super.onStart();
-		setSelectedDate(mDateToShow == null ? adapter.getSelectedDate()
-				: mDateToShow);
-		mDateToShow = null;
-	}
-
-	@Override
 	public void restoreState(Bundle state) {
-		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(getActivity(), mDateToShow), true);
 	}
 
 	@Override
 	public void saveState(Bundle state) {
-		log("save "
-				+ DateUtils.toString(getActivity(), adapter.getSelectedDate()),
-				true);
-		state.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
+	}
+
+	public Calendar getSelectedDate() {
+		return adapter.getSelectedDate();
 	}
 
 	public void setSelectedDate(Calendar date) {
+		log("set selected date to " + DateUtils.toString(getActivity(), date));
 		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				date.getTime()));

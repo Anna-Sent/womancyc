@@ -58,6 +58,33 @@ public class MainActivity extends ParentActivity implements
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 	}
 
+	private Calendar mDateToShow = null;
+
+	@Override
+	public void onStart() {
+		log("onStart");
+		super.onStart();
+		mMonthView.setSelectedDate(mDateToShow == null ? Calendar.getInstance()
+				: mDateToShow);
+	}
+
+	public void onStop() {
+		mDateToShow = mMonthView.getSelectedDate();
+		super.onStop();
+	}
+
+	@Override
+	public void restoreState(Bundle state) {
+		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
+		log("restore " + DateUtils.toString(this, mDateToShow));
+	}
+
+	@Override
+	public void saveActivityState(Bundle state) {
+		log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()));
+		state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
+	}
+
 	@Override
 	public void beforeOnSaveInstanceState() {
 		FragmentManager fm = getSupportFragmentManager();
