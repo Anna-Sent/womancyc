@@ -30,7 +30,7 @@ public class MonthViewFragment extends StateSaverFragment implements
 		OnItemClickListener, OnItemLongClickListener, OnClickListener,
 		OnDateSetListener, DataKeeperClient {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
