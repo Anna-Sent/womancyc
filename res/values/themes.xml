@@ -33,14 +33,14 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="nextItemIcon">@drawable/next_item_dark</item>
         <item name="prevItemIcon">@drawable/previous_item_dark</item>
-        <item name="note_bg">@drawable/note_bg_dark</item>
-        <item name="one_drop_bg">@drawable/one_drop_bg_dark</item>
-        <item name="two_drops_bg">@drawable/two_drops_bg_dark</item>
-        <item name="three_drops_bg">@drawable/three_drops_bg_dark</item>
-        <item name="sex_bg">@drawable/sex_bg_dark</item>
-        <item name="protected_sex_bg">@drawable/protected_sex_bg_dark</item>
-        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_dark</item>
-        <item name="took_pill_bg">@drawable/pill_bg_dark</item>
+        <item name="note_bg">@drawable/note_bg_src_dark</item>
+        <item name="one_drop_bg">@drawable/one_drop_bg_src_dark</item>
+        <item name="two_drops_bg">@drawable/two_drops_bg_src_dark</item>
+        <item name="three_drops_bg">@drawable/three_drops_bg_src_dark</item>
+        <item name="sex_bg">@drawable/sex_bg_src_dark</item>
+        <item name="protected_sex_bg">@drawable/protected_sex_bg_src_dark</item>
+        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_src_dark</item>
+        <item name="took_pill_bg">@drawable/pill_bg_src_dark</item>
         <item name="sex">@drawable/sex_dark</item>
         <item name="protected_sex">@drawable/protected_sex_dark</item>
         <item name="unprotected_sex">@drawable/unprotected_sex_dark</item>
@@ -49,15 +49,15 @@
     <style name="AppThemeLight" parent="AppBaseThemeLight">
         <item name="nextItemIcon">@drawable/next_item_light</item>
         <item name="prevItemIcon">@drawable/previous_item_light</item>
-        <item name="note_bg">@drawable/note_bg_light</item>
-        <item name="one_drop_bg">@drawable/one_drop_bg_light</item>
-        <item name="two_drops_bg">@drawable/two_drops_bg_light</item>
-        <item name="three_drops_bg">@drawable/three_drops_bg_light</item>
-        <item name="sex_bg">@drawable/sex_bg_light</item>
-        <item name="protected_sex_bg">@drawable/protected_sex_bg_light</item>
-        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_light</item>
+        <item name="note_bg">@drawable/note_bg_src_light</item>
+        <item name="one_drop_bg">@drawable/one_drop_bg_src_light</item>
+        <item name="two_drops_bg">@drawable/two_drops_bg_src_light</item>
+        <item name="three_drops_bg">@drawable/three_drops_bg_src_light</item>
+        <item name="sex_bg">@drawable/sex_bg_src_light</item>
+        <item name="protected_sex_bg">@drawable/protected_sex_bg_src_light</item>
+        <item name="unprotected_sex_bg">@drawable/unprotected_sex_bg_src_light</item>
+        <item name="took_pill_bg">@drawable/pill_bg_src_light</item>
         <item name="sex">@drawable/sex_light</item>
-        <item name="took_pill_bg">@drawable/pill_bg_light</item>
         <item name="protected_sex">@drawable/protected_sex_light</item>
         <item name="unprotected_sex">@drawable/unprotected_sex_light</item>
     </style>
