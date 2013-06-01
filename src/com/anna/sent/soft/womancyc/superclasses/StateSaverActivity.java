@@ -24,6 +24,7 @@ public abstract class StateSaverActivity extends FragmentActivity implements
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg, boolean debug) {
 		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
