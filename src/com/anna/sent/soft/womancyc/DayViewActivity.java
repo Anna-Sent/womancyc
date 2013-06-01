@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
@@ -28,6 +29,7 @@ public class DayViewActivity extends DialogActivity implements
 	}
 
 	private boolean mIsLargeLayout;
+	private Calendar mDateToShow;
 	private DayViewFragment mDayView;
 
 	@Override
@@ -44,41 +46,65 @@ public class DayViewActivity extends DialogActivity implements
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 
-		if (mResultIntent == null) {
-			setResult(RESULT_CANCELED);
+		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+
+		if (savedInstanceState == null) {
+			mDateToShow = (Calendar) getIntent().getSerializableExtra(
+					Shared.DATE_TO_SHOW);
+			log("got from intent " + DateUtils.toString(this, mDateToShow));
 		} else {
-			setResult(RESULT_OK, mResultIntent);
+			myRestoreState(savedInstanceState);
 		}
 
-		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+		setResult();
 
 		if (mIsLargeLayout) {
 			finish();
 			return;
 		}
 
-		if (savedInstanceState == null) {
-			Calendar date = (Calendar) getIntent().getSerializableExtra(
-					Shared.DATE_TO_SHOW);
+		Bundle args = new Bundle();
+		args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
 
-			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, date);
+		Fragment newFragment = new DayViewFragment();
+		newFragment.setArguments(args);
+		log("set args " + DateUtils.toString(this, mDateToShow));
 
-			Fragment newFragment = new DayViewFragment();
-			newFragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.add(android.R.id.content, newFragment).commit();
+	}
 
-			getSupportFragmentManager().beginTransaction()
-					.add(android.R.id.content, newFragment).commit();
+	@Override
+	protected void beforeOnSaveInstanceState() {
+		FragmentManager fm = getSupportFragmentManager();
+
+		Fragment dayView = fm.findFragmentById(android.R.id.content);
+		if (dayView != null) {
+			fm.beginTransaction().remove(dayView).commit();
 		}
 	}
 
-	private static Intent mResultIntent = null;
+	public void myRestoreState(Bundle state) {
+		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
+		log("restore " + DateUtils.toString(this, mDateToShow));
+	}
+
+	@Override
+	protected void saveActivityState(Bundle state) {
+		state.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+		log("save " + DateUtils.toString(this, mDateToShow));
+	}
 
 	@Override
 	public void onCalendarItemChanged(Calendar date) {
-		mResultIntent = new Intent();
-		mResultIntent.putExtra(Shared.DATE_TO_SHOW, date);
-		setResult(RESULT_OK, mResultIntent);
+		mDateToShow = date;
+		setResult();
 		log("put to result " + DateUtils.toString(this, date));
+	}
+
+	private void setResult() {
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra(Shared.DATE_TO_SHOW, mDateToShow);
+		setResult(RESULT_OK, resultIntent);
 	}
 }
