@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.util.Log;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DialogActivity;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class DayViewActivity extends DialogActivity implements
 		DayViewFragment.Listener {
@@ -19,7 +21,6 @@ public class DayViewActivity extends DialogActivity implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -43,6 +44,12 @@ public class DayViewActivity extends DialogActivity implements
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 
+		if (mResultIntent == null) {
+			setResult(RESULT_CANCELED);
+		} else {
+			setResult(RESULT_OK, mResultIntent);
+		}
+
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 
 		if (mIsLargeLayout) {
@@ -65,7 +72,13 @@ public class DayViewActivity extends DialogActivity implements
 		}
 	}
 
+	private static Intent mResultIntent = null;
+
 	@Override
 	public void onCalendarItemChanged(Calendar date) {
+		mResultIntent = new Intent();
+		mResultIntent.putExtra(Shared.DATE_TO_SHOW, date);
+		setResult(RESULT_OK, mResultIntent);
+		log("put to result " + DateUtils.toString(this, date));
 	}
 }

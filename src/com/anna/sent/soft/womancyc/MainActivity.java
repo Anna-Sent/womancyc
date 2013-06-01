@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
@@ -24,7 +26,6 @@ public class MainActivity extends ParentActivity implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -74,13 +75,25 @@ public class MainActivity extends ParentActivity implements
 		}
 	}
 
+	private final static int REQUEST_DATE = 1;
+
 	private void showAsDialogFragment(Calendar date) {
 		Intent intent = new Intent(
 				this,
 				ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(this) ? DayViewActivityDark.class
 						: DayViewActivityLight.class);
 		intent.putExtra(Shared.DATE_TO_SHOW, date);
-		startActivity(intent);
+		startActivityForResult(intent, REQUEST_DATE);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_DATE && resultCode == Activity.RESULT_OK) {
+			Calendar date = (Calendar) data
+					.getSerializableExtra(Shared.DATE_TO_SHOW);
+			log("got from result " + DateUtils.toString(this, date));
+			mMonthView.setSelectedDate(date);
+		}
 	}
 
 	private void showAsEmbeddedFragment(Calendar date) {
