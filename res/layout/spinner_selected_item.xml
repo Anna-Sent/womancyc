@@ -11,6 +11,7 @@
         android:drawablePadding="5dp"
         android:paddingLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?attr/spinnerItemTextColor"
         android:textIsSelectable="false"
         android:textSize="12sp" />
 
