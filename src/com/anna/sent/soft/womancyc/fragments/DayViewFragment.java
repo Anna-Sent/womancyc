@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -31,7 +29,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends Fragment implements OnClickListener,
-		OnItemSelectedListener, DataKeeperClient, OnDateSetListener {
+		DataKeeperClient, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -74,12 +72,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	private AutoCompleteTextView textViewNote;
 	private Button currentDay;
 
-	private CalendarData mValue;
-
-	public DayViewFragment() {
-		super();
-		log("create");
-	}
+	private CalendarData mValue = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,28 +83,10 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	}
 
 	@Override
-	public void onActivityCreated(Bundle arg0) {
-		log("onActivityCreated");
-		super.onActivityCreated(arg0);
-	}
-
-	@Override
-	public void onResume() {
-		log("onResume");
-		super.onResume();
-	}
-
-	@Override
 	public void onPause() {
 		log("onPause");
 		super.onPause();
-		onDialogPositiveClick();
-	}
-
-	@Override
-	public void onDestroy() {
-		log("onDestroy");
-		super.onDestroy();
+		tryToSave();
 	}
 
 	private void fillSpinner(int stringsArray, int imagesArray, Spinner spinner) {
@@ -133,7 +108,6 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(this);
 	}
 
 	private View createView() {
@@ -183,14 +157,24 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		textViewNote.setText(mValue.getNote());
 	}
 
+	private void setDate(Calendar date) {
+		if (mValue != null) {
+			tryToSave();
+		}
+
+		mValue = mDataKeeper.get(date);
+		if (mValue == null) {
+			mValue = new CalendarData(date);
+		}
+
+		fillWithData();
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.buttonClear:
-			onDialogNeutralClick();
-			break;
-		case R.id.checkBoxTookPill:
-			onDataChanged();
+			clear();
 			break;
 		case R.id.currentDay:
 			Bundle args = new Bundle();
@@ -209,24 +193,15 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		}
 	}
 
-	private void setDate(Calendar date) {
-		mValue = mDataKeeper.get(date);
-		if (mValue == null) {
-			mValue = new CalendarData(date);
-		}
-
-		fillWithData();
-	}
-
 	@Override
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
-		if (mListener != null) {
-			mListener.onCalendarItemChanged(dateToShow);
-		}
-
 		if (!DateUtils.datesAreEqual(dateToShow, mValue.getDate())) {
+			if (mListener != null) {
+				mListener.onCalendarItemChanged(dateToShow);
+			}
+
 			setDate(dateToShow);
 		}
 	}
@@ -251,35 +226,14 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		setDate(dateToShow);
 	}
 
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		onDataChanged();
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		onDataChanged();
-	}
-
-	private void onDialogPositiveClick() {
-		if (mDataKeeper != null) {
-			boolean isDataChanged = updateDataIfNeeded();
-			if (isDataChanged) {
-				mDataKeeper.insertOrUpdate(mValue);
-			}
-		}
-	}
-
-	private void onDialogNeutralClick() {
+	private void clear() {
 		if (mDataKeeper != null) {
 			mDataKeeper.delete(mValue);
-			mValue.clear();
-			fillWithData();
+			setDate(mValue.getDate());
 		}
 	}
 
-	private void onDataChanged() {
+	private void tryToSave() {
 		if (mDataKeeper != null) {
 			boolean isDataChanged = updateDataIfNeeded();
 			if (isDataChanged) {
