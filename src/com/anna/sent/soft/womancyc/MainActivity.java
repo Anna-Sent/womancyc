@@ -102,7 +102,7 @@ public class MainActivity extends ParentActivity implements
 		}
 	}
 
-	private final static int REQUEST_DATE = 1;
+	public final static int REQUEST_DATE = 1;
 
 	private void showAsDialogFragment(Calendar date) {
 		Intent intent = new Intent(
