@@ -5,12 +5,18 @@
 
         <!-- item name="numberPickerStyle">@style/Widget.Holo.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_dark</item>
+        <item name="spinnerItemTextColor">@android:color/white</item>
+        <item name="textViewTextColor">@android:color/white</item>
+        <item name="editableTextViewTextColor">@android:color/white</item>
     </style>
 
     <style name="AppBaseThemeLight" parent="android:Theme.Holo.Light">
 
         <!-- item name="numberPickerStyle">@style/Widget.Holo.Light.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="textViewTextColor">@android:color/black</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
     </style>
 
     <style name="DialogBaseTheme" parent="android:Theme.Holo.Dialog">

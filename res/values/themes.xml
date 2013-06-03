@@ -16,18 +16,27 @@
         <attr name="sex" format="reference" />
         <attr name="protected_sex" format="reference" />
         <attr name="unprotected_sex" format="reference" />
+        <attr name="spinnerItemTextColor" format="color|reference" />
+        <attr name="textViewTextColor" format="color|reference" />
+        <attr name="editableTextViewTextColor" format="color|reference" />
     </declare-styleable>
 
     <style name="AppBaseTheme" parent="android:Theme">
 
         <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="textViewTextColor">@android:color/white</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
     </style>
 
     <style name="AppBaseThemeLight" parent="android:Theme.Light">
 
         <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="textViewTextColor">@android:color/black</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
@@ -61,12 +70,6 @@
         <item name="protected_sex">@drawable/protected_sex_light</item>
         <item name="unprotected_sex">@drawable/unprotected_sex_light</item>
     </style>
-
-    <declare-styleable name="Theme.Dialog">
-        <attr name="spinnerItemTextColor" format="color|reference" />
-        <attr name="textViewTextColor" format="color|reference" />
-        <attr name="editableTextViewTextColor" format="color|reference" />
-    </declare-styleable>
 
     <style name="DialogBaseTheme" parent="android:Theme.Dialog">
 
