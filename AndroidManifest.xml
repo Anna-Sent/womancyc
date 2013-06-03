@@ -15,9 +15,10 @@
 
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ic_launcher_womancyc"
         android:label="@string/app_name" >
         <receiver
-            android:name=".widget.MyCycleWidgetSmall"
+            android:name="com.anna.sent.soft.womancyc.widget.MyCycleWidgetSmall"
             android:label="@string/widget_small_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -35,7 +36,7 @@
                 android:resource="@xml/my_cycle_widget_provider_info_small" />
         </receiver>
         <receiver
-            android:name=".widget.MyCycleWidgetMedium"
+            android:name="com.anna.sent.soft.womancyc.widget.MyCycleWidgetMedium"
             android:label="@string/widget_medium_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -54,7 +55,7 @@
         </receiver>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.anna.sent.soft.womancyc.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,20 +64,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DayViewActivityLight"
-            android:parentActivityName=".MainActivity"
+            android:name="com.anna.sent.soft.womancyc.DayViewActivityLight"
+            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
             android:theme="@style/DialogThemeLight" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.anna.sent.soft.womancyc.MainActivity" />
         </activity>
         <activity
-            android:name=".DayViewActivityDark"
-            android:parentActivityName=".MainActivity"
+            android:name="com.anna.sent.soft.womancyc.DayViewActivityDark"
+            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
             android:theme="@style/DialogTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.anna.sent.soft.womancyc.MainActivity" />
         </activity>
         <activity
             android:name="com.google.ads.AdActivity"
