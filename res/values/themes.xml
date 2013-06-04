@@ -77,6 +77,8 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="nextItemIcon">@drawable/next_item_dark</item>
+        <item name="prevItemIcon">@drawable/previous_item_dark</item>
     </style>
 
     <style name="DialogBaseThemeLight" parent="android:Theme.Dialog">
@@ -85,18 +87,16 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
-    </style>
-
-    <style name="DialogTheme" parent="DialogBaseTheme">
-        <item name="android:windowNoTitle">true</item>
         <item name="nextItemIcon">@drawable/next_item_dark</item>
         <item name="prevItemIcon">@drawable/previous_item_dark</item>
     </style>
 
+    <style name="DialogTheme" parent="DialogBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="DialogThemeLight" parent="DialogBaseThemeLight">
         <item name="android:windowNoTitle">true</item>
-        <item name="nextItemIcon">@drawable/next_item_light</item>
-        <item name="prevItemIcon">@drawable/previous_item_light</item>
     </style>
 
 </resources>

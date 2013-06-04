@@ -25,6 +25,8 @@
         <item name="spinnerItemTextColor">@android:color/white</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/white</item>
+        <item name="nextItemIcon">@drawable/next_item_dark</item>
+        <item name="prevItemIcon">@drawable/previous_item_dark</item>
     </style>
 
     <style name="DialogBaseThemeLight" parent="android:Theme.Holo.Light.Dialog">
@@ -33,6 +35,8 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="nextItemIcon">@drawable/next_item_light</item>
+        <item name="prevItemIcon">@drawable/previous_item_light</item>
     </style>
 
 </resources>
