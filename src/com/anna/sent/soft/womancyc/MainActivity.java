@@ -68,10 +68,7 @@ public class MainActivity extends ParentActivity implements
 			mDateToShow = Calendar.getInstance();
 		}
 
-		mMonthView.setSelectedDate(mDateToShow);
-		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(mDateToShow);
-		}
+		showDate(mDateToShow);
 	}
 
 	public void onStop() {
@@ -125,10 +122,7 @@ public class MainActivity extends ParentActivity implements
 			Calendar date = (Calendar) data
 					.getSerializableExtra(Shared.DATE_TO_SHOW);
 			log("got from result " + DateUtils.toString(this, date));
-			mMonthView.setSelectedDate(date);
-			if (mIsLargeLayout) {
-				showAsEmbeddedFragment(date);
-			}
+			showDate(date);
 		}
 	}
 
@@ -169,15 +163,19 @@ public class MainActivity extends ParentActivity implements
 		mMonthView.setSelectedDate(date);
 	}
 
+	private void showDate(Calendar date) {
+		mMonthView.setSelectedDate(date);
+		if (mIsLargeLayout) {
+			showAsEmbeddedFragment(date);
+		}
+	}
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		Calendar date = (Calendar) intent
 				.getSerializableExtra(Shared.DATE_TO_SHOW);
-		mMonthView.setSelectedDate(date);
-		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(date);
-		}
+		showDate(date);
 	}
 
 	@Override
