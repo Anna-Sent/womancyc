@@ -50,9 +50,9 @@ public class MonthViewFragment extends StateSaverFragment implements
 	}
 
 	public interface Listener {
-		public void onCalendarItemSelected(Calendar date);
+		public void onMonthViewItemChangedByUser(Calendar date);
 
-		public void onCalendarItemLongClick(Calendar date);
+		public void onMonthViewItemLongClick(Calendar date);
 	}
 
 	private Listener mListener = null;
@@ -137,9 +137,6 @@ public class MonthViewFragment extends StateSaverFragment implements
 		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				date.getTime()));
-		if (mListener != null) {
-			mListener.onCalendarItemSelected(date);
-		}
 	}
 
 	@Override
@@ -149,6 +146,10 @@ public class MonthViewFragment extends StateSaverFragment implements
 		if (item != null) {
 			Calendar date = (Calendar) item;
 			setSelectedDate(date);
+
+			if (mListener != null) {
+				mListener.onMonthViewItemChangedByUser(date);
+			}
 		}
 	}
 
@@ -159,8 +160,13 @@ public class MonthViewFragment extends StateSaverFragment implements
 		if (item != null) {
 			Calendar date = (Calendar) item;
 			setSelectedDate(date);
+
 			if (mListener != null) {
-				mListener.onCalendarItemLongClick(date);
+				mListener.onMonthViewItemChangedByUser(date);
+			}
+
+			if (mListener != null) {
+				mListener.onMonthViewItemLongClick(date);
 			}
 		}
 
@@ -176,6 +182,9 @@ public class MonthViewFragment extends StateSaverFragment implements
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, -1);
 		setSelectedDate(dateToShow);
+		if (mListener != null) {
+			mListener.onMonthViewItemChangedByUser(dateToShow);
+		}
 	}
 
 	private void toNextMonth() {
@@ -183,6 +192,9 @@ public class MonthViewFragment extends StateSaverFragment implements
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, 1);
 		setSelectedDate(dateToShow);
+		if (mListener != null) {
+			mListener.onMonthViewItemChangedByUser(dateToShow);
+		}
 	}
 
 	@Override
@@ -210,5 +222,8 @@ public class MonthViewFragment extends StateSaverFragment implements
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
 		setSelectedDate(dateToShow);
+		if (mListener != null) {
+			mListener.onMonthViewItemChangedByUser(dateToShow);
+		}
 	}
 }
