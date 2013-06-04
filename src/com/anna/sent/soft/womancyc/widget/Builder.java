@@ -18,24 +18,24 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public abstract class Builder {
 	private void setOnClickPendingIntent(Context context, RemoteViews views) {
-		Intent dayViewIntent = new Intent(
-				context,
-				ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(context) ? DayViewActivityDark.class
-						: DayViewActivityLight.class);
-		dayViewIntent.putExtra(Shared.DATE_TO_SHOW, Calendar.getInstance());
-		Intent monthViewIntent = new Intent(context, MainActivity.class);
 
+		Intent intent;
 		PendingIntent pendingIntent;
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
 				|| context.getResources().getBoolean(R.bool.isLargeLayout)) {
-			pendingIntent = PendingIntent.getActivity(context, 0,
-					monthViewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			intent = new Intent(context, MainActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
 		} else {
-			pendingIntent = TaskStackBuilder
-					.create(context)
-					.addNextIntentWithParentStack(dayViewIntent)
-					.getPendingIntent(MainActivity.REQUEST_DATE,
-							PendingIntent.FLAG_UPDATE_CURRENT);
+			intent = new Intent(
+					context,
+					ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(context) ? DayViewActivityDark.class
+							: DayViewActivityLight.class);
+			intent.putExtra(Shared.DATE_TO_SHOW, Calendar.getInstance());
+			intent.putExtra("setResult", "");
+			pendingIntent = TaskStackBuilder.create(context)
+					.addNextIntentWithParentStack(intent)
+					.getPendingIntent(0, 0);
 		}
 
 		views.setOnClickPendingIntent(R.id.widget, pendingIntent);

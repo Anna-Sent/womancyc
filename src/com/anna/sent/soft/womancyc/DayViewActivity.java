@@ -2,10 +2,11 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Calendar;
 
+import android.app.PendingIntent;
+import android.app.PendingIntent.CanceledException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
@@ -63,24 +64,16 @@ public class DayViewActivity extends DialogActivity implements
 			return;
 		}
 
-		Bundle args = new Bundle();
-		args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+		if (savedInstanceState == null) {
+			Bundle args = new Bundle();
+			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
 
-		Fragment newFragment = new DayViewFragment();
-		newFragment.setArguments(args);
-		log("set args " + DateUtils.toString(this, mDateToShow));
+			Fragment newFragment = new DayViewFragment();
+			newFragment.setArguments(args);
+			log("set args " + DateUtils.toString(this, mDateToShow));
 
-		getSupportFragmentManager().beginTransaction()
-				.add(android.R.id.content, newFragment).commit();
-	}
-
-	@Override
-	protected void beforeOnSaveInstanceState() {
-		FragmentManager fm = getSupportFragmentManager();
-
-		Fragment dayView = fm.findFragmentById(android.R.id.content);
-		if (dayView != null) {
-			fm.beginTransaction().remove(dayView).commit();
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, newFragment).commit();
 		}
 	}
 
@@ -106,5 +99,21 @@ public class DayViewActivity extends DialogActivity implements
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra(Shared.DATE_TO_SHOW, mDateToShow);
 		setResult(RESULT_OK, resultIntent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		try {
+			if (getIntent().getExtras().containsKey("setResult")) {
+				Intent data = new Intent(this, MainActivity.class);
+				data.putExtra(Shared.DATE_TO_SHOW, mDateToShow);
+				PendingIntent.getActivity(this, 0, data,
+						PendingIntent.FLAG_UPDATE_CURRENT).send();
+			}
+		} catch (CanceledException e) {
+			e.printStackTrace();
+		}
+
+		super.onDestroy();
 	}
 }
