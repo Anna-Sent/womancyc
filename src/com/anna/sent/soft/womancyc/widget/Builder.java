@@ -29,7 +29,7 @@ public abstract class Builder {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
 				|| context.getResources().getBoolean(R.bool.isLargeLayout)) {
 			pendingIntent = PendingIntent.getActivity(context, 0,
-					monthViewIntent, 0);
+					monthViewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		} else {
 			pendingIntent = TaskStackBuilder
 					.create(context)
