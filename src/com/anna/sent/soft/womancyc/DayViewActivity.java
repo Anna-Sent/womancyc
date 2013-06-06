@@ -17,7 +17,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class DayViewActivity extends DialogActivity implements
 		DayViewFragment.Listener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -89,7 +89,7 @@ public class DayViewActivity extends DialogActivity implements
 	}
 
 	@Override
-	public void onCalendarItemChanged(Calendar date) {
+	public void onDayViewItemChangedByUser(Calendar date) {
 		mDateToShow = date;
 		setResult();
 		log("put to result " + DateUtils.toString(this, date));

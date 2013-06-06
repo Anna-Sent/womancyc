@@ -51,7 +51,7 @@ public class CalendarHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		log("Creating database");
-		database.execSQL(DATABASE_CREATE);
+		createDatabase(database);
 	}
 
 	@Override
@@ -59,11 +59,19 @@ public class CalendarHelper extends SQLiteOpenHelper {
 			int newVersion) {
 		log("Upgrading database from version " + oldVersion + " to "
 				+ newVersion + ", which will destroy all old data");
-		database.execSQL("drop table if exists " + TABLE_CALENDAR);
-		onCreate(database);
+		recreateDatabase(database);
 	}
 
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	}
+
+	public void createDatabase(SQLiteDatabase database) {
+		database.execSQL(DATABASE_CREATE);
+	}
+
+	public void recreateDatabase(SQLiteDatabase database) {
+		database.execSQL("drop table if exists " + TABLE_CALENDAR);
+		onCreate(database);
 	}
 }

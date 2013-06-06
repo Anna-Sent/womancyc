@@ -38,6 +38,10 @@ public class CalendarDataSource {
 		mDatabase = mHelper.getWritableDatabase();
 	}
 
+	public void clearAllData() {
+		mHelper.recreateDatabase(mDatabase);
+	}
+
 	public void close() {
 		mHelper.close();
 	}

@@ -3,21 +3,25 @@ package com.anna.sent.soft.womancyc;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.superclasses.ParentActivity;
+import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
-public class MainActivity extends ParentActivity implements
+public class MainActivity extends DataKeeperActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
@@ -182,5 +186,55 @@ public class MainActivity extends ParentActivity implements
 	protected void onPause() {
 		super.onPause();
 		MyCycleWidget.updateAllWidgets(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		switch (ThemeUtils.getThemeId(this)) {
+		case ThemeUtils.LIGHT_THEME:
+			menu.findItem(R.id.lighttheme).setChecked(true);
+			break;
+		case ThemeUtils.DARK_THEME:
+			menu.findItem(R.id.darktheme).setChecked(true);
+			break;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.lighttheme:
+			ThemeUtils.changeToTheme(this, ThemeUtils.LIGHT_THEME);
+			return true;
+		case R.id.darktheme:
+			ThemeUtils.changeToTheme(this, ThemeUtils.DARK_THEME);
+			return true;
+		case R.id.help:
+			return true;
+		case R.id.clearAllData:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.clearAllDataConfirmation)
+					.setMessage(R.string.clearAllDataConfirmationMessage)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									clearAllData();
+								}
+							})
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+								}
+							});
+			builder.create().show();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

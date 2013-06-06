@@ -47,8 +47,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		dataChanged();
 	}
 
-	@Override
-	protected void onResume() {
+	private void openDataSource() {
 		try {
 			mDataSource.open();
 			mValues = mDataSource.getAllRows();
@@ -60,14 +59,22 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 					getString(R.string.errorWhileOpenningDatabase),
 					Toast.LENGTH_LONG).show();
 		}
+	}
 
+	private void closeDataSource() {
+		mDataSource.close();
+	}
+
+	@Override
+	protected void onResume() {
+		openDataSource();
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mDataSource.close();
+		closeDataSource();
 	}
 
 	@Override
@@ -132,6 +139,12 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	private int indexOf(CalendarData value) {
 		return Collections.binarySearch(mValues, value,
 				new CalendarDataComparator());
+	}
+
+	protected void clearAllData() {
+		mDataSource.clearAllData();
+		closeDataSource();
+		openDataSource();
 	}
 
 	private class CalendarDataComparator implements Comparator<CalendarData> {

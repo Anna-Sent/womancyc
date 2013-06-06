@@ -31,7 +31,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 public class DayViewFragment extends Fragment implements OnClickListener,
 		DataKeeperClient, OnDateSetListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -51,7 +51,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	}
 
 	public interface Listener {
-		public void onCalendarItemChanged(Calendar date);
+		public void onDayViewItemChangedByUser(Calendar date);
 	}
 
 	private Listener mListener = null;
@@ -146,6 +146,8 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 				Shared.DATE_TO_SHOW);
 		setDate(date);
 
+		boolean isEmbedded = getArguments().getBoolean("isEmbedded", false);
+
 		return v;
 	}
 
@@ -199,7 +201,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		dateToShow.set(year, month, day);
 		if (!DateUtils.datesAreEqual(dateToShow, mValue.getDate())) {
 			if (mListener != null) {
-				mListener.onCalendarItemChanged(dateToShow);
+				mListener.onDayViewItemChangedByUser(dateToShow);
 			}
 
 			setDate(dateToShow);
@@ -210,7 +212,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		Calendar dateToShow = (Calendar) mValue.getDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
 		if (mListener != null) {
-			mListener.onCalendarItemChanged(dateToShow);
+			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
 
 		setDate(dateToShow);
@@ -220,7 +222,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		Calendar dateToShow = (Calendar) mValue.getDate().clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
 		if (mListener != null) {
-			mListener.onCalendarItemChanged(dateToShow);
+			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
 
 		setDate(dateToShow);

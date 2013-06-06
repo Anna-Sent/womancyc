@@ -12,6 +12,9 @@
     <string name="widget_medium_name">WomanCyc Medium</string>
     <string name="lighttheme">Светлая тема</string>
     <string name="darktheme">Темная тема</string>
+    <string name="clearAllData">Сброс данных</string>
+    <string name="clearAllDataConfirmation">Удалить все данные?</string>
+    <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления</string>
     <string name="help">Справка</string>
     <string name="clear">Очистить</string>
     <string name="today">Сегодня</string>
