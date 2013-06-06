@@ -2,5 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="view_padding">5dp</dimen>
 
 </resources>

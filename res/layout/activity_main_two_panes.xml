@@ -28,9 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="a151a5351deb085"
+            ads:adUnitId="@string/adUnitId"
             ads:loadAdOnCreate="true"
-            android:gravity="center" />
+            android:gravity="center"
+            android:paddingTop="@dimen/view_padding" />
     </LinearLayout>
 
 </LinearLayout>

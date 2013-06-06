@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.Spinner;
 
 import com.anna.sent.soft.womancyc.R;
@@ -29,7 +32,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends Fragment implements OnClickListener,
-		DataKeeperClient, OnDateSetListener {
+		DataKeeperClient, OnDateSetListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -73,6 +76,9 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	private Button currentDay;
 
 	private CalendarData mValue = null;
+	private boolean mIsEmbedded;
+
+	public static final String IS_EMBEDDED = "isembedded";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +114,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(this);
 	}
 
 	private View createView() {
@@ -146,7 +153,21 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 				Shared.DATE_TO_SHOW);
 		setDate(date);
 
-		boolean isEmbedded = getArguments().getBoolean("isEmbedded", false);
+		mIsEmbedded = getArguments().getBoolean(IS_EMBEDDED, false);
+		Button close = (Button) v.findViewById(R.id.buttonClose);
+		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
+		close.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getActivity().finish();
+			}
+		});
+
+		if (mIsEmbedded) {
+			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			clear.setLayoutParams(params);
+		}
 
 		return v;
 	}
@@ -191,6 +212,12 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.prevDay:
 			toPrevDay();
+			break;
+		case R.id.checkBoxTookPill:
+			if (mIsEmbedded) {
+				tryToSave();
+			}
+
 			break;
 		}
 	}
@@ -294,5 +321,20 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		}
 
 		return s1.equals(s2);
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		if (mIsEmbedded) {
+			tryToSave();
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		if (mIsEmbedded) {
+			tryToSave();
+		}
 	}
 }

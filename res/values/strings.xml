@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="adUnitId">a151a5351deb085</string>
     <string name="nextMonth">Следующий месяц</string>
     <string name="prevMonth">Предыдущий месяц</string>
     <string name="currentMonth">Текущий месяц</string>
@@ -17,6 +18,7 @@
     <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления</string>
     <string name="help">Справка</string>
     <string name="clear">Очистить</string>
+    <string name="close">Закрыть</string>
     <string name="today">Сегодня</string>
     <string name="menstruation">Менструация</string>
     <string name="sex">Секс</string>

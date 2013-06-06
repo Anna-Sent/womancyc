@@ -140,6 +140,7 @@ public class MainActivity extends DataKeeperActivity implements
 
 		Bundle args = new Bundle();
 		args.putSerializable(Shared.DATE_TO_SHOW, date);
+		args.putBoolean(DayViewFragment.IS_EMBEDDED, true);
 
 		Fragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
