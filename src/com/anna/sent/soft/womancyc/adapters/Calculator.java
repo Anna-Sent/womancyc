@@ -95,7 +95,7 @@ public class Calculator {
 			} while (currentData != null && currentData.getMenstruation() != 0);
 
 			map.put(current, firstDayOfCycleData.getDate());
-			return firstDayOfCycleData.getDate();
+			return (Calendar) firstDayOfCycleData.getDate().clone();
 		}
 	}
 
@@ -156,6 +156,137 @@ public class Calculator {
 			int difference = DateUtils.getDifferenceInDays(firstDayOfNextCycle,
 					firstDayOfCycle);
 			return difference;
+		}
+	}
+
+	public class MenstrualCycleLenght {
+		public int avg, min, max;
+
+		public MenstrualCycleLenght(int avg, int min, int max) {
+			this.avg = avg;
+			this.min = min;
+			this.max = max;
+		}
+	}
+
+	public class BleedingLenght {
+		public int avg, min, max;
+
+		public BleedingLenght(int avg, int min, int max) {
+			this.avg = avg;
+			this.min = min;
+			this.max = max;
+		}
+	}
+
+	public class Statistic {
+		public MenstrualCycleLenght MCL;
+		public BleedingLenght BL;
+
+		public Statistic(MenstrualCycleLenght mcl, BleedingLenght bl) {
+			MCL = mcl;
+			BL = bl;
+		}
+	}
+
+	public Statistic getStatistic() {
+		int currentIndex = mDataKeeper.getCount() - 1;
+		CalendarData firstDayOfLastCycleData = mDataKeeper.get(currentIndex);
+		while (firstDayOfLastCycleData != null
+				&& firstDayOfLastCycleData.getMenstruation() == 0) {
+			--currentIndex;
+			firstDayOfLastCycleData = mDataKeeper.get(currentIndex);
+		}
+
+		if (firstDayOfLastCycleData == null) {
+			MenstrualCycleLenght mcl = new MenstrualCycleLenght(0, 0, 0);
+			BleedingLenght bl = new BleedingLenght(0, 0, 0);
+			return new Statistic(mcl, bl);
+		} else {
+			Calendar firstDayOfCycle = (Calendar) firstDayOfLastCycleData
+					.getDate().clone();
+			double mcSum = 0;
+			int mcActualCount = 0;
+			int mcMax = 0;
+			int mcMin = 0;
+			double bSum = 0;
+			int bActualCount = 0;
+			int bMax = 0;
+			int bMin = 0;
+
+			do {
+				Calendar yesterday = (Calendar) firstDayOfCycle.clone();
+				yesterday.add(Calendar.DAY_OF_MONTH, -1);
+				Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
+
+				int bleedingLen = 0;
+				@SuppressWarnings("unused")
+				Calendar firstDayOfBleeding = (Calendar) firstDayOfCycle
+						.clone();
+				Calendar lastDayOfBleeding = (Calendar) firstDayOfCycle.clone();
+				Calendar current = (Calendar) firstDayOfCycle.clone();
+				CalendarData dayOfBleedingData = mDataKeeper.get(current);
+				while (dayOfBleedingData != null
+						&& dayOfBleedingData.getMenstruation() != 0) {
+					++bleedingLen;
+					lastDayOfBleeding = (Calendar) current.clone();
+					current.add(Calendar.DAY_OF_MONTH, 1);
+					dayOfBleedingData = mDataKeeper.get(current);
+				}
+
+				Calendar today = Calendar.getInstance();
+				if (firstDayOfPrevCycle != null) {
+					int cycleLen = DateUtils.getDifferenceInDays(
+							firstDayOfCycle, firstDayOfPrevCycle);
+
+					if (DateUtils.beforeOrEqual(lastDayOfBleeding, today)) {
+						if (cycleLen <= 60) {
+							mcSum += cycleLen;
+							++mcActualCount;
+
+							if (cycleLen > mcMax) {
+								mcMax = cycleLen;
+							}
+
+							if (mcMin == 0) {
+								mcMin = cycleLen;
+							}
+
+							if (cycleLen < mcMin) {
+								mcMin = cycleLen;
+							}
+						}
+					}
+				}
+
+				if (DateUtils.before(lastDayOfBleeding, today)) {
+					bSum += bleedingLen;
+					++bActualCount;
+
+					if (bleedingLen > bMax) {
+						bMax = bleedingLen;
+					}
+
+					if (bMin == 0) {
+						bMin = bleedingLen;
+					}
+
+					if (bleedingLen < bMin) {
+						bMin = bleedingLen;
+					}
+				}
+
+				firstDayOfCycle = firstDayOfPrevCycle;
+			} while (firstDayOfCycle != null);
+
+			int mcAvg = mcActualCount == 0 ? 0 : (int) Math.round(mcSum
+					/ mcActualCount);
+			int bAvg = bActualCount == 0 ? 0 : (int) Math.round(bSum
+					/ bActualCount);
+			MenstrualCycleLenght mcl = new MenstrualCycleLenght(mcAvg, mcMin,
+					mcMax);
+			BleedingLenght bl = new BleedingLenght(bAvg, bMin, bMax);
+			return new Statistic(mcl, bl);
 		}
 	}
 }

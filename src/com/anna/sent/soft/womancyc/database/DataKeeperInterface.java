@@ -12,6 +12,8 @@ public interface DataKeeperInterface {
 
 	public CalendarData get(int index);
 
+	public int getCount();
+
 	public void insertOrUpdate(CalendarData value);
 
 	public void delete(CalendarData value);

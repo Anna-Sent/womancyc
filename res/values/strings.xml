@@ -28,6 +28,11 @@
     <string name="note">Заметка</string>
     <string name="tookPill">Таблетку приняла</string>
     <string name="noData">Нет данных</string>
+    <string name="menstrualCycleLength">Продолжительность менструального цикла</string>
+    <string name="bleedingLength">Продолжительность менструации</string>
+    <string name="avgValue">Среднее значение</string>
+    <string name="minValue">Минимальное значение</string>
+    <string name="maxValue">Максимальное значение</string>
 
     <string-array name="menstruationTypes">
         <item>Нет</item>

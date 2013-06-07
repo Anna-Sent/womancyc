@@ -33,6 +33,10 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private DataKeeper mDataKeeper;
 
+	protected DataKeeper getDataKeeper() {
+		return mDataKeeper;
+	}
+
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
@@ -82,6 +86,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	@Override
 	public CalendarData get(int index) {
 		return mDataKeeper.get(index);
+	}
+
+	@Override
+	public int getCount() {
+		return mDataKeeper.getCount();
 	}
 
 	@Override

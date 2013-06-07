@@ -64,6 +64,11 @@ public class DataKeeper implements DataKeeperInterface {
 	}
 
 	@Override
+	public int getCount() {
+		return mValues.size();
+	}
+
+	@Override
 	public void insertOrUpdate(CalendarData value) {
 		int index = indexOf(value);
 		if (index >= 0) {
