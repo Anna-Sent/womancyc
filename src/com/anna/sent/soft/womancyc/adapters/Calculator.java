@@ -133,7 +133,29 @@ public class Calculator {
 			return 0;
 		}
 
-		int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
-		return avgLen;
+		int currentIndex = getLeftNeighborIndex(current);
+		CalendarData currentData = mDataKeeper.get(currentIndex);
+		Calendar firstDayOfNextCycle;
+
+		do {
+			++currentIndex;
+			currentData = mDataKeeper.get(currentIndex);
+			if (currentData != null) {
+				firstDayOfNextCycle = getFirstDayOfCycle(currentData.getDate());
+			} else {
+				firstDayOfNextCycle = null;
+			}
+		} while (firstDayOfNextCycle != null
+				&& DateUtils
+						.datesAreEqual(firstDayOfCycle, firstDayOfNextCycle));
+
+		if (firstDayOfNextCycle == null) {
+			int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
+			return avgLen;
+		} else {
+			int difference = DateUtils.getDifferenceInDays(firstDayOfNextCycle,
+					firstDayOfCycle);
+			return difference;
+		}
 	}
 }
