@@ -1,6 +1,8 @@
 package com.anna.sent.soft.womancyc;
 
 import android.os.Bundle;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.adapters.Calculator;
@@ -37,5 +39,12 @@ public class StatisticActivity extends ChildActivity {
 		avgBL.setText(String.valueOf(BL.avg));
 		minBL.setText(String.valueOf(BL.min));
 		maxBL.setText(String.valueOf(BL.max));
+
+		TableLayout table = (TableLayout) findViewById(R.id.table);
+		TableRow row = new TableRow(this);
+		TextView cell = new TextView(this);
+		cell.setText("sdf");
+		row.addView(cell);
+		table.addView(row);
 	}
 }
