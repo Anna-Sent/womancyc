@@ -4,14 +4,17 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
@@ -179,7 +182,9 @@ public class MainActivity extends DataKeeperActivity implements
 		super.onNewIntent(intent);
 		Calendar date = (Calendar) intent
 				.getSerializableExtra(Shared.DATE_TO_SHOW);
-		showDate(date);
+		if (date != null) {
+			showDate(date);
+		}
 	}
 
 	@Override
@@ -209,26 +214,45 @@ public class MainActivity extends DataKeeperActivity implements
 		case R.id.help:
 			return true;
 		case R.id.clearAllData:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.clearAllDataConfirmation)
-					.setMessage(R.string.clearAllDataConfirmationMessage)
-					.setPositiveButton(android.R.string.yes,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									clearAllData();
-								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
-			builder.create().show();
+			clearAllDataAction();
+			return true;
+		case R.id.statistic:
+			startActivity(new Intent(this, StatisticActivity.class));
+			return true;
+		case R.id.rate:
+			rateAction();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void clearAllDataAction() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.clearAllDataConfirmation)
+				.setMessage(R.string.clearAllDataConfirmationMessage)
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								clearAllData();
+							}
+						})
+				.setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		builder.create().show();
+	}
+
+	private void rateAction() {
+		try {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse("market://details?id=" + getPackageName()));
+			startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			Toast.makeText(this, R.string.marketNotFound, Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 }

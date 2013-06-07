@@ -16,6 +16,9 @@
     <string name="clearAllData">Сброс данных</string>
     <string name="clearAllDataConfirmation">Удалить все данные?</string>
     <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления</string>
+    <string name="statistic">Статистика</string>
+    <string name="rate">Оценить приложение</string>
+    <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
     <string name="clear">Очистить</string>
     <string name="close">Закрыть</string>
