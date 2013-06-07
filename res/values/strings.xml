@@ -24,6 +24,7 @@
     <string name="sex">Секс</string>
     <string name="note">Заметка</string>
     <string name="tookPill">Таблетку приняла</string>
+    <string name="noData">Нет данных</string>
 
     <string-array name="menstruationTypes">
         <item>Нет</item>

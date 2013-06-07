@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -63,10 +63,10 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		mListener = listener;
 	}
 
-	private DataKeeper mDataKeeper = null;
+	private DataKeeperInterface mDataKeeper = null;
 
 	@Override
-	public void setDataKeeper(DataKeeper dataKeeper) {
+	public void setDataKeeper(DataKeeperInterface dataKeeper) {
 		mDataKeeper = dataKeeper;
 	}
 

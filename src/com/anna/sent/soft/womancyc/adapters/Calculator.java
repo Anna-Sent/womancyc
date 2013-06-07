@@ -6,7 +6,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class Calculator {
@@ -24,9 +24,9 @@ public class Calculator {
 	}
 
 	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
-	private DataKeeper mDataKeeper;
+	private DataKeeperInterface mDataKeeper;
 
-	public Calculator(DataKeeper dataKeeper) {
+	public Calculator(DataKeeperInterface dataKeeper) {
 		mDataKeeper = dataKeeper;
 	}
 
@@ -45,7 +45,7 @@ public class Calculator {
 			} while (nextData != null && nextData.getMenstruation() == 0);
 
 			if (nextData == null) {
-				int avgLen = getAverageLengthOfThreeLastMenstrualPeriods(firstDayOfCycle);
+				int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
 				dayOfCycle = DateUtils.getDifferenceInDays(current,
 						firstDayOfCycle) % avgLen + 1;
 			} else {
@@ -66,7 +66,7 @@ public class Calculator {
 		}
 	}
 
-	private Calendar getFirstDayOfCycle(Calendar current) {
+	public Calendar getFirstDayOfCycle(Calendar current) {
 		DateUtils.zeroTime(current);
 		if (map.containsKey(current)) {
 			log("get cashed value");
@@ -99,27 +99,41 @@ public class Calculator {
 		}
 	}
 
-	private int getAverageLengthOfThreeLastMenstrualPeriods(
-			Calendar firstDayOfCycle) {
+	private int getAvgLenOfLastMenstrualCycles(Calendar firstDayOfCycle) {
 		double sum = 0;
 		final int count = 3;
 		int actualCount = 0;
+		int countOfCycles = 0;
 
-		while (actualCount < count) {
+		while (countOfCycles < count) {
 			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
 			yesterday.add(Calendar.DAY_OF_MONTH, -1);
 
-			Calendar firstDayOfPrevCycle = (Calendar) firstDayOfCycle.clone();
-			firstDayOfCycle = getFirstDayOfCycle(yesterday);
-			if (firstDayOfCycle == null) {
+			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
+			if (firstDayOfPrevCycle == null) {
 				break;
 			}
 
-			sum += DateUtils.getDifferenceInDays(firstDayOfCycle,
+			int difference = DateUtils.getDifferenceInDays(firstDayOfCycle,
 					firstDayOfPrevCycle);
-			++actualCount;
+			if (difference <= 60) {
+				sum += difference;
+				++actualCount;
+			}
+
+			++countOfCycles;
 		}
 
 		return actualCount == 0 ? 28 : (int) Math.round(sum / actualCount);
+	}
+
+	public int getLenOfCurrentMenstrualCycle(Calendar current) {
+		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
+		if (firstDayOfCycle == null) {
+			return 0;
+		}
+
+		int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
+		return avgLen;
 	}
 }

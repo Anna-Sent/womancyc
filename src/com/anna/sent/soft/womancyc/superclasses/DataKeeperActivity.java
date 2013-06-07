@@ -1,8 +1,6 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import android.database.SQLException;
@@ -14,11 +12,11 @@ import android.widget.Toast;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.database.CalendarDataSource;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
+import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
+import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
-		DataKeeper {
+		DataKeeperInterface {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -33,36 +31,13 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	private CalendarDataSource mDataSource;
-	private List<CalendarData> mValues;
-	private List<String> mNotes;
+	private DataKeeper mDataKeeper;
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
-		mDataSource = new CalendarDataSource(this);
-		mDataSource.open();
-		mValues = mDataSource.getAllRows();
-		mNotes = mDataSource.getAllNotes();
-		dataChanged();
-	}
-
-	private void openDataSource() {
-		try {
-			mDataSource.open();
-			mValues = mDataSource.getAllRows();
-			mNotes = mDataSource.getAllNotes();
-			dataChanged();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
-					Toast.LENGTH_LONG).show();
-		}
-	}
-
-	private void closeDataSource() {
-		mDataSource.close();
+		mDataKeeper = new DataKeeper(this);
+		openDataSource();
 	}
 
 	@Override
@@ -71,93 +46,73 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		super.onResume();
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		closeDataSource();
+	private void openDataSource() {
+		try {
+			mDataKeeper.openDataSource();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Toast.makeText(this,
+					getString(R.string.errorWhileOpenningDatabase),
+					Toast.LENGTH_LONG).show();
+			mDataKeeper.closeDataSource();
+		}
+
+		dataChanged();
 	}
 
 	@Override
-	public List<String> getNotes() {
-		return mNotes;
+	protected void onPause() {
+		super.onPause();
+		mDataKeeper.closeDataSource();
+		MyCycleWidget.updateAllWidgets(this);
 	}
 
 	protected abstract void dataChanged();
 
 	@Override
-	public void insertOrUpdate(CalendarData value) {
-		int index = indexOf(value);
-		if (index >= 0) {
-			mDataSource.update(value);
-			mValues.set(index, value);
-		} else {
-			mDataSource.insert(value);
-			mValues.add(-index - 1, value);
-		}
+	public CalendarData get(Calendar date) {
+		return mDataKeeper.get(date);
+	}
 
-		mNotes = mDataSource.getAllNotes();
+	@Override
+	public int indexOf(Calendar date) {
+		return mDataKeeper.indexOf(date);
+	}
+
+	@Override
+	public CalendarData get(int index) {
+		return mDataKeeper.get(index);
+	}
+
+	@Override
+	public void insertOrUpdate(CalendarData value) {
+		mDataKeeper.insertOrUpdate(value);
 		dataChanged();
 	}
 
 	@Override
 	public void delete(CalendarData value) {
-		int index = indexOf(value);
-		if (index >= 0) {
-			mDataSource.delete(value);
-			mValues.remove(index);
-
-			mNotes = mDataSource.getAllNotes();
-			dataChanged();
-		}
+		mDataKeeper.delete(value);
+		dataChanged();
 	}
 
 	@Override
-	public CalendarData get(Calendar date) {
-		int index = indexOf(date);
-		if (index >= 0) {
-			return mValues.get(index);
-		} else {
-			return null;
+	public List<String> getNotes() {
+		return mDataKeeper.getNotes();
+	}
+
+	protected final void clearAllData() {
+		try {
+			mDataKeeper.clearAllData();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Toast.makeText(this,
+					getString(R.string.errorWhileOpenningDatabase),
+					Toast.LENGTH_LONG).show();
+			mDataKeeper.closeDataSource();
 		}
-	}
 
-	@Override
-	public int indexOf(Calendar date) {
-		return Collections.binarySearch(mValues, new CalendarData(date),
-				new CalendarDataComparator());
-	}
-
-	@Override
-	public CalendarData get(int index) {
-		if (index >= 0 && index < mValues.size()) {
-			return mValues.get(index);
-		} else {
-			return null;
-		}
-	}
-
-	private int indexOf(CalendarData value) {
-		return Collections.binarySearch(mValues, value,
-				new CalendarDataComparator());
-	}
-
-	protected void clearAllData() {
-		mDataSource.clearAllData();
-		closeDataSource();
-		openDataSource();
-	}
-
-	private class CalendarDataComparator implements Comparator<CalendarData> {
-		@Override
-		public int compare(CalendarData lhs, CalendarData rhs) {
-			Calendar date1 = lhs.getDate();
-			Calendar date2 = rhs.getDate();
-			if (DateUtils.datesAreEqual(date1, date2)) {
-				return 0;
-			} else {
-				return date1.after(date2) ? 1 : -1;
-			}
-		}
+		dataChanged();
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
-import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public class MainActivity extends DataKeeperActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
@@ -181,12 +180,6 @@ public class MainActivity extends DataKeeperActivity implements
 		Calendar date = (Calendar) intent
 				.getSerializableExtra(Shared.DATE_TO_SHOW);
 		showDate(date);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		MyCycleWidget.updateAllWidgets(this);
 	}
 
 	@Override
