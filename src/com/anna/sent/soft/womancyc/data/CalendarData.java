@@ -64,6 +64,11 @@ public class CalendarData implements Serializable {
 		tookPill = value;
 	}
 
+	public boolean isEmpty() {
+		return menstruation == 0 && sex == 0 && !tookPill
+				&& (note == null || note.equals(""));
+	}
+
 	@Override
 	public String toString() {
 		return DateUtils.toString(date) + " = " + getId() + ": " + menstruation

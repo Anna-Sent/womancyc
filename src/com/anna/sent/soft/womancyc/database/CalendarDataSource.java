@@ -47,14 +47,17 @@ public class CalendarDataSource {
 	}
 
 	public void insert(CalendarData value) {
-		ContentValues values = new ContentValues();
-		values.put(CalendarHelper.COLUMN_ID, value.getId());
-		values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
-		values.put(CalendarHelper.COLUMN_SEX, value.getSex());
-		values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
-		values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-		mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null, values);
-		log("Insert calendar: " + value.toString());
+		if (!value.isEmpty()) {
+			ContentValues values = new ContentValues();
+			values.put(CalendarHelper.COLUMN_ID, value.getId());
+			values.put(CalendarHelper.COLUMN_MENSTRUATION,
+					value.getMenstruation());
+			values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+			values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
+			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
+			mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null, values);
+			log("Insert calendar: " + value.toString());
+		}
 	}
 
 	public void delete(CalendarData value) {
@@ -64,14 +67,19 @@ public class CalendarDataSource {
 	}
 
 	public void update(CalendarData value) {
-		ContentValues values = new ContentValues();
-		values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
-		values.put(CalendarHelper.COLUMN_SEX, value.getSex());
-		values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
-		values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-		mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
-				CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-		log("Update calendar: " + value.toString());
+		if (value.isEmpty()) {
+			delete(value);
+		} else {
+			ContentValues values = new ContentValues();
+			values.put(CalendarHelper.COLUMN_MENSTRUATION,
+					value.getMenstruation());
+			values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+			values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
+			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
+			mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
+					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
+			log("Update calendar: " + value.toString());
+		}
 	}
 
 	public List<CalendarData> getAllRows() {
