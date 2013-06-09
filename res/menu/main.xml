@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/statistic"
-        android:showAsAction="never"
+        android:showAsAction="ifRoom"
         android:title="@string/statistic"/>
 
     <group android:checkableBehavior="single" >
