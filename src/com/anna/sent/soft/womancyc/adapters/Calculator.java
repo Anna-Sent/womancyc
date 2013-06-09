@@ -1,7 +1,9 @@
 package com.anna.sent.soft.womancyc.adapters;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import android.util.Log;
 
@@ -159,52 +161,51 @@ public class Calculator {
 		}
 	}
 
-	public class MenstrualCycleLenght {
-		public int avg, min, max;
+	public class Value {
+		public final int avg, min, max;
 
-		public MenstrualCycleLenght(int avg, int min, int max) {
+		public Value(int avg, int min, int max) {
 			this.avg = avg;
 			this.min = min;
 			this.max = max;
 		}
 	}
 
-	public class BleedingLenght {
-		public int avg, min, max;
+	public class Row {
+		public final Calendar firstDayOfCycle;
+		public final int menstrualCycleLen;
+		public final int bleedingLen;
 
-		public BleedingLenght(int avg, int min, int max) {
-			this.avg = avg;
-			this.min = min;
-			this.max = max;
+		public Row(Calendar firstDayOfCycle, int menstrualCycleLen,
+				int bleedingLen) {
+			this.firstDayOfCycle = firstDayOfCycle;
+			this.menstrualCycleLen = menstrualCycleLen;
+			this.bleedingLen = bleedingLen;
 		}
 	}
 
 	public class Statistic {
-		public MenstrualCycleLenght MCL;
-		public BleedingLenght BL;
+		public final Value MCL;
+		public final Value BL;
+		public final List<Row> rows;
 
-		public Statistic(MenstrualCycleLenght mcl, BleedingLenght bl) {
+		public Statistic(Value mcl, Value bl, List<Row> rows) {
 			MCL = mcl;
 			BL = bl;
+			this.rows = rows;
 		}
 	}
 
 	public Statistic getStatistic() {
-		int currentIndex = mDataKeeper.getCount() - 1;
-		CalendarData firstDayOfLastCycleData = mDataKeeper.get(currentIndex);
-		while (firstDayOfLastCycleData != null
-				&& firstDayOfLastCycleData.getMenstruation() == 0) {
-			--currentIndex;
-			firstDayOfLastCycleData = mDataKeeper.get(currentIndex);
-		}
+		int lastIndex = mDataKeeper.getCount() - 1;
+		Calendar firstDayOfLastCycle = getFirstDayOfCycle(mDataKeeper.get(
+				lastIndex).getDate());
 
-		if (firstDayOfLastCycleData == null) {
-			MenstrualCycleLenght mcl = new MenstrualCycleLenght(0, 0, 0);
-			BleedingLenght bl = new BleedingLenght(0, 0, 0);
-			return new Statistic(mcl, bl);
+		if (firstDayOfLastCycle == null) {
+			Value mcl = new Value(0, 0, 0);
+			Value bl = new Value(0, 0, 0);
+			return new Statistic(mcl, bl, new ArrayList<Row>());
 		} else {
-			Calendar firstDayOfCycle = (Calendar) firstDayOfLastCycleData
-					.getDate().clone();
 			double mcSum = 0;
 			int mcActualCount = 0;
 			int mcMax = 0;
@@ -213,80 +214,72 @@ public class Calculator {
 			int bActualCount = 0;
 			int bMax = 0;
 			int bMin = 0;
+			List<Row> rows = new ArrayList<Row>();
+			Calendar firstDayOfCycle = (Calendar) firstDayOfLastCycle.clone();
+			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
+			yesterday.add(Calendar.DAY_OF_MONTH, -1);
+			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
 
-			do {
-				Calendar yesterday = (Calendar) firstDayOfCycle.clone();
-				yesterday.add(Calendar.DAY_OF_MONTH, -1);
-				Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
-
+			while (firstDayOfPrevCycle != null) {
 				int bleedingLen = 0;
-				@SuppressWarnings("unused")
-				Calendar firstDayOfBleeding = (Calendar) firstDayOfCycle
-						.clone();
-				Calendar lastDayOfBleeding = (Calendar) firstDayOfCycle.clone();
-				Calendar current = (Calendar) firstDayOfCycle.clone();
+				Calendar current = (Calendar) firstDayOfPrevCycle.clone();
 				CalendarData dayOfBleedingData = mDataKeeper.get(current);
 				while (dayOfBleedingData != null
 						&& dayOfBleedingData.getMenstruation() != 0) {
 					++bleedingLen;
-					lastDayOfBleeding = (Calendar) current.clone();
 					current.add(Calendar.DAY_OF_MONTH, 1);
 					dayOfBleedingData = mDataKeeper.get(current);
 				}
 
-				Calendar today = Calendar.getInstance();
-				if (firstDayOfPrevCycle != null) {
-					int cycleLen = DateUtils.getDifferenceInDays(
-							firstDayOfCycle, firstDayOfPrevCycle);
+				bSum += bleedingLen;
+				++bActualCount;
 
-					if (DateUtils.beforeOrEqual(lastDayOfBleeding, today)) {
-						if (cycleLen <= 60) {
-							mcSum += cycleLen;
-							++mcActualCount;
+				if (bleedingLen > bMax) {
+					bMax = bleedingLen;
+				}
 
-							if (cycleLen > mcMax) {
-								mcMax = cycleLen;
-							}
+				if (bMin == 0) {
+					bMin = bleedingLen;
+				}
 
-							if (mcMin == 0) {
-								mcMin = cycleLen;
-							}
+				if (bleedingLen < bMin) {
+					bMin = bleedingLen;
+				}
 
-							if (cycleLen < mcMin) {
-								mcMin = cycleLen;
-							}
-						}
+				int cycleLen = DateUtils.getDifferenceInDays(firstDayOfCycle,
+						firstDayOfPrevCycle);
+
+				if (cycleLen <= 60) {
+					mcSum += cycleLen;
+					++mcActualCount;
+
+					if (cycleLen > mcMax) {
+						mcMax = cycleLen;
+					}
+
+					if (mcMin == 0) {
+						mcMin = cycleLen;
+					}
+
+					if (cycleLen < mcMin) {
+						mcMin = cycleLen;
 					}
 				}
 
-				if (DateUtils.before(lastDayOfBleeding, today)) {
-					bSum += bleedingLen;
-					++bActualCount;
-
-					if (bleedingLen > bMax) {
-						bMax = bleedingLen;
-					}
-
-					if (bMin == 0) {
-						bMin = bleedingLen;
-					}
-
-					if (bleedingLen < bMin) {
-						bMin = bleedingLen;
-					}
-				}
-
+				rows.add(0, new Row(firstDayOfPrevCycle, cycleLen, bleedingLen));
 				firstDayOfCycle = firstDayOfPrevCycle;
-			} while (firstDayOfCycle != null);
+				Calendar yesterday_i = (Calendar) firstDayOfPrevCycle.clone();
+				yesterday_i.add(Calendar.DAY_OF_MONTH, -1);
+				firstDayOfPrevCycle = getFirstDayOfCycle(yesterday_i);
+			}
 
 			int mcAvg = mcActualCount == 0 ? 0 : (int) Math.round(mcSum
 					/ mcActualCount);
 			int bAvg = bActualCount == 0 ? 0 : (int) Math.round(bSum
 					/ bActualCount);
-			MenstrualCycleLenght mcl = new MenstrualCycleLenght(mcAvg, mcMin,
-					mcMax);
-			BleedingLenght bl = new BleedingLenght(bAvg, bMin, bMax);
-			return new Statistic(mcl, bl);
+			Value mcl = new Value(mcAvg, mcMin, mcMax);
+			Value bl = new Value(bAvg, bMin, bMax);
+			return new Statistic(mcl, bl, rows);
 		}
 	}
 }

@@ -6,10 +6,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.adapters.Calculator;
-import com.anna.sent.soft.womancyc.adapters.Calculator.BleedingLenght;
-import com.anna.sent.soft.womancyc.adapters.Calculator.MenstrualCycleLenght;
 import com.anna.sent.soft.womancyc.adapters.Calculator.Statistic;
+import com.anna.sent.soft.womancyc.adapters.Calculator.Value;
 import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class StatisticActivity extends ChildActivity {
 	@Override
@@ -24,7 +24,7 @@ public class StatisticActivity extends ChildActivity {
 		TextView minMCL = (TextView) findViewById(R.id.rowMinMCLValue);
 		TextView maxMCL = (TextView) findViewById(R.id.rowMaxMCLValue);
 
-		MenstrualCycleLenght MCL = stat.MCL;
+		Value MCL = stat.MCL;
 
 		avgMCL.setText(String.valueOf(MCL.avg));
 		minMCL.setText(String.valueOf(MCL.min));
@@ -34,17 +34,21 @@ public class StatisticActivity extends ChildActivity {
 		TextView minBL = (TextView) findViewById(R.id.rowMinBLValue);
 		TextView maxBL = (TextView) findViewById(R.id.rowMaxBLValue);
 
-		BleedingLenght BL = stat.BL;
+		Value BL = stat.BL;
 
 		avgBL.setText(String.valueOf(BL.avg));
 		minBL.setText(String.valueOf(BL.min));
 		maxBL.setText(String.valueOf(BL.max));
 
 		TableLayout table = (TableLayout) findViewById(R.id.table);
-		TableRow row = new TableRow(this);
-		TextView cell = new TextView(this);
-		cell.setText("sdf");
-		row.addView(cell);
-		table.addView(row);
+		for (int i = 0; i < stat.rows.size(); ++i) {
+			TableRow row = new TableRow(this);
+			TextView cell = new TextView(this);
+			cell.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle)
+					+ " " + stat.rows.get(i).menstrualCycleLen + " "
+					+ stat.rows.get(i).bleedingLen);
+			row.addView(cell);
+			table.addView(row);
+		}
 	}
 }
