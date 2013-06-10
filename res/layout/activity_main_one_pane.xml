@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
         ads:adUnitId="@string/adUnitId"
-        ads:loadAdOnCreate="true"
+        ads:loadAdOnCreate="@bool/showAd"
         android:gravity="center" />
 
     <fragment
