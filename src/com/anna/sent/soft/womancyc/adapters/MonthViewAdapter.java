@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.utils.DateUtils;

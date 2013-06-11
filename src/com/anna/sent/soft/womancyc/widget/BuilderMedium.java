@@ -5,7 +5,7 @@ import java.util.Calendar;
 import android.content.Context;
 
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.adapters.Calculator;
+import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 
 public final class BuilderMedium extends Builder {

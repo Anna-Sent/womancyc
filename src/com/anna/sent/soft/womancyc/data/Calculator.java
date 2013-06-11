@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc.adapters;
+package com.anna.sent.soft.womancyc.data;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 

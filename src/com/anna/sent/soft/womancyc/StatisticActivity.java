@@ -5,9 +5,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.anna.sent.soft.womancyc.adapters.Calculator;
-import com.anna.sent.soft.womancyc.adapters.Calculator.Statistic;
-import com.anna.sent.soft.womancyc.adapters.Calculator.Value;
+import com.anna.sent.soft.womancyc.data.Calculator;
+import com.anna.sent.soft.womancyc.data.Calculator.Statistic;
+import com.anna.sent.soft.womancyc.data.Calculator.Value;
 import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
