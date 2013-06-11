@@ -58,13 +58,16 @@ public class Calculator {
 			if (firstDayOfNextCycle == null && DateUtils.after(current, today)) {
 				int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
 
-				if (DateUtils.before(firstDayOfCycle, today)) {
-					firstDayOfCycle = today;
-					firstDayOfCycle.add(Calendar.DAY_OF_MONTH, 1);
+				Calendar expectedFirstDayOfCycle;
+				if (DateUtils.getDifferenceInDays(today, firstDayOfCycle) > avgLen) {
+					expectedFirstDayOfCycle = (Calendar) today.clone();
+					expectedFirstDayOfCycle.add(Calendar.DAY_OF_MONTH, 1);
+				} else {
+					expectedFirstDayOfCycle = firstDayOfCycle;
 				}
 
 				dayOfCycle = DateUtils.getDifferenceInDays(current,
-						firstDayOfCycle) % avgLen + 1;
+						expectedFirstDayOfCycle) % avgLen + 1;
 			} else {
 				dayOfCycle = DateUtils.getDifferenceInDays(current,
 						firstDayOfCycle) + 1;
