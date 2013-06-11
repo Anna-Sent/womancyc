@@ -32,21 +32,37 @@ public class Calculator {
 	}
 
 	public int getDayOfCycle(Calendar current) {
-		DateUtils.zeroTime(current);
 		int dayOfCycle;
 		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
 		if (firstDayOfCycle == null) {
 			dayOfCycle = 0;
 		} else {
-			int nextIndex = getLeftNeighborIndex(current);
-			CalendarData nextData;
-			do {
-				++nextIndex;
-				nextData = mDataKeeper.get(nextIndex);
-			} while (nextData != null && nextData.getMenstruation() == 0);
+			int currentIndex = getLeftNeighborIndex(current);
+			CalendarData currentData = mDataKeeper.get(currentIndex);
+			Calendar firstDayOfNextCycle;
 
-			if (nextData == null) {
+			do {
+				++currentIndex;
+				currentData = mDataKeeper.get(currentIndex);
+				if (currentData != null) {
+					firstDayOfNextCycle = getFirstDayOfCycle(currentData
+							.getDate());
+				} else {
+					firstDayOfNextCycle = null;
+				}
+			} while (firstDayOfNextCycle != null
+					&& DateUtils.datesAreEqual(firstDayOfCycle,
+							firstDayOfNextCycle));
+
+			Calendar today = Calendar.getInstance();
+			if (firstDayOfNextCycle == null && DateUtils.after(current, today)) {
 				int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
+
+				if (DateUtils.before(firstDayOfCycle, today)) {
+					firstDayOfCycle = today;
+					firstDayOfCycle.add(Calendar.DAY_OF_MONTH, 1);
+				}
+
 				dayOfCycle = DateUtils.getDifferenceInDays(current,
 						firstDayOfCycle) % avgLen + 1;
 			} else {
@@ -123,6 +139,7 @@ public class Calculator {
 			}
 
 			++countOfCycles;
+			firstDayOfCycle = firstDayOfPrevCycle;
 		}
 
 		return actualCount == 0 ? 28 : (int) Math.round(sum / actualCount);
