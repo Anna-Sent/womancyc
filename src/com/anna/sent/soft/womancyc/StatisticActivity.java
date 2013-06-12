@@ -1,8 +1,10 @@
 package com.anna.sent.soft.womancyc;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.data.Calculator;
@@ -42,12 +44,15 @@ public class StatisticActivity extends ChildActivity {
 
 		TableLayout table = (TableLayout) findViewById(R.id.table);
 		for (int i = 0; i < stat.rows.size(); ++i) {
-			TableRow row = new TableRow(this);
-			TextView cell = new TextView(this);
-			cell.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle)
-					+ " " + stat.rows.get(i).menstrualCycleLen + " "
-					+ stat.rows.get(i).bleedingLen);
-			row.addView(cell);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View row = inflater.inflate(R.layout.statistic_row, null, false);
+			TextView column1 = (TextView) row.findViewById(R.id.column1);
+			TextView column2 = (TextView) row.findViewById(R.id.column2);
+			TextView column3 = (TextView) row.findViewById(R.id.column3);
+
+			column1.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle));
+			column2.setText(String.valueOf(stat.rows.get(i).menstrualCycleLen));
+			column3.setText(String.valueOf(stat.rows.get(i).bleedingLen));
 			table.addView(row);
 		}
 	}
