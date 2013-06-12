@@ -59,7 +59,7 @@ public class Calculator {
 				int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
 
 				Calendar expectedFirstDayOfCycle;
-				if (DateUtils.getDifferenceInDays(today, firstDayOfCycle) > avgLen) {
+				if (DateUtils.getDifferenceInDays(today, firstDayOfCycle) + 1 > avgLen) {
 					expectedFirstDayOfCycle = (Calendar) today.clone();
 					expectedFirstDayOfCycle.add(Calendar.DAY_OF_MONTH, 1);
 				} else {
