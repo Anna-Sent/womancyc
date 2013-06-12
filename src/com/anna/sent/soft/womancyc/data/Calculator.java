@@ -37,23 +37,7 @@ public class Calculator {
 		if (firstDayOfCycle == null) {
 			dayOfCycle = 0;
 		} else {
-			int currentIndex = getLeftNeighborIndex(current);
-			CalendarData currentData = mDataKeeper.get(currentIndex);
-			Calendar firstDayOfNextCycle;
-
-			do {
-				++currentIndex;
-				currentData = mDataKeeper.get(currentIndex);
-				if (currentData != null) {
-					firstDayOfNextCycle = getFirstDayOfCycle(currentData
-							.getDate());
-				} else {
-					firstDayOfNextCycle = null;
-				}
-			} while (firstDayOfNextCycle != null
-					&& DateUtils.datesAreEqual(firstDayOfCycle,
-							firstDayOfNextCycle));
-
+			Calendar firstDayOfNextCycle = getFirstDayOfNextCycle(current);
 			Calendar today = Calendar.getInstance();
 			if (firstDayOfNextCycle == null && DateUtils.after(current, today)) {
 				int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
@@ -75,6 +59,27 @@ public class Calculator {
 		}
 
 		return dayOfCycle;
+	}
+
+	private Calendar getFirstDayOfNextCycle(Calendar current) {
+		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
+		int currentIndex = getLeftNeighborIndex(current);
+		CalendarData currentData = mDataKeeper.get(currentIndex);
+		Calendar firstDayOfNextCycle;
+
+		do {
+			++currentIndex;
+			currentData = mDataKeeper.get(currentIndex);
+			if (currentData != null) {
+				firstDayOfNextCycle = getFirstDayOfCycle(currentData.getDate());
+			} else {
+				firstDayOfNextCycle = null;
+			}
+		} while (firstDayOfNextCycle != null
+				&& DateUtils
+						.datesAreEqual(firstDayOfCycle, firstDayOfNextCycle));
+
+		return firstDayOfNextCycle;
 	}
 
 	private int getLeftNeighborIndex(Calendar current) {
@@ -154,22 +159,7 @@ public class Calculator {
 			return 0;
 		}
 
-		int currentIndex = getLeftNeighborIndex(current);
-		CalendarData currentData = mDataKeeper.get(currentIndex);
-		Calendar firstDayOfNextCycle;
-
-		do {
-			++currentIndex;
-			currentData = mDataKeeper.get(currentIndex);
-			if (currentData != null) {
-				firstDayOfNextCycle = getFirstDayOfCycle(currentData.getDate());
-			} else {
-				firstDayOfNextCycle = null;
-			}
-		} while (firstDayOfNextCycle != null
-				&& DateUtils
-						.datesAreEqual(firstDayOfCycle, firstDayOfNextCycle));
-
+		Calendar firstDayOfNextCycle = getFirstDayOfNextCycle(current);
 		if (firstDayOfNextCycle == null) {
 			int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
 			return avgLen;
