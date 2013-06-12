@@ -1,6 +1,7 @@
 package com.anna.sent.soft.womancyc;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,12 @@ public class StatisticActivity extends ChildActivity {
 			TextView column3 = (TextView) row.findViewById(R.id.column3);
 
 			column1.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle));
-			column2.setText(String.valueOf(stat.rows.get(i).menstrualCycleLen));
+			int mcl = stat.rows.get(i).menstrualCycleLen;
+			column2.setText(String.valueOf(mcl));
+			if (mcl > 60) {
+				column2.setTextColor(Color.RED);
+			}
+
 			column3.setText(String.valueOf(stat.rows.get(i).bleedingLen));
 			table.addView(row);
 		}
