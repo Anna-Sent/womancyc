@@ -285,7 +285,7 @@ public class Calculator {
 					}
 				}
 
-				rows.add(0, new Row(firstDayOfPrevCycle, cycleLen, bleedingLen));
+				rows.add(new Row(firstDayOfPrevCycle, cycleLen, bleedingLen));
 				firstDayOfCycle = firstDayOfPrevCycle;
 				Calendar yesterday_i = (Calendar) firstDayOfPrevCycle.clone();
 				yesterday_i.add(Calendar.DAY_OF_MONTH, -1);
