@@ -125,7 +125,7 @@ public class Calculator {
 	}
 
 	private int getAvgLenOfLastMenstrualCycles(Calendar firstDayOfCycle) {
-		double sum = 0;
+		int sum = 0;
 		final int count = 3;
 		int actualCount = 0;
 		int countOfCycles = 0;
@@ -134,7 +134,7 @@ public class Calculator {
 		while (countOfCycles < count && firstDayOfPrevCycle != null) {
 			int difference = DateUtils.getDifferenceInDays(firstDayOfCycle,
 					firstDayOfPrevCycle);
-			if (difference <= 60) {
+			if (difference <= 60 && difference > 0) {
 				sum += difference;
 				++actualCount;
 			}
@@ -144,7 +144,8 @@ public class Calculator {
 			firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 		}
 
-		return actualCount == 0 ? 28 : (int) Math.round(sum / actualCount);
+		return actualCount == 0 || sum <= 0 ? 28 : (int) Math
+				.round((double) sum / actualCount);
 	}
 
 	public int getLenOfCurrentMenstrualCycle(Calendar current) {
