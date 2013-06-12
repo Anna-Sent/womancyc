@@ -129,16 +129,9 @@ public class Calculator {
 		final int count = 3;
 		int actualCount = 0;
 		int countOfCycles = 0;
+		Calendar firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 
-		while (countOfCycles < count) {
-			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
-			yesterday.add(Calendar.DAY_OF_MONTH, -1);
-
-			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
-			if (firstDayOfPrevCycle == null) {
-				break;
-			}
-
+		while (countOfCycles < count && firstDayOfPrevCycle != null) {
 			int difference = DateUtils.getDifferenceInDays(firstDayOfCycle,
 					firstDayOfPrevCycle);
 			if (difference <= 60) {
@@ -148,6 +141,7 @@ public class Calculator {
 
 			++countOfCycles;
 			firstDayOfCycle = firstDayOfPrevCycle;
+			firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 		}
 
 		return actualCount == 0 ? 28 : (int) Math.round(sum / actualCount);
@@ -225,9 +219,7 @@ public class Calculator {
 			int bMin = 0;
 			List<Row> rows = new ArrayList<Row>();
 			Calendar firstDayOfCycle = (Calendar) firstDayOfLastCycle.clone();
-			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
-			yesterday.add(Calendar.DAY_OF_MONTH, -1);
-			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
+			Calendar firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 
 			while (firstDayOfPrevCycle != null) {
 				int bleedingLen = 0;
@@ -277,9 +269,7 @@ public class Calculator {
 
 				rows.add(new Row(firstDayOfPrevCycle, cycleLen, bleedingLen));
 				firstDayOfCycle = firstDayOfPrevCycle;
-				Calendar yesterday_i = (Calendar) firstDayOfPrevCycle.clone();
-				yesterday_i.add(Calendar.DAY_OF_MONTH, -1);
-				firstDayOfPrevCycle = getFirstDayOfCycle(yesterday_i);
+				firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 			}
 
 			int mcAvg = mcActualCount == 0 ? 0 : (int) Math.round(mcSum
@@ -289,6 +279,18 @@ public class Calculator {
 			Value mcl = new Value(mcAvg, mcMin, mcMax);
 			Value bl = new Value(bAvg, bMin, bMax);
 			return new Statistic(mcl, bl, rows);
+		}
+	}
+
+	private Calendar getFirstDayOfPrevCycle(Calendar current) {
+		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
+		if (firstDayOfCycle == null) {
+			return null;
+		} else {
+			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
+			yesterday.add(Calendar.DAY_OF_MONTH, -1);
+			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
+			return firstDayOfPrevCycle;
 		}
 	}
 }
