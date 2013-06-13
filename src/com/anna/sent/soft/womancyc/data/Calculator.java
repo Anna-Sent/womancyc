@@ -61,27 +61,6 @@ public class Calculator {
 		return dayOfCycle;
 	}
 
-	private Calendar getFirstDayOfNextCycle(Calendar current) {
-		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
-		int currentIndex = getLeftNeighborIndex(current);
-		CalendarData currentData = mDataKeeper.get(currentIndex);
-		Calendar firstDayOfNextCycle;
-
-		do {
-			++currentIndex;
-			currentData = mDataKeeper.get(currentIndex);
-			if (currentData != null) {
-				firstDayOfNextCycle = getFirstDayOfCycle(currentData.getDate());
-			} else {
-				firstDayOfNextCycle = null;
-			}
-		} while (firstDayOfNextCycle != null
-				&& DateUtils
-						.datesAreEqual(firstDayOfCycle, firstDayOfNextCycle));
-
-		return firstDayOfNextCycle;
-	}
-
 	private int getLeftNeighborIndex(Calendar current) {
 		int currentIndex = mDataKeeper.indexOf(current);
 		if (currentIndex >= 0) {
@@ -121,6 +100,51 @@ public class Calculator {
 
 			map.put(current, firstDayOfCycleData.getDate());
 			return (Calendar) firstDayOfCycleData.getDate().clone();
+		}
+	}
+
+	private Calendar getFirstDayOfNextCycle(Calendar current) {
+		int currentIndex = getLeftNeighborIndex(current);
+		CalendarData currentData = mDataKeeper.get(currentIndex);
+
+		if (currentData == null) {
+			currentIndex = 0;
+		} else {
+			Calendar tomorrow = (Calendar) currentData.getDate().clone();
+
+			while (currentData != null && currentData.getMenstruation() != 0) {
+				tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+				currentIndex = mDataKeeper.indexOf(tomorrow);
+				currentData = mDataKeeper.get(currentIndex);
+			}
+
+			if (currentIndex < 0) {
+				currentIndex = -currentIndex - 1;
+			}
+		}
+
+		currentData = mDataKeeper.get(currentIndex);
+		while (currentData != null && currentData.getMenstruation() == 0) {
+			++currentIndex;
+			currentData = mDataKeeper.get(currentIndex);
+		}
+
+		if (currentData == null) {
+			return null;
+		} else {
+			return (Calendar) currentData.getDate().clone();
+		}
+	}
+
+	private Calendar getFirstDayOfPrevCycle(Calendar current) {
+		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
+		if (firstDayOfCycle == null) {
+			return null;
+		} else {
+			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
+			yesterday.add(Calendar.DAY_OF_MONTH, -1);
+			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
+			return firstDayOfPrevCycle;
 		}
 	}
 
@@ -280,18 +304,6 @@ public class Calculator {
 			Value mcl = new Value(mcAvg, mcMin, mcMax);
 			Value bl = new Value(bAvg, bMin, bMax);
 			return new Statistic(mcl, bl, rows);
-		}
-	}
-
-	private Calendar getFirstDayOfPrevCycle(Calendar current) {
-		Calendar firstDayOfCycle = getFirstDayOfCycle(current);
-		if (firstDayOfCycle == null) {
-			return null;
-		} else {
-			Calendar yesterday = (Calendar) firstDayOfCycle.clone();
-			yesterday.add(Calendar.DAY_OF_MONTH, -1);
-			Calendar firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
-			return firstDayOfPrevCycle;
 		}
 	}
 }
