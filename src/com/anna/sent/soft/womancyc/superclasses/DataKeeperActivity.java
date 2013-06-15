@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
+import com.anna.sent.soft.womancyc.database.CalendarDataManager;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
@@ -118,7 +119,35 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			Toast.makeText(this,
 					getString(R.string.errorWhileOpenningDatabase),
 					Toast.LENGTH_LONG).show();
-			mDataKeeper.closeDataSource();
+		}
+
+		dataChanged();
+	}
+
+	protected void backup() {
+		try {
+			CalendarDataManager.backup(mDataKeeper);
+			Toast.makeText(this,
+					getString(R.string.dataExportSuccessfull, "sdf"),
+					Toast.LENGTH_LONG).show();
+		} catch (SQLException e) {
+			Toast.makeText(this,
+					getString(R.string.errorWhileOpenningDatabase),
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	protected void restore() {
+		try {
+			mDataKeeper.clearAllData();
+			CalendarDataManager.restore(mDataKeeper);
+			Toast.makeText(this,
+					getString(R.string.dataImportSuccessfull, "sdf"),
+					Toast.LENGTH_LONG).show();
+		} catch (SQLException e) {
+			Toast.makeText(this,
+					getString(R.string.errorWhileOpenningDatabase),
+					Toast.LENGTH_LONG).show();
 		}
 
 		dataChanged();

@@ -222,6 +222,12 @@ public class MainActivity extends DataKeeperActivity implements
 		case R.id.rate:
 			rateAction();
 			return true;
+		case R.id.backupData:
+			backup();
+			return true;
+		case R.id.restoreData:
+			restore();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

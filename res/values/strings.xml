@@ -20,6 +20,10 @@
     <string name="rate">Оценить приложение</string>
     <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
+    <string name="backupData">Экспорт</string>
+    <string name="dataExportSuccessfull">Данные экспортированы в файл %s</string>
+    <string name="restoreData">Импорт</string>
+    <string name="dataImportSuccessfull">Данные импортированы из файла %s</string>
     <string name="clear">Очистить</string>
     <string name="close">Закрыть</string>
     <string name="today">Сегодня</string>

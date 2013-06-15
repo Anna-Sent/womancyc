@@ -20,6 +20,14 @@
     </group>
 
     <item
+        android:id="@+id/backupData"
+        android:showAsAction="never"
+        android:title="@string/backupData"/>
+    <item
+        android:id="@+id/restoreData"
+        android:showAsAction="never"
+        android:title="@string/restoreData"/>
+    <item
         android:id="@+id/clearAllData"
         android:showAsAction="never"
         android:title="@string/clearAllData"/>
