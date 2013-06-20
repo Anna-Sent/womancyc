@@ -90,6 +90,9 @@ public class CalendarDataManager {
 			} catch (IOException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileWriting);
 			}
+		} else {
+			mErrorMessage = mContext
+					.getString(R.string.errorExternalStorageWriting);
 		}
 
 		return false;
@@ -145,6 +148,9 @@ public class CalendarDataManager {
 			} catch (XmlPullParserException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileImport);
 			}
+		} else {
+			mErrorMessage = mContext
+					.getString(R.string.errorExternalStorageReading);
 		}
 
 		return false;

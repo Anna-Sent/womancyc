@@ -82,5 +82,7 @@
     <string name="errorFileWriting">Ошибка записи файла</string>
     <string name="errorFileImport">Ошибка импорта файла</string>
     <string name="errorFileExport">Ошибка экспорта файла</string>
+    <string name="errorExternalStorageReading">Устройство недоступно для чтения</string>
+    <string name="errorExternalStorageWriting">Устройство недоступно для записи</string>
 
 </resources>
