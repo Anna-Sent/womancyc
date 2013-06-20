@@ -77,5 +77,10 @@
     </array>
 
     <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
+    <string name="errorFileNotFound">Файл %s не найден</string>
+    <string name="errorFileReading">Ошибка чтения файла</string>
+    <string name="errorFileWriting">Ошибка записи файла</string>
+    <string name="errorFileImport">Ошибка импорта файла</string>
+    <string name="errorFileExport">Ошибка экспорта файла</string>
 
 </resources>

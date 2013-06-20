@@ -1,6 +1,7 @@
 package com.anna.sent.soft.womancyc.database;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,12 +11,20 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Xml;
 
+import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public class CalendarDataManager {
+	private Context mContext;
+
+	public CalendarDataManager(Context context) {
+		mContext = context;
+	}
+
 	private static boolean isExternalStorageWritable() {
 		String state = Environment.getExternalStorageState();
 		if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -47,13 +56,13 @@ public class CalendarDataManager {
 
 	private static String TAG_ROW = "row";
 
-	private static String mErrorMessage = null;
+	private String mErrorMessage = null;
 
-	public static String getErrorMessage() {
+	public String getErrorMessage() {
 		return mErrorMessage;
 	}
 
-	public static boolean backup(DataKeeper dataKeeper) {
+	public boolean backup(DataKeeper dataKeeper) {
 		if (isExternalStorageWritable()) {
 			try {
 				File xmlfile = new File(getBackupFileName());
@@ -71,9 +80,15 @@ public class CalendarDataManager {
 				output.close();
 
 				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				mErrorMessage = e.getLocalizedMessage();
+			} catch (FileNotFoundException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileNotFound,
+						getBackupFileName());
+			} catch (IllegalArgumentException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileExport);
+			} catch (IllegalStateException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileExport);
+			} catch (IOException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileWriting);
 			}
 		}
 
@@ -105,7 +120,7 @@ public class CalendarDataManager {
 		xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
 	}
 
-	public static boolean restore(DataKeeper dataKeeper) {
+	public boolean restore(DataKeeper dataKeeper) {
 		if (isExternalStorageReadable()) {
 			try {
 				File xmlfile = new File(getBackupFileName());
@@ -122,9 +137,13 @@ public class CalendarDataManager {
 				}
 
 				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				mErrorMessage = e.getLocalizedMessage();
+			} catch (FileNotFoundException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileNotFound,
+						getBackupFileName());
+			} catch (IOException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileReading);
+			} catch (XmlPullParserException e) {
+				mErrorMessage = mContext.getString(R.string.errorFileImport);
 			}
 		}
 
@@ -132,8 +151,7 @@ public class CalendarDataManager {
 	}
 
 	private static int readCalendarTable(XmlPullParser xpp, int eventType,
-			DataKeeper dataKeeper) throws XmlPullParserException,
-			IOException {
+			DataKeeper dataKeeper) throws XmlPullParserException, IOException {
 		if (eventType == XmlPullParser.START_TAG
 				&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
 			eventType = xpp.next();

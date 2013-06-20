@@ -128,7 +128,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	protected void backup() {
 		try {
-			boolean result = CalendarDataManager.backup(mDataKeeper);
+			CalendarDataManager cdm = new CalendarDataManager(this);
+			boolean result = cdm.backup(mDataKeeper);
 			if (result) {
 				Toast.makeText(
 						this,
@@ -137,13 +138,12 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 						Toast.LENGTH_LONG).show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(CalendarDataManager.getErrorMessage())
-						.setPositiveButton(android.R.string.yes,
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-									}
-								});
+				builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
+						android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
 				builder.create().show();
 			}
 		} catch (SQLException e) {
@@ -156,7 +156,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	protected void restore() {
 		try {
 			mDataKeeper.clearAllData();
-			boolean result = CalendarDataManager.restore(mDataKeeper);
+			CalendarDataManager cdm = new CalendarDataManager(this);
+			boolean result = cdm.restore(mDataKeeper);
 			if (result) {
 				Toast.makeText(
 						this,
@@ -165,13 +166,12 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 						Toast.LENGTH_LONG).show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(CalendarDataManager.getErrorMessage())
-						.setPositiveButton(android.R.string.yes,
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-									}
-								});
+				builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
+						android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
 				builder.create().show();
 			}
 		} catch (SQLException e) {
