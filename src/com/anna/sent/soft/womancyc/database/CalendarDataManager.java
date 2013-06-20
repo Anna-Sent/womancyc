@@ -53,7 +53,7 @@ public class CalendarDataManager {
 		return mErrorMessage;
 	}
 
-	public static boolean backup(DataKeeperInterface dataKeeper) {
+	public static boolean backup(DataKeeper dataKeeper) {
 		if (isExternalStorageWritable()) {
 			try {
 				File xmlfile = new File(getBackupFileName());
@@ -81,7 +81,7 @@ public class CalendarDataManager {
 	}
 
 	private static void writeCalendarTable(XmlSerializer xmlSerializer,
-			DataKeeperInterface dataKeeper) throws IllegalArgumentException,
+			DataKeeper dataKeeper) throws IllegalArgumentException,
 			IllegalStateException, IOException {
 		xmlSerializer.startTag(null, CalendarHelper.TABLE_CALENDAR);
 
@@ -105,7 +105,7 @@ public class CalendarDataManager {
 		xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
 	}
 
-	public static boolean restore(DataKeeperInterface dataKeeper) {
+	public static boolean restore(DataKeeper dataKeeper) {
 		if (isExternalStorageReadable()) {
 			try {
 				File xmlfile = new File(getBackupFileName());
@@ -132,7 +132,7 @@ public class CalendarDataManager {
 	}
 
 	private static int readCalendarTable(XmlPullParser xpp, int eventType,
-			DataKeeperInterface dataKeeper) throws XmlPullParserException,
+			DataKeeper dataKeeper) throws XmlPullParserException,
 			IOException {
 		if (eventType == XmlPullParser.START_TAG
 				&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {

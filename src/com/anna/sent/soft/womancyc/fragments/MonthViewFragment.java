@@ -19,7 +19,7 @@ import android.widget.GridView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
-import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.superclasses.StateSaverFragment;
@@ -61,10 +61,10 @@ public class MonthViewFragment extends StateSaverFragment implements
 		mListener = listener;
 	}
 
-	private DataKeeperInterface mDataKeeper = null;
+	private DataKeeper mDataKeeper = null;
 
 	@Override
-	public void setDataKeeper(DataKeeperInterface dataKeeper) {
+	public void setDataKeeper(DataKeeper dataKeeper) {
 		mDataKeeper = dataKeeper;
 	}
 

@@ -14,12 +14,12 @@ import android.widget.Toast;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.CalendarDataManager;
+import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
-		DataKeeperInterface {
+		DataKeeper {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -34,16 +34,16 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	private DataKeeper mDataKeeper;
+	private DataKeeperImpl mDataKeeper;
 
-	protected DataKeeper getDataKeeper() {
+	protected DataKeeperImpl getDataKeeper() {
 		return mDataKeeper;
 	}
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
-		mDataKeeper = new DataKeeper(this);
+		mDataKeeper = new DataKeeperImpl(this);
 		openDataSource();
 	}
 

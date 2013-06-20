@@ -7,7 +7,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class Calculator {
@@ -25,9 +25,9 @@ public class Calculator {
 	}
 
 	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
-	private DataKeeperInterface mDataKeeper;
+	private DataKeeper mDataKeeper;
 
-	public Calculator(DataKeeperInterface dataKeeper) {
+	public Calculator(DataKeeper dataKeeper) {
 		mDataKeeper = dataKeeper;
 	}
 

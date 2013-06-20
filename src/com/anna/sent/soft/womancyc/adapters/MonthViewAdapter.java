@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.database.DataKeeperInterface;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
@@ -46,10 +46,10 @@ public class MonthViewAdapter extends BaseAdapter {
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
 
-	private DataKeeperInterface mDataKeeper;
+	private DataKeeper mDataKeeper;
 	private Calculator mCalculator;
 
-	public MonthViewAdapter(Context context, DataKeeperInterface dataKeeper) {
+	public MonthViewAdapter(Context context, DataKeeper dataKeeper) {
 		super();
 		mContext = context;
 		mDataKeeper = dataKeeper;
