@@ -5,6 +5,11 @@
 
         <!-- item name="numberPickerStyle">@style/Widget.Holo.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_dark</item>
+        <item name="rateIcon">@drawable/rate_dark</item>
+        <item name="statisticIcon">@drawable/statistic_dark</item>
+        <item name="clearAllDataIcon">@drawable/discard_dark</item>
+        <item name="importIcon">@drawable/import_dark</item>
+        <item name="exportIcon">@drawable/export_dark</item>
         <item name="spinnerItemTextColor">@android:color/white</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/white</item>
@@ -14,6 +19,11 @@
 
         <!-- item name="numberPickerStyle">@style/Widget.Holo.Light.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="rateIcon">@drawable/rate_light</item>
+        <item name="statisticIcon">@drawable/statistic_light</item>
+        <item name="clearAllDataIcon">@drawable/discard_light</item>
+        <item name="importIcon">@drawable/import_light</item>
+        <item name="exportIcon">@drawable/export_light</item>
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>

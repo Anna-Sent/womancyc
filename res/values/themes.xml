@@ -3,6 +3,11 @@
 
     <declare-styleable name="Theme">
         <attr name="helpIcon" format="reference" />
+        <attr name="rateIcon" format="reference" />
+        <attr name="statisticIcon" format="reference" />
+        <attr name="clearAllDataIcon" format="reference" />
+        <attr name="importIcon" format="reference" />
+        <attr name="exportIcon" format="reference" />
         <attr name="nextItemIcon" format="reference" />
         <attr name="prevItemIcon" format="reference" />
         <attr name="note_bg" format="reference" />
@@ -25,6 +30,11 @@
 
         <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="rateIcon">@drawable/rate_light</item>
+        <item name="statisticIcon">@drawable/statistic_light</item>
+        <item name="clearAllDataIcon">@drawable/discard_light</item>
+        <item name="importIcon">@drawable/import_light</item>
+        <item name="exportIcon">@drawable/export_light</item>
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
@@ -34,6 +44,11 @@
 
         <!-- item name="numberPickerStyle">@style/Widget.NumberPicker</item -->
         <item name="helpIcon">@drawable/help_light</item>
+        <item name="rateIcon">@drawable/rate_light</item>
+        <item name="statisticIcon">@drawable/statistic_light</item>
+        <item name="clearAllDataIcon">@drawable/discard_light</item>
+        <item name="importIcon">@drawable/import_light</item>
+        <item name="exportIcon">@drawable/export_light</item>
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
