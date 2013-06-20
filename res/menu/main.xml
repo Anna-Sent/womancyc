@@ -22,12 +22,12 @@
 
     <item
         android:id="@+id/backupData"
-        android:icon="?attr/backupDataIcon"
+        android:icon="?attr/exportIcon"
         android:showAsAction="never"
         android:title="@string/backupData"/>
     <item
         android:id="@+id/restoreData"
-        android:icon="?attr/restoreDataIcon"
+        android:icon="?attr/importIcon"
         android:showAsAction="never"
         android:title="@string/restoreData"/>
     <item
