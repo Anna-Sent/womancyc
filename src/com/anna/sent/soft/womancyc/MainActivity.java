@@ -223,10 +223,10 @@ public class MainActivity extends DataKeeperActivity implements
 			rateAction();
 			return true;
 		case R.id.backupData:
-			backup();
+			backupAction();
 			return true;
 		case R.id.restoreData:
-			restore();
+			restoreAction();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -241,6 +241,28 @@ public class MainActivity extends DataKeeperActivity implements
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								clearAllData();
+							}
+						})
+				.setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		builder.create().show();
+	}
+
+	private void backupAction() {
+		backup();
+	}
+
+	private void restoreAction() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.restoreConfirmation)
+				.setMessage(R.string.restoreConfirmationMessage)
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								restore();
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,

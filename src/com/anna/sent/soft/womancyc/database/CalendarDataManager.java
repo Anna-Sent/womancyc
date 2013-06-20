@@ -3,9 +3,11 @@ package com.anna.sent.soft.womancyc.database;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Calendar;
 
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.os.Environment;
@@ -33,11 +35,28 @@ public class CalendarDataManager {
 		return false;
 	}
 
-	public static void backup(DataKeeperInterface dataKeeper) {
+	public static String getBackupFileName() {
+		String dir = Environment.getExternalStorageDirectory()
+				.getAbsolutePath();
+		if (dir.charAt(dir.length() - 1) != '/') {
+			dir += "/";
+		}
+
+		return dir + "WomanCyc/backup.xml";
+	}
+
+	private static String TAG_ROW = "row";
+
+	private static String mErrorMessage = null;
+
+	public static String getErrorMessage() {
+		return mErrorMessage;
+	}
+
+	public static boolean backup(DataKeeperInterface dataKeeper) {
 		if (isExternalStorageWritable()) {
 			try {
-				File xmlfile = new File(
-						Environment.getExternalStorageDirectory() + "/sos.xml");
+				File xmlfile = new File(getBackupFileName());
 				xmlfile.getParentFile().mkdirs();
 				FileOutputStream output = new FileOutputStream(xmlfile);
 
@@ -45,43 +64,51 @@ public class CalendarDataManager {
 				xmlSerializer.setOutput(output, "UTF-8");
 
 				xmlSerializer.startDocument(null, true);
-				xmlSerializer.startTag(null, CalendarHelper.TABLE_CALENDAR);
-
-				for (int i = 0; i < dataKeeper.getCount(); ++i) {
-					CalendarData value = dataKeeper.get(i);
-
-					xmlSerializer.startTag(null, "row");
-					xmlSerializer.attribute(null, CalendarHelper.COLUMN_ID,
-							String.valueOf(value.getId()));
-					xmlSerializer.attribute(null,
-							CalendarHelper.COLUMN_MENSTRUATION,
-							String.valueOf(value.getMenstruation()));
-					xmlSerializer.attribute(null, CalendarHelper.COLUMN_SEX,
-							String.valueOf(value.getSex()));
-					xmlSerializer.attribute(null,
-							CalendarHelper.COLUMN_TOOK_PILL,
-							String.valueOf(value.getTookPill()));
-					xmlSerializer.attribute(null, CalendarHelper.COLUMN_NOTE,
-							value.getNote());
-					xmlSerializer.endTag(null, "row");
-				}
-
-				xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
+				writeCalendarTable(xmlSerializer, dataKeeper);
 				xmlSerializer.endDocument();
 
 				xmlSerializer.flush();
 				output.close();
+
+				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
+				mErrorMessage = e.getLocalizedMessage();
 			}
 		}
+
+		return false;
 	}
 
-	public static void restore(DataKeeperInterface dataKeeper) {
+	private static void writeCalendarTable(XmlSerializer xmlSerializer,
+			DataKeeperInterface dataKeeper) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+		xmlSerializer.startTag(null, CalendarHelper.TABLE_CALENDAR);
+
+		for (int i = 0; i < dataKeeper.getCount(); ++i) {
+			CalendarData value = dataKeeper.get(i);
+
+			xmlSerializer.startTag(null, TAG_ROW);
+			xmlSerializer.attribute(null, CalendarHelper.COLUMN_ID,
+					String.valueOf(value.getId()));
+			xmlSerializer.attribute(null, CalendarHelper.COLUMN_MENSTRUATION,
+					String.valueOf(value.getMenstruation()));
+			xmlSerializer.attribute(null, CalendarHelper.COLUMN_SEX,
+					String.valueOf(value.getSex()));
+			xmlSerializer.attribute(null, CalendarHelper.COLUMN_TOOK_PILL,
+					String.valueOf(value.getTookPill()));
+			xmlSerializer.attribute(null, CalendarHelper.COLUMN_NOTE,
+					value.getNote());
+			xmlSerializer.endTag(null, TAG_ROW);
+		}
+
+		xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
+	}
+
+	public static boolean restore(DataKeeperInterface dataKeeper) {
 		if (isExternalStorageReadable()) {
 			try {
-				File xmlfile = new File(
-						Environment.getExternalStorageDirectory() + "/sos.xml");
+				File xmlfile = new File(getBackupFileName());
 				xmlfile.getParentFile().mkdirs();
 				FileReader input = new FileReader(xmlfile);
 
@@ -90,62 +117,71 @@ public class CalendarDataManager {
 
 				int eventType = xpp.getEventType();
 				while (eventType != XmlPullParser.END_DOCUMENT) {
-					if (eventType == XmlPullParser.START_TAG
-							&& xpp.getName().equals(
-									CalendarHelper.TABLE_CALENDAR)) {
-						eventType = xpp.next();
-						while (eventType == XmlPullParser.START_TAG
-								&& xpp.getName().equals("row")) {
-							Calendar date = Calendar.getInstance();
-							int menstruation = 0;
-							int sex = 0;
-							boolean tookPill = false;
-							String note = "";
-
-							for (int i = 0; i < xpp.getAttributeCount(); ++i) {
-								if (xpp.getAttributeName(i).equals(
-										CalendarHelper.COLUMN_ID)) {
-									date.setTimeInMillis(Long.valueOf(xpp
-											.getAttributeValue(i)));
-								} else if (xpp.getAttributeName(i).equals(
-										CalendarHelper.COLUMN_MENSTRUATION)) {
-									menstruation = Integer.valueOf(xpp
-											.getAttributeValue(i));
-								} else if (xpp.getAttributeName(i).equals(
-										CalendarHelper.COLUMN_SEX)) {
-									sex = Integer.valueOf(xpp
-											.getAttributeValue(i));
-								} else if (xpp.getAttributeName(i).equals(
-										CalendarHelper.COLUMN_TOOK_PILL)) {
-									tookPill = Boolean.valueOf(xpp
-											.getAttributeValue(i));
-								} else if (xpp.getAttributeName(i).equals(
-										CalendarHelper.COLUMN_NOTE)) {
-									note = xpp.getAttributeValue(i);
-								}
-							}
-
-							CalendarData value = new CalendarData(date);
-							value.setMenstruation(menstruation);
-							value.setSex(sex);
-							value.setTookPill(tookPill);
-							value.setNote(note);
-							dataKeeper.insertOrUpdate(value);
-							eventType = xpp.next();
-							if (eventType == XmlPullParser.END_TAG
-									&& xpp.getName().equals("row")) {
-								eventType = xpp.next();
-							} else {
-								break;
-							}
-						}
-					}
-
 					eventType = xpp.next();
+					eventType = readCalendarTable(xpp, eventType, dataKeeper);
 				}
+
+				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
+				mErrorMessage = e.getLocalizedMessage();
 			}
 		}
+
+		return false;
+	}
+
+	private static int readCalendarTable(XmlPullParser xpp, int eventType,
+			DataKeeperInterface dataKeeper) throws XmlPullParserException,
+			IOException {
+		if (eventType == XmlPullParser.START_TAG
+				&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
+			eventType = xpp.next();
+			while (eventType == XmlPullParser.START_TAG
+					&& xpp.getName().equals(TAG_ROW)) {
+				Calendar date = Calendar.getInstance();
+				int menstruation = 0;
+				int sex = 0;
+				boolean tookPill = false;
+				String note = "";
+
+				for (int i = 0; i < xpp.getAttributeCount(); ++i) {
+					String name = xpp.getAttributeName(i);
+					String value = xpp.getAttributeValue(i);
+					if (name.equals(CalendarHelper.COLUMN_ID)) {
+						date.setTimeInMillis(Long.valueOf(value));
+					} else if (name.equals(CalendarHelper.COLUMN_MENSTRUATION)) {
+						menstruation = Integer.valueOf(value);
+					} else if (name.equals(CalendarHelper.COLUMN_SEX)) {
+						sex = Integer.valueOf(value);
+					} else if (name.equals(CalendarHelper.COLUMN_TOOK_PILL)) {
+						tookPill = Boolean.valueOf(value);
+					} else if (name.equals(CalendarHelper.COLUMN_NOTE)) {
+						note = value;
+					}
+				}
+
+				CalendarData value = new CalendarData(date);
+				value.setMenstruation(menstruation);
+				value.setSex(sex);
+				value.setTookPill(tookPill);
+				value.setNote(note);
+				dataKeeper.insertOrUpdate(value);
+				eventType = xpp.next();
+				if (eventType == XmlPullParser.END_TAG
+						&& xpp.getName().equals(TAG_ROW)) {
+					eventType = xpp.next();
+				} else {
+					break;
+				}
+			}
+
+			if (eventType == XmlPullParser.END_TAG
+					&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
+				eventType = xpp.next();
+			}
+		}
+
+		return eventType;
 	}
 }

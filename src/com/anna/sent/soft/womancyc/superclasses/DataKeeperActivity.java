@@ -3,6 +3,8 @@ package com.anna.sent.soft.womancyc.superclasses;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -126,10 +128,24 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	protected void backup() {
 		try {
-			CalendarDataManager.backup(mDataKeeper);
-			Toast.makeText(this,
-					getString(R.string.dataExportSuccessfull, "sdf"),
-					Toast.LENGTH_LONG).show();
+			boolean result = CalendarDataManager.backup(mDataKeeper);
+			if (result) {
+				Toast.makeText(
+						this,
+						getString(R.string.dataExportSuccessfull,
+								CalendarDataManager.getBackupFileName()),
+						Toast.LENGTH_LONG).show();
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(CalendarDataManager.getErrorMessage())
+						.setPositiveButton(android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+									}
+								});
+				builder.create().show();
+			}
 		} catch (SQLException e) {
 			Toast.makeText(this,
 					getString(R.string.errorWhileOpenningDatabase),
@@ -140,10 +156,24 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	protected void restore() {
 		try {
 			mDataKeeper.clearAllData();
-			CalendarDataManager.restore(mDataKeeper);
-			Toast.makeText(this,
-					getString(R.string.dataImportSuccessfull, "sdf"),
-					Toast.LENGTH_LONG).show();
+			boolean result = CalendarDataManager.restore(mDataKeeper);
+			if (result) {
+				Toast.makeText(
+						this,
+						getString(R.string.dataImportSuccessfull,
+								CalendarDataManager.getBackupFileName()),
+						Toast.LENGTH_LONG).show();
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(CalendarDataManager.getErrorMessage())
+						.setPositiveButton(android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+									}
+								});
+				builder.create().show();
+			}
 		} catch (SQLException e) {
 			Toast.makeText(this,
 					getString(R.string.errorWhileOpenningDatabase),
