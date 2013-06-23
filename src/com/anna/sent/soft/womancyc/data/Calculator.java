@@ -24,6 +24,9 @@ public class Calculator {
 		}
 	}
 
+	private static final int DEFAULT_MENSTRUAL_CYCLE_LEN = 28;
+	private static final int MAX_MENSTRUAL_CYCLE_LEN = 60;
+
 	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
 	private DataKeeper mDataKeeper;
 
@@ -158,7 +161,7 @@ public class Calculator {
 		while (countOfCycles < count && firstDayOfPrevCycle != null) {
 			int difference = DateUtils.getDifferenceInDays(firstDayOfCycle,
 					firstDayOfPrevCycle);
-			if (difference <= 60 && difference > 0) {
+			if (difference <= MAX_MENSTRUAL_CYCLE_LEN && difference > 0) {
 				sum += difference;
 				++actualCount;
 			}
@@ -168,8 +171,8 @@ public class Calculator {
 			firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 		}
 
-		return actualCount == 0 || sum <= 0 ? 28 : (int) Math
-				.round((double) sum / actualCount);
+		return actualCount == 0 || sum <= 0 ? DEFAULT_MENSTRUAL_CYCLE_LEN
+				: (int) Math.round((double) sum / actualCount);
 	}
 
 	public int getLenOfCurrentMenstrualCycle(Calendar current) {
@@ -275,7 +278,7 @@ public class Calculator {
 				int cycleLen = DateUtils.getDifferenceInDays(firstDayOfCycle,
 						firstDayOfPrevCycle);
 
-				if (cycleLen <= 60) {
+				if (cycleLen <= MAX_MENSTRUAL_CYCLE_LEN) {
 					mcSum += cycleLen;
 					++mcActualCount;
 
