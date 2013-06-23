@@ -51,9 +51,9 @@
     <array name="menstruationDrawables">
         <item>0</item>
         <item>@drawable/menstruation</item>
-        <item>@drawable/one_drop</item>
-        <item>@drawable/two_drops</item>
-        <item>@drawable/three_drops</item>
+        <item>@drawable/menstruation_one_drop</item>
+        <item>@drawable/menstruation_two_drops</item>
+        <item>@drawable/menstruation_three_drops</item>
     </array>
 
     <string-array name="sexTypes">
@@ -65,14 +65,14 @@
 
     <array name="sexDrawablesDark">
         <item>0</item>
-        <item>@drawable/unprotected_sex_dark</item>
-        <item>@drawable/protected_sex_dark</item>
+        <item>@drawable/sex_unprotected_dark</item>
+        <item>@drawable/sex_protected_dark</item>
         <item>@drawable/sex_dark</item>
     </array>
     <array name="sexDrawablesLight">
         <item>0</item>
-        <item>@drawable/unprotected_sex_light</item>
-        <item>@drawable/protected_sex_light</item>
+        <item>@drawable/sex_unprotected_light</item>
+        <item>@drawable/sex_protected_light</item>
         <item>@drawable/sex_light</item>
     </array>
 
