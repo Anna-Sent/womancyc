@@ -37,6 +37,7 @@
                 android:layout_weight="0.6"
                 android:background="@drawable/selector_transparent_button"
                 android:contentDescription="@string/currentDay"
+                android:drawableLeft="?attr/goToTodayIcon"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/blue" />

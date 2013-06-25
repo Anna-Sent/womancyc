@@ -205,6 +205,9 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
 		case R.id.lighttheme:
 			ThemeUtils.changeToTheme(this, ThemeUtils.LIGHT_THEME);
 			return true;

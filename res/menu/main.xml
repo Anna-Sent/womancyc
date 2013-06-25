@@ -4,8 +4,13 @@
     <item
         android:id="@+id/statistic"
         android:icon="?attr/statisticIcon"
-        android:showAsAction="ifRoom"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/statistic"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="?attr/settingsIcon"
+        android:showAsAction="never"
+        android:title="@string/settings"/>
     <item
         android:id="@+id/rate"
         android:icon="?attr/rateIcon"

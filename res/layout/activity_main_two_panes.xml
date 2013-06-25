@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
             ads:adUnitId="@string/adUnitId"
-            ads:loadAdOnCreate="@bool/showAd"
+            ads:loadAdOnCreate="true"
             android:gravity="center"
             android:paddingTop="@dimen/view_padding" />
     </LinearLayout>

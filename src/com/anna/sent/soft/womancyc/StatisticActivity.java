@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -60,6 +62,23 @@ public class StatisticActivity extends ChildActivity {
 
 			column3.setText(String.valueOf(stat.rows.get(i).bleedingLen));
 			table.addView(row);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.statistic, menu);
+		menu.findItem(R.id.showDividers).setChecked(true);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.showDividers:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 }

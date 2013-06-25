@@ -11,6 +11,7 @@
     <string name="app_name">WomanCyc</string>
     <string name="widget_small_name">WomanCyc Small</string>
     <string name="widget_medium_name">WomanCyc Medium</string>
+    <string name="settings">Настройки</string>
     <string name="lighttheme">Светлая тема</string>
     <string name="darktheme">Темная тема</string>
     <string name="clearAllData">Сброс данных</string>
@@ -22,10 +23,11 @@
     <string name="rate">Оценить приложение</string>
     <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
-    <string name="backupData">Экспортировать данные в файл</string>
+    <string name="backupData">Экспортировать данные</string>
     <string name="dataExportSuccessfull">Данные экспортированы в файл %s</string>
-    <string name="restoreData">Восстановить данные из файла</string>
+    <string name="restoreData">Восстановить данные</string>
     <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
+    <string name="showDividers">Показывать разделители</string>
     <string name="clear">Очистить</string>
     <string name="close">Закрыть</string>
     <string name="today">Сегодня</string>
@@ -39,6 +41,7 @@
     <string name="avgValue">Среднее значение</string>
     <string name="minValue">Минимальное значение</string>
     <string name="maxValue">Максимальное значение</string>
+    <string name="firstDayOfCycle">Первый день цикла</string>
 
     <string-array name="menstruationTypes">
         <item>Нет</item>
