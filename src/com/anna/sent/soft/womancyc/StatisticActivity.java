@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.data.Calculator;
@@ -16,11 +16,18 @@ import com.anna.sent.soft.womancyc.data.Calculator.Value;
 import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class StatisticActivity extends ChildActivity {
+public class StatisticActivity extends ChildActivity implements OnClickListener {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_statistic);
+
+		TableRow tableRow2 = (TableRow) findViewById(R.id.tableRow2);
+		tableRow2.setOnClickListener(this);
+		TableRow tableRow3 = (TableRow) findViewById(R.id.tableRow3);
+		tableRow3.setOnClickListener(this);
+		TableRow tableRow4 = (TableRow) findViewById(R.id.tableRow4);
+		tableRow4.setOnClickListener(this);
 
 		Calculator calc = new Calculator(getDataKeeper());
 		Statistic stat = calc.getStatistic();
@@ -48,7 +55,9 @@ public class StatisticActivity extends ChildActivity {
 		TableLayout table = (TableLayout) findViewById(R.id.table);
 		for (int i = 0; i < stat.rows.size(); ++i) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.statistic_row, null, false);
+			View row = inflater.inflate(R.layout.table_row_statistic, null,
+					false);
+			row.setOnClickListener(this);
 			TextView column1 = (TextView) row.findViewById(R.id.column1);
 			TextView column2 = (TextView) row.findViewById(R.id.column2);
 			TextView column3 = (TextView) row.findViewById(R.id.column3);
@@ -65,20 +74,18 @@ public class StatisticActivity extends ChildActivity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.statistic, menu);
-		menu.findItem(R.id.showDividers).setChecked(true);
-		return true;
-	}
+	private View mSelectedRow = null;
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.showDividers:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+	public void onClick(View v) {
+		if (v instanceof TableRow) {
+			if (mSelectedRow != null) {
+				mSelectedRow.setBackground(null);
+			}
+
+			v.setBackground(getResources().getDrawable(
+					R.drawable.bg_selected_view));
+			mSelectedRow = v;
 		}
 	}
 }

@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/height"
                 android:layout_gravity="center"
                 android:layout_weight="0.2"
-                android:background="@drawable/selector_transparent_button"
+                android:background="@drawable/bg_transparent_button"
                 android:contentDescription="@string/prevDay"
                 android:drawableRight="?attr/prevItemIcon" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/height"
                 android:layout_gravity="center"
                 android:layout_weight="0.6"
-                android:background="@drawable/selector_transparent_button"
+                android:background="@drawable/bg_transparent_button"
                 android:contentDescription="@string/currentDay"
                 android:drawableLeft="?attr/goToTodayIcon"
                 android:gravity="center"
@@ -48,7 +48,7 @@
                 android:layout_height="@dimen/height"
                 android:layout_gravity="center"
                 android:layout_weight="0.2"
-                android:background="@drawable/selector_transparent_button"
+                android:background="@drawable/bg_transparent_button"
                 android:contentDescription="@string/nextDay"
                 android:drawableLeft="?attr/nextItemIcon" />
         </LinearLayout>

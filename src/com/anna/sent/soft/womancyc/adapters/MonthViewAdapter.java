@@ -201,7 +201,7 @@ public class MonthViewAdapter extends BaseAdapter {
 	}
 
 	private int getDayOfWeekLayoutResource() {
-		return R.layout.day_of_week;
+		return R.layout.grid_cell_day_of_week;
 	}
 
 	private int getDayOfWeekViewId() {
@@ -216,7 +216,7 @@ public class MonthViewAdapter extends BaseAdapter {
 	}
 
 	protected int getDayOfMonthLayoutResource() {
-		return R.layout.day_of_month;
+		return R.layout.grid_cell_day_of_month;
 	}
 
 	protected int getDayOfMonthViewId() {
@@ -267,7 +267,7 @@ public class MonthViewAdapter extends BaseAdapter {
 		if (cellData != null) {
 			switch (cellData.getMenstruation()) {
 			case 1:
-				layers.add(getDrawable(R.drawable.menstruation_bg_src));
+				layers.add(getDrawable(R.drawable.bg_menstruation));
 				break;
 			case 2:
 				layers.add(getDrawableFromTheme(R.attr.one_drop_bg));
@@ -302,7 +302,7 @@ public class MonthViewAdapter extends BaseAdapter {
 		}
 
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
-			layers.add(getDrawable(R.drawable.selected_day_of_month_bg));
+			layers.add(getDrawable(R.drawable.bg_selected_view));
 		}
 
 		LayerDrawable background = new LayerDrawable(
