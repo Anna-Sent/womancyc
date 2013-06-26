@@ -3,6 +3,7 @@ package com.anna.sent.soft.womancyc;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,8 +71,13 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			}
 
 			column3.setText(String.valueOf(stat.rows.get(i).bleedingLen));
-			table.addView(row);
+			table.addView(row, table.getChildCount() - 1);
 		}
+
+		TextView textViewStatisticRemark = (TextView) findViewById(R.id.statisticRemark);
+		textViewStatisticRemark.setText(Html.fromHtml(getString(
+				R.string.statisticRemark, Calculator.MAX_MENSTRUAL_CYCLE_LEN,
+				Calculator.MAX_MENSTRUAL_CYCLE_LEN)));
 	}
 
 	private View mSelectedRow = null;
