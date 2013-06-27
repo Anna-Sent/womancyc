@@ -67,11 +67,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		dataChanged();
 	}
 
-	private class StartupTask extends AsyncTask {
+	private class StartupTask extends AsyncTask<Object, Object, Object> {
 		private ProgressDialog progressDialog;
 
 		@Override
-		protected Object doInBackground(final Object... objects) {
+		protected Object doInBackground(Object... objects) {
 			_openDataSource();
 			try {
 				Thread.sleep(1000);
