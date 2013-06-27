@@ -70,8 +70,12 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mDataKeeper.closeDataSource();
+		closeDataSource();
 		MyCycleWidget.updateAllWidgets(this);
+	}
+
+	private void closeDataSource() {
+		mDataKeeper.closeDataSource();
 	}
 
 	protected abstract void dataChanged();
