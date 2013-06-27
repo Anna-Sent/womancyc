@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.database;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,8 +15,8 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class DataKeeperImpl implements DataKeeper {
 	private Context mContext;
 	private CalendarDataSource mDataSource;
-	private List<CalendarData> mValues;
-	private List<String> mNotes;
+	private List<CalendarData> mValues = new ArrayList<CalendarData>();
+	private List<String> mNotes = new ArrayList<String>();
 
 	public DataKeeperImpl(Context context) {
 		mContext = context;
@@ -24,18 +25,18 @@ public class DataKeeperImpl implements DataKeeper {
 
 	public void openDataSource() throws SQLException {
 		mDataSource.open();
-		mValues = mDataSource.getAllRows();
-		mNotes = mDataSource.getAllNotes();
+		mDataSource.getAllRows(mValues);
+		mDataSource.getAllNotes(mNotes);
 	}
 
 	public void closeDataSource() {
 		mDataSource.close();
 	}
 
-	public void clearAllData() throws SQLException {
+	public void clearAllData() {
 		mDataSource.clearAllData();
-		closeDataSource();
-		openDataSource();
+		mDataSource.getAllRows(mValues);
+		mDataSource.getAllNotes(mNotes);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class DataKeeperImpl implements DataKeeper {
 			mValues.add(-index - 1, value);
 		}
 
-		mNotes = mDataSource.getAllNotes();
+		mDataSource.getAllNotes(mNotes);
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class DataKeeperImpl implements DataKeeper {
 			mDataSource.delete(value);
 			mValues.remove(index);
 
-			mNotes = mDataSource.getAllNotes();
+			mDataSource.getAllNotes(mNotes);
 		}
 	}
 

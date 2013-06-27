@@ -4,8 +4,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.SQLException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,8 +16,8 @@ import android.widget.Toast;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.CalendarDataManager;
-import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
@@ -36,10 +38,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private DataKeeperImpl mDataKeeper;
 
-	protected DataKeeperImpl getDataKeeper() {
-		return mDataKeeper;
-	}
-
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
@@ -53,7 +51,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		super.onResume();
 	}
 
-	private void openDataSource() {
+	private void _openDataSource() {
 		try {
 			mDataKeeper.openDataSource();
 		} catch (SQLException e) {
@@ -61,10 +59,44 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			Toast.makeText(this,
 					getString(R.string.errorWhileOpenningDatabase),
 					Toast.LENGTH_LONG).show();
-			mDataKeeper.closeDataSource();
+		}
+	}
+
+	private void openDataSource() {
+		new StartupTask().execute();
+		dataChanged();
+	}
+
+	private class StartupTask extends AsyncTask {
+		private ProgressDialog progressDialog;
+
+		@Override
+		protected Object doInBackground(final Object... objects) {
+			_openDataSource();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 
-		dataChanged();
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					progressDialog = ProgressDialog.show(
+							DataKeeperActivity.this, "", "", true);
+				}
+			});
+		}
+
+		@Override
+		protected void onPostExecute(Object object) {
+			super.onPostExecute(object);
+			progressDialog.dismiss();
+		}
 	}
 
 	@Override
@@ -118,70 +150,50 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	protected final void clearAllData() {
-		try {
-			mDataKeeper.clearAllData();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
-					Toast.LENGTH_LONG).show();
-		}
-
+		mDataKeeper.clearAllData();
 		dataChanged();
 	}
 
 	protected void backup() {
-		try {
-			CalendarDataManager cdm = new CalendarDataManager(this);
-			boolean result = cdm.backup(mDataKeeper);
-			if (result) {
-				Toast.makeText(
-						this,
-						getString(R.string.dataExportSuccessfull,
-								CalendarDataManager.getBackupFileName()),
-						Toast.LENGTH_LONG).show();
-			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
-						android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-				builder.create().show();
-			}
-		} catch (SQLException e) {
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
+		CalendarDataManager cdm = new CalendarDataManager(this);
+		boolean result = cdm.backup(mDataKeeper);
+		if (result) {
+			Toast.makeText(
+					this,
+					getString(R.string.dataExportSuccessfull,
+							CalendarDataManager.getBackupFileName()),
 					Toast.LENGTH_LONG).show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
+					android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+						}
+					});
+			builder.create().show();
 		}
 	}
 
 	protected void restore() {
-		try {
-			mDataKeeper.clearAllData();
-			CalendarDataManager cdm = new CalendarDataManager(this);
-			boolean result = cdm.restore(mDataKeeper);
-			if (result) {
-				Toast.makeText(
-						this,
-						getString(R.string.dataImportSuccessfull,
-								CalendarDataManager.getBackupFileName()),
-						Toast.LENGTH_LONG).show();
-			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
-						android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-				builder.create().show();
-			}
-		} catch (SQLException e) {
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
+		mDataKeeper.clearAllData();
+		CalendarDataManager cdm = new CalendarDataManager(this);
+		boolean result = cdm.restore(mDataKeeper);
+		if (result) {
+			Toast.makeText(
+					this,
+					getString(R.string.dataImportSuccessfull,
+							CalendarDataManager.getBackupFileName()),
 					Toast.LENGTH_LONG).show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
+					android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+						}
+					});
+			builder.create().show();
 		}
 
 		dataChanged();

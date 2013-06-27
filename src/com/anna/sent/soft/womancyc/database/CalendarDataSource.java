@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.database;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class CalendarDataSource {
 		}
 	}
 
-	private SQLiteDatabase mDatabase;
+	private SQLiteDatabase mDatabase = null;
 	private CalendarHelper mHelper;
 
 	public CalendarDataSource(Context context) {
@@ -38,16 +37,25 @@ public class CalendarDataSource {
 		mDatabase = mHelper.getWritableDatabase();
 	}
 
+	private boolean isOpen() {
+		return mDatabase != null;
+	}
+
 	public void clearAllData() {
-		mHelper.recreateDatabase(mDatabase);
+		if (isOpen()) {
+			mHelper.recreateDatabase(mDatabase);
+		}
 	}
 
 	public void close() {
-		mHelper.close();
+		if (isOpen()) {
+			mHelper.close();
+			mDatabase = null;
+		}
 	}
 
 	public void insert(CalendarData value) {
-		if (!value.isEmpty()) {
+		if (isOpen() && !value.isEmpty()) {
 			ContentValues values = new ContentValues();
 			values.put(CalendarHelper.COLUMN_ID, value.getId());
 			values.put(CalendarHelper.COLUMN_MENSTRUATION,
@@ -61,61 +69,68 @@ public class CalendarDataSource {
 	}
 
 	public void delete(CalendarData value) {
-		mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
-				CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-		log("Delete calendar: " + value.toString());
+		if (isOpen()) {
+			mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
+					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
+			log("Delete calendar: " + value.toString());
+		}
 	}
 
 	public void update(CalendarData value) {
-		if (value.isEmpty()) {
-			delete(value);
-		} else {
-			ContentValues values = new ContentValues();
-			values.put(CalendarHelper.COLUMN_MENSTRUATION,
-					value.getMenstruation());
-			values.put(CalendarHelper.COLUMN_SEX, value.getSex());
-			values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
-			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-			mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
-					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-			log("Update calendar: " + value.toString());
+		if (isOpen()) {
+			if (value.isEmpty()) {
+				delete(value);
+			} else {
+				ContentValues values = new ContentValues();
+				values.put(CalendarHelper.COLUMN_MENSTRUATION,
+						value.getMenstruation());
+				values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+				values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
+				values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
+				mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
+						CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
+				log("Update calendar: " + value.toString());
+			}
 		}
 	}
 
-	public List<CalendarData> getAllRows() {
-		List<CalendarData> list = new ArrayList<CalendarData>();
-		Cursor cursor = mDatabase.query(CalendarHelper.TABLE_CALENDAR,
-				CalendarHelper.AllColumns, null, null, null, null,
-				CalendarHelper.COLUMN_ID);
-		cursor.moveToFirst();
-		log("Load calendar data:");
-		while (!cursor.isAfterLast()) {
-			CalendarData row = cursorToCalendar(cursor);
-			list.add(row);
-			cursor.moveToNext();
-			log(row.toString());
-		}
+	public void getAllRows(List<CalendarData> list) {
+		list.clear();
+		if (isOpen()) {
+			Cursor cursor = mDatabase.query(CalendarHelper.TABLE_CALENDAR,
+					CalendarHelper.AllColumns, null, null, null, null,
+					CalendarHelper.COLUMN_ID);
+			cursor.moveToFirst();
+			log("Load calendar data:");
+			while (!cursor.isAfterLast()) {
+				CalendarData row = cursorToCalendar(cursor);
+				list.add(row);
+				cursor.moveToNext();
+				log(row.toString());
+			}
 
-		cursor.close();
-		return list;
+			cursor.close();
+		}
 	}
 
-	public List<String> getAllNotes() {
-		List<String> list = new ArrayList<String>();
-		Cursor cursor = mDatabase.query(true, CalendarHelper.TABLE_CALENDAR,
-				new String[] { CalendarHelper.COLUMN_NOTE }, null, null, null,
-				null, CalendarHelper.COLUMN_NOTE, null);
-		cursor.moveToFirst();
-		log("Load notes:");
-		while (!cursor.isAfterLast()) {
-			String row = cursorToNote(cursor);
-			list.add(row);
-			cursor.moveToNext();
-			log(row);
-		}
+	public void getAllNotes(List<String> list) {
+		list.clear();
+		if (isOpen()) {
+			Cursor cursor = mDatabase.query(true,
+					CalendarHelper.TABLE_CALENDAR,
+					new String[] { CalendarHelper.COLUMN_NOTE }, null, null,
+					null, null, CalendarHelper.COLUMN_NOTE, null);
+			cursor.moveToFirst();
+			log("Load notes:");
+			while (!cursor.isAfterLast()) {
+				String row = cursorToNote(cursor);
+				list.add(row);
+				cursor.moveToNext();
+				log(row);
+			}
 
-		cursor.close();
-		return list;
+			cursor.close();
+		}
 	}
 
 	private CalendarData cursorToCalendar(Cursor cursor) {
