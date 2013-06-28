@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -34,7 +35,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 public class DayViewFragment extends Fragment implements OnClickListener,
 		DataKeeperClient, OnDateSetListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -137,7 +138,9 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 
 		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
+				android.R.layout.simple_list_item_1,
+				mDataKeeper == null ? new ArrayList<String>() : mDataKeeper
+						.getNotes());
 		textViewNote.setAdapter(adapter);
 
 		Button clear = (Button) v.findViewById(R.id.buttonClear);
@@ -185,7 +188,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			tryToSave();
 		}
 
-		mValue = mDataKeeper.get(date);
+		mValue = mDataKeeper == null ? null : mDataKeeper.get(date);
 		if (mValue == null) {
 			mValue = new CalendarData(date);
 		}
