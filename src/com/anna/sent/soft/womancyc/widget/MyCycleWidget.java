@@ -10,9 +10,23 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.RemoteViews;
+import android.util.Log;
 
 public abstract class MyCycleWidget extends AppWidgetProvider {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = true;
+
+	private String wrapMsg(String msg) {
+		return getClass().getSimpleName() + ": " + msg;
+	}
+
+	@SuppressWarnings("unused")
+	private void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	public static final String UPDATE_ACTION = "UPDATE_MY_PREGNANCY_WIDGET_ACTION";
 
 	@Override
@@ -42,19 +56,29 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 		super.onReceive(context, intent);
 	}
 
+	static final String EXTRA_APP_WIDGET_ID = "appwidgetid";
+
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		for (int i = 0; i < appWidgetIds.length; ++i) {
-			RemoteViews views = getBuilder().buildViews(context,
-					appWidgetIds[i]);
-			appWidgetManager.updateAppWidget(appWidgetIds[i], views);
+			Intent service = new Intent(context, UpdateWidgetService.class);
+			service.putExtra(EXTRA_APP_WIDGET_ID, appWidgetIds[i]);
+			context.startService(service);
 		}
 
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
-	protected abstract Builder getBuilder();
+	public static Builder getBuilder(String className) {
+		if (MyCycleWidgetMedium.class.getName().equals(className)) {
+			return new BuilderMedium();
+		} else if (MyCycleWidgetSmall.class.getName().equals(className)) {
+			return new BuilderSmall();
+		} else {
+			return null;
+		}
+	}
 
 	public static void updateAllWidgets(Context context) {
 		updateWidgets(context, MyCycleWidgetSmall.class);

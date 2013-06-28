@@ -47,8 +47,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	@Override
 	protected void onResume() {
-		openDataSource();
 		super.onResume();
+		openDataSource();
 	}
 
 	private void _openDataSource() {
@@ -73,11 +73,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected Object doInBackground(Object... objects) {
 			_openDataSource();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			return null;
 		}
 
@@ -87,7 +82,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			runOnUiThread(new Runnable() {
 				public void run() {
 					progressDialog = ProgressDialog.show(
-							DataKeeperActivity.this, "", "", true);
+							DataKeeperActivity.this, "", "", false, false);
 				}
 			});
 		}
