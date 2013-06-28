@@ -229,8 +229,9 @@ public class Calculator {
 
 	public Statistic getStatistic() {
 		int lastIndex = mDataKeeper.getCount() - 1;
-		Calendar firstDayOfLastCycle = getFirstDayOfCycle(mDataKeeper.get(
-				lastIndex).getDate());
+		CalendarData lastData = mDataKeeper.get(lastIndex);
+		Calendar firstDayOfLastCycle = lastData == null ? null
+				: getFirstDayOfCycle(lastData.getDate());
 
 		if (firstDayOfLastCycle == null) {
 			Value mcl = new Value(0, 0, 0);

@@ -78,6 +78,10 @@ public class DayViewActivity extends DialogActivity implements
 
 	@Override
 	protected void dataChanged() {
+	}
+
+	@Override
+	protected void dataLoaded() {
 		mDayView.setDate(mDateToShow);
 	}
 

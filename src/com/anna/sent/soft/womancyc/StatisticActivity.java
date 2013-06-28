@@ -22,7 +22,29 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_statistic);
+	}
 
+	private View mSelectedRow = null;
+
+	@Override
+	public void onClick(View v) {
+		if (v instanceof TableRow) {
+			if (mSelectedRow != null) {
+				mSelectedRow.setBackground(null);
+			}
+
+			v.setBackground(getResources().getDrawable(
+					R.drawable.bg_selected_view));
+			mSelectedRow = v;
+		}
+	}
+
+	@Override
+	protected void dataChanged() {
+	}
+
+	@Override
+	protected void dataLoaded() {
 		TableRow tableRow2 = (TableRow) findViewById(R.id.tableRow2);
 		tableRow2.setOnClickListener(this);
 		TableRow tableRow3 = (TableRow) findViewById(R.id.tableRow3);
@@ -78,20 +100,5 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 		textViewStatisticRemark.setText(Html.fromHtml(getString(
 				R.string.statisticRemark, Calculator.MAX_MENSTRUAL_CYCLE_LEN,
 				Calculator.MAX_MENSTRUAL_CYCLE_LEN)));
-	}
-
-	private View mSelectedRow = null;
-
-	@Override
-	public void onClick(View v) {
-		if (v instanceof TableRow) {
-			if (mSelectedRow != null) {
-				mSelectedRow.setBackground(null);
-			}
-
-			v.setBackground(getResources().getDrawable(
-					R.drawable.bg_selected_view));
-			mSelectedRow = v;
-		}
 	}
 }

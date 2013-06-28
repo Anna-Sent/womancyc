@@ -109,6 +109,14 @@ public class MainActivity extends DataKeeperActivity implements
 		mMonthView.update();
 	}
 
+	@Override
+	protected void dataLoaded() {
+		mMonthView.update();
+		if (mIsLargeLayout) {
+			mDayView.setDate(mMonthView.getSelectedDate());
+		}
+	}
+
 	private final static int REQUEST_DATE = 1;
 
 	private void showAsDialogFragment(Calendar date) {
@@ -140,13 +148,13 @@ public class MainActivity extends DataKeeperActivity implements
 
 		Bundle args = new Bundle();
 		args.putBoolean(DayViewFragment.IS_EMBEDDED, true);
+		args.putSerializable(Shared.DATE_TO_SHOW, date);
 
 		DayViewFragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
 
 		fragmentManager.beginTransaction().add(R.id.dayView, newFragment)
 				.commit();
-		newFragment.setDate(mDateToShow);
 	}
 
 	@Override

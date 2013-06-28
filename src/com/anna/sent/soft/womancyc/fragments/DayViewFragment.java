@@ -166,17 +166,13 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT);
 			clear.setLayoutParams(params);
+
+			Calendar dateToShow = (Calendar) getArguments().getSerializable(
+					Shared.DATE_TO_SHOW);
+			setDate(dateToShow);
 		}
 
 		return v;
-	}
-
-	private void fillWithData() {
-		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
-		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
-		spinnerHadSex.setSelection((int) mValue.getSex());
-		checkBoxTookPill.setChecked(mValue.getTookPill());
-		textViewNote.setText(mValue.getNote());
 	}
 
 	public void setDate(Calendar date) {
@@ -189,7 +185,11 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			mValue = new CalendarData(date);
 		}
 
-		fillWithData();
+		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
+		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
+		spinnerHadSex.setSelection((int) mValue.getSex());
+		checkBoxTookPill.setChecked(mValue.getTookPill());
+		textViewNote.setText(mValue.getNote());
 	}
 
 	@Override
@@ -199,12 +199,16 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			clear();
 			break;
 		case R.id.currentDay:
-			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
-			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-			dialog.setArguments(args);
-			dialog.setOnDateSetListener(this);
-			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
+			if (mValue != null) {
+				Bundle args = new Bundle();
+				args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
+				DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+				dialog.setArguments(args);
+				dialog.setOnDateSetListener(this);
+				dialog.show(getFragmentManager(), dialog.getClass()
+						.getSimpleName());
+			}
+
 			break;
 		case R.id.nextDay:
 			toNextDay();
@@ -235,63 +239,61 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	}
 
 	private void toPrevDay() {
-		Calendar dateToShow = (Calendar) mValue.getDate().clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
-		if (mListener != null) {
-			mListener.onDayViewItemChangedByUser(dateToShow);
-		}
+		if (mValue != null) {
+			Calendar dateToShow = (Calendar) mValue.getDate().clone();
+			dateToShow.add(Calendar.DAY_OF_MONTH, -1);
+			if (mListener != null) {
+				mListener.onDayViewItemChangedByUser(dateToShow);
+			}
 
-		setDate(dateToShow);
+			setDate(dateToShow);
+		}
 	}
 
 	private void toNextDay() {
-		Calendar dateToShow = (Calendar) mValue.getDate().clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
-		if (mListener != null) {
-			mListener.onDayViewItemChangedByUser(dateToShow);
-		}
+		if (mValue != null) {
+			Calendar dateToShow = (Calendar) mValue.getDate().clone();
+			dateToShow.add(Calendar.DAY_OF_MONTH, 1);
+			if (mListener != null) {
+				mListener.onDayViewItemChangedByUser(dateToShow);
+			}
 
-		setDate(dateToShow);
+			setDate(dateToShow);
+		}
 	}
 
 	private void clear() {
-		if (mDataKeeper != null) {
+		if (mDataKeeper != null && mValue != null) {
 			mDataKeeper.delete(mValue);
 			setDate(mValue.getDate());
 		}
 	}
 
 	private void tryToSave() {
-		if (mDataKeeper != null) {
-			boolean isDataChanged = updateDataIfNeeded();
+		if (mDataKeeper != null && mValue != null) {
+			int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
+			int sex = spinnerHadSex.getSelectedItemPosition();
+			boolean tookPill = checkBoxTookPill.isChecked();
+			String note = textViewNote.getText().toString();
+
+			printEquality(mValue.getMenstruation(), menstruation);
+			printEquality(mValue.getSex(), sex);
+			printEquality(mValue.getNote(), note);
+
+			boolean isDataChanged = menstruation != mValue.getMenstruation()
+					|| sex != mValue.getSex()
+					|| tookPill != mValue.getTookPill()
+					|| !isEqual(note, mValue.getNote());
 			if (isDataChanged) {
+				mValue.setMenstruation(menstruation);
+				mValue.setSex(sex);
+				mValue.setTookPill(tookPill);
+				mValue.setNote(note);
+				log("data is changed");
+
 				mDataKeeper.insertOrUpdate(mValue);
 			}
 		}
-	}
-
-	private boolean updateDataIfNeeded() {
-		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
-		int sex = spinnerHadSex.getSelectedItemPosition();
-		boolean tookPill = checkBoxTookPill.isChecked();
-		String note = textViewNote.getText().toString();
-
-		printEquality(mValue.getMenstruation(), menstruation);
-		printEquality(mValue.getSex(), sex);
-		printEquality(mValue.getNote(), note);
-
-		boolean isDataChanged = menstruation != mValue.getMenstruation()
-				|| sex != mValue.getSex() || tookPill != mValue.getTookPill()
-				|| !isEqual(note, mValue.getNote());
-		if (isDataChanged) {
-			mValue.setMenstruation(menstruation);
-			mValue.setSex(sex);
-			mValue.setTookPill(tookPill);
-			mValue.setNote(note);
-			log("data is changed");
-		}
-
-		return isDataChanged;
 	}
 
 	private void printEquality(int value1, int value2) {

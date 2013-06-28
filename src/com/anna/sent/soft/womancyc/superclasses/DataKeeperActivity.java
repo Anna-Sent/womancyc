@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -67,11 +66,17 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	private class StartupTask extends AsyncTask<Object, Object, Object> {
-		private ProgressDialog progressDialog;
+		// private ProgressDialog progressDialog;
 
 		@Override
 		protected Object doInBackground(Object... objects) {
 			log("doInBackground");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
 			_openDataSource();
 			return null;
 		}
@@ -80,12 +85,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		protected void onPreExecute() {
 			log("onPreExecute");
 			super.onPreExecute();
-			runOnUiThread(new Runnable() {
-				public void run() {
-					progressDialog = ProgressDialog.show(
-							DataKeeperActivity.this, "", "", false, false);
-				}
-			});
+			/*
+			 * runOnUiThread(new Runnable() { public void run() { progressDialog
+			 * = ProgressDialog.show( DataKeeperActivity.this, "", "", false,
+			 * false); } });
+			 */
 		}
 
 		@Override
@@ -94,8 +98,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			super.onPostExecute(object);
 			runOnUiThread(new Runnable() {
 				public void run() {
-					progressDialog.dismiss();
-					dataChanged();
+					// progressDialog.dismiss();
+					dataLoaded();
 				}
 			});
 		}
@@ -113,6 +117,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	protected abstract void dataChanged();
+
+	protected abstract void dataLoaded();
 
 	@Override
 	public CalendarData get(Calendar date) {
