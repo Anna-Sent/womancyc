@@ -106,9 +106,7 @@ public class MainActivity extends DataKeeperActivity implements
 
 	@Override
 	protected void dataChanged() {
-		if (mMonthView != null) {
-			mMonthView.update();
-		}
+		mMonthView.update();
 	}
 
 	private final static int REQUEST_DATE = 1;
@@ -141,14 +139,14 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 
 		Bundle args = new Bundle();
-		args.putSerializable(Shared.DATE_TO_SHOW, date);
 		args.putBoolean(DayViewFragment.IS_EMBEDDED, true);
 
-		Fragment newFragment = new DayViewFragment();
+		DayViewFragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
 
 		fragmentManager.beginTransaction().add(R.id.dayView, newFragment)
 				.commit();
+		newFragment.setDate(mDateToShow);
 	}
 
 	@Override

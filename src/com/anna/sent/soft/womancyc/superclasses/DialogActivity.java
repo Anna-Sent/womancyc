@@ -7,8 +7,4 @@ public abstract class DialogActivity extends DataKeeperActivity {
 	protected void setupTheme() {
 		ThemeUtils.onDialogStyleActivityCreateSetTheme(this);
 	}
-
-	@Override
-	protected void dataChanged() {
-	}
 }

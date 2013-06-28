@@ -51,8 +51,12 @@ public class DataKeeperImpl implements DataKeeper {
 
 	@Override
 	public int indexOf(Calendar date) {
-		return Collections.binarySearch(mValues, new CalendarData(date),
-				new CalendarDataComparator());
+		if (mValues.size() > 0) {
+			return Collections.binarySearch(mValues, new CalendarData(date),
+					new CalendarDataComparator());
+		} else {
+			return -1;
+		}
 	}
 
 	@Override

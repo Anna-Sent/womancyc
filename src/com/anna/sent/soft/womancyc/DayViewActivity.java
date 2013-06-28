@@ -66,16 +66,19 @@ public class DayViewActivity extends DialogActivity implements
 
 		if (savedInstanceState == null) {
 			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
 			args.putBoolean(DayViewFragment.IS_EMBEDDED, false);
 
 			Fragment newFragment = new DayViewFragment();
 			newFragment.setArguments(args);
-			log("set args " + DateUtils.toString(this, mDateToShow));
 
 			getSupportFragmentManager().beginTransaction()
 					.add(android.R.id.content, newFragment).commit();
 		}
+	}
+
+	@Override
+	protected void dataChanged() {
+		mDayView.setDate(mDateToShow);
 	}
 
 	public void myRestoreState(Bundle state) {

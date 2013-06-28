@@ -29,7 +29,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -42,7 +41,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
 		mDataKeeper = new DataKeeperImpl(this);
-		openDataSource();
 	}
 
 	@Override
@@ -63,8 +61,9 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	private void openDataSource() {
+		log("before task execute");
 		new StartupTask().execute();
-		dataChanged();
+		log("after task execute");
 	}
 
 	private class StartupTask extends AsyncTask<Object, Object, Object> {
@@ -72,12 +71,14 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected Object doInBackground(Object... objects) {
+			log("doInBackground");
 			_openDataSource();
 			return null;
 		}
 
 		@Override
 		protected void onPreExecute() {
+			log("onPreExecute");
 			super.onPreExecute();
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -89,8 +90,14 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected void onPostExecute(Object object) {
+			log("onPostExecute");
 			super.onPostExecute(object);
-			progressDialog.dismiss();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					progressDialog.dismiss();
+					dataChanged();
+				}
+			});
 		}
 	}
 

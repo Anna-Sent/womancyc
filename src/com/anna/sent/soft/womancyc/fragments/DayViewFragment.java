@@ -152,10 +152,6 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		nextDay.setOnClickListener(this);
 		clear.setOnClickListener(this);
 
-		Calendar date = (Calendar) getArguments().getSerializable(
-				Shared.DATE_TO_SHOW);
-		setDate(date);
-
 		mIsEmbedded = getArguments().getBoolean(IS_EMBEDDED, false);
 		Button close = (Button) v.findViewById(R.id.buttonClose);
 		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
@@ -183,7 +179,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		textViewNote.setText(mValue.getNote());
 	}
 
-	private void setDate(Calendar date) {
+	public void setDate(Calendar date) {
 		if (mValue != null) {
 			tryToSave();
 		}
