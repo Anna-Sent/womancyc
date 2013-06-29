@@ -23,24 +23,24 @@ public class DataKeeperImpl implements DataKeeper {
 		mDataSource = new CalendarDataSource(mContext);
 	}
 
-	public void openDataSource() throws SQLException {
+	public synchronized void openDataSource() throws SQLException {
 		mDataSource.open();
 		mDataSource.getAllRows(mValues);
 		mDataSource.getAllNotes(mNotes);
 	}
 
-	public void closeDataSource() {
+	public synchronized void closeDataSource() {
 		mDataSource.close();
 	}
 
-	public void clearAllData() {
+	public synchronized void clearAllData() {
 		mDataSource.clearAllData();
 		mDataSource.getAllRows(mValues);
 		mDataSource.getAllNotes(mNotes);
 	}
 
 	@Override
-	public CalendarData get(Calendar date) {
+	public synchronized CalendarData get(Calendar date) {
 		int index = indexOf(date);
 		if (index >= 0) {
 			return mValues.get(index);
@@ -50,17 +50,13 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public int indexOf(Calendar date) {
-		if (mValues.size() > 0) {
-			return Collections.binarySearch(mValues, new CalendarData(date),
-					new CalendarDataComparator());
-		} else {
-			return -1;
-		}
+	public synchronized int indexOf(Calendar date) {
+		return Collections.binarySearch(mValues, new CalendarData(date),
+				new CalendarDataComparator());
 	}
 
 	@Override
-	public CalendarData get(int index) {
+	public synchronized CalendarData get(int index) {
 		if (index >= 0 && index < mValues.size()) {
 			return mValues.get(index);
 		} else {
@@ -69,12 +65,12 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public int getCount() {
+	public synchronized int getCount() {
 		return mValues.size();
 	}
 
 	@Override
-	public void insertOrUpdate(CalendarData value) {
+	public synchronized void insertOrUpdate(CalendarData value) {
 		int index = indexOf(value);
 		if (index >= 0) {
 			mDataSource.update(value);
@@ -88,7 +84,7 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public void delete(CalendarData value) {
+	public synchronized void delete(CalendarData value) {
 		int index = indexOf(value);
 		if (index >= 0) {
 			mDataSource.delete(value);
@@ -99,11 +95,11 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public List<String> getNotes() {
+	public synchronized List<String> getNotes() {
 		return mNotes;
 	}
 
-	private int indexOf(CalendarData value) {
+	private synchronized int indexOf(CalendarData value) {
 		return Collections.binarySearch(mValues, value,
 				new CalendarDataComparator());
 	}

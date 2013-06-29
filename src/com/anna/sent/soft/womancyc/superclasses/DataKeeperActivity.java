@@ -75,11 +75,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected Object doInBackground(Object... objects) {
 			log("doInBackground");
-			try {
+			/*try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 
 			_openDataSource();
 			return null;
@@ -89,20 +89,17 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		protected void onPreExecute() {
 			log("onPreExecute");
 			super.onPreExecute();
-			runOnUiThread(new Runnable() {
-				public void run() {
-					timer.schedule(new ShowProgressTask(), 500);
-				}
-			});
+			timer.schedule(new ShowProgressTask(), 500);
 		}
 
 		@Override
 		protected void onPostExecute(Object object) {
 			log("onPostExecute");
 			super.onPostExecute(object);
+			timer.cancel();
+			timer.purge();
 			runOnUiThread(new Runnable() {
 				public void run() {
-					timer.cancel();
 					if (progressDialog != null) {
 						progressDialog.dismiss();
 					}
