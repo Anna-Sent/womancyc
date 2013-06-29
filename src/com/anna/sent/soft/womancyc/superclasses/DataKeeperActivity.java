@@ -2,8 +2,11 @@ package com.anna.sent.soft.womancyc.superclasses;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -61,12 +64,13 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private void openDataSource() {
 		log("before task execute");
-		new StartupTask().execute();
+		new OpenDataSourceTask().execute();
 		log("after task execute");
 	}
 
-	private class StartupTask extends AsyncTask<Object, Object, Object> {
-		// private ProgressDialog progressDialog;
+	private class OpenDataSourceTask extends AsyncTask<Object, Object, Object> {
+		private ProgressDialog progressDialog = null;
+		private Timer timer = new Timer();
 
 		@Override
 		protected Object doInBackground(Object... objects) {
@@ -85,11 +89,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		protected void onPreExecute() {
 			log("onPreExecute");
 			super.onPreExecute();
-			/*
-			 * runOnUiThread(new Runnable() { public void run() { progressDialog
-			 * = ProgressDialog.show( DataKeeperActivity.this, "", "", false,
-			 * false); } });
-			 */
+			runOnUiThread(new Runnable() {
+				public void run() {
+					timer.schedule(new ShowProgressTask(), 500);
+				}
+			});
 		}
 
 		@Override
@@ -98,10 +102,26 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			super.onPostExecute(object);
 			runOnUiThread(new Runnable() {
 				public void run() {
-					// progressDialog.dismiss();
+					timer.cancel();
+					if (progressDialog != null) {
+						progressDialog.dismiss();
+					}
+
 					dataLoaded();
 				}
 			});
+		}
+
+		private class ShowProgressTask extends TimerTask {
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						progressDialog = ProgressDialog.show(
+								DataKeeperActivity.this, "", "", false, false);
+					}
+				});
+			}
 		}
 	}
 
