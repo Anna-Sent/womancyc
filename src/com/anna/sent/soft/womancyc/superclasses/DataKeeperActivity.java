@@ -71,15 +71,15 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	private class OpenDataSourceTask extends AsyncTask<Object, Object, Object> {
 		private ProgressDialog progressDialog = null;
 		private Timer timer = new Timer();
+		boolean completed = false;
 
 		@Override
 		protected Object doInBackground(Object... objects) {
 			log("doInBackground");
-			/*try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
+			/*
+			 * try { Thread.sleep(5000); } catch (InterruptedException e) {
+			 * e.printStackTrace(); }
+			 */
 
 			_openDataSource();
 			return null;
@@ -88,32 +88,34 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected void onPreExecute() {
 			log("onPreExecute");
-			super.onPreExecute();
 			timer.schedule(new ShowProgressTask(), 500);
 		}
 
 		@Override
 		protected void onPostExecute(Object object) {
 			log("onPostExecute");
-			super.onPostExecute(object);
+			completed = true;
 			timer.cancel();
 			timer.purge();
-			runOnUiThread(new Runnable() {
-				public void run() {
-					if (progressDialog != null) {
-						progressDialog.dismiss();
-					}
+			if (progressDialog != null) {
+				progressDialog.dismiss();
+			}
 
-					dataLoaded();
-				}
-			});
+			dataLoaded();
 		}
 
 		private class ShowProgressTask extends TimerTask {
 			@Override
 			public void run() {
+				log("ShowProgressTask");
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
+						if (completed) {
+							return;
+						}
+
+						log("ShowProgressTask on ui thread");
 						progressDialog = ProgressDialog.show(
 								DataKeeperActivity.this, "", "", false, false);
 					}
