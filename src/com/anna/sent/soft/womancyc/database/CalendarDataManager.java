@@ -10,7 +10,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Xml;
@@ -44,16 +43,6 @@ public class CalendarDataManager {
 		return false;
 	}
 
-	public static String getBackupFileName() {
-		String dir = Environment.getExternalStorageDirectory()
-				.getAbsolutePath();
-		if (dir.charAt(dir.length() - 1) != '/') {
-			dir += "/";
-		}
-
-		return dir + "WomanCyc/backup.xml";
-	}
-
 	private static String TAG_ROW = "row";
 
 	private String mErrorMessage = null;
@@ -62,11 +51,10 @@ public class CalendarDataManager {
 		return mErrorMessage;
 	}
 
-	public boolean backup(DataKeeper dataKeeper) {
+	public boolean backup(DataKeeper dataKeeper, String filename) {
 		if (isExternalStorageWritable()) {
 			try {
-				File xmlfile = new File(getBackupFileName());
-				xmlfile.getParentFile().mkdirs();
+				File xmlfile = new File(filename);
 				FileOutputStream output = new FileOutputStream(xmlfile);
 
 				XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -86,7 +74,7 @@ public class CalendarDataManager {
 				return true;
 			} catch (FileNotFoundException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileNotFound,
-						getBackupFileName());
+						filename);
 			} catch (IllegalArgumentException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileExport);
 			} catch (IllegalStateException e) {
@@ -102,7 +90,6 @@ public class CalendarDataManager {
 		return false;
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	private static void writeCalendarTable(XmlSerializer xmlSerializer,
 			DataKeeper dataKeeper) throws IllegalArgumentException,
 			IllegalStateException, IOException {
@@ -128,11 +115,10 @@ public class CalendarDataManager {
 		xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
 	}
 
-	public boolean restore(DataKeeper dataKeeper) {
+	public boolean restore(DataKeeper dataKeeper, String filename) {
 		if (isExternalStorageReadable()) {
 			try {
-				File xmlfile = new File(getBackupFileName());
-				xmlfile.getParentFile().mkdirs();
+				File xmlfile = new File(filename);
 				FileReader input = new FileReader(xmlfile);
 
 				XmlPullParser xpp = Xml.newPullParser();
@@ -147,7 +133,7 @@ public class CalendarDataManager {
 				return true;
 			} catch (FileNotFoundException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileNotFound,
-						getBackupFileName());
+						filename);
 			} catch (IOException e) {
 				mErrorMessage = mContext.getString(R.string.errorFileReading);
 			} catch (XmlPullParserException e) {
@@ -161,7 +147,6 @@ public class CalendarDataManager {
 		return false;
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	private static int readCalendarTable(XmlPullParser xpp, int eventType,
 			DataKeeper dataKeeper) throws XmlPullParserException, IOException {
 		if (eventType == XmlPullParser.START_TAG

@@ -1,19 +1,30 @@
 package com.anna.sent.soft.womancyc;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
@@ -243,35 +254,92 @@ public class MainActivity extends DataKeeperActivity implements
 	}
 
 	private void clearAllDataAction() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.clearAllDataConfirmation)
-				.setMessage(R.string.clearAllDataConfirmationMessage)
-				.setPositiveButton(android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								clearAllData();
-							}
-						})
-				.setNegativeButton(android.R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-		builder.create().show();
+		if (getCount() == 0) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.thereIsNoData).setPositiveButton(
+					android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+						}
+					});
+			builder.create().show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.clearAllDataConfirmation)
+					.setMessage(R.string.clearAllDataConfirmationMessage)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									clearAllData();
+								}
+							})
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+								}
+							});
+			builder.create().show();
+		}
+	}
+
+	private final static String EXT = ".xml";
+
+	private List<String> getFilesList() {
+		List<String> list = new ArrayList<String>();
+		File dir = new File(getAppDirName());
+		dir.mkdirs();
+		File[] files = dir.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String filename) {
+				return filename.endsWith(EXT);
+			}
+		});
+		if (files != null) {
+			for (int i = 0; i < files.length; ++i) {
+				String filename = files[i].getName();
+				filename = filename.substring(0, filename.lastIndexOf(EXT));
+				list.add(filename);
+			}
+
+			Collections.sort(list);
+		}
+
+		return list;
+	}
+
+	private static String getAppDirName() {
+		String dir = Environment.getExternalStorageDirectory()
+				.getAbsolutePath();
+		if (dir.charAt(dir.length() - 1) != '/') {
+			dir += "/";
+		}
+
+		return dir + "WomanCyc/";
 	}
 
 	private void backupAction() {
-		backup();
-	}
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.dialog_export, null);
+		final AutoCompleteTextView textView = (AutoCompleteTextView) view
+				.findViewById(R.id.fileName);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, getFilesList());
+		textView.setAdapter(adapter);
 
-	private void restoreAction() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.restoreConfirmation)
-				.setMessage(R.string.restoreConfirmationMessage)
+		builder.setTitle(R.string.enterFileNameToWrite)
+				.setView(view)
 				.setPositiveButton(android.R.string.yes,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								restore();
+								String filename = textView.getText().toString();
+								if (!filename.endsWith(EXT)) {
+									filename += EXT;
+								}
+
+								backup(getAppDirName() + filename);
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,
@@ -280,6 +348,39 @@ public class MainActivity extends DataKeeperActivity implements
 							}
 						});
 		builder.create().show();
+	}
+
+	private void restoreAction() {
+		final List<String> filenames = getFilesList();
+		if (filenames.isEmpty()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.filesToReadNotFound).setPositiveButton(
+					android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+						}
+					});
+			builder.create().show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.enterFileNameToRead)
+					.setItems(getFilesList().toArray(new String[] {}),
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									String filename = filenames.get(which);
+									restore(getAppDirName() + filename + EXT);
+								}
+							})
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+								}
+							});
+			builder.create().show();
+		}
 	}
 
 	private void rateAction() {

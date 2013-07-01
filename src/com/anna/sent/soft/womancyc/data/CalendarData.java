@@ -40,7 +40,7 @@ public class CalendarData implements Serializable {
 
 	@SuppressLint("SimpleDateFormat")
 	public String getDateString() {
-		return new SimpleDateFormat(DATE_FORMAT).format(date);
+		return new SimpleDateFormat(DATE_FORMAT).format(date.getTime());
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -57,7 +57,7 @@ public class CalendarData implements Serializable {
 		return menstruation;
 	}
 
-	private static final String MENSTRUATION_YES = "";
+	private static final String MENSTRUATION_YES = "yes";
 	private static final String MENSTRUATION_ONE_DROP = "one_drop";
 	private static final String MENSTRUATION_TWO_DROPS = "two_drops";
 	private static final String MENSTRUATION_THREE_DROPS = "three_drops";

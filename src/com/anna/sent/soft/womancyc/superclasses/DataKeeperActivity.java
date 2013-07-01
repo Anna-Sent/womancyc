@@ -35,7 +35,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	private abstract class DataTask extends AsyncTask<Object, Object, String> {
+	private abstract class DataTask extends AsyncTask<String, Object, String> {
 		private ProgressDialog mProgressDialog = null;
 		private Timer mTimer = new Timer();
 		private boolean mCompleted = false;
@@ -119,7 +119,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 
 		@Override
-		protected String doInBackground(Object... params) {
+		protected String doInBackground(String... params) {
 			try {
 				mDataKeeper.openDataSource();
 			} catch (SQLException e) {
@@ -199,7 +199,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 
 		@Override
-		protected String doInBackground(Object... params) {
+		protected String doInBackground(String... params) {
 			mDataKeeper.clearAllData();
 			return null;
 		}
@@ -211,8 +211,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	protected void backup() {
-		new BackupTask().execute();
+	protected void backup(String filename) {
+		new BackupTask().execute(filename);
 	}
 
 	private class BackupTask extends DataTask {
@@ -221,21 +221,22 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 
 		@Override
-		protected String doInBackground(Object... params) {
+		protected String doInBackground(String... params) {
+			String filename = params.length > 0 && params[0] != null ? params[0]
+					: "";
 			CalendarDataManager cdm = new CalendarDataManager(
 					DataKeeperActivity.this);
-			boolean result = cdm.backup(mDataKeeper);
+			boolean result = cdm.backup(mDataKeeper, filename);
 			if (result) {
-				return getString(R.string.dataExportSuccessfull,
-						CalendarDataManager.getBackupFileName());
+				return getString(R.string.dataExportSuccessfull, filename);
 			} else {
 				return cdm.getErrorMessage();
 			}
 		}
 	}
 
-	protected void restore() {
-		new RestoreTask().execute();
+	protected void restore(String filename) {
+		new RestoreTask().execute(filename);
 	}
 
 	private class RestoreTask extends DataTask {
@@ -244,14 +245,15 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 
 		@Override
-		protected String doInBackground(Object... params) {
+		protected String doInBackground(String... params) {
+			String filename = params.length > 0 && params[0] != null ? params[0]
+					: "";
 			mDataKeeper.clearAllData();
 			CalendarDataManager cdm = new CalendarDataManager(
 					DataKeeperActivity.this);
-			boolean result = cdm.restore(mDataKeeper);
+			boolean result = cdm.restore(mDataKeeper, filename);
 			if (result) {
-				return getString(R.string.dataImportSuccessfull,
-						CalendarDataManager.getBackupFileName());
+				return getString(R.string.dataImportSuccessfull, filename);
 			} else {
 				return cdm.getErrorMessage();
 			}
