@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +35,64 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
+	private abstract class DataTask extends AsyncTask<Object, Object, String> {
+		private ProgressDialog mProgressDialog = null;
+		private Timer mTimer = new Timer();
+		private boolean mCompleted = false;
+		private boolean mShowProgress;
+		private String mProgressMessage;
+
+		public DataTask(boolean showProgress, String progressMessage) {
+			super();
+			mShowProgress = showProgress;
+			mProgressMessage = progressMessage;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			log("onPreExecute");
+			if (mShowProgress) {
+				mTimer.schedule(new ShowProgressTask(), 500);
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			log("onPostExecute");
+			mCompleted = true;
+			mTimer.cancel();
+			mTimer.purge();
+			if (mProgressDialog != null) {
+				mProgressDialog.dismiss();
+			}
+
+			if (result != null && !result.equals("")) {
+				Toast.makeText(DataKeeperActivity.this, result,
+						Toast.LENGTH_LONG).show();
+			}
+		}
+
+		private class ShowProgressTask extends TimerTask {
+			@Override
+			public void run() {
+				log("ShowProgressTask");
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if (mCompleted) {
+							return;
+						}
+
+						log("ShowProgressTask on ui thread");
+						mProgressDialog = ProgressDialog.show(
+								DataKeeperActivity.this, "", mProgressMessage,
+								false, false);
+					}
+				});
+			}
+		}
+	}
+
 	private DataKeeperImpl mDataKeeper;
 
 	@Override
@@ -51,76 +107,33 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		openDataSource();
 	}
 
-	private void _openDataSource() {
-		try {
-			mDataKeeper.openDataSource();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Toast.makeText(this,
-					getString(R.string.errorWhileOpenningDatabase),
-					Toast.LENGTH_LONG).show();
-		}
-	}
-
 	private void openDataSource() {
 		log("before task execute");
 		new OpenDataSourceTask().execute();
 		log("after task execute");
 	}
 
-	private class OpenDataSourceTask extends AsyncTask<Object, Object, Object> {
-		private ProgressDialog progressDialog = null;
-		private Timer timer = new Timer();
-		boolean completed = false;
+	private class OpenDataSourceTask extends DataTask {
+		public OpenDataSourceTask() {
+			super(true, "Open data source");
+		}
 
 		@Override
-		protected Object doInBackground(Object... objects) {
-			log("doInBackground");
-			/*
-			 * try { Thread.sleep(5000); } catch (InterruptedException e) {
-			 * e.printStackTrace(); }
-			 */
+		protected String doInBackground(Object... params) {
+			try {
+				mDataKeeper.openDataSource();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return getString(R.string.errorWhileOpenningDatabase);
+			}
 
-			_openDataSource();
 			return null;
 		}
 
 		@Override
-		protected void onPreExecute() {
-			log("onPreExecute");
-			timer.schedule(new ShowProgressTask(), 500);
-		}
-
-		@Override
-		protected void onPostExecute(Object object) {
-			log("onPostExecute");
-			completed = true;
-			timer.cancel();
-			timer.purge();
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
-
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
 			dataLoaded();
-		}
-
-		private class ShowProgressTask extends TimerTask {
-			@Override
-			public void run() {
-				log("ShowProgressTask");
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (completed) {
-							return;
-						}
-
-						log("ShowProgressTask on ui thread");
-						progressDialog = ProgressDialog.show(
-								DataKeeperActivity.this, "", "", false, false);
-					}
-				});
-			}
 		}
 	}
 
@@ -177,53 +190,78 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	protected final void clearAllData() {
-		mDataKeeper.clearAllData();
-		dataChanged();
+		new ClearAllDataTask().execute();
+	}
+
+	private class ClearAllDataTask extends DataTask {
+		public ClearAllDataTask() {
+			super(true, "Clear all data");
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			mDataKeeper.clearAllData();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			dataChanged();
+		}
 	}
 
 	protected void backup() {
-		CalendarDataManager cdm = new CalendarDataManager(this);
-		boolean result = cdm.backup(mDataKeeper);
-		if (result) {
-			Toast.makeText(
-					this,
-					getString(R.string.dataExportSuccessfull,
-							CalendarDataManager.getBackupFileName()),
-					Toast.LENGTH_LONG).show();
-		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
-					android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
-			builder.create().show();
+		new BackupTask().execute();
+	}
+
+	private class BackupTask extends DataTask {
+		public BackupTask() {
+			super(false, null);
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			CalendarDataManager cdm = new CalendarDataManager(
+					DataKeeperActivity.this);
+			boolean result = cdm.backup(mDataKeeper);
+			if (result) {
+				return getString(R.string.dataExportSuccessfull,
+						CalendarDataManager.getBackupFileName());
+			} else {
+				return cdm.getErrorMessage();
+			}
 		}
 	}
 
 	protected void restore() {
-		mDataKeeper.clearAllData();
-		CalendarDataManager cdm = new CalendarDataManager(this);
-		boolean result = cdm.restore(mDataKeeper);
-		if (result) {
-			Toast.makeText(
-					this,
-					getString(R.string.dataImportSuccessfull,
-							CalendarDataManager.getBackupFileName()),
-					Toast.LENGTH_LONG).show();
-		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(cdm.getErrorMessage()).setPositiveButton(
-					android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
-			builder.create().show();
+		new RestoreTask().execute();
+	}
+
+	private class RestoreTask extends DataTask {
+		public RestoreTask() {
+			super(true, "Restore data");
 		}
 
-		dataChanged();
+		@Override
+		protected String doInBackground(Object... params) {
+			mDataKeeper.clearAllData();
+			CalendarDataManager cdm = new CalendarDataManager(
+					DataKeeperActivity.this);
+			boolean result = cdm.restore(mDataKeeper);
+			if (result) {
+				return getString(R.string.dataImportSuccessfull,
+						CalendarDataManager.getBackupFileName());
+			} else {
+				return cdm.getErrorMessage();
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			dataChanged();
+		}
 	}
 
 	@Override
