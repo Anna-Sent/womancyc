@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Calendar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Xml;
@@ -71,6 +71,10 @@ public class CalendarDataManager {
 
 				XmlSerializer xmlSerializer = Xml.newSerializer();
 				xmlSerializer.setOutput(output, "UTF-8");
+				xmlSerializer
+						.setFeature(
+								"http://xmlpull.org/v1/doc/features.html#indent-output",
+								true);
 
 				xmlSerializer.startDocument(null, true);
 				writeCalendarTable(xmlSerializer, dataKeeper);
@@ -98,6 +102,7 @@ public class CalendarDataManager {
 		return false;
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private static void writeCalendarTable(XmlSerializer xmlSerializer,
 			DataKeeper dataKeeper) throws IllegalArgumentException,
 			IllegalStateException, IOException {
@@ -108,13 +113,13 @@ public class CalendarDataManager {
 
 			xmlSerializer.startTag(null, TAG_ROW);
 			xmlSerializer.attribute(null, CalendarHelper.COLUMN_ID,
-					String.valueOf(value.getId()));
+					String.valueOf(value.getDateString()));
 			xmlSerializer.attribute(null, CalendarHelper.COLUMN_MENSTRUATION,
-					String.valueOf(value.getMenstruation()));
+					String.valueOf(value.getMenstruationString()));
 			xmlSerializer.attribute(null, CalendarHelper.COLUMN_SEX,
-					String.valueOf(value.getSex()));
+					String.valueOf(value.getSexString()));
 			xmlSerializer.attribute(null, CalendarHelper.COLUMN_TOOK_PILL,
-					String.valueOf(value.getTookPill()));
+					String.valueOf(value.getTookPillString()));
 			xmlSerializer.attribute(null, CalendarHelper.COLUMN_NOTE,
 					value.getNote());
 			xmlSerializer.endTag(null, TAG_ROW);
@@ -156,6 +161,7 @@ public class CalendarDataManager {
 		return false;
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private static int readCalendarTable(XmlPullParser xpp, int eventType,
 			DataKeeper dataKeeper) throws XmlPullParserException, IOException {
 		if (eventType == XmlPullParser.START_TAG
@@ -163,34 +169,25 @@ public class CalendarDataManager {
 			eventType = xpp.next();
 			while (eventType == XmlPullParser.START_TAG
 					&& xpp.getName().equals(TAG_ROW)) {
-				Calendar date = Calendar.getInstance();
-				int menstruation = 0;
-				int sex = 0;
-				boolean tookPill = false;
-				String note = "";
+				CalendarData data = new CalendarData();
 
 				for (int i = 0; i < xpp.getAttributeCount(); ++i) {
 					String name = xpp.getAttributeName(i);
 					String value = xpp.getAttributeValue(i);
 					if (name.equals(CalendarHelper.COLUMN_ID)) {
-						date.setTimeInMillis(Long.valueOf(value));
+						data.setDate(value);
 					} else if (name.equals(CalendarHelper.COLUMN_MENSTRUATION)) {
-						menstruation = Integer.valueOf(value);
+						data.setMenstruation(value);
 					} else if (name.equals(CalendarHelper.COLUMN_SEX)) {
-						sex = Integer.valueOf(value);
+						data.setSex(value);
 					} else if (name.equals(CalendarHelper.COLUMN_TOOK_PILL)) {
-						tookPill = Boolean.valueOf(value);
+						data.setTookPill(value);
 					} else if (name.equals(CalendarHelper.COLUMN_NOTE)) {
-						note = value;
+						data.setNote(value);
 					}
 				}
 
-				CalendarData value = new CalendarData(date);
-				value.setMenstruation(menstruation);
-				value.setSex(sex);
-				value.setTookPill(tookPill);
-				value.setNote(note);
-				dataKeeper.insertOrUpdate(value);
+				dataKeeper.insertOrUpdate(data);
 				eventType = xpp.next();
 				if (eventType == XmlPullParser.END_TAG
 						&& xpp.getName().equals(TAG_ROW)) {
