@@ -12,12 +12,26 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.util.Xml;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public class CalendarDataManager {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = true;
+
+	private static String wrapMsg(String msg) {
+		return CalendarDataManager.class.getSimpleName() + ": " + msg;
+	}
+
+	private static void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	private Context mContext;
 
 	public CalendarDataManager(Context context) {
@@ -140,7 +154,7 @@ public class CalendarDataManager {
 
 				int eventType = xpp.getEventType();
 				while (eventType != XmlPullParser.END_DOCUMENT) {
-					eventType = xpp.next();
+					eventType = xpp.nextTag();
 					eventType = readCalendarTable(xpp, eventType, dataKeeper);
 				}
 
@@ -165,32 +179,40 @@ public class CalendarDataManager {
 			DataKeeper dataKeeper) throws XmlPullParserException, IOException {
 		if (eventType == XmlPullParser.START_TAG
 				&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
-			eventType = xpp.next();
+			log("start of " + xpp.getName());
+			eventType = xpp.nextTag();
 			while (eventType == XmlPullParser.START_TAG
 					&& xpp.getName().equals(TAG_ROW)) {
+				log("start of " + xpp.getName());
 				CalendarData data = new CalendarData();
 
 				for (int i = 0; i < xpp.getAttributeCount(); ++i) {
 					String name = xpp.getAttributeName(i);
 					String value = xpp.getAttributeValue(i);
 					if (name.equals(CalendarHelper.COLUMN_ID)) {
+						log(name + " " + value);
 						data.setDate(value);
 					} else if (name.equals(CalendarHelper.COLUMN_MENSTRUATION)) {
+						log(name + " " + value);
 						data.setMenstruation(value);
 					} else if (name.equals(CalendarHelper.COLUMN_SEX)) {
+						log(name + " " + value);
 						data.setSex(value);
 					} else if (name.equals(CalendarHelper.COLUMN_TOOK_PILL)) {
+						log(name + " " + value);
 						data.setTookPill(value);
 					} else if (name.equals(CalendarHelper.COLUMN_NOTE)) {
+						log(name + " \"" + value + "\"");
 						data.setNote(value);
 					}
 				}
 
 				dataKeeper.insertOrUpdate(data);
-				eventType = xpp.next();
+				eventType = xpp.nextTag();
 				if (eventType == XmlPullParser.END_TAG
 						&& xpp.getName().equals(TAG_ROW)) {
-					eventType = xpp.next();
+					log("end of " + xpp.getName());
+					eventType = xpp.nextTag();
 				} else {
 					break;
 				}
@@ -198,6 +220,7 @@ public class CalendarDataManager {
 
 			if (eventType == XmlPullParser.END_TAG
 					&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
+				log("end of " + xpp.getName());
 				eventType = xpp.next();
 			}
 		}
