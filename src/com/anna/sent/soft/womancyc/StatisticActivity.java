@@ -41,10 +41,6 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 
 	@Override
 	protected void dataChanged() {
-	}
-
-	@Override
-	protected void dataLoaded() {
 		TableRow tableRow2 = (TableRow) findViewById(R.id.tableRow2);
 		tableRow2.setOnClickListener(this);
 		TableRow tableRow3 = (TableRow) findViewById(R.id.tableRow3);

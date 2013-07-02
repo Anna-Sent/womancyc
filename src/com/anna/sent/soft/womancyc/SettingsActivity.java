@@ -4,10 +4,6 @@ import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
 
 public class SettingsActivity extends ChildActivity {
 	@Override
-	protected void dataLoaded() {
-	}
-
-	@Override
 	protected void dataChanged() {
 	}
 }

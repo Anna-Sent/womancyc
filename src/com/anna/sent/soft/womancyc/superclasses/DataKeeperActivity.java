@@ -133,7 +133,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			dataLoaded();
+			dataChanged();
 		}
 	}
 
@@ -149,8 +149,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	protected abstract void dataChanged();
-
-	protected abstract void dataLoaded();
 
 	@Override
 	public CalendarData get(Calendar date) {

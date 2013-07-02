@@ -118,13 +118,8 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	protected void dataChanged() {
 		mMonthView.update();
-	}
-
-	@Override
-	protected void dataLoaded() {
-		mMonthView.update();
 		if (mIsLargeLayout) {
-			mDayView.setDate(mMonthView.getSelectedDate());
+			mDayView.update();
 		}
 	}
 
@@ -158,7 +153,6 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 
 		Bundle args = new Bundle();
-		args.putBoolean(DayViewFragment.IS_EMBEDDED, true);
 		args.putSerializable(Shared.DATE_TO_SHOW, date);
 
 		DayViewFragment newFragment = new DayViewFragment();

@@ -76,10 +76,9 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	private AutoCompleteTextView textViewNote;
 	private Button currentDay;
 
-	private CalendarData mValue = null;
+	private Calendar mDateToShow;
+	private CalendarData mValue;
 	private boolean mIsEmbedded;
-
-	public static final String IS_EMBEDDED = "isembedded";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,7 +151,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		nextDay.setOnClickListener(this);
 		clear.setOnClickListener(this);
 
-		mIsEmbedded = getArguments().getBoolean(IS_EMBEDDED, false);
+		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
 		Button close = (Button) v.findViewById(R.id.buttonClose);
 		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
 		close.setOnClickListener(new OnClickListener() {
@@ -166,30 +165,47 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT);
 			clear.setLayoutParams(params);
-
-			Calendar dateToShow = (Calendar) getArguments().getSerializable(
-					Shared.DATE_TO_SHOW);
-			setDate(dateToShow);
 		}
+
+		mDateToShow = (Calendar) getArguments().getSerializable(
+				Shared.DATE_TO_SHOW);
+		update();
 
 		return v;
 	}
 
-	public void setDate(Calendar date) {
+	public void update() {
+		mValue = mDataKeeper == null || mDateToShow == null ? null
+				: mDataKeeper.get(mDateToShow);
+
 		if (mValue != null) {
-			tryToSave();
-		}
+			int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
+			if (menstruation != mValue.getMenstruation()) {
+				spinnerHadMenstruation.setSelection((int) mValue
+						.getMenstruation());
+			}
 
-		mValue = mDataKeeper == null ? null : mDataKeeper.get(date);
-		if (mValue == null) {
-			mValue = new CalendarData(date);
-		}
+			int sex = spinnerHadSex.getSelectedItemPosition();
+			if (sex != mValue.getSex()) {
+				spinnerHadSex.setSelection((int) mValue.getSex());
+			}
 
-		currentDay.setText(DateUtils.toString(getActivity(), mValue.getDate()));
-		spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
-		spinnerHadSex.setSelection((int) mValue.getSex());
-		checkBoxTookPill.setChecked(mValue.getTookPill());
-		textViewNote.setText(mValue.getNote());
+			boolean tookPill = checkBoxTookPill.isChecked();
+			if (tookPill != mValue.getTookPill()) {
+				checkBoxTookPill.setChecked(mValue.getTookPill());
+			}
+
+			String note = textViewNote.getText().toString();
+			if (!isEqual(note, mValue.getNote())) {
+				textViewNote.setText(mValue.getNote());
+			}
+		} else {
+			currentDay.setText("");
+			spinnerHadMenstruation.setSelection(0);
+			spinnerHadSex.setSelection(0);
+			checkBoxTookPill.setChecked(false);
+			textViewNote.setText("");
+		}
 	}
 
 	@Override
@@ -199,16 +215,12 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			clear();
 			break;
 		case R.id.currentDay:
-			if (mValue != null) {
-				Bundle args = new Bundle();
-				args.putSerializable(Shared.DATE_TO_SHOW, mValue.getDate());
-				DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-				dialog.setArguments(args);
-				dialog.setOnDateSetListener(this);
-				dialog.show(getFragmentManager(), dialog.getClass()
-						.getSimpleName());
-			}
-
+			Bundle args = new Bundle();
+			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
+			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+			dialog.setArguments(args);
+			dialog.setOnDateSetListener(this);
+			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
 			break;
 		case R.id.nextDay:
 			toNextDay();
@@ -229,44 +241,47 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
-		if (!DateUtils.datesAreEqual(dateToShow, mValue.getDate())) {
+		if (!DateUtils.datesAreEqual(dateToShow, mDateToShow)) {
 			if (mListener != null) {
 				mListener.onDayViewItemChangedByUser(dateToShow);
 			}
 
-			setDate(dateToShow);
+			tryToSave();
+			mDateToShow = dateToShow;
+			update();
 		}
 	}
 
 	private void toPrevDay() {
-		if (mValue != null) {
-			Calendar dateToShow = (Calendar) mValue.getDate().clone();
-			dateToShow.add(Calendar.DAY_OF_MONTH, -1);
-			if (mListener != null) {
-				mListener.onDayViewItemChangedByUser(dateToShow);
-			}
-
-			setDate(dateToShow);
+		Calendar dateToShow = (Calendar) mDateToShow.clone();
+		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
+		if (mListener != null) {
+			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
+
+		tryToSave();
+		mDateToShow = dateToShow;
+		update();
 	}
 
 	private void toNextDay() {
-		if (mValue != null) {
-			Calendar dateToShow = (Calendar) mValue.getDate().clone();
-			dateToShow.add(Calendar.DAY_OF_MONTH, 1);
-			if (mListener != null) {
-				mListener.onDayViewItemChangedByUser(dateToShow);
-			}
-
-			setDate(dateToShow);
+		Calendar dateToShow = (Calendar) mDateToShow.clone();
+		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
+		if (mListener != null) {
+			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
+
+		tryToSave();
+		mDateToShow = dateToShow;
+		update();
 	}
 
 	private void clear() {
 		if (mDataKeeper != null && mValue != null) {
 			mDataKeeper.delete(mValue);
-			setDate(mValue.getDate());
 		}
+
+		update();
 	}
 
 	private void tryToSave() {
@@ -275,10 +290,6 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			int sex = spinnerHadSex.getSelectedItemPosition();
 			boolean tookPill = checkBoxTookPill.isChecked();
 			String note = textViewNote.getText().toString();
-
-			printEquality(mValue.getMenstruation(), menstruation);
-			printEquality(mValue.getSex(), sex);
-			printEquality(mValue.getNote(), note);
 
 			boolean isDataChanged = menstruation != mValue.getMenstruation()
 					|| sex != mValue.getSex()
@@ -294,22 +305,6 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 				mDataKeeper.insertOrUpdate(mValue);
 			}
 		}
-	}
-
-	private void printEquality(int value1, int value2) {
-		if (value1 != value2) {
-			log(value1 + " != " + value2);
-		}
-	}
-
-	private void printEquality(String s1, String s2) {
-		if (!isEqual(s1, s2)) {
-			log(toString(s1) + " != " + toString(s2));
-		}
-	}
-
-	private String toString(String s) {
-		return s == null ? "null" : "\"" + s + "\"";
 	}
 
 	private boolean isEqual(String s1, String s2) {
