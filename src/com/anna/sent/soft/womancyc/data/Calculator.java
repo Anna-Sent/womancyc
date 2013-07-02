@@ -27,8 +27,11 @@ public class Calculator {
 	public static final int DEFAULT_MENSTRUAL_CYCLE_LEN = 28;
 	public static final int MAX_MENSTRUAL_CYCLE_LEN = 60;
 
-	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
+	/**
+	 * Must be not null.
+	 */
 	private DataKeeper mDataKeeper;
+	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
 
 	public Calculator(DataKeeper dataKeeper) {
 		mDataKeeper = dataKeeper;

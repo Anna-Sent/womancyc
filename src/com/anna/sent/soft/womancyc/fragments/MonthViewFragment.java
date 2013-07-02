@@ -61,6 +61,10 @@ public class MonthViewFragment extends StateSaverFragment implements
 		mListener = listener;
 	}
 
+	/**
+	 * must be not null! fragment gets it when onAttach() is called by parent
+	 * activity
+	 */
 	private DataKeeper mDataKeeper = null;
 
 	@Override

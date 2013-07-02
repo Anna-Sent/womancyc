@@ -51,6 +51,13 @@ public class CalendarDataManager {
 		return mErrorMessage;
 	}
 
+	/**
+	 * 
+	 * @param dataKeeper
+	 *            not null
+	 * @param filename
+	 * @return
+	 */
 	public boolean backup(DataKeeper dataKeeper, String filename) {
 		if (isExternalStorageWritable()) {
 			try {
@@ -115,6 +122,13 @@ public class CalendarDataManager {
 		xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
 	}
 
+	/**
+	 * 
+	 * @param dataKeeper
+	 *            not null
+	 * @param filename
+	 * @return
+	 */
 	public boolean restore(DataKeeper dataKeeper, String filename) {
 		if (isExternalStorageReadable()) {
 			try {

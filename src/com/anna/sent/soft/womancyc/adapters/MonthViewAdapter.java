@@ -46,6 +46,9 @@ public class MonthViewAdapter extends BaseAdapter {
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
 
+	/**
+	 * Must be not null.
+	 */
 	private DataKeeper mDataKeeper;
 	private Calculator mCalculator;
 
@@ -227,10 +230,8 @@ public class MonthViewAdapter extends BaseAdapter {
 	protected void initDayOfMonth(View cell, int position, Calendar item) {
 		int themeId = ThemeUtils.getThemeId(mContext);
 
-		CalendarData cellData = mDataKeeper == null ? null : mDataKeeper
-				.get(item);
-		int dayOfCycle = mDataKeeper == null ? 0 : mCalculator
-				.getDayOfCycle(item);
+		CalendarData cellData = mDataKeeper.get(item);
+		int dayOfCycle = mCalculator.getDayOfCycle(item);
 
 		TextView dayOfCycleTextView = (TextView) cell
 				.findViewById(R.id.dayOfCycleTextView);
@@ -324,8 +325,8 @@ public class MonthViewAdapter extends BaseAdapter {
 	}
 
 	public void update() {
-		mCalculator = new Calculator(mDataKeeper);
 		log("update");
+		mCalculator = new Calculator(mDataKeeper);
 		notifyDataSetChanged();
 	}
 }
