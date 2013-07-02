@@ -17,7 +17,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class DayViewActivity extends DialogActivity implements
 		DayViewFragment.Listener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -54,7 +54,13 @@ public class DayViewActivity extends DialogActivity implements
 					Shared.DATE_TO_SHOW);
 			log("got from intent " + DateUtils.toString(this, mDateToShow));
 		} else {
-			myRestoreState(savedInstanceState);
+			mDateToShow = (Calendar) savedInstanceState
+					.getSerializable(Shared.DATE_TO_SHOW);
+			log("restore " + DateUtils.toString(this, mDateToShow));
+		}
+
+		if (mDateToShow == null) {
+			mDateToShow = Calendar.getInstance();
 		}
 
 		setResult();
@@ -79,11 +85,6 @@ public class DayViewActivity extends DialogActivity implements
 	@Override
 	protected void dataChanged() {
 		mDayView.update();
-	}
-
-	public void myRestoreState(Bundle state) {
-		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(this, mDateToShow));
 	}
 
 	@Override
