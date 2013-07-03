@@ -14,14 +14,16 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public class CalendarDataSource {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG_NOTES = true;
+	private static final boolean DEBUG_ROWS = false;
+	private static final boolean DEBUG_CRUD = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	private void log(String msg) {
-		if (DEBUG) {
+	private void log(String msg, boolean scenario) {
+		if (scenario) {
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
@@ -65,7 +67,7 @@ public class CalendarDataSource {
 			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
 			long id = mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null,
 					values);
-			log("Insert calendar: " + value.toString());
+			log("Insert calendar: " + value.toString(), DEBUG_CRUD);
 			return id != -1;
 		}
 
@@ -76,7 +78,7 @@ public class CalendarDataSource {
 		if (isOpen()) {
 			int rows = mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
 					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-			log("Delete calendar: " + value.toString());
+			log("Delete calendar: " + value.toString(), DEBUG_CRUD);
 			return rows > 0;
 		}
 
@@ -93,7 +95,7 @@ public class CalendarDataSource {
 			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
 			int rows = mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
 					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-			log("Update calendar: " + value.toString());
+			log("Update calendar: " + value.toString(), DEBUG_CRUD);
 			return rows > 0;
 		}
 
@@ -107,12 +109,12 @@ public class CalendarDataSource {
 					CalendarHelper.AllColumns, null, null, null, null,
 					CalendarHelper.COLUMN_ID);
 			cursor.moveToFirst();
-			log("Load calendar data:");
+			log("Load calendar data:", DEBUG_ROWS);
 			while (!cursor.isAfterLast()) {
 				CalendarData row = cursorToCalendar(cursor);
 				list.add(row);
 				cursor.moveToNext();
-				log(row.toString());
+				log(row.toString(), DEBUG_ROWS);
 			}
 
 			cursor.close();
@@ -122,17 +124,19 @@ public class CalendarDataSource {
 	public void getAllNotes(List<String> list) {
 		list.clear();
 		if (isOpen()) {
+			String selection = CalendarHelper.COLUMN_NOTE + " IS NOT NULL AND "
+					+ CalendarHelper.COLUMN_NOTE + " != ''";
 			Cursor cursor = mDatabase.query(true,
 					CalendarHelper.TABLE_CALENDAR,
-					new String[] { CalendarHelper.COLUMN_NOTE }, null, null,
-					null, null, CalendarHelper.COLUMN_NOTE, null);
+					new String[] { CalendarHelper.COLUMN_NOTE }, selection,
+					null, null, null, CalendarHelper.COLUMN_NOTE, null);
 			cursor.moveToFirst();
-			log("Load notes:");
+			log("Load notes:", DEBUG_NOTES);
 			while (!cursor.isAfterLast()) {
 				String row = cursorToNote(cursor);
 				list.add(row);
 				cursor.moveToNext();
-				log(row);
+				log(row, DEBUG_NOTES);
 			}
 
 			cursor.close();
