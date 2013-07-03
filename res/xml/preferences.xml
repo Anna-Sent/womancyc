@@ -2,20 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
-        android:key="pref_key_storage_settings"
-        android:title="pref_sms_storage_title" >
-
+        android:key="pref_calculation_settings"
+        android:title="@string/pref_calculation_settings_title" >
         <Preference
-            android:dependency="pref_key_auto_delete"
-            android:key="pref_key_sms_delete_limit"
-            android:summary="pref_summary_delete_limit"
-            android:title="pref_title_sms_delete" />
+            android:defaultValue="28"
+            android:key="pref_default_menstrual_cycle_len"
+            android:summary="@string/pref_default_menstrual_cycle_len_summary"
+            android:title="@string/pref_default_menstrual_cycle_len_title" />
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="pref_sync"
-            android:summary="pref_sync_summ"
-            android:title="pref_sync" />
+            android:key="pref_use_average"
+            android:summary="@string/pref_use_average_summary"
+            android:title="@string/pref_use_average_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

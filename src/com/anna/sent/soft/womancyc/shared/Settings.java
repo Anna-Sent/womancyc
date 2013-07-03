@@ -14,7 +14,7 @@ public class Settings {
 				SETTINGS_FILE, Context.MODE_PRIVATE);
 	}
 
-	private static final String DEFAULT_MENSTRUAL_CYCLE_LEN = "com.anna.sent.soft.womancyc.defaultmcl";
+	private static final String DEFAULT_MENSTRUAL_CYCLE_LEN = "pref_default_menstrual_cycle_len";
 
 	public static int getDefaultMenstrualCycleLen(Context context) {
 		SharedPreferences settings = getSettings(context);
@@ -28,7 +28,7 @@ public class Settings {
 		editor.commit();
 	}
 
-	private static final String USE_AVG = "com.anna.sent.soft.womancyc.useavg";
+	private static final String USE_AVG = "pref_use_average";
 
 	public static boolean useAverage(Context context) {
 		SharedPreferences settings = getSettings(context);
@@ -42,7 +42,7 @@ public class Settings {
 		editor.commit();
 	}
 
-	private static final String LAST_BACKUP_FILE_NAME = "com.anna.sent.soft.womancyc.lastbackupfilename";
+	private static final String LAST_BACKUP_FILE_NAME = "pref_last_backup_file_name";
 
 	public static String getLastBackupFileName(Context context) {
 		SharedPreferences settings = getSettings(context);
