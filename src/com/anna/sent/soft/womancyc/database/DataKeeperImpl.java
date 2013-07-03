@@ -71,26 +71,36 @@ public class DataKeeperImpl implements DataKeeper {
 
 	@Override
 	public synchronized void insertOrUpdate(CalendarData value) {
-		int index = indexOf(value);
-		if (index >= 0) {
-			mDataSource.update(value);
-			mValues.set(index, value);
-		} else {
-			mDataSource.insert(value);
-			mValues.add(-index - 1, value);
+		if (value.isEmpty()) {
+			delete(value);
+			return;
 		}
 
-		mDataSource.getAllNotes(mNotes);
+		int index = indexOf(value);
+		if (index >= 0) {
+			boolean updated = mDataSource.update(value);
+			if (updated) {
+				mValues.set(index, value);
+				mDataSource.getAllNotes(mNotes);
+			}
+		} else {
+			boolean inserted = mDataSource.insert(value);
+			if (inserted) {
+				mValues.add(-index - 1, value);
+				mDataSource.getAllNotes(mNotes);
+			}
+		}
 	}
 
 	@Override
 	public synchronized void delete(CalendarData value) {
 		int index = indexOf(value);
 		if (index >= 0) {
-			mDataSource.delete(value);
-			mValues.remove(index);
-
-			mDataSource.getAllNotes(mNotes);
+			boolean deleted = mDataSource.delete(value);
+			if (deleted) {
+				mValues.remove(index);
+				mDataSource.getAllNotes(mNotes);
+			}
 		}
 	}
 

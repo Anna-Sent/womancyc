@@ -54,8 +54,8 @@ public class CalendarDataSource {
 		}
 	}
 
-	public void insert(CalendarData value) {
-		if (isOpen() && !value.isEmpty()) {
+	public boolean insert(CalendarData value) {
+		if (isOpen()) {
 			ContentValues values = new ContentValues();
 			values.put(CalendarHelper.COLUMN_ID, value.getId());
 			values.put(CalendarHelper.COLUMN_MENSTRUATION,
@@ -63,35 +63,41 @@ public class CalendarDataSource {
 			values.put(CalendarHelper.COLUMN_SEX, value.getSex());
 			values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
 			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-			mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null, values);
+			long id = mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null,
+					values);
 			log("Insert calendar: " + value.toString());
+			return id != -1;
 		}
+
+		return false;
 	}
 
-	public void delete(CalendarData value) {
+	public boolean delete(CalendarData value) {
 		if (isOpen()) {
-			mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
+			int rows = mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
 					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
 			log("Delete calendar: " + value.toString());
+			return rows > 0;
 		}
+
+		return false;
 	}
 
-	public void update(CalendarData value) {
+	public boolean update(CalendarData value) {
 		if (isOpen()) {
-			if (value.isEmpty()) {
-				delete(value);
-			} else {
-				ContentValues values = new ContentValues();
-				values.put(CalendarHelper.COLUMN_MENSTRUATION,
-						value.getMenstruation());
-				values.put(CalendarHelper.COLUMN_SEX, value.getSex());
-				values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
-				values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-				mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
-						CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-				log("Update calendar: " + value.toString());
-			}
+			ContentValues values = new ContentValues();
+			values.put(CalendarHelper.COLUMN_MENSTRUATION,
+					value.getMenstruation());
+			values.put(CalendarHelper.COLUMN_SEX, value.getSex());
+			values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
+			values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
+			int rows = mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
+					CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
+			log("Update calendar: " + value.toString());
+			return rows > 0;
 		}
+
+		return false;
 	}
 
 	public void getAllRows(List<CalendarData> list) {
