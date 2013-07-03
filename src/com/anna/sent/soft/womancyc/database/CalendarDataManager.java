@@ -20,7 +20,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public class CalendarDataManager {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private static String wrapMsg(String msg) {
 		return CalendarDataManager.class.getSimpleName() + ": " + msg;

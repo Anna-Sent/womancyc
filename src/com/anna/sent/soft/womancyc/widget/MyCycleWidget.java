@@ -14,7 +14,7 @@ import android.util.Log;
 
 public abstract class MyCycleWidget extends AppWidgetProvider {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
