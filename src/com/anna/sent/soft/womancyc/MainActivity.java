@@ -331,11 +331,14 @@ public class MainActivity extends DataKeeperActivity implements
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								String filename = textView.getText().toString();
-								if (!filename.endsWith(EXT)) {
-									filename += EXT;
+								if (filename.endsWith(EXT)) {
+									filename = filename.substring(0,
+											filename.lastIndexOf(EXT));
 								}
 
-								backup(getAppDirName() + filename);
+								backup(getAppDirName() + filename + EXT);
+								Settings.setLastBackupFileName(
+										MainActivity.this, filename);
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,
@@ -365,8 +368,9 @@ public class MainActivity extends DataKeeperActivity implements
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
-									String filename = filenames.get(which);
-									restore(getAppDirName() + filename + EXT);
+									final String filename = filenames
+											.get(which);
+									restoreWithConfirmation(filename);
 								}
 							})
 					.setNegativeButton(android.R.string.cancel,
@@ -376,6 +380,32 @@ public class MainActivity extends DataKeeperActivity implements
 								}
 							});
 			builder.create().show();
+		}
+	}
+
+	private void restoreWithConfirmation(final String filename) {
+		if (getCount() > 0) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					MainActivity.this);
+			builder.setTitle(getString(R.string.restoreConfirmation, filename))
+					.setMessage(R.string.restoreConfirmationMessage)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									restore(getAppDirName() + filename + EXT);
+								}
+							})
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+								}
+							});
+			builder.create().show();
+		} else {
+			restore(getAppDirName() + filename + EXT);
 		}
 	}
 

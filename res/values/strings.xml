@@ -30,6 +30,8 @@
     <string name="enterFileNameToRead">Выберите файл для импорта</string>
     <string name="filesToReadNotFound">Файлы для импорта не найдены</string>
     <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
+    <string name="restoreConfirmation">Восстановить данные из файла %s?</string>
+    <string name="restoreConfirmationMessage">Текущие данные будут заменены новыми</string>
     <string name="showDividers">Показывать разделители</string>
     <string name="clear">Очистить</string>
     <string name="close">Закрыть</string>
