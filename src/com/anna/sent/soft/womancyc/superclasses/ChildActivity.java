@@ -1,6 +1,7 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,7 +36,10 @@ public abstract class ChildActivity extends DataKeeperActivity {
 	private class ActionBarHelper {
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		private void setupActionBar() {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
+			ActionBar actionBar = getActionBar();
+			if (actionBar != null) {
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
 		}
 	}
 

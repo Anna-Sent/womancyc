@@ -20,8 +20,8 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class StatisticActivity extends ChildActivity implements OnClickListener {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
-		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_statistic);
+		super.setViews(savedInstanceState);
 	}
 
 	private View mSelectedRow = null;
