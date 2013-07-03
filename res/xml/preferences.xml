@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="pref_key_storage_settings"
+        android:title="pref_sms_storage_title" >
+
+        <Preference
+            android:dependency="pref_key_auto_delete"
+            android:key="pref_key_sms_delete_limit"
+            android:summary="pref_summary_delete_limit"
+            android:title="pref_title_sms_delete" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_sync"
+            android:summary="pref_sync_summ"
+            android:title="pref_sync" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

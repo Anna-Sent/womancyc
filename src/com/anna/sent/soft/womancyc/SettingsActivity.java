@@ -1,9 +1,13 @@
 package com.anna.sent.soft.womancyc;
 
-import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
+import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
-public class SettingsActivity extends ChildActivity {
+public class SettingsActivity extends PreferenceActivity {
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void dataChanged() {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(R.xml.preferences);
 	}
 }
