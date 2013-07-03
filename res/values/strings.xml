@@ -32,6 +32,8 @@
     <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
     <string name="restoreConfirmation">Восстановить данные из файла %s?</string>
     <string name="restoreConfirmationMessage">Текущие данные будут заменены новыми</string>
+    <string name="backupConfirmation">Файл %s существует</string>
+    <string name="backupConfirmationMessage">Заменить содержимое файла?</string>
     <string name="showDividers">Показывать разделители</string>
     <string name="clear">Очистить</string>
     <string name="close">Закрыть</string>

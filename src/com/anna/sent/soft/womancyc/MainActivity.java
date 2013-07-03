@@ -307,8 +307,8 @@ public class MainActivity extends DataKeeperActivity implements
 	private static String getAppDirName() {
 		String dir = Environment.getExternalStorageDirectory()
 				.getAbsolutePath();
-		if (dir.charAt(dir.length() - 1) != '/') {
-			dir += "/";
+		if (dir.charAt(dir.length() - 1) != File.separatorChar) {
+			dir += File.separator;
 		}
 
 		return dir + "WomanCyc/";
@@ -336,9 +336,7 @@ public class MainActivity extends DataKeeperActivity implements
 											filename.lastIndexOf(EXT));
 								}
 
-								backup(getAppDirName() + filename + EXT);
-								Settings.setLastBackupFileName(
-										MainActivity.this, filename);
+								backupWithConfirmation(filename);
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,
@@ -347,6 +345,35 @@ public class MainActivity extends DataKeeperActivity implements
 							}
 						});
 		builder.create().show();
+	}
+
+	private void backupWithConfirmation(String filename) {
+		Settings.setLastBackupFileName(this, filename);
+		final String absoluteFileName = getAppDirName() + filename + EXT;
+		File file = new File(absoluteFileName);
+		if (file.exists()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					MainActivity.this);
+			builder.setTitle(getString(R.string.backupConfirmation, filename))
+					.setMessage(R.string.backupConfirmationMessage)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									backup(absoluteFileName);
+								}
+							})
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+								}
+							});
+			builder.create().show();
+		} else {
+			backup(absoluteFileName);
+		}
 	}
 
 	private void restoreAction() {
@@ -383,7 +410,8 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 	}
 
-	private void restoreWithConfirmation(final String filename) {
+	private void restoreWithConfirmation(String filename) {
+		final String absoluteFileName = getAppDirName() + filename + EXT;
 		if (getCount() > 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					MainActivity.this);
@@ -393,19 +421,19 @@ public class MainActivity extends DataKeeperActivity implements
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									restore(getAppDirName() + filename + EXT);
+									restore(absoluteFileName);
 								}
 							})
 					.setNegativeButton(android.R.string.cancel,
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
-										int which) {
+										int id) {
 								}
 							});
 			builder.create().show();
 		} else {
-			restore(getAppDirName() + filename + EXT);
+			restore(absoluteFileName);
 		}
 	}
 
