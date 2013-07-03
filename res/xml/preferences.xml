@@ -3,13 +3,13 @@
 
     <PreferenceCategory android:title="@string/pref_calculation_settings_title" >
         <Preference
-            android:defaultValue="28"
+            android:defaultValue="@integer/defaultMenstrualCycleLen"
             android:key="pref_default_menstrual_cycle_len"
             android:summary="@string/pref_default_menstrual_cycle_len_summary"
             android:title="@string/pref_default_menstrual_cycle_len_title" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/useAverage"
             android:key="pref_use_average"
             android:summary="@string/pref_use_average_summary"
             android:title="@string/pref_use_average_title" />

@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -45,6 +46,7 @@ public class DayViewActivity extends DialogActivity implements
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		super.setViews(savedInstanceState);
 
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);

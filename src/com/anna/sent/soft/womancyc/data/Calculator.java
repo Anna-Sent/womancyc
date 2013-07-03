@@ -27,6 +27,7 @@ public class Calculator {
 	}
 
 	public static final int MAX_MENSTRUAL_CYCLE_LEN = 60;
+	public static final int MIN_MENSTRUAL_CYCLE_LEN = 10;
 
 	/**
 	 * Must be not null.

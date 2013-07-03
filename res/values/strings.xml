@@ -3,7 +3,7 @@
 
     <string name="pref_calculation_settings_title">Расчет</string>
     <string name="pref_default_menstrual_cycle_len_title">Продолжительность менструального цикла</string>
-    <string name="pref_default_menstrual_cycle_len_summary">Продолжительность МЦ для прогноза. Если данных для расчета средней недостаточно</string>
+    <string name="pref_default_menstrual_cycle_len_summary">Продолжительность МЦ для прогноза %s. Если данных для расчета средней недостаточно</string>
     <string name="pref_use_average_title">Использовать среднюю продолжительность МЦ для прогноза</string>
     <string name="pref_use_average_summary">Средняя продолжительность МЦ берется за три месяца, не более %s дней</string>
     <string name="adUnitId">a151a5351deb085</string>
@@ -31,7 +31,6 @@
     <string name="chooseFileNameToWrite">Выберите файл для экспорта</string>
     <string name="newFile">Новый файл&#8230;</string>
     <string name="enterFileNameToWrite">Введите имя файла для экспорта</string>
-    <string name="defaultFileName">backup</string>
     <string name="dataExportSuccessfull">Данные экспортированы в файл %s</string>
     <string name="restoreData">Восстановить данные</string>
     <string name="chooseFileNameToRead">Выберите файл для импорта</string>

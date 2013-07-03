@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -71,6 +72,7 @@ public class MainActivity extends DataKeeperActivity implements
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
