@@ -23,11 +23,13 @@
     <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
     <string name="backupData">Экспортировать данные</string>
+    <string name="chooseFileNameToWrite">Выберите файл для экспорта</string>
+    <string name="newFile">Новый файл&#8230;</string>
     <string name="enterFileNameToWrite">Введите имя файла для экспорта</string>
     <string name="defaultFileName">backup</string>
     <string name="dataExportSuccessfull">Данные экспортированы в файл %s</string>
     <string name="restoreData">Восстановить данные</string>
-    <string name="enterFileNameToRead">Выберите файл для импорта</string>
+    <string name="chooseFileNameToRead">Выберите файл для импорта</string>
     <string name="filesToReadNotFound">Файлы для импорта не найдены</string>
     <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
     <string name="restoreConfirmation">Восстановить данные из файла %s?</string>

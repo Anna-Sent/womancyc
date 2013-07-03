@@ -315,6 +315,32 @@ public class MainActivity extends DataKeeperActivity implements
 	}
 
 	private void backupAction() {
+		final List<String> list = getFilesList();
+		list.add(0, getString(R.string.newFile));
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.chooseFileNameToWrite)
+				.setItems(list.toArray(new String[] {}),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (which == 0) {
+									backupToNewFile();
+								} else {
+									String filename = list.get(which);
+									backupWithConfirmation(filename);
+								}
+							}
+						})
+				.setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		builder.create().show();
+	}
+
+	private void backupToNewFile() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.dialog_export, null);
 		final AutoCompleteTextView textView = (AutoCompleteTextView) view
@@ -389,7 +415,7 @@ public class MainActivity extends DataKeeperActivity implements
 			builder.create().show();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.enterFileNameToRead)
+			builder.setTitle(R.string.chooseFileNameToRead)
 					.setItems(getFilesList().toArray(new String[] {}),
 							new DialogInterface.OnClickListener() {
 								@Override
