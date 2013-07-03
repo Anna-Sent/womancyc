@@ -54,9 +54,9 @@ public class DayViewActivity extends DialogActivity implements
 					Shared.DATE_TO_SHOW);
 			if (mDateToShow == null) {
 				mDateToShow = Calendar.getInstance();
+			} else {
+				log("got from intent " + DateUtils.toString(this, mDateToShow));
 			}
-
-			log("got from intent " + DateUtils.toString(this, mDateToShow));
 		} else {
 			mDateToShow = (Calendar) savedInstanceState
 					.getSerializable(Shared.DATE_TO_SHOW);
