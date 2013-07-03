@@ -91,9 +91,9 @@ public class CalendarData implements Serializable {
 			menstruation = 3;
 		} else if (value.equals(MENSTRUATION_THREE_DROPS)) {
 			menstruation = 4;
+		} else {
+			menstruation = 0;
 		}
-
-		menstruation = 0;
 	}
 
 	public int getSex() {
@@ -129,9 +129,9 @@ public class CalendarData implements Serializable {
 			sex = 2;
 		} else if (value.equals(SEX_YES)) {
 			sex = 3;
+		} else {
+			sex = 0;
 		}
-
-		sex = 0;
 	}
 
 	public String getNote() {
