@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
+import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -321,6 +322,7 @@ public class MainActivity extends DataKeeperActivity implements
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, getFilesList());
 		textView.setAdapter(adapter);
+		textView.setText(Settings.getLastBackupFileName(this));
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.enterFileNameToWrite)

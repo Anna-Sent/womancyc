@@ -56,7 +56,7 @@ public class MonthViewAdapter extends BaseAdapter {
 		super();
 		mContext = context;
 		mDataKeeper = dataKeeper;
-		mCalculator = new Calculator(mDataKeeper);
+		mCalculator = new Calculator(context, mDataKeeper);
 		mToday = Calendar.getInstance();
 		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
 			mDayOfWeekValues.add(Calendar.SUNDAY);
@@ -326,7 +326,7 @@ public class MonthViewAdapter extends BaseAdapter {
 
 	public void update() {
 		log("update");
-		mCalculator = new Calculator(mDataKeeper);
+		mCalculator = new Calculator(mContext, mDataKeeper);
 		notifyDataSetChanged();
 	}
 }

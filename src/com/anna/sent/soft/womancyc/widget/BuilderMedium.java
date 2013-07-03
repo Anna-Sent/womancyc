@@ -11,7 +11,7 @@ import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 public final class BuilderMedium extends Builder {
 	@Override
 	protected String getResult(Context context, DataKeeperImpl dataKeeper) {
-		Calculator calc = new Calculator(dataKeeper);
+		Calculator calc = new Calculator(context, dataKeeper);
 		Calendar today = Calendar.getInstance();
 		int dayOfCycle = calc.getDayOfCycle(today);
 		int avgLen = 0;

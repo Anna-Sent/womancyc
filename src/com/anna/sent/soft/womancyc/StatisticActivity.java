@@ -48,7 +48,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 		TableRow tableRow4 = (TableRow) findViewById(R.id.tableRow4);
 		tableRow4.setOnClickListener(this);
 
-		Calculator calc = new Calculator(this);
+		Calculator calc = new Calculator(this, this);
 		Statistic stat = calc.getStatistic();
 
 		TextView avgMCL = (TextView) findViewById(R.id.rowAvgMCLValue);
