@@ -271,13 +271,13 @@ public class MonthViewAdapter extends BaseAdapter {
 				layers.add(getDrawable(R.drawable.bg_menstruation));
 				break;
 			case 2:
-				layers.add(getDrawableFromTheme(R.attr.one_drop_bg));
+				layers.add(getDrawable(R.drawable.bg_one_drop));
 				break;
 			case 3:
-				layers.add(getDrawableFromTheme(R.attr.two_drops_bg));
+				layers.add(getDrawable(R.drawable.bg_two_drops));
 				break;
 			case 4:
-				layers.add(getDrawableFromTheme(R.attr.three_drops_bg));
+				layers.add(getDrawable(R.drawable.bg_three_drops));
 				break;
 			}
 
