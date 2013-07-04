@@ -14,7 +14,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public class CalendarDataSource {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG_NOTES = true;
+	private static final boolean DEBUG_NOTES = false;
 	private static final boolean DEBUG_ROWS = false;
 	private static final boolean DEBUG_CRUD = false;
 
