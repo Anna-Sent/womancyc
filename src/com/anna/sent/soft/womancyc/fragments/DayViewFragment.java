@@ -79,9 +79,6 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	private AutoCompleteTextView textViewNote;
 	private Button currentDay;
 
-	/**
-	 * must be not null! fragment gets it from arguments
-	 */
 	private Calendar mDateToShow;
 	private CalendarData mValue;
 	private boolean mIsEmbedded;
@@ -144,8 +141,16 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			clear.setLayoutParams(params);
 		}
 
-		Calendar value = (Calendar) getArguments().getSerializable(
-				Shared.DATE_TO_SHOW);
+		Calendar value = null;
+		if (getArguments() != null) {
+			value = (Calendar) getArguments().getSerializable(
+					Shared.DATE_TO_SHOW);
+		}
+
+		if (value == null) {
+			value = Calendar.getInstance();
+		}
+
 		setSelectedDate(value);
 	}
 
