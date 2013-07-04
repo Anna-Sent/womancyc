@@ -6,11 +6,11 @@ import android.content.Context;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
-import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 
 public final class BuilderMedium extends Builder {
 	@Override
-	protected String getResult(Context context, DataKeeperImpl dataKeeper) {
+	protected String getResult(Context context, DataKeeper dataKeeper) {
 		Calculator calc = new Calculator(context, dataKeeper);
 		Calendar today = Calendar.getInstance();
 		int dayOfCycle = calc.getDayOfCycle(today);

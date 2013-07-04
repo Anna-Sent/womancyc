@@ -13,6 +13,7 @@ import com.anna.sent.soft.womancyc.DayViewActivityDark;
 import com.anna.sent.soft.womancyc.DayViewActivityLight;
 import com.anna.sent.soft.womancyc.MainActivity;
 import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
@@ -72,6 +73,5 @@ public abstract class Builder {
 		return views;
 	}
 
-	protected abstract String getResult(Context context,
-			DataKeeperImpl dataKeeper);
+	protected abstract String getResult(Context context, DataKeeper dataKeeper);
 }

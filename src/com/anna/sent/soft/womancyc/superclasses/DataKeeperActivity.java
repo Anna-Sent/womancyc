@@ -95,6 +95,10 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private DataKeeperImpl mDataKeeper;
 
+	protected DataKeeper getDataKeeper() {
+		return mDataKeeper;
+	}
+
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);

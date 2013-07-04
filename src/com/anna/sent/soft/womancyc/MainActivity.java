@@ -251,7 +251,7 @@ public class MainActivity extends DataKeeperActivity implements
 	}
 
 	private void clearAllDataAction() {
-		if (getCount() == 0) {
+		if (getDataKeeper().getCount() == 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.thereIsNoData).setPositiveButton(
 					android.R.string.yes,
@@ -440,7 +440,7 @@ public class MainActivity extends DataKeeperActivity implements
 
 	private void restoreWithConfirmation(String filename) {
 		final String absoluteFileName = getAppDirName() + filename + EXT;
-		if (getCount() > 0) {
+		if (getDataKeeper().getCount() > 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					MainActivity.this);
 			builder.setTitle(getString(R.string.restoreConfirmation, filename))
