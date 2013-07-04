@@ -90,15 +90,63 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		log("onCreateView");
-		View v = createView();
+		View v = inflater.inflate(R.layout.view_day, null);
 		return v;
 	}
 
 	@Override
-	public void onPause() {
-		log("onPause");
-		super.onPause();
-		tryToSave();
+	public void onActivityCreated(Bundle savedInstanceState) {
+		log("onActivityCreated");
+		super.onActivityCreated(savedInstanceState);
+		spinnerHadMenstruation = (Spinner) getActivity().findViewById(
+				R.id.spinnerHadMenstruation);
+		int drawablesId = R.array.menstruationDrawables;
+		fillSpinner(R.array.menstruationTypes, drawablesId,
+				spinnerHadMenstruation);
+
+		spinnerHadSex = (Spinner) getActivity().findViewById(R.id.spinnerSex);
+		drawablesId = ThemeUtils.getThemeId(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
+				: R.array.sexDrawablesLight;
+		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
+
+		checkBoxTookPill = (CheckBox) getActivity().findViewById(
+				R.id.checkBoxTookPill);
+		checkBoxTookPill.setOnClickListener(this);
+
+		textViewNote = (AutoCompleteTextView) getActivity().findViewById(
+				R.id.textViewNote);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
+		textViewNote.setAdapter(adapter);
+
+		Button clear = (Button) getActivity().findViewById(R.id.buttonClear);
+		currentDay = (Button) getActivity().findViewById(R.id.currentDay);
+		currentDay.setOnClickListener(this);
+		Button prevDay = (Button) getActivity().findViewById(R.id.prevDay);
+		prevDay.setOnClickListener(this);
+		Button nextDay = (Button) getActivity().findViewById(R.id.nextDay);
+		nextDay.setOnClickListener(this);
+		clear.setOnClickListener(this);
+
+		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
+		Button close = (Button) getActivity().findViewById(R.id.buttonClose);
+		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
+		close.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getActivity().finish();
+			}
+		});
+
+		if (mIsEmbedded) {
+			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			clear.setLayoutParams(params);
+		}
+
+		Calendar value = (Calendar) getArguments().getSerializable(
+				Shared.DATE_TO_SHOW);
+		setSelectedDate(value);
 	}
 
 	private void fillSpinner(int stringsArray, int imagesArray, Spinner spinner) {
@@ -123,69 +171,25 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		spinner.setOnItemSelectedListener(this);
 	}
 
-	private View createView() {
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View v = inflater.inflate(R.layout.view_day, null);
+	public Calendar getSelectedDate() {
+		return mDateToShow;
+	}
 
-		spinnerHadMenstruation = (Spinner) v
-				.findViewById(R.id.spinnerHadMenstruation);
-		int drawablesId = R.array.menstruationDrawables;
-		fillSpinner(R.array.menstruationTypes, drawablesId,
-				spinnerHadMenstruation);
-
-		spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
-		drawablesId = ThemeUtils.getThemeId(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
-				: R.array.sexDrawablesLight;
-		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
-
-		checkBoxTookPill = (CheckBox) v.findViewById(R.id.checkBoxTookPill);
-		checkBoxTookPill.setOnClickListener(this);
-
-		textViewNote = (AutoCompleteTextView) v.findViewById(R.id.textViewNote);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
-		textViewNote.setAdapter(adapter);
-
-		Button clear = (Button) v.findViewById(R.id.buttonClear);
-		currentDay = (Button) v.findViewById(R.id.currentDay);
-		currentDay.setOnClickListener(this);
-		Button prevDay = (Button) v.findViewById(R.id.prevDay);
-		prevDay.setOnClickListener(this);
-		Button nextDay = (Button) v.findViewById(R.id.nextDay);
-		nextDay.setOnClickListener(this);
-		clear.setOnClickListener(this);
-
-		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
-		Button close = (Button) v.findViewById(R.id.buttonClose);
-		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
-		close.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getActivity().finish();
-			}
-		});
-
-		if (mIsEmbedded) {
-			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
-			clear.setLayoutParams(params);
-		}
-
-		mDateToShow = (Calendar) getArguments().getSerializable(
-				Shared.DATE_TO_SHOW);
+	public void setSelectedDate(Calendar value) {
+		mDateToShow = value;
 		update();
-
-		return v;
 	}
 
 	public void update() {
+		log("update " + toString(), true);
+		if (getActivity() == null)
+			log("activity is null", true);
 		mValue = mDataKeeper.get(mDateToShow);
 		if (mValue == null) {
 			mValue = new CalendarData(mDateToShow);
 		}
 
-		currentDay.setText(mDateToShow == null ? "" : DateUtils.toString(
-				getActivity(), mDateToShow));
+		currentDay.setText(DateUtils.toString(getActivity(), mDateToShow));
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		if (menstruation != mValue.getMenstruation()) {
 			spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
@@ -205,6 +209,13 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		if (!isEqual(note, mValue.getNote())) {
 			textViewNote.setText(mValue.getNote());
 		}
+	}
+
+	@Override
+	public void onPause() {
+		log("onPause");
+		super.onPause();
+		tryToSave();
 	}
 
 	@Override
@@ -246,8 +257,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			}
 
 			tryToSave();
-			mDateToShow = dateToShow;
-			update();
+			setSelectedDate(dateToShow);
 		}
 	}
 
@@ -259,8 +269,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		}
 
 		tryToSave();
-		mDateToShow = dateToShow;
-		update();
+		setSelectedDate(dateToShow);
 	}
 
 	private void toNextDay() {
@@ -271,8 +280,7 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 		}
 
 		tryToSave();
-		mDateToShow = dateToShow;
-		update();
+		setSelectedDate(dateToShow);
 	}
 
 	private void clear() {
