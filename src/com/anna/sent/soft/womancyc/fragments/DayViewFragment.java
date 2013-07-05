@@ -1,8 +1,11 @@
 package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
+import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -116,14 +119,19 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
 		textViewNote.setAdapter(adapter);
 
-		Button clear = (Button) getActivity().findViewById(R.id.buttonClear);
 		currentDay = (Button) getActivity().findViewById(R.id.currentDay);
 		currentDay.setOnClickListener(this);
 		Button prevDay = (Button) getActivity().findViewById(R.id.prevDay);
 		prevDay.setOnClickListener(this);
 		Button nextDay = (Button) getActivity().findViewById(R.id.nextDay);
 		nextDay.setOnClickListener(this);
+
+		Button clear = (Button) getActivity().findViewById(R.id.buttonClear);
 		clear.setOnClickListener(this);
+
+		Button viewAsList = (Button) getActivity().findViewById(
+				R.id.buttonViewAsList);
+		viewAsList.setOnClickListener(this);
 
 		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
 		Button close = (Button) getActivity().findViewById(R.id.buttonClose);
@@ -242,6 +250,37 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.prevDay:
 			toPrevDay();
+			break;
+		case R.id.buttonViewAsList:
+			final List<String> list = mDataKeeper.getNotes();
+			if (list.size() == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setMessage(R.string.thereIsNoData).setPositiveButton(
+						android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+				builder.create().show();
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setItems(list.toArray(new String[] {}),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								textViewNote.setText(list.get(which));
+							}
+						}).setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+				builder.create().show();
+			}
+
 			break;
 		case R.id.checkBoxTookPill:
 			if (mIsEmbedded) {
