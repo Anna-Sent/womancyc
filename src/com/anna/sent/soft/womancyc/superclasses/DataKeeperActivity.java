@@ -224,7 +224,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private class OpenDataSourceTask extends DataTask {
 		public OpenDataSourceTask() {
-			super(true, "Open data source");
+			super(true, getString(R.string.openDataSourceTask));
 		}
 
 		@Override
@@ -263,7 +263,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private class ClearAllDataTask extends DataTask {
 		public ClearAllDataTask() {
-			super(true, "Clear all data");
+			super(true, getString(R.string.clearAllData));
 		}
 
 		@Override
@@ -313,7 +313,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 	private class RestoreTask extends DataTask {
 		public RestoreTask() {
-			super(true, "Restore data");
+			super(true, getString(R.string.restoreDataTask));
 		}
 
 		@Override
