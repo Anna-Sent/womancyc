@@ -35,11 +35,61 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
+	private boolean mIsDataTaskCompleted;
 	private ProgressDialog mProgressDialog = null;
+	private Timer mTimer = null;
+
+	private void startTimer(String message) {
+		stopTimer();
+		mTimer = new Timer(message);
+		mTimer.schedule(new StartProgressTask(message), 500);
+	}
+
+	private class StartProgressTask extends TimerTask {
+		private String mMessage;
+
+		public StartProgressTask(String message) {
+			super();
+			mMessage = message;
+		}
+
+		@Override
+		public void run() {
+			log("ShowProgressTask");
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (mIsDataTaskCompleted || mIsStopped) {
+						return;
+					}
+
+					log("ShowProgressTask on ui thread");
+					if (mProgressDialog == null) {
+						mProgressDialog = ProgressDialog.show(
+								DataKeeperActivity.this, "", mMessage, false,
+								false);
+					}
+				}
+			});
+		}
+	}
+
+	private void stopTimer() {
+		if (mTimer != null) {
+			mTimer.cancel();
+			mTimer.purge();
+			mTimer = null;
+		}
+	}
+
+	private void stopProgress() {
+		if (mProgressDialog != null && !mIsStopped) {
+			mProgressDialog.dismiss();
+			mProgressDialog = null;
+		}
+	}
 
 	private abstract class DataTask extends AsyncTask<String, Object, String> {
-		private Timer mTimer = new Timer();
-		private boolean mCompleted = false;
 		private boolean mShowProgress;
 		private String mProgressMessage;
 
@@ -52,45 +102,25 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected void onPreExecute() {
 			log("onPreExecute");
+			mIsDataTaskCompleted = false;
 			if (mShowProgress) {
-				mTimer.schedule(new ShowProgressTask(), 500);
+				startTimer(mProgressMessage);
 			}
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			log("onPostExecute");
-			mCompleted = true;
-			mTimer.cancel();
-			mTimer.purge();
-			if (mProgressDialog != null) {
-				mProgressDialog.dismiss();
-				mProgressDialog = null;
-			}
-
-			if (result != null && !result.equals("")) {
-				Toast.makeText(DataKeeperActivity.this, result,
-						Toast.LENGTH_LONG).show();
-			}
-		}
-
-		private class ShowProgressTask extends TimerTask {
-			@Override
-			public void run() {
-				log("ShowProgressTask");
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (mCompleted) {
-							return;
-						}
-
-						log("ShowProgressTask on ui thread");
-						mProgressDialog = ProgressDialog.show(
-								DataKeeperActivity.this, "", mProgressMessage,
-								false, false);
-					}
-				});
+			mIsDataTaskCompleted = true;
+			stopTimer();
+			stopProgress();
+			if (mIsStopped) {
+				closeDataSource();
+			} else {
+				if (result != null && !result.equals("")) {
+					Toast.makeText(DataKeeperActivity.this, result,
+							Toast.LENGTH_LONG).show();
+				}
 			}
 		}
 	}
@@ -113,43 +143,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		openDataSource();
 	}
 
-	private void openDataSource() {
-		log("before task execute");
-		new OpenDataSourceTask().execute();
-		log("after task execute");
-	}
-
-	private class OpenDataSourceTask extends DataTask {
-		public OpenDataSourceTask() {
-			super(true, "Open data source");
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-
-			try {
-				mDataKeeper.openDataSource();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return getString(R.string.errorWhileOpenningDatabase);
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			dataChanged();
-		}
-	}
-
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -157,13 +150,27 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		MyCycleWidget.updateAllWidgets(this);
 	}
 
+	private boolean mIsStopped;
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		mIsStopped = false;
+	}
+
 	@Override
 	protected void onStop() {
+		stopTimer();
+		stopProgress();
+		closeDataSource();
+		mIsStopped = true;
 		super.onStop();
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-			mProgressDialog = null;
-		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		closeDataSource();
+		super.onDestroy();
 	}
 
 	private void closeDataSource() {
@@ -209,6 +216,47 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		return mDataKeeper.getNotes();
 	}
 
+	private void openDataSource() {
+		log("before open data source task execute");
+		new OpenDataSourceTask().execute();
+		log("after open data source task execute");
+	}
+
+	private class OpenDataSourceTask extends DataTask {
+		public OpenDataSourceTask() {
+			super(true, "Open data source");
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+
+			try {
+				mDataKeeper.openDataSource();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return getString(R.string.errorWhileOpenningDatabase);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			if (mIsStopped) {
+				return;
+			}
+
+			dataChanged();
+		}
+	}
+
 	protected final void clearAllData() {
 		new ClearAllDataTask().execute();
 	}
@@ -227,6 +275,10 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			if (mIsStopped) {
+				return;
+			}
+
 			dataChanged();
 		}
 	}
@@ -282,6 +334,10 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			if (mIsStopped) {
+				return;
+			}
+
 			dataChanged();
 		}
 	}
