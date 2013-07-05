@@ -12,6 +12,7 @@
         <attr name="nextItemIcon" format="reference" />
         <attr name="prevItemIcon" format="reference" />
         <attr name="goToTodayIcon" format="reference" />
+        <attr name="listIcon" format="reference" />
         <attr name="note_bg" format="reference" />
         <attr name="sex_bg" format="reference" />
         <attr name="protected_sex_bg" format="reference" />
@@ -59,6 +60,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="listIcon">@drawable/ic_list_dark</item>
         <item name="note_bg">@drawable/bg_note_dark</item>
         <item name="sex_bg">@drawable/bg_sex_dark</item>
         <item name="protected_sex_bg">@drawable/bg_protected_sex_dark</item>
@@ -73,6 +75,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_light</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_light</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_light</item>
+        <item name="listIcon">@drawable/ic_list_light</item>
         <item name="note_bg">@drawable/bg_note_light</item>
         <item name="sex_bg">@drawable/bg_sex_light</item>
         <item name="protected_sex_bg">@drawable/bg_protected_sex_light</item>
@@ -92,6 +95,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="listIcon">@drawable/ic_list_dark</item>
     </style>
 
     <style name="DialogBaseThemeLight" parent="android:Theme.Dialog">
@@ -103,6 +107,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="listIcon">@drawable/ic_list_dark</item>
     </style>
 
     <style name="DialogTheme" parent="DialogBaseTheme">

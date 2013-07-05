@@ -42,6 +42,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="listIcon">@drawable/ic_list_dark</item>
     </style>
 
     <style name="DialogBaseThemeLight" parent="android:Theme.Holo.Light.Dialog">
@@ -53,6 +54,7 @@
         <item name="nextItemIcon">@drawable/ic_next_item_light</item>
         <item name="prevItemIcon">@drawable/ic_previous_item_light</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_light</item>
+        <item name="listIcon">@drawable/ic_list_light</item>
     </style>
 
 </resources>

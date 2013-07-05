@@ -123,12 +123,30 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?attr/textViewTextColor" />
 
-        <AutoCompleteTextView
-            android:id="@+id/textViewNote"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearance"
-            android:textColor="?attr/editableTextViewTextColor" />
+            android:layout_height="wrap_content" >
+
+            <AutoCompleteTextView
+                android:id="@+id/textViewNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/buttonViewAsList"
+                android:inputType="textMultiLine"
+                android:textAppearance="?android:attr/textAppearance"
+                android:textColor="?attr/editableTextViewTextColor" />
+
+            <Button
+                android:id="@id/buttonViewAsList"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="?attr/listIcon"
+                android:text="" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
