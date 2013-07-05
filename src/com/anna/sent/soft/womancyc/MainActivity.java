@@ -62,11 +62,13 @@ public class MainActivity extends DataKeeperActivity implements
 		if (fragment instanceof MonthViewFragment) {
 			mMonthView = (MonthViewFragment) fragment;
 			mMonthView.setListener(this);
+			log("attach month view");
 		}
 
 		if (fragment instanceof DayViewFragment) {
 			mDayView = (DayViewFragment) fragment;
 			mDayView.setListener(this);
+			log("attach day view");
 		}
 	}
 
@@ -99,7 +101,6 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public void restoreState(Bundle state) {
 		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
-		log("restore " + DateUtils.toString(this, mDateToShow));
 	}
 
 	@Override
@@ -188,16 +189,6 @@ public class MainActivity extends DataKeeperActivity implements
 		mMonthView.setSelectedDate(date);
 		if (mIsLargeLayout) {
 			showAsEmbeddedFragment(date);
-		}
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		Calendar date = (Calendar) intent
-				.getSerializableExtra(Shared.DATE_TO_SHOW);
-		if (date != null) {
-			showDate(date);
 		}
 	}
 
@@ -313,7 +304,7 @@ public class MainActivity extends DataKeeperActivity implements
 			dir += File.separator;
 		}
 
-		return dir + "WomanCyc/";
+		return dir + "WomanCyc" + File.separator;
 	}
 
 	private void backupAction() {
