@@ -35,8 +35,9 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
+	private ProgressDialog mProgressDialog = null;
+
 	private abstract class DataTask extends AsyncTask<String, Object, String> {
-		private ProgressDialog mProgressDialog = null;
 		private Timer mTimer = new Timer();
 		private boolean mCompleted = false;
 		private boolean mShowProgress;
@@ -64,6 +65,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			mTimer.purge();
 			if (mProgressDialog != null) {
 				mProgressDialog.dismiss();
+				mProgressDialog = null;
 			}
 
 			if (result != null && !result.equals("")) {
@@ -124,6 +126,13 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected String doInBackground(String... params) {
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+
 			try {
 				mDataKeeper.openDataSource();
 			} catch (SQLException e) {
@@ -146,6 +155,15 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		super.onPause();
 		closeDataSource();
 		MyCycleWidget.updateAllWidgets(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (mProgressDialog != null) {
+			mProgressDialog.dismiss();
+			mProgressDialog = null;
+		}
 	}
 
 	private void closeDataSource() {
