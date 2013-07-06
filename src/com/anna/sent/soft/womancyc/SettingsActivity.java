@@ -8,6 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
@@ -41,10 +42,14 @@ public class SettingsActivity extends PreferenceActivity implements
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-		Preference prefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
-		prefMcl.setSummary(getString(
+		Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
+		prefDefMcl.setSummary(getString(
 				R.string.pref_default_menstrual_cycle_len_summary,
 				String.valueOf(Settings.getDefaultMenstrualCycleLen(this))));
+
+		Preference prefUseAvg = findPreference(Settings.KEY_PREF_USE_AVG);
+		prefUseAvg.setSummary(getString(R.string.pref_use_average_summary,
+				String.valueOf(Calculator.MAX_MENSTRUAL_CYCLE_LEN)));
 
 		ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
 		prefTheme.setSummary(prefTheme.getEntry());
@@ -54,10 +59,12 @@ public class SettingsActivity extends PreferenceActivity implements
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		if (key.equals(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN)) {
-			Preference prefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
-			prefMcl.setSummary(getString(
-					R.string.pref_default_menstrual_cycle_len_summary,
-					String.valueOf(Settings.getDefaultMenstrualCycleLen(this))));
+			Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
+			prefDefMcl
+					.setSummary(getString(
+							R.string.pref_default_menstrual_cycle_len_summary,
+							String.valueOf(Settings
+									.getDefaultMenstrualCycleLen(this))));
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
 			ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
 			prefTheme.setSummary(prefTheme.getEntry());

@@ -14,19 +14,26 @@
             android:summary="@string/pref_use_average_summary"
             android:title="@string/pref_use_average_title" />
     </PreferenceCategory>
-
-    <Preference android:title="@string/rate" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="market://details?id=com.anna.sent.soft.childbirthdate" />
-    </Preference>
-
-    <ListPreference
-        android:defaultValue="@integer/defaultTheme"
-        android:dialogTitle="@string/pref_theme_title"
-        android:entries="@array/theme"
-        android:entryValues="@array/theme_values"
-        android:key="pref_theme"
-        android:title="@string/pref_theme_title" />
+    <PreferenceCategory android:title="@string/pref_ui_settings_title" >
+        <ListPreference
+            android:defaultValue="@integer/defaultTheme"
+            android:dialogTitle="@string/pref_theme_title"
+            android:entries="@array/theme"
+            android:entryValues="@array/theme_values"
+            android:key="pref_theme"
+            android:title="@string/pref_theme_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_other_settings_title" >
+        <Preference android:title="@string/rate" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="market://details?id=com.anna.sent.soft.womancyc" />
+        </Preference>
+        <Preference android:title="@string/pref_childbirthdate" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="market://details?id=com.anna.sent.soft.childbirthdate" />
+        </Preference>
+    </PreferenceCategory>
 
 </PreferenceScreen>
