@@ -6,8 +6,15 @@
         android:icon="?attr/statisticIcon"
         android:showAsAction="ifRoom|withText"
         android:title="@string/statistic"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="?attr/settingsIcon"
+        android:showAsAction="never"
+        android:title="@string/settings"/>
 
-    <group android:checkableBehavior="single" >
+    <group
+        android:checkableBehavior="single"
+        android:visible="false" >
         <item
             android:id="@+id/lighttheme"
             android:checkable="true"
@@ -20,11 +27,6 @@
             android:title="@string/darktheme"/>
     </group>
 
-    <item
-        android:id="@+id/settings"
-        android:icon="?attr/settingsIcon"
-        android:showAsAction="never"
-        android:title="@string/settings"/>
     <item
         android:id="@+id/backupData"
         android:icon="?attr/exportIcon"

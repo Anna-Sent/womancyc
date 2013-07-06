@@ -56,4 +56,30 @@ public class Settings {
 		editor.putString(KEY_PREF_LAST_BACKUP_FILE_NAME, value);
 		editor.commit();
 	}
+
+	public static final String KEY_PREF_THEME = "pref_theme";
+
+	public static int getTheme(Context context) {
+		SharedPreferences settings = getSettings(context);
+		int defaultValue = context.getResources().getInteger(
+				R.integer.defaultTheme);
+		String value = settings.getString(KEY_PREF_THEME, "");
+		int result = defaultValue;
+		if (!value.equals("")) {
+			try {
+				result = Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				result = defaultValue;
+			}
+		}
+
+		return result;
+	}
+
+	public static void setTheme(Context context, int value) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.putString(KEY_PREF_THEME, String.valueOf(value));
+		editor.commit();
+	}
 }

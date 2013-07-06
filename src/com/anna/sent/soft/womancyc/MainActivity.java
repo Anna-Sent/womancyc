@@ -214,10 +214,12 @@ public class MainActivity extends DataKeeperActivity implements
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		case R.id.lighttheme:
-			ThemeUtils.changeToTheme(this, ThemeUtils.LIGHT_THEME);
+			Settings.setTheme(this, ThemeUtils.LIGHT_THEME);
+			ThemeUtils.applyChanges(this);
 			return true;
 		case R.id.darktheme:
-			ThemeUtils.changeToTheme(this, ThemeUtils.DARK_THEME);
+			Settings.setTheme(this, ThemeUtils.DARK_THEME);
+			ThemeUtils.applyChanges(this);
 			return true;
 		case R.id.help:
 			return true;

@@ -7,4 +7,15 @@
 
     <bool name="useAverage">true</bool>
 
+    <string-array name="theme">
+        <item>Темная</item>
+        <item>Светлая</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <integer name="defaultTheme">0</integer>
+
 </resources>
