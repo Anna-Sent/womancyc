@@ -28,6 +28,11 @@
     </group>
 
     <item
+        android:id="@+id/clearAllData"
+        android:icon="?attr/clearAllDataIcon"
+        android:showAsAction="never"
+        android:title="@string/clearAllData"/>
+    <item
         android:id="@+id/backupData"
         android:icon="?attr/exportIcon"
         android:showAsAction="never"
@@ -37,11 +42,6 @@
         android:icon="?attr/importIcon"
         android:showAsAction="never"
         android:title="@string/restoreData"/>
-    <item
-        android:id="@+id/clearAllData"
-        android:icon="?attr/clearAllDataIcon"
-        android:showAsAction="never"
-        android:title="@string/clearAllData"/>
     <item
         android:id="@+id/rate"
         android:icon="?attr/rateIcon"
