@@ -36,7 +36,7 @@ public class CalendarHelper extends SQLiteOpenHelper {
 			CalendarHelper.COLUMN_TOOK_PILL, CalendarHelper.COLUMN_NOTE };
 
 	private static final String DATABASE_NAME = "WomanCycCalendar.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_CALENDAR + "(" + COLUMN_ID + " integer primary key, "
