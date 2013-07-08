@@ -21,6 +21,6 @@ public final class BuilderMedium extends Builder {
 
 		return dayOfCycle > 0 ? String.valueOf(dayOfCycle) + " ("
 				+ String.valueOf(avgLen) + ")" : context
-				.getString(R.string.noData);
+				.getString(R.string.thereIsNoData);
 	}
 }

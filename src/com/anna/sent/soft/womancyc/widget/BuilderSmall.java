@@ -15,6 +15,6 @@ public class BuilderSmall extends Builder {
 		Calendar today = Calendar.getInstance();
 		int dayOfCycle = calc.getDayOfCycle(today);
 		return dayOfCycle > 0 ? String.valueOf(dayOfCycle) : context
-				.getString(R.string.noData);
+				.getString(R.string.thereIsNoData);
 	}
 }
