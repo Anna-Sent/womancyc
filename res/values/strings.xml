@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="bacupFileName">backup%s</string>
+    <string name="bacupFileName">backup_%s</string>
     <string name="openDataSourceTask">Загрузка базы данных</string>
     <string name="restoreDataTask">Восстановление данных</string>
     <string name="pref_calculation_settings_title">Расчет</string>
