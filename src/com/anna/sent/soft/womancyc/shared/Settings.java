@@ -42,21 +42,6 @@ public class Settings {
 		editor.commit();
 	}
 
-	public static final String KEY_PREF_LAST_BACKUP_FILE_NAME = "pref_last_backup_file_name";
-
-	public static String getLastBackupFileName(Context context) {
-		SharedPreferences settings = getSettings(context);
-		return settings.getString(KEY_PREF_LAST_BACKUP_FILE_NAME,
-				context.getString(R.string.lastBacupFileName));
-	}
-
-	public static void setLastBackupFileName(Context context, String value) {
-		SharedPreferences settings = getSettings(context);
-		Editor editor = settings.edit();
-		editor.putString(KEY_PREF_LAST_BACKUP_FILE_NAME, value);
-		editor.commit();
-	}
-
 	public static final String KEY_PREF_THEME = "pref_theme";
 
 	public static int getTheme(Context context) {

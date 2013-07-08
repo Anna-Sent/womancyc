@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="lastBacupFileName">backup</string>
-
     <integer name="defaultMenstrualCycleLen">28</integer>
 
     <bool name="useAverage">true</bool>

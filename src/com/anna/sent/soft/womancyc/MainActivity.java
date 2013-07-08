@@ -355,7 +355,8 @@ public class MainActivity extends DataKeeperActivity implements
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, getFilesList());
 		textView.setAdapter(adapter);
-		textView.setText(Settings.getLastBackupFileName(this));
+		textView.setText(getString(R.string.bacupFileName,
+				DateUtils.toString(this, Calendar.getInstance())));
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.enterFileNameToWrite)
@@ -381,7 +382,6 @@ public class MainActivity extends DataKeeperActivity implements
 	}
 
 	private void backupWithConfirmation(String filename) {
-		Settings.setLastBackupFileName(this, filename);
 		final String absoluteFileName = getAppDirName() + filename + EXT;
 		File file = new File(absoluteFileName);
 		if (file.exists()) {
@@ -423,7 +423,7 @@ public class MainActivity extends DataKeeperActivity implements
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.chooseFileNameToRead)
-					.setItems(getFilesList().toArray(new String[] {}),
+					.setItems(filenames.toArray(new String[] {}),
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
