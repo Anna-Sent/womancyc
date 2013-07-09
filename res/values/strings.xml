@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="menstrualCycleLen">Продолжительность менструального цикла</string>
     <string name="days">д.</string>
     <string name="pref_password_title">Пароль</string>
     <string name="passwordIsSet">Установлен</string>
@@ -16,9 +15,9 @@
     <string name="restoreDataTask">Восстановление данных</string>
     <string name="pref_calculation_settings_title">Расчет</string>
     <string name="pref_default_menstrual_cycle_len_title">Менструальный цикл</string>
-    <string name="pref_default_menstrual_cycle_len_summary">%s д. Используется для прогноза, если не установлена галочка \"Считать среднюю продолжительность\" или если данных для расчета средней продолжительности недостаточно.</string>
-    <string name="pref_use_average_title">Считать среднюю продолжительность</string>
-    <string name="pref_use_average_summary">Расчет средней продолжительности цикла ведется не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
+    <string name="pref_default_menstrual_cycle_len_summary">%1$s д. Это значение используется для прогноза, если не установлена галочка \"%2$s\" или если данных для расчета средней продолжительности недостаточно.</string>
+    <string name="pref_use_average_title">На основе текущих данных</string>
+    <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
     <string name="pref_safety_settings_title">Безопасность</string>
     <string name="pref_ui_settings_title">Внешний вид</string>
     <string name="pref_theme_title">Тема</string>

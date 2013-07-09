@@ -2,6 +2,8 @@
 <resources>
 
     <integer name="defaultMenstrualCycleLen">28</integer>
+    <integer name="maxMenstrualCycleLen">60</integer>
+    <integer name="minMenstrualCycleLen">10</integer>
 
     <bool name="useAverage">true</bool>
 

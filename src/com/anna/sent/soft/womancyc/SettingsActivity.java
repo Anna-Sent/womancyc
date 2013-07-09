@@ -50,11 +50,12 @@ public class SettingsActivity extends PreferenceActivity implements
 		Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
 		prefDefMcl.setSummary(getString(
 				R.string.pref_default_menstrual_cycle_len_summary,
-				String.valueOf(Settings.getDefaultMenstrualCycleLen(this))));
+				String.valueOf(Settings.getDefaultMenstrualCycleLen(this)),
+				getString(R.string.pref_use_average_title)));
 
 		Preference prefUseAvg = findPreference(Settings.KEY_PREF_USE_AVG);
 		prefUseAvg.setSummary(getString(R.string.pref_use_average_summary,
-				String.valueOf(Calculator.MAX_MENSTRUAL_CYCLE_LEN)));
+				String.valueOf(Calculator.getMaxMenstrualCycleLen(this))));
 
 		ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
 		prefTheme.setSummary(prefTheme.getEntry());
@@ -65,11 +66,10 @@ public class SettingsActivity extends PreferenceActivity implements
 			String key) {
 		if (key.equals(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN)) {
 			Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
-			prefDefMcl
-					.setSummary(getString(
-							R.string.pref_default_menstrual_cycle_len_summary,
-							String.valueOf(Settings
-									.getDefaultMenstrualCycleLen(this))));
+			prefDefMcl.setSummary(getString(
+					R.string.pref_default_menstrual_cycle_len_summary,
+					String.valueOf(Settings.getDefaultMenstrualCycleLen(this)),
+					getString(R.string.pref_use_average_title)));
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
 			ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
 			prefTheme.setSummary(prefTheme.getEntry());

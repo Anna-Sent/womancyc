@@ -6,10 +6,9 @@
         <com.anna.sent.soft.womancyc.fragments.NumberPickerPreference
             android:defaultValue="@integer/defaultMenstrualCycleLen"
             android:key="pref_default_menstrual_cycle_len"
+            android:max="@integer/maxMenstrualCycleLen"
             android:title="@string/pref_default_menstrual_cycle_len_title"
-            custom:max="56"
-            custom:min="23"
-            custom:title="@string/menstrualCycleLen"
+            custom:min="@integer/minMenstrualCycleLen"
             custom:unit="@string/days" />
 
         <CheckBoxPreference

@@ -19,7 +19,6 @@ public class NumberPickerPreference extends DialogPreference {
 
 	private int mMinValue;
 	private int mMaxValue;
-	private String mTitle;
 	private String mUnit;
 	private int mValue;
 	private NumberPicker mNumberPicker;
@@ -37,9 +36,9 @@ public class NumberPickerPreference extends DialogPreference {
 		try {
 			setMinValue(a.getInteger(R.styleable.NumberPickerPreference_min,
 					DEFAULT_MIN_VALUE));
-			setMaxValue(a.getInteger(R.styleable.NumberPickerPreference_max,
+			setMaxValue(a.getInteger(
+					R.styleable.NumberPickerPreference_android_max,
 					DEFAULT_MAX_VALUE));
-			mTitle = a.getString(R.styleable.NumberPickerPreference_title);
 			mUnit = a.getString(R.styleable.NumberPickerPreference_unit);
 		} finally {
 			a.recycle();
@@ -67,8 +66,6 @@ public class NumberPickerPreference extends DialogPreference {
 	protected void onBindDialogView(View view) {
 		super.onBindDialogView(view);
 
-		TextView title = (TextView) view.findViewById(R.id.textViewTitle);
-		title.setText(mTitle);
 		TextView unit = (TextView) view.findViewById(R.id.textViewUnit);
 		unit.setText(mUnit);
 

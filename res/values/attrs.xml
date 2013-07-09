@@ -2,9 +2,8 @@
 
     <!-- note: to re-use an existing Android attribute not already used by the superclass, name should have prefix "android:" and do not define a format -->
     <declare-styleable name="NumberPickerPreference">
-        <attr name="max" format="integer" />
+        <attr name="android:max" />
         <attr name="min" format="integer" />
-        <attr name="title" format="string" />
         <attr name="unit" format="string" />
     </declare-styleable>
 

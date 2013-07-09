@@ -84,7 +84,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			column1.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle));
 			int mcl = stat.rows.get(i).menstrualCycleLen;
 			column2.setText(String.valueOf(mcl));
-			if (mcl > Calculator.MAX_MENSTRUAL_CYCLE_LEN) {
+			if (mcl > Calculator.getMaxMenstrualCycleLen(this)) {
 				column2.setTextColor(Color.RED);
 			}
 
@@ -94,7 +94,8 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 
 		TextView textViewStatisticRemark = (TextView) findViewById(R.id.statisticRemark);
 		textViewStatisticRemark.setText(Html.fromHtml(getString(
-				R.string.statisticRemark, Calculator.MAX_MENSTRUAL_CYCLE_LEN,
-				Calculator.MAX_MENSTRUAL_CYCLE_LEN)));
+				R.string.statisticRemark,
+				Calculator.getMaxMenstrualCycleLen(this),
+				Calculator.getMaxMenstrualCycleLen(this))));
 	}
 }

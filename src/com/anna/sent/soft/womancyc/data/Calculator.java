@@ -8,6 +8,7 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
+import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -26,8 +27,9 @@ public class Calculator {
 		}
 	}
 
-	public static final int MAX_MENSTRUAL_CYCLE_LEN = 60;
-	public static final int MIN_MENSTRUAL_CYCLE_LEN = 10;
+	private final int MAX_MENSTRUAL_CYCLE_LEN;
+	@SuppressWarnings("unused")
+	private final int MIN_MENSTRUAL_CYCLE_LEN;
 
 	/**
 	 * Must be not null.
@@ -42,6 +44,18 @@ public class Calculator {
 		defaultMenstrualCycleLen = Settings
 				.getDefaultMenstrualCycleLen(context);
 		useAvg = Settings.useAverage(context);
+		MAX_MENSTRUAL_CYCLE_LEN = getMaxMenstrualCycleLen(context);
+		MIN_MENSTRUAL_CYCLE_LEN = getMinMenstrualCycleLen(context);
+	}
+
+	public static int getMaxMenstrualCycleLen(Context context) {
+		return context.getResources()
+				.getInteger(R.integer.maxMenstrualCycleLen);
+	}
+
+	public static int getMinMenstrualCycleLen(Context context) {
+		return context.getResources()
+				.getInteger(R.integer.minMenstrualCycleLen);
 	}
 
 	public int getDayOfCycle(Calendar current) {
