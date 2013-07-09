@@ -12,6 +12,34 @@ public class Settings {
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
+	public static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
+
+	public static boolean isBlocked(Context context) {
+		SharedPreferences settings = getSettings(context);
+		return settings.getBoolean(KEY_PREF_IS_BLOCKED, false);
+	}
+
+	public static void isBlocked(Context context, boolean value) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.putBoolean(KEY_PREF_IS_BLOCKED, value);
+		editor.commit();
+	}
+
+	public static final String KEY_PREF_PASSWORD = "pref_password";
+
+	public static String getPassword(Context context) {
+		SharedPreferences settings = getSettings(context);
+		return settings.getString(KEY_PREF_PASSWORD, "");
+	}
+
+	public static void setPassword(Context context, String value) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.putString(KEY_PREF_PASSWORD, value);
+		editor.commit();
+	}
+
 	public static final String KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN = "pref_default_menstrual_cycle_len";
 
 	public static int getDefaultMenstrualCycleLen(Context context) {

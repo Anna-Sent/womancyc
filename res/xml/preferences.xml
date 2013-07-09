@@ -5,14 +5,18 @@
         <Preference
             android:defaultValue="@integer/defaultMenstrualCycleLen"
             android:key="pref_default_menstrual_cycle_len"
-            android:summary="@string/pref_default_menstrual_cycle_len_summary"
             android:title="@string/pref_default_menstrual_cycle_len_title" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/useAverage"
             android:key="pref_use_average"
-            android:summary="@string/pref_use_average_summary"
             android:title="@string/pref_use_average_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_safety_settings_title" >
+        <Preference
+            android:defaultValue=""
+            android:key="pref_password"
+            android:title="@string/pref_password_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_ui_settings_title" >
         <ListPreference

@@ -42,6 +42,11 @@ public class SettingsActivity extends PreferenceActivity implements
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
+		Preference prefPass = findPreference(Settings.KEY_PREF_PASSWORD);
+		boolean isPasswordSet = Settings.getPassword(this).equals("");
+		prefPass.setSummary(isPasswordSet ? getString(R.string.passwordIsSet)
+				: getString(R.string.passwordIsNotSet));
+
 		Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
 		prefDefMcl.setSummary(getString(
 				R.string.pref_default_menstrual_cycle_len_summary,
