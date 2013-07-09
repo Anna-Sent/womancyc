@@ -42,21 +42,34 @@ public class SettingsActivity extends PreferenceActivity implements
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-		Preference prefPass = findPreference(Settings.KEY_PREF_PASSWORD);
-		boolean isPasswordSet = Settings.getPassword(this).equals("");
-		prefPass.setSummary(isPasswordSet ? getString(R.string.passwordIsSet)
-				: getString(R.string.passwordIsNotSet));
+		setupDefaultMenstrualCycleLenPreference();
+		setupUseAvgPreference();
+		setupPasswordPreference();
+		setupThemePreference();
+	}
 
+	private void setupDefaultMenstrualCycleLenPreference() {
 		Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
 		prefDefMcl.setSummary(getString(
 				R.string.pref_default_menstrual_cycle_len_summary,
 				String.valueOf(Settings.getDefaultMenstrualCycleLen(this)),
 				getString(R.string.pref_use_average_title)));
+	}
 
+	private void setupUseAvgPreference() {
 		Preference prefUseAvg = findPreference(Settings.KEY_PREF_USE_AVG);
 		prefUseAvg.setSummary(getString(R.string.pref_use_average_summary,
 				String.valueOf(Calculator.getMaxMenstrualCycleLen(this))));
+	}
 
+	private void setupPasswordPreference() {
+		Preference prefPass = findPreference(Settings.KEY_PREF_PASSWORD);
+		boolean isPasswordSet = Settings.getPassword(this).equals("");
+		prefPass.setSummary(isPasswordSet ? getString(R.string.passwordIsSet)
+				: getString(R.string.passwordIsNotSet));
+	}
+
+	private void setupThemePreference() {
 		ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
 		prefTheme.setSummary(prefTheme.getEntry());
 	}
@@ -65,15 +78,11 @@ public class SettingsActivity extends PreferenceActivity implements
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		if (key.equals(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN)) {
-			Preference prefDefMcl = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
-			prefDefMcl.setSummary(getString(
-					R.string.pref_default_menstrual_cycle_len_summary,
-					String.valueOf(Settings.getDefaultMenstrualCycleLen(this)),
-					getString(R.string.pref_use_average_title)));
+			setupDefaultMenstrualCycleLenPreference();
+		} else if (key.equals(Settings.KEY_PREF_PASSWORD)) {
+			setupPasswordPreference();
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
-			ListPreference prefTheme = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
-			prefTheme.setSummary(prefTheme.getEntry());
-			ThemeUtils.applyChanges(this);
+			setupThemePreference();
 		}
 	}
 
