@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto" >
 
     <PreferenceCategory android:title="@string/pref_calculation_settings_title" >
-        <Preference
+        <com.anna.sent.soft.womancyc.fragments.NumberPickerPreference
             android:defaultValue="@integer/defaultMenstrualCycleLen"
             android:key="pref_default_menstrual_cycle_len"
-            android:title="@string/pref_default_menstrual_cycle_len_title" />
+            android:title="@string/pref_default_menstrual_cycle_len_title"
+            custom:max="56"
+            custom:min="23"
+            custom:title="@string/menstrualCycleLen"
+            custom:unit="@string/days" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/useAverage"

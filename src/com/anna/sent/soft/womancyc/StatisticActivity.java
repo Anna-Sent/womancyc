@@ -84,7 +84,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			column1.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle));
 			int mcl = stat.rows.get(i).menstrualCycleLen;
 			column2.setText(String.valueOf(mcl));
-			if (mcl > 60) {
+			if (mcl > Calculator.MAX_MENSTRUAL_CYCLE_LEN) {
 				column2.setTextColor(Color.RED);
 			}
 
