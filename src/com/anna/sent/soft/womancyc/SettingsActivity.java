@@ -83,6 +83,7 @@ public class SettingsActivity extends PreferenceActivity implements
 			setupPasswordPreference();
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
 			setupThemePreference();
+			ThemeUtils.applyChanges(this);
 		}
 	}
 
