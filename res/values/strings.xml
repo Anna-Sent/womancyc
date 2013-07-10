@@ -3,13 +3,14 @@
 
     <string name="days">д.</string>
     <string name="pref_password_title">Пароль</string>
-    <string name="passwordIsSet">Установлен</string>
-    <string name="passwordIsNotSet">Не установлен</string>
+    <string name="isSet">Установлен</string>
+    <string name="isNotSet">Не установлен</string>
     <string name="enterPassword">Введите пароль</string>
     <string name="confirmPassword">Подтвердите пароль</string>
     <string name="incorrectPassword">Неверный пароль</string>
     <string name="confirmationUnsuccess">Пароли не совпадают. Пароль не установлен</string>
-    <string name="confirmationSuccess">Пароль установлен</string>
+    <string name="passwordIsSet">Пароль установлен</string>
+    <string name="passwordIsNotSet">Пароль не установлен</string>
     <string name="bacupFileName">backup_%s</string>
     <string name="openDataSourceTask">Загрузка базы данных</string>
     <string name="restoreDataTask">Восстановление данных</string>

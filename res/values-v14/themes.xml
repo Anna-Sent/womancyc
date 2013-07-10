@@ -4,6 +4,7 @@
     <style name="AppBaseThemeLight" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="numberPickerStyle">@style/Widget.Holo.Light.NumberPicker</item>
         <item name="helpIcon">@drawable/ic_menu_help_dark</item>
+        <item name="lockIcon">@drawable/ic_lock_dark</item>
         <item name="settingsIcon">@drawable/ic_settings_dark</item>
         <item name="rateIcon">@drawable/ic_menu_rate_dark</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_dark</item>

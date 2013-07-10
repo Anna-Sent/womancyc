@@ -4,6 +4,7 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo">
         <item name="numberPickerStyle">@style/Widget.Holo.NumberPicker</item>
         <item name="helpIcon">@drawable/ic_menu_help_dark</item>
+        <item name="lockIcon">@drawable/ic_lock_dark</item>
         <item name="settingsIcon">@drawable/ic_settings_dark</item>
         <item name="rateIcon">@drawable/ic_menu_rate_dark</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_dark</item>
@@ -19,6 +20,7 @@
     <style name="AppBaseThemeLight" parent="android:Theme.Holo.Light">
         <item name="numberPickerStyle">@style/Widget.Holo.Light.NumberPicker</item>
         <item name="helpIcon">@drawable/ic_menu_help_light</item>
+        <item name="lockIcon">@drawable/ic_lock_dark</item>
         <item name="settingsIcon">@drawable/ic_settings_light</item>
         <item name="rateIcon">@drawable/ic_menu_rate_light</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
@@ -40,6 +42,7 @@
         <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
         <item name="listIcon">@drawable/ic_list_dark</item>
+        <item name="removeContentIcon">@drawable/ic_remove_content_dark</item>
     </style>
 
     <style name="DialogBaseThemeLight" parent="android:Theme.Holo.Light.Dialog">
@@ -51,6 +54,7 @@
         <item name="prevItemIcon">@drawable/ic_previous_item_light</item>
         <item name="goToTodayIcon">@drawable/ic_go_to_today_light</item>
         <item name="listIcon">@drawable/ic_list_light</item>
+        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
 
 </resources>

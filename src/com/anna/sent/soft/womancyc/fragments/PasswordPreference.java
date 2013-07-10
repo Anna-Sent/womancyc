@@ -8,6 +8,8 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -67,6 +69,23 @@ public class PasswordPreference extends DialogPreference {
 		mEditTextPassword.setText(mPassword);
 		mEditTextConfirmedPassword = (EditText) view
 				.findViewById(R.id.editTextConfirmedPassword);
+
+		Button clearPass = (Button) view.findViewById(R.id.buttonClearPassword);
+		clearPass.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mEditTextPassword.setText("");
+			}
+		});
+
+		Button clearConfirmedPass = (Button) view
+				.findViewById(R.id.buttonClearConfirmedPassword);
+		clearConfirmedPass.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mEditTextConfirmedPassword.setText("");
+			}
+		});
 	}
 
 	@Override
@@ -80,23 +99,25 @@ public class PasswordPreference extends DialogPreference {
 					: confirmedPassword;
 			String newPassword = mEditTextPassword.getText().toString();
 			newPassword = newPassword == null ? "" : newPassword;
+			String message;
 			if (confirmedPassword.equals(newPassword)) {
-				Toast.makeText(
-						getContext(),
-						getContext().getResources().getString(
-								R.string.confirmationSuccess),
-						Toast.LENGTH_LONG).show();
+				if (newPassword.equals("")) {
+					message = getContext().getResources().getString(
+							R.string.passwordIsNotSet);
+				} else {
+					message = getContext().getResources().getString(
+							R.string.passwordIsSet);
+				}
 			} else {
+				message = getContext().getResources().getString(
+						R.string.confirmationUnsuccess);
 				newPassword = "";
-				Toast.makeText(
-						getContext(),
-						getContext().getResources().getString(
-								R.string.confirmationUnsuccess),
-						Toast.LENGTH_LONG).show();
 			}
 
+			Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
 			mPassword = newPassword;
 			persistString(mPassword);
+
 			mEditTextPassword = null;
 			mEditTextConfirmedPassword = null;
 		}
