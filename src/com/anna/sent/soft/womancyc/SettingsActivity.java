@@ -64,7 +64,7 @@ public class SettingsActivity extends PreferenceActivity implements
 
 	private void setupPasswordPreference() {
 		Preference prefPass = findPreference(Settings.KEY_PREF_PASSWORD);
-		boolean isPasswordSet = Settings.getPassword(this).equals("");
+		boolean isPasswordSet = !Settings.getPassword(this).equals("");
 		prefPass.setSummary(isPasswordSet ? getString(R.string.passwordIsSet)
 				: getString(R.string.passwordIsNotSet));
 	}

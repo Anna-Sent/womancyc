@@ -17,7 +17,7 @@
             android:title="@string/pref_use_average_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_safety_settings_title" >
-        <Preference
+        <com.anna.sent.soft.womancyc.fragments.PasswordPreference
             android:defaultValue=""
             android:key="pref_password"
             android:title="@string/pref_password_title" />

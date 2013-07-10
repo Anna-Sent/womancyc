@@ -4,7 +4,7 @@
     <string name="days">д.</string>
     <string name="pref_password_title">Пароль</string>
     <string name="passwordIsSet">Установлен</string>
-    <string name="passwordIsNotSet">Не задан</string>
+    <string name="passwordIsNotSet">Не установлен</string>
     <string name="enterPassword">Введите пароль</string>
     <string name="confirmPassword">Подтвердите пароль</string>
     <string name="enterNewPassword">Введите новый пароль</string>
