@@ -169,7 +169,7 @@ public class NumberPickerPreference extends DialogPreference {
 	}
 
 	private static class SavedState extends BaseSavedState {
-		int value;
+		public int value;
 
 		public SavedState(Parcelable superState) {
 			super(superState);
