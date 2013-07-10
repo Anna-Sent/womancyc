@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,14 +14,27 @@ import com.anna.sent.soft.numberpickerlibrary.NumberPicker;
 import com.anna.sent.soft.womancyc.R;
 
 public class NumberPickerPreference extends DialogPreference {
+	private static final String TAG = "moo";
+	private static final boolean DEBUG = false;
+
+	private String wrapMsg(String msg) {
+		return getClass().getSimpleName() + ": " + msg;
+	}
+
+	private void log(String msg) {
+		if (DEBUG) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	private static final int DEFAULT_MIN_VALUE = 0;
 	private static final int DEFAULT_MAX_VALUE = 100;
 	private static final int DEFAULT_VALUE = 0;
 
 	private int mMinValue;
 	private int mMaxValue;
-	private String mUnit;
 	private int mValue;
+	private String mUnit;
 	private NumberPicker mNumberPicker;
 
 	public NumberPickerPreference(Context context) {
@@ -30,7 +44,6 @@ public class NumberPickerPreference extends DialogPreference {
 	public NumberPickerPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		// get attributes specified in XML
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
 				R.styleable.NumberPickerPreference, 0, 0);
 		try {
@@ -44,7 +57,6 @@ public class NumberPickerPreference extends DialogPreference {
 			a.recycle();
 		}
 
-		// set layout
 		setDialogLayoutResource(R.layout.dialog_numberpicker);
 		setPositiveButtonText(android.R.string.ok);
 		setNegativeButtonText(android.R.string.cancel);
@@ -111,52 +123,52 @@ public class NumberPickerPreference extends DialogPreference {
 	protected void onDialogClosed(boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
 
-		// when the user selects "OK", persist the new value
 		if (positiveResult) {
 			int numberPickerValue = mNumberPicker.getValue();
 			if (callChangeListener(numberPickerValue)) {
 				setValue(numberPickerValue);
+				mNumberPicker = null;
 			}
 		}
 	}
 
 	@Override
 	protected Parcelable onSaveInstanceState() {
-		// save the instance state so that it will survive screen orientation
-		// changes and other events that may temporarily destroy it
+		log("save");
 		final Parcelable superState = super.onSaveInstanceState();
 
-		// set the state's value with the class member that holds current
-		// setting value
+		/*
+		 * if (isPersistent()) { return superState; }
+		 */
+
 		final SavedState myState = new SavedState(superState);
-		myState.minValue = getMinValue();
-		myState.maxValue = getMaxValue();
-		myState.value = getValue();
+		if (mNumberPicker != null) {
+			myState.value = mNumberPicker.getValue();
+			log("save " + myState.value);
+		}
 
 		return myState;
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
-		// check whether we saved the state in onSaveInstanceState()
+		log("restore");
 		if (state == null || !state.getClass().equals(SavedState.class)) {
-			// didn't save the state, so call superclass
+			log("restore " + state == null ? "null" : state.getClass()
+					.getName());
 			super.onRestoreInstanceState(state);
 			return;
 		}
 
-		// restore the state
 		SavedState myState = (SavedState) state;
-		setMinValue(myState.minValue);
-		setMaxValue(myState.maxValue);
-		setValue(myState.value);
-
 		super.onRestoreInstanceState(myState.getSuperState());
+		if (mNumberPicker != null) {
+			mNumberPicker.setValue(myState.value);
+			log("restore " + myState.value);
+		}
 	}
 
 	private static class SavedState extends BaseSavedState {
-		int minValue;
-		int maxValue;
 		int value;
 
 		public SavedState(Parcelable superState) {
@@ -165,18 +177,12 @@ public class NumberPickerPreference extends DialogPreference {
 
 		public SavedState(Parcel source) {
 			super(source);
-
-			minValue = source.readInt();
-			maxValue = source.readInt();
 			value = source.readInt();
 		}
 
 		@Override
 		public void writeToParcel(Parcel dest, int flags) {
 			super.writeToParcel(dest, flags);
-
-			dest.writeInt(minValue);
-			dest.writeInt(maxValue);
 			dest.writeInt(value);
 		}
 
