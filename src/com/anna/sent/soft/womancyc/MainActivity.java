@@ -9,11 +9,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -26,11 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
-import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -195,48 +191,32 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		switch (ThemeUtils.getThemeId(this)) {
-		case ThemeUtils.LIGHT_THEME:
-			menu.findItem(R.id.lighttheme).setChecked(true);
-			break;
-		case ThemeUtils.DARK_THEME:
-			menu.findItem(R.id.darktheme).setChecked(true);
-			break;
-		}
-
+		menu.findItem(R.id.lockAndExit).setVisible(true);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.settings:
-			startActivity(new Intent(this, SettingsActivity.class));
-			return true;
-		case R.id.lighttheme:
-			Settings.setTheme(this, ThemeUtils.LIGHT_THEME);
-			ThemeUtils.applyChanges(this);
-			return true;
-		case R.id.darktheme:
-			Settings.setTheme(this, ThemeUtils.DARK_THEME);
-			ThemeUtils.applyChanges(this);
-			return true;
-		case R.id.help:
-			return true;
-		case R.id.clearAllData:
-			clearAllDataAction();
-			return true;
 		case R.id.statistic:
 			startActivity(new Intent(this, StatisticActivity.class));
-			return true;
-		case R.id.rate:
-			rateAction();
 			return true;
 		case R.id.backupData:
 			backupAction();
 			return true;
 		case R.id.restoreData:
 			restoreAction();
+			return true;
+		case R.id.clearAllData:
+			clearAllDataAction();
+			return true;
+		case R.id.settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		case R.id.help:
+			return true;
+		case R.id.lockAndExit:
+			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -467,17 +447,6 @@ public class MainActivity extends DataKeeperActivity implements
 			builder.create().show();
 		} else {
 			restore(absoluteFileName);
-		}
-	}
-
-	private void rateAction() {
-		try {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse("market://details?id=" + getPackageName()));
-			startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			Toast.makeText(this, R.string.marketNotFound, Toast.LENGTH_SHORT)
-					.show();
 		}
 	}
 }

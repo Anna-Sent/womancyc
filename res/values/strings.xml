@@ -45,6 +45,7 @@
     <string name="rate">Оценить приложение</string>
     <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
+    <string name="lockAndExit">Блокировка и выход</string>
     <string name="backupData">Сохранить данные</string>
     <string name="chooseFileNameToWrite">Выберите файл для экспорта</string>
     <string name="newFile">Новый файл&#8230;</string>

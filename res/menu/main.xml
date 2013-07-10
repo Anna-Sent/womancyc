@@ -6,22 +6,11 @@
         android:icon="?attr/statisticIcon"
         android:showAsAction="ifRoom|withText"
         android:title="@string/statistic"/>
-
-    <group
-        android:checkableBehavior="single"
-        android:visible="false" >
-        <item
-            android:id="@+id/lighttheme"
-            android:checkable="true"
-            android:showAsAction="never"
-            android:title="@string/lighttheme"/>
-        <item
-            android:id="@+id/darktheme"
-            android:checkable="true"
-            android:showAsAction="never"
-            android:title="@string/darktheme"/>
-    </group>
-
+    <item
+        android:id="@+id/settings"
+        android:icon="?attr/settingsIcon"
+        android:showAsAction="never"
+        android:title="@string/settings"/>
     <item
         android:id="@+id/backupData"
         android:icon="?attr/exportIcon"
@@ -33,26 +22,19 @@
         android:showAsAction="never"
         android:title="@string/restoreData"/>
     <item
-        android:id="@+id/rate"
-        android:icon="?attr/rateIcon"
-        android:showAsAction="never"
-        android:title="@string/rate"
-        android:visible="false"/>
-    <item
         android:id="@+id/clearAllData"
         android:icon="?attr/clearAllDataIcon"
         android:showAsAction="never"
         android:title="@string/clearAllData"/>
     <item
-        android:id="@+id/settings"
-        android:icon="?attr/settingsIcon"
-        android:showAsAction="never"
-        android:title="@string/settings"/>
-    <item
         android:id="@+id/help"
         android:icon="?attr/helpIcon"
         android:showAsAction="never"
-        android:title="@string/help"
-        android:visible="false"/>
+        android:title="@string/help"/>
+    <item
+        android:id="@+id/lockAndExit"
+        android:icon="?attr/lockIcon"
+        android:showAsAction="never"
+        android:title="@string/lockAndExit"/>
 
 </menu>
