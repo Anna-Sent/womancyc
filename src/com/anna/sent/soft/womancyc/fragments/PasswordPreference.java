@@ -9,13 +9,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 
 public class PasswordPreference extends DialogPreference {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -27,9 +27,8 @@ public class PasswordPreference extends DialogPreference {
 		}
 	}
 
-	private String mOldPassword, mNewPassword, mConfirmedPassword;
-	private EditText mEditTextOldPassword, mEditTextNewPassword,
-			mEditTextConfirmedPassword;
+	private String mPassword;
+	private EditText mEditTextPassword, mEditTextConfirmedPassword;
 
 	public PasswordPreference(Context context) {
 		this(context, null);
@@ -45,8 +44,14 @@ public class PasswordPreference extends DialogPreference {
 	}
 
 	@Override
-	protected void onSetInitialValue(boolean restore, Object defaultValue) {
-		persistString(restore ? getPersistedString("") : (String) defaultValue);
+	protected void onSetInitialValue(boolean restorePersistedValue,
+			Object defaultValue) {
+		if (restorePersistedValue) {
+			mPassword = getPersistedString("");
+		} else {
+			mPassword = (String) defaultValue;
+			persistString(mPassword);
+		}
 	}
 
 	@Override
@@ -58,35 +63,10 @@ public class PasswordPreference extends DialogPreference {
 	protected void onBindDialogView(View view) {
 		super.onBindDialogView(view);
 
-		TextView textViewOldPassword = (TextView) view
-				.findViewById(R.id.textViewOldPassword);
-		mEditTextOldPassword = (EditText) view
-				.findViewById(R.id.editTextOldPassword);
-		if (mNewPassword == null || mNewPassword.equals("")) {
-			textViewOldPassword.setVisibility(View.GONE);
-			mEditTextOldPassword.setVisibility(View.GONE);
-		} else {
-			textViewOldPassword.setVisibility(View.VISIBLE);
-			textViewOldPassword.setText(R.string.enterOldPassword);
-			mEditTextOldPassword.setVisibility(View.VISIBLE);
-			mEditTextOldPassword.setText(mOldPassword);
-		}
-
-		TextView textViewNewPassword = (TextView) view
-				.findViewById(R.id.textViewNewPassword);
-		textViewNewPassword.setText(R.string.enterNewPassword);
-
-		TextView textViewConfirmPassword = (TextView) view
-				.findViewById(R.id.textViewConfirmPassword);
-		textViewConfirmPassword.setText(R.string.confirmPassword);
-
-		mEditTextNewPassword = (EditText) view
-				.findViewById(R.id.editTextNewPassword);
-		mEditTextNewPassword.setText(mNewPassword);
-
+		mEditTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
+		mEditTextPassword.setText(mPassword);
 		mEditTextConfirmedPassword = (EditText) view
 				.findViewById(R.id.editTextConfirmedPassword);
-		mEditTextConfirmedPassword.setText(mConfirmedPassword);
 	}
 
 	@Override
@@ -94,11 +74,31 @@ public class PasswordPreference extends DialogPreference {
 		super.onDialogClosed(positiveResult);
 
 		if (positiveResult) {
-			// check old pass
-			// check confirm pass
-			String password = mEditTextNewPassword.getText().toString();
-			persistString(password);
-			mEditTextNewPassword = null;
+			String confirmedPassword = mEditTextConfirmedPassword.getText()
+					.toString();
+			confirmedPassword = confirmedPassword == null ? ""
+					: confirmedPassword;
+			String newPassword = mEditTextPassword.getText().toString();
+			newPassword = newPassword == null ? "" : newPassword;
+			if (confirmedPassword.equals(newPassword)) {
+				Toast.makeText(
+						getContext(),
+						getContext().getResources().getString(
+								R.string.confirmationSuccess),
+						Toast.LENGTH_LONG).show();
+			} else {
+				newPassword = "";
+				Toast.makeText(
+						getContext(),
+						getContext().getResources().getString(
+								R.string.confirmationUnsuccess),
+						Toast.LENGTH_LONG).show();
+			}
+
+			mPassword = newPassword;
+			persistString(mPassword);
+			mEditTextPassword = null;
+			mEditTextConfirmedPassword = null;
 		}
 	}
 
@@ -112,9 +112,12 @@ public class PasswordPreference extends DialogPreference {
 		 */
 
 		final SavedState myState = new SavedState(superState);
-		if (mEditTextNewPassword != null) {
-			myState.newPassword = mEditTextNewPassword.getText().toString();
-			log("save " + myState.newPassword);
+		if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
+			myState.password = mEditTextPassword.getText().toString();
+			log("save password \"" + myState.password + "\"");
+			myState.confirmedPassword = mEditTextConfirmedPassword.getText()
+					.toString();
+			log("save confirmed password \"" + myState.confirmedPassword + "\"");
 		}
 
 		return myState;
@@ -132,14 +135,17 @@ public class PasswordPreference extends DialogPreference {
 
 		SavedState myState = (SavedState) state;
 		super.onRestoreInstanceState(myState.getSuperState());
-		if (mEditTextNewPassword != null) {
-			mEditTextNewPassword.setText(myState.newPassword);
-			log("restore " + myState.newPassword);
+		if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
+			mEditTextPassword.setText(myState.password);
+			log("restore password \"" + myState.password + "\"");
+			mEditTextConfirmedPassword.setText(myState.confirmedPassword);
+			log("restore confirmed password \"" + myState.confirmedPassword
+					+ "\"");
 		}
 	}
 
 	private static class SavedState extends BaseSavedState {
-		public String newPassword, oldPassword, confirmedPassword;
+		public String password, confirmedPassword;
 
 		public SavedState(Parcelable superState) {
 			super(superState);
@@ -147,16 +153,14 @@ public class PasswordPreference extends DialogPreference {
 
 		public SavedState(Parcel source) {
 			super(source);
-			newPassword = source.readString();
-			oldPassword = source.readString();
+			password = source.readString();
 			confirmedPassword = source.readString();
 		}
 
 		@Override
 		public void writeToParcel(Parcel dest, int flags) {
 			super.writeToParcel(dest, flags);
-			dest.writeString(newPassword);
-			dest.writeString(oldPassword);
+			dest.writeString(password);
 			dest.writeString(confirmedPassword);
 		}
 
