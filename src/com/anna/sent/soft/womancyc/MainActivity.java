@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
+import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
@@ -74,6 +75,7 @@ public class MainActivity extends DataKeeperActivity implements
 		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+		Settings.isBlocked(this, false);
 	}
 
 	private Calendar mDateToShow = null;
@@ -189,10 +191,13 @@ public class MainActivity extends DataKeeperActivity implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
 		getMenuInflater().inflate(R.menu.main, menu);
-		menu.findItem(R.id.lockAndExit).setVisible(true);
-		return true;
+		menu.findItem(R.id.lockAndExit).setVisible(
+				Settings.isPasswordSet(this)
+						&& !Settings.lockAutomatically(this));
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -216,6 +221,7 @@ public class MainActivity extends DataKeeperActivity implements
 		case R.id.help:
 			return true;
 		case R.id.lockAndExit:
+			Settings.isBlocked(this, true);
 			finish();
 			return true;
 		default:

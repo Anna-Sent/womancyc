@@ -12,6 +12,36 @@ public class Settings {
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
+	public static final String KEY_PREF_LOCK_AUTOMATICALLY = "pref_lock_automatically";
+
+	public static boolean lockAutomatically(Context context) {
+		SharedPreferences settings = getSettings(context);
+		return settings.getBoolean(KEY_PREF_LOCK_AUTOMATICALLY, context
+				.getResources().getBoolean(R.bool.lockAutomatically));
+	}
+
+	public static void lockAutomatically(Context context, boolean value) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.putBoolean(KEY_PREF_LOCK_AUTOMATICALLY, value);
+		editor.commit();
+	}
+
+	public static final String KEY_PREF_HIDE_WIDGET = "pref_hide_widget";
+
+	public static boolean hideWidget(Context context) {
+		SharedPreferences settings = getSettings(context);
+		return settings.getBoolean(KEY_PREF_HIDE_WIDGET, context.getResources()
+				.getBoolean(R.bool.hideWidget));
+	}
+
+	public static void hideWidget(Context context, boolean value) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.putBoolean(KEY_PREF_HIDE_WIDGET, value);
+		editor.commit();
+	}
+
 	public static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
 
 	public static boolean isBlocked(Context context) {
@@ -38,6 +68,16 @@ public class Settings {
 		Editor editor = settings.edit();
 		editor.putString(KEY_PREF_PASSWORD, value);
 		editor.commit();
+	}
+
+	public static boolean isPasswordSet(Context context) {
+		String password = getPassword(context);
+		return !password.equals("");
+	}
+
+	public static boolean isApplicationLocked(Context context) {
+		return isPasswordSet(context)
+				&& (isBlocked(context) || lockAutomatically(context));
 	}
 
 	public static final String KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN = "pref_default_menstrual_cycle_len";

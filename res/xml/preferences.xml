@@ -21,6 +21,16 @@
             android:defaultValue=""
             android:key="pref_password"
             android:title="@string/pref_password_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/lockAutomatically"
+            android:key="pref_lock_automatically"
+            android:title="@string/pref_lock_automatically_title" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/hideWidget"
+            android:key="pref_hide_widget"
+            android:summary="@string/pref_hide_widget_summary"
+            android:title="@string/pref_hide_widget_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_ui_settings_title" >
         <ListPreference

@@ -6,6 +6,8 @@
     <integer name="minMenstrualCycleLen">10</integer>
 
     <bool name="useAverage">true</bool>
+    <bool name="lockAutomatically">false</bool>
+    <bool name="hideWidget">false</bool>
 
     <string-array name="theme">
         <item>Темная</item>

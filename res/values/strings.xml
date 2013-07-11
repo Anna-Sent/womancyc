@@ -2,7 +2,6 @@
 <resources>
 
     <string name="days">д.</string>
-    <string name="pref_password_title">Пароль</string>
     <string name="isSet">Установлен</string>
     <string name="isNotSet">Не установлен</string>
     <string name="enterPassword">Введите пароль</string>
@@ -20,6 +19,12 @@
     <string name="pref_use_average_title">На основе текущих данных</string>
     <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
     <string name="pref_safety_settings_title">Безопасность</string>
+    <string name="pref_password_title">Пароль</string>
+    <string name="pref_lock_automatically_title">Автоматическая блокировка</string>
+    <string name="pref_lock_automatically_summary_on">Да: запрашивать пароль при каждом запуске приложения.</string>
+    <string name="pref_lock_automatically_summary_off">Нет: запрашивать пароль, если выход из приложения осуществлен с помощью пункта меню \"%s\".</string>
+    <string name="pref_hide_widget_title">Скрывать виджет</string>
+    <string name="pref_hide_widget_summary">Скрывать содержимое виджета, когда приложение заблокировано паролем.</string>
     <string name="pref_ui_settings_title">Внешний вид</string>
     <string name="pref_theme_title">Тема</string>
     <string name="pref_other_settings_title">Другое</string>

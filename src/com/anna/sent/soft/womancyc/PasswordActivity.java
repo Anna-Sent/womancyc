@@ -18,7 +18,7 @@ public class PasswordActivity extends StateSaverActivity implements
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		super.setViews(savedInstanceState);
-		if (Settings.isBlocked(this)) {
+		if (Settings.isApplicationLocked(this)) {
 			setContentView(R.layout.activity_password);
 			mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
 			Button buttonOk = (Button) findViewById(R.id.buttonOk);

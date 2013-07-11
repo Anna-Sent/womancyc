@@ -11,6 +11,7 @@ import com.anna.sent.soft.womancyc.MainActivity;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
+import com.anna.sent.soft.womancyc.shared.Settings;
 
 public abstract class Builder {
 	private static final String TAG = "moo";
@@ -39,16 +40,22 @@ public abstract class Builder {
 		setOnClickPendingIntent(context, views);
 
 		String result;
-		DataKeeperImpl dataKeeper = new DataKeeperImpl(context);
-		try {
-			dataKeeper.openDataSource();
-			result = getResult(context, dataKeeper);
-		} catch (SQLException e) {
-			result = context.getString(R.string.errorWhileOpenningDatabase);
-		} finally {
-			dataKeeper.closeDataSource();
+		if (Settings.hideWidget(context)
+				&& Settings.isApplicationLocked(context)) {
+			result = "?";
+		} else {
+			DataKeeperImpl dataKeeper = new DataKeeperImpl(context);
+			try {
+				dataKeeper.openDataSource();
+				result = getResult(context, dataKeeper);
+			} catch (SQLException e) {
+				result = context.getString(R.string.errorWhileOpenningDatabase);
+			} finally {
+				dataKeeper.closeDataSource();
+			}
 		}
 
+		log(result);
 		views.setTextViewText(R.id.widgetTextView, result);
 		return views;
 	}
