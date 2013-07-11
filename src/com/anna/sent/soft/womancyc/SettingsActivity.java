@@ -51,10 +51,14 @@ public class SettingsActivity extends PreferenceActivity implements
 
 	private void setupDefaultMenstrualCycleLenPreference() {
 		Preference pref = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
-		pref.setSummary(getString(
-				R.string.pref_default_menstrual_cycle_len_summary,
-				String.valueOf(Settings.getDefaultMenstrualCycleLen(this)),
-				getString(R.string.pref_use_average_title)));
+		String mcl = String.valueOf(Settings.getDefaultMenstrualCycleLen(this));
+		if (Settings.useAverage(this)) {
+			pref.setSummary(getString(
+					R.string.pref_default_menstrual_cycle_len_summary_on, mcl));
+		} else {
+			pref.setSummary(getString(
+					R.string.pref_default_menstrual_cycle_len_summary_off, mcl));
+		}
 	}
 
 	private void setupUseAvgPreference() {
@@ -102,6 +106,8 @@ public class SettingsActivity extends PreferenceActivity implements
 			ThemeUtils.applyChanges(this);
 		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
 			setupLockAutomaticallyPreference();
+		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
+			setupDefaultMenstrualCycleLenPreference();
 		}
 	}
 
