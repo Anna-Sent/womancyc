@@ -73,12 +73,13 @@ public class SettingsActivity extends PreferenceActivity implements
 		pref.setSummary(isPasswordSet ? getString(R.string.isSet)
 				: getString(R.string.isNotSet));
 
-		Preference pref0 = findPreference("pref_send_password_to_email");
-		pref0.setEnabled(isPasswordSet);
-		Preference pref1 = findPreference(Settings.KEY_PREF_LOCK_AUTOMATICALLY);
-		pref1.setEnabled(isPasswordSet);
-		Preference pref2 = findPreference(Settings.KEY_PREF_HIDE_WIDGET);
-		pref2.setEnabled(isPasswordSet);
+		String[] keys = new String[] { "pref_send_password_to_email",
+				Settings.KEY_PREF_LOCK_AUTOMATICALLY,
+				Settings.KEY_PREF_HIDE_WIDGET };
+		for (int i = 0; i < keys.length; ++i) {
+			Preference pref_i = findPreference(keys[i]);
+			pref_i.setEnabled(isPasswordSet);
+		}
 	}
 
 	private void setupLockAutomaticallyPreference() {
