@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" >
-    </TextView>
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/dayOfCycleTextView"
@@ -23,7 +22,6 @@
         android:paddingRight="2dp"
         android:textIsSelectable="false"
         android:textSize="12sp"
-        android:textStyle="bold" >
-    </TextView>
+        android:textStyle="bold" />
 
 </RelativeLayout>
