@@ -21,6 +21,11 @@
     <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
     <string name="pref_safety_settings_title">Безопасность</string>
     <string name="pref_password_title">Пароль</string>
+    <string name="pref_send_password_to_email_title">Отправить пароль по email</string>
+    <string name="to">Кому:</string>
+    <string name="subject">Тема:</string>
+    <string name="message">Сообщение:</string>
+    <string name="send">Отправить</string>
     <string name="pref_lock_automatically_title">Автоматическая блокировка</string>
     <string name="pref_lock_automatically_summary_on">Да: запрашивать пароль при каждом запуске приложения.</string>
     <string name="pref_lock_automatically_summary_off">Нет: запрашивать пароль, если выход из приложения осуществлен с помощью пункта меню \"%s\".</string>
@@ -29,7 +34,9 @@
     <string name="pref_ui_settings_title">Внешний вид</string>
     <string name="pref_theme_title">Тема</string>
     <string name="pref_other_settings_title">Другое</string>
-    <string name="pref_childbirthdate">Дата родов и срок беременности</string>
+    <string name="pref_rate_title">Оценить приложение</string>
+    <string name="pref_support_title">Написать разработчику</string>
+    <string name="pref_childbirthdate_title">Дата родов и срок беременности</string>
     <string name="adUnitId">a151a5351deb085</string>
     <string name="nextMonth">Следующий месяц</string>
     <string name="prevMonth">Предыдущий месяц</string>
@@ -48,7 +55,6 @@
     <string name="clearAllDataConfirmation">Удалить все данные?</string>
     <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления. Сохраните данные в файл, если необходимо.</string>
     <string name="statistic">Статистика</string>
-    <string name="rate">Оценить приложение</string>
     <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
     <string name="lockAndExit">Блокировка и выход</string>

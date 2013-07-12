@@ -22,6 +22,15 @@
             android:key="pref_password"
             android:title="@string/pref_password_title" />
 
+        <Preference
+            android:key="pref_send_password_to_email"
+            android:title="@string/pref_send_password_to_email_title" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.anna.sent.soft.womancyc.SendEmailActivity"
+                android:targetPackage="com.anna.sent.soft.womancyc" />
+        </Preference>
+
         <CheckBoxPreference
             android:defaultValue="@bool/lockAutomatically"
             android:key="pref_lock_automatically"
@@ -42,12 +51,18 @@
             android:title="@string/pref_theme_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_other_settings_title" >
-        <Preference android:title="@string/rate" >
+        <Preference android:title="@string/pref_rate_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=com.anna.sent.soft.womancyc" />
         </Preference>
-        <Preference android:title="@string/pref_childbirthdate" >
+        <Preference android:title="@string/pref_support_title" >
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:anna.sent@gmail.com"
+                android:launchMode="singleInstance" />
+        </Preference>
+        <Preference android:title="@string/pref_childbirthdate_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=com.anna.sent.soft.childbirthdate" />

@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -101,6 +102,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.anna.sent.soft.womancyc.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.anna.sent.soft.womancyc.SendEmailActivity"
+            android:parentActivityName="com.anna.sent.soft.womancyc.SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.anna.sent.soft.womancyc.SettingsActivity" />
         </activity>
         <activity
             android:name="com.google.ads.AdActivity"

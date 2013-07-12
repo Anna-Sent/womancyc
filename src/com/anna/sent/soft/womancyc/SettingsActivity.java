@@ -72,6 +72,9 @@ public class SettingsActivity extends PreferenceActivity implements
 		boolean isPasswordSet = Settings.isPasswordSet(this);
 		pref.setSummary(isPasswordSet ? getString(R.string.isSet)
 				: getString(R.string.isNotSet));
+
+		Preference pref0 = findPreference("pref_send_password_to_email");
+		pref0.setEnabled(isPasswordSet);
 		Preference pref1 = findPreference(Settings.KEY_PREF_LOCK_AUTOMATICALLY);
 		pref1.setEnabled(isPasswordSet);
 		Preference pref2 = findPreference(Settings.KEY_PREF_HIDE_WIDGET);
