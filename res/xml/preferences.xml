@@ -65,10 +65,14 @@
             <intent
                 android:action="android.intent.action.SENDTO"
                 android:data="mailto:anna.sent@gmail.com"
-                android:launchMode="singleInstance" />
+                android:launchMode="singleInstance" >
+                <extra
+                    android:name="android.intent.extra.SUBJECT"
+                    android:value="@string/app_name" />
+            </intent>
         </Preference>
         <Preference
-            android:summary="@string/pref_support_summary"
+            android:summary="@string/pref_childbirthdate_summary"
             android:title="@string/pref_childbirthdate_title" >
             <intent
                 android:action="android.intent.action.VIEW"
