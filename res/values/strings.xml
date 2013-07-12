@@ -15,13 +15,14 @@
     <string name="restoreDataTask">Восстановление данных</string>
     <string name="pref_calculation_settings_title">Расчет</string>
     <string name="pref_default_menstrual_cycle_len_title">Менструальный цикл</string>
-    <string name="pref_default_menstrual_cycle_len_summary_on">Если данных для расчета средней продолжительности недостаточно, использовать значение %1$s д.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_on">Использовать для прогноза значение %1$s д., если данных для расчета средней продолжительности недостаточно.</string>
     <string name="pref_default_menstrual_cycle_len_summary_off">Использовать для прогноза значение %1$s д.</string>
     <string name="pref_use_average_title">На основе текущих данных</string>
     <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
     <string name="pref_safety_settings_title">Безопасность</string>
     <string name="pref_password_title">Пароль</string>
     <string name="pref_send_password_to_email_title">Отправить пароль по email</string>
+    <string name="pref_send_password_to_email_summary">Для восстановления пароля</string>
     <string name="to">Кому:</string>
     <string name="subject">Тема:</string>
     <string name="message">Сообщение:</string>
@@ -35,8 +36,11 @@
     <string name="pref_theme_title">Тема</string>
     <string name="pref_other_settings_title">Другое</string>
     <string name="pref_rate_title">Оценить приложение</string>
+    <string name="pref_rate_summary"></string>
     <string name="pref_support_title">Написать разработчику</string>
+    <string name="pref_support_summary">Отправить отзыв, замечание, предложение</string>
     <string name="pref_childbirthdate_title">Дата родов и срок беременности</string>
+    <string name="pref_childbirthdate_summary">Приложение "Калькулятор беременности": расчет даты родов, срока беременности разными методами</string>
     <string name="adUnitId">a151a5351deb085</string>
     <string name="nextMonth">Следующий месяц</string>
     <string name="prevMonth">Предыдущий месяц</string>

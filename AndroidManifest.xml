@@ -111,6 +111,22 @@
                 android:value="com.anna.sent.soft.womancyc.SettingsActivity" />
         </activity>
         <activity
+            android:name="com.anna.sent.soft.womancyc.SendEmailActivityLight"
+            android:parentActivityName="com.anna.sent.soft.womancyc.SettingsActivity"
+            android:theme="@style/DialogThemeLight" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.anna.sent.soft.womancyc.SettingsActivity" />
+        </activity>
+        <activity
+            android:name="com.anna.sent.soft.womancyc.SendEmailActivityDark"
+            android:parentActivityName="com.anna.sent.soft.womancyc.SettingsActivity"
+            android:theme="@style/DialogTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.anna.sent.soft.womancyc.SettingsActivity" />
+        </activity>
+        <activity
             android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
     </application>

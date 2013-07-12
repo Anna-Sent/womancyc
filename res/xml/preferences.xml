@@ -24,6 +24,7 @@
 
         <Preference
             android:key="pref_send_password_to_email"
+            android:summary="@string/pref_send_password_to_email_summary"
             android:title="@string/pref_send_password_to_email_title" >
             <intent
                 android:action="android.intent.action.VIEW"
@@ -51,18 +52,24 @@
             android:title="@string/pref_theme_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_other_settings_title" >
-        <Preference android:title="@string/pref_rate_title" >
+        <Preference
+            android:summary="@string/pref_rate_summary"
+            android:title="@string/pref_rate_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=com.anna.sent.soft.womancyc" />
         </Preference>
-        <Preference android:title="@string/pref_support_title" >
+        <Preference
+            android:summary="@string/pref_support_summary"
+            android:title="@string/pref_support_title" >
             <intent
                 android:action="android.intent.action.SENDTO"
                 android:data="mailto:anna.sent@gmail.com"
                 android:launchMode="singleInstance" />
         </Preference>
-        <Preference android:title="@string/pref_childbirthdate_title" >
+        <Preference
+            android:summary="@string/pref_support_summary"
+            android:title="@string/pref_childbirthdate_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=com.anna.sent.soft.childbirthdate" />
