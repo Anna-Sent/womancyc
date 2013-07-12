@@ -7,7 +7,7 @@ import android.database.SQLException;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.anna.sent.soft.womancyc.MainActivity;
+import com.anna.sent.soft.womancyc.PasswordActivity;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
@@ -29,7 +29,7 @@ public abstract class Builder {
 
 	private void setOnClickPendingIntent(Context context, RemoteViews views) {
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-				new Intent(context, MainActivity.class), 0);
+				new Intent(context, PasswordActivity.class), 0);
 		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 	}
 
