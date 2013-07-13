@@ -26,10 +26,6 @@
             android:key="pref_send_password_to_email"
             android:summary="@string/pref_send_password_to_email_summary"
             android:title="@string/pref_send_password_to_email_title" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetClass="com.anna.sent.soft.womancyc.SendEmailActivity"
-                android:targetPackage="com.anna.sent.soft.womancyc" />
         </Preference>
 
         <CheckBoxPreference
