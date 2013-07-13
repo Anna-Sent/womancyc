@@ -26,14 +26,15 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 
 	private View mSelectedRow = null;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		if (v instanceof TableRow) {
 			if (mSelectedRow != null) {
-				mSelectedRow.setBackground(null);
+				mSelectedRow.setBackgroundDrawable(null);
 			}
 
-			v.setBackground(getResources().getDrawable(
+			v.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.bg_selected_view));
 			mSelectedRow = v;
 		}
