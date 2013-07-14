@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,13 +23,12 @@ import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
-import com.anna.sent.soft.womancyc.superclasses.StateSaverFragment;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
-public class MonthViewFragment extends StateSaverFragment implements
-		OnItemClickListener, OnItemLongClickListener, OnClickListener,
-		OnDateSetListener, DataKeeperClient {
+public class MonthViewFragment extends Fragment implements OnItemClickListener,
+		OnItemLongClickListener, OnClickListener, OnDateSetListener,
+		DataKeeperClient {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -89,7 +89,8 @@ public class MonthViewFragment extends StateSaverFragment implements
 	}
 
 	@Override
-	public void setViews(Bundle savedInstanceState) {
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		log("onActivityCreated");
 		adapter = new MonthViewAdapter(getActivity(), mDataKeeper);
 
@@ -122,14 +123,6 @@ public class MonthViewFragment extends StateSaverFragment implements
 						return true;
 					}
 				});
-	}
-
-	@Override
-	public void restoreState(Bundle state) {
-	}
-
-	@Override
-	public void saveState(Bundle state) {
 	}
 
 	public Calendar getSelectedDate() {
