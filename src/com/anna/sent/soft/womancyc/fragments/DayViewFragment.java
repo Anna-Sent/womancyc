@@ -189,15 +189,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			}
 		});
 
-		buttonClose.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
-		buttonClose.setVisibility(View.VISIBLE);
-		buttonClose.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
-
 		Calendar value = null;
 		if (getArguments() != null) {
 			value = (Calendar) getArguments().getSerializable(
