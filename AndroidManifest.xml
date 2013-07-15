@@ -74,22 +74,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.anna.sent.soft.womancyc.DayViewActivityLight"
-            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
-            android:theme="@style/DialogThemeLight" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.anna.sent.soft.womancyc.MainActivity" />
-        </activity>
-        <activity
-            android:name="com.anna.sent.soft.womancyc.DayViewActivityDark"
-            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
-            android:theme="@style/DialogTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.anna.sent.soft.womancyc.MainActivity" />
-        </activity>
-        <activity
             android:name="com.anna.sent.soft.womancyc.StatisticActivity"
             android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity" >
             <meta-data

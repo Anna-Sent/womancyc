@@ -5,11 +5,12 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +35,10 @@ import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class DayViewFragment extends Fragment implements OnClickListener,
+public class DayViewFragment extends DialogFragment implements OnClickListener,
 		DataKeeperClient, OnDateSetListener, OnItemSelectedListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -80,7 +81,8 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	private Spinner spinnerHadMenstruation, spinnerHadSex;
 	private CheckBox checkBoxTookPill;
 	private AutoCompleteTextView textViewNote;
-	private Button currentDay;
+	private Button buttonCurrentDay, buttonClear, buttonClose, buttonPrevDay,
+			buttonNextDay, buttonViewAsList;
 
 	private Calendar mDateToShow;
 	private CalendarData mValue;
@@ -89,64 +91,118 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		log("onCreateView");
-		View v = inflater.inflate(R.layout.view_day, null);
+		View v = null;
+		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
+		if (mIsEmbedded) {
+			v = createView(inflater);
+			log("onCreateView");
+		} else {
+			v = super.onCreateView(inflater, container, savedInstanceState);
+			log("onCreateView returns null");
+		}
+
 		return v;
+	}
+
+	private View createView(LayoutInflater inflater) {
+		return inflater.inflate(R.layout.view_day, null);
+	}
+
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		log("onCreateDialog");
+		if (mIsEmbedded) {
+			return super.onCreateDialog(savedInstanceState);
+		} else {
+			View v = createView(getActivity().getLayoutInflater());
+			spinnerHadMenstruation = (Spinner) v
+					.findViewById(R.id.spinnerHadMenstruation);
+			spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
+			checkBoxTookPill = (CheckBox) v.findViewById(R.id.checkBoxTookPill);
+			textViewNote = (AutoCompleteTextView) v
+					.findViewById(R.id.textViewNote);
+			buttonClear = (Button) v.findViewById(R.id.buttonClear);
+			buttonClose = (Button) v.findViewById(R.id.buttonClose);
+			buttonCurrentDay = (Button) v.findViewById(R.id.currentDay);
+			buttonPrevDay = (Button) v.findViewById(R.id.prevDay);
+			buttonNextDay = (Button) v.findViewById(R.id.nextDay);
+			buttonViewAsList = (Button) v.findViewById(R.id.buttonViewAsList);
+			setupView();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setView(v).setTitle("");
+			return builder.create();
+		}
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		log("onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
-		spinnerHadMenstruation = (Spinner) getActivity().findViewById(
-				R.id.spinnerHadMenstruation);
+		if (mIsEmbedded) {
+			spinnerHadMenstruation = (Spinner) getActivity().findViewById(
+					R.id.spinnerHadMenstruation);
+			spinnerHadSex = (Spinner) getActivity().findViewById(
+					R.id.spinnerSex);
+			checkBoxTookPill = (CheckBox) getActivity().findViewById(
+					R.id.checkBoxTookPill);
+			textViewNote = (AutoCompleteTextView) getActivity().findViewById(
+					R.id.textViewNote);
+			buttonClear = (Button) getActivity().findViewById(R.id.buttonClear);
+			buttonClose = (Button) getActivity().findViewById(R.id.buttonClose);
+			buttonCurrentDay = (Button) getActivity().findViewById(
+					R.id.currentDay);
+			buttonPrevDay = (Button) getActivity().findViewById(R.id.prevDay);
+			buttonNextDay = (Button) getActivity().findViewById(R.id.nextDay);
+			buttonViewAsList = (Button) getActivity().findViewById(
+					R.id.buttonViewAsList);
+			setupView();
+		}
+	}
+
+	private void setupView() {
 		int drawablesId = R.array.menstruationDrawables;
 		fillSpinner(R.array.menstruationTypes, drawablesId,
 				spinnerHadMenstruation);
 
-		spinnerHadSex = (Spinner) getActivity().findViewById(R.id.spinnerSex);
 		drawablesId = ThemeUtils.getThemeId(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
 				: R.array.sexDrawablesLight;
 		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 
-		checkBoxTookPill = (CheckBox) getActivity().findViewById(
-				R.id.checkBoxTookPill);
 		checkBoxTookPill.setOnClickListener(this);
 
-		textViewNote = (AutoCompleteTextView) getActivity().findViewById(
-				R.id.textViewNote);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
 		textViewNote.setAdapter(adapter);
 
-		currentDay = (Button) getActivity().findViewById(R.id.currentDay);
-		currentDay.setOnClickListener(this);
-		Button prevDay = (Button) getActivity().findViewById(R.id.prevDay);
-		prevDay.setOnClickListener(this);
-		Button nextDay = (Button) getActivity().findViewById(R.id.nextDay);
-		nextDay.setOnClickListener(this);
+		buttonCurrentDay.setOnClickListener(this);
+		buttonPrevDay.setOnClickListener(this);
+		buttonNextDay.setOnClickListener(this);
 
-		Button clear = (Button) getActivity().findViewById(R.id.buttonClear);
-		clear.setOnClickListener(this);
+		buttonClear.setOnClickListener(this);
 
-		Button viewAsList = (Button) getActivity().findViewById(
-				R.id.buttonViewAsList);
-		viewAsList.setOnClickListener(this);
+		buttonViewAsList.setOnClickListener(this);
 
-		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
-		Button close = (Button) getActivity().findViewById(R.id.buttonClose);
-		close.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
-		close.setOnClickListener(new OnClickListener() {
+		buttonClose.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
+		buttonClose.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				getActivity().finish();
+				dismiss();
 			}
 		});
 
 		if (mIsEmbedded) {
+			buttonClose.setVisibility(View.GONE);
 			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT);
-			clear.setLayoutParams(params);
+			buttonClear.setLayoutParams(params);
+		} else {
+			buttonClose.setVisibility(View.VISIBLE);
+			buttonClose.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dismiss();
+				}
+			});
 		}
 
 		Calendar value = null;
@@ -194,15 +250,14 @@ public class DayViewFragment extends Fragment implements OnClickListener,
 	}
 
 	public void update() {
-		log("update " + toString(), true);
-		if (getActivity() == null)
-			log("activity is null", true);
+		log("update " + toString());
 		mValue = mDataKeeper.get(mDateToShow);
 		if (mValue == null) {
 			mValue = new CalendarData(mDateToShow);
 		}
 
-		currentDay.setText(DateUtils.toString(getActivity(), mDateToShow));
+		buttonCurrentDay
+				.setText(DateUtils.toString(getActivity(), mDateToShow));
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		if (menstruation != mValue.getMenstruation()) {
 			spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());

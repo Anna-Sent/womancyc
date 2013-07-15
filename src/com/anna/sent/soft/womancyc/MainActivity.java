@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -32,7 +32,6 @@ import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
-import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MainActivity extends DataKeeperActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
@@ -116,6 +115,11 @@ public class MainActivity extends DataKeeperActivity implements
 		if (dayView != null) {
 			fm.beginTransaction().remove(dayView).commit();
 		}
+
+		dayView = fm.findFragmentByTag(TAG_DAY_VIEW);
+		if (dayView != null) {
+			fm.beginTransaction().remove(dayView).commit();
+		}
 	}
 
 	@Override
@@ -126,25 +130,12 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 	}
 
-	private final static int REQUEST_DATE = 1;
+	private final static String TAG_DAY_VIEW = "day_view_as_dialog";
 
 	private void showAsDialogFragment(Calendar date) {
-		Intent intent = new Intent(
-				this,
-				ThemeUtils.DARK_THEME == ThemeUtils.getThemeId(this) ? DayViewActivityDark.class
-						: DayViewActivityLight.class);
-		intent.putExtra(Shared.DATE_TO_SHOW, date);
-		startActivityForResult(intent, REQUEST_DATE);
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_DATE && resultCode == Activity.RESULT_OK) {
-			Calendar date = (Calendar) data
-					.getSerializableExtra(Shared.DATE_TO_SHOW);
-			log("got from result " + DateUtils.toString(this, date));
-			showDate(date);
-		}
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		DialogFragment dayView = createDayView(date);
+		dayView.show(fragmentManager, TAG_DAY_VIEW);
 	}
 
 	private void showAsEmbeddedFragment(Calendar date) {
@@ -155,14 +146,16 @@ public class MainActivity extends DataKeeperActivity implements
 			fragmentManager.beginTransaction().remove(dayView).commit();
 		}
 
+		dayView = createDayView(date);
+		fragmentManager.beginTransaction().add(R.id.dayView, dayView).commit();
+	}
+
+	private DayViewFragment createDayView(Calendar date) {
 		Bundle args = new Bundle();
 		args.putSerializable(Shared.DATE_TO_SHOW, date);
-
 		DayViewFragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
-
-		fragmentManager.beginTransaction().add(R.id.dayView, newFragment)
-				.commit();
+		return newFragment;
 	}
 
 	@Override
