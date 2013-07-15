@@ -219,6 +219,7 @@ public class MainActivity extends DataKeeperActivity implements
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		case R.id.help:
+			startActivity(new Intent(this, HelpActivity.class));
 			return true;
 		case R.id.lockAndExit:
 			Settings.isBlocked(this, true);
