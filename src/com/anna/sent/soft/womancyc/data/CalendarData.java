@@ -135,7 +135,7 @@ public class CalendarData implements Serializable {
 	}
 
 	public String getNote() {
-		return note;
+		return note == null ? "" : note;
 	}
 
 	public void setNote(String value) {
