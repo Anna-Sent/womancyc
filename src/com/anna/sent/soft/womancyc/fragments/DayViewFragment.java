@@ -23,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.Spinner;
 
 import com.anna.sent.soft.womancyc.R;
@@ -190,20 +189,14 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			}
 		});
 
-		if (mIsEmbedded) {
-			buttonClose.setVisibility(View.GONE);
-			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
-			buttonClear.setLayoutParams(params);
-		} else {
-			buttonClose.setVisibility(View.VISIBLE);
-			buttonClose.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dismiss();
-				}
-			});
-		}
+		buttonClose.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
+		buttonClose.setVisibility(View.VISIBLE);
+		buttonClose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		Calendar value = null;
 		if (getArguments() != null) {
@@ -290,7 +283,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.buttonClear:
-			clear();
+			mDataKeeper.delete(mValue);
+			update();
 			break;
 		case R.id.currentDay:
 			Bundle args = new Bundle();
@@ -338,10 +332,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 			break;
 		case R.id.checkBoxTookPill:
-			if (mIsEmbedded) {
-				tryToSave();
-			}
-
+			tryToSave();
 			break;
 		}
 	}
@@ -382,11 +373,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		setSelectedDate(dateToShow);
 	}
 
-	private void clear() {
-		mDataKeeper.delete(mValue);
-		update();
-	}
-
 	private void tryToSave() {
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		int sex = spinnerHadSex.getSelectedItemPosition();
@@ -422,15 +408,11 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
-		if (mIsEmbedded) {
-			tryToSave();
-		}
+		tryToSave();
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		if (mIsEmbedded) {
-			tryToSave();
-		}
+		tryToSave();
 	}
 }

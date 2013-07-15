@@ -158,17 +158,16 @@
 
             <Button
                 android:id="@+id/buttonClear"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:drawableLeft="?attr/removeContentIcon"
                 android:text="@string/clear"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
                 android:id="@+id/buttonClose"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1.5"
                 android:text="@string/close"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>

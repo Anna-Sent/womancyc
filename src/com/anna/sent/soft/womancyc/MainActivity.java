@@ -125,9 +125,6 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	protected void dataChanged() {
 		mMonthView.update();
-		if (mIsLargeLayout) {
-			mDayView.update();
-		}
 	}
 
 	private final static String TAG_DAY_VIEW = "day_view_as_dialog";
