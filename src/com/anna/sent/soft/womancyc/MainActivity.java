@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
@@ -36,7 +37,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 public class MainActivity extends DataKeeperActivity implements
 		MonthViewFragment.Listener, DayViewFragment.Listener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -224,6 +225,28 @@ public class MainActivity extends DataKeeperActivity implements
 		case R.id.lockAndExit:
 			Settings.isBlocked(this, true);
 			finish();
+			return true;
+		case R.id.test25:
+			Calendar today = Calendar.getInstance();
+			Calendar date = (Calendar) today.clone();
+			date.add(Calendar.YEAR, -25);
+			int index = 1;
+			while (DateUtils.beforeOrEqual(date, today)) {
+				log(index + " " + DateUtils.toString(date));
+				if (1 <= index && index <= 7) {
+					CalendarData value = new CalendarData(date);
+					value.setMenstruation(1);
+					insertOrUpdate(value);
+				}
+
+				++index;
+				if (index == 29) {
+					index = 1;
+				}
+
+				date.add(Calendar.DAY_OF_MONTH, 1);
+			}
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

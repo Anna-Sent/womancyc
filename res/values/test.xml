@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="test">true</bool>
+
+    <string name="test25">Test 25 years</string>
+
+</resources>
