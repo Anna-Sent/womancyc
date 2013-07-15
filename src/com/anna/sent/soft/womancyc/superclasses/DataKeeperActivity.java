@@ -18,6 +18,7 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.CalendarDataManager;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
+import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
@@ -66,8 +67,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 					log("ShowProgressTask on ui thread");
 					if (mProgressDialog == null) {
 						mProgressDialog = ProgressDialog.show(
-								DataKeeperActivity.this, "", mMessage, false,
-								false);
+								DataKeeperActivity.this, mMessage, mMessage,
+								false, false);
 					}
 				}
 			});
@@ -89,7 +90,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		}
 	}
 
-	private abstract class DataTask extends AsyncTask<String, Object, String> {
+	private abstract class DataTask extends AsyncTask<String, String, String> {
 		private boolean mShowProgress;
 		private String mProgressMessage;
 
@@ -105,6 +106,16 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			mIsDataTaskCompleted = false;
 			if (mShowProgress) {
 				startTimer(mProgressMessage);
+			}
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			super.onProgressUpdate(values);
+			if (mShowProgress && !mIsStopped && mProgressDialog != null) {
+				String progress = values.length > 0 && values[0] != null ? values[0]
+						: "";
+				mProgressDialog.setMessage(progress);
 			}
 		}
 
@@ -326,6 +337,60 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			} else {
 				return cdm.getErrorMessage();
 			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			if (mIsStopped) {
+				return;
+			}
+
+			dataChanged();
+		}
+	}
+
+	protected void test25() {
+		new Test25YearsTask().execute();
+	}
+
+	private class Test25YearsTask extends DataTask {
+		public Test25YearsTask() {
+			super(true, getString(R.string.test25));
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			Calendar today = Calendar.getInstance();
+			Calendar date = (Calendar) today.clone();
+			date.add(Calendar.YEAR, -25);
+			int initialYear = date.get(Calendar.YEAR);
+			int prevYear = initialYear;
+			int index = 1;
+			while (DateUtils.beforeOrEqual(date, today)) {
+				log(index + " " + DateUtils.toString(date));
+				if (1 <= index && index <= 7) {
+					CalendarData value = new CalendarData(date);
+					value.setMenstruation(1);
+					mDataKeeper.insertOrUpdate(value);
+				}
+
+				++index;
+				if (index == 29) {
+					index = 1;
+				}
+
+				date.add(Calendar.DAY_OF_MONTH, 1);
+
+				int currentYear = date.get(Calendar.YEAR);
+				if (currentYear != prevYear) {
+					String progress = String.valueOf(currentYear - initialYear);
+					publishProgress(new String[] { progress });
+					prevYear = currentYear;
+				}
+			}
+
+			return null;
 		}
 
 		@Override
