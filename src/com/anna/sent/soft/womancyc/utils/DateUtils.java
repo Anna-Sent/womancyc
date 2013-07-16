@@ -57,6 +57,28 @@ public class DateUtils {
 		}
 	}
 
+	public static int compare(Calendar date1, Calendar date2) {
+		int d1 = date1.get(Calendar.DAY_OF_MONTH);
+		int d2 = date2.get(Calendar.DAY_OF_MONTH);
+		int m1 = date1.get(Calendar.MONTH);
+		int m2 = date2.get(Calendar.MONTH);
+		int y1 = date1.get(Calendar.YEAR);
+		int y2 = date2.get(Calendar.YEAR);
+		if (y1 == y2) {
+			if (m1 == m2) {
+				if (d1 == d2) {
+					return 0;
+				} else {
+					return d1 > d2 ? 1 : -1;
+				}
+			} else {
+				return m1 > m2 ? 1 : -1;
+			}
+		} else {
+			return y1 > y2 ? 1 : -1;
+		}
+	}
+
 	public static boolean beforeOrEqual(Calendar date1, Calendar date2) {
 		int d1 = date1.get(Calendar.DAY_OF_MONTH);
 		int d2 = date2.get(Calendar.DAY_OF_MONTH);
