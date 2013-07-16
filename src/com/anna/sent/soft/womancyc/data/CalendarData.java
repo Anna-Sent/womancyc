@@ -134,6 +134,10 @@ public class CalendarData implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @return always not null. empty or non-empty string
+	 */
 	public String getNote() {
 		return note == null ? "" : note;
 	}
