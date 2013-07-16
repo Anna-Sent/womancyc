@@ -178,9 +178,11 @@ public class CalendarData implements Serializable {
 		if (obj == this) {
 			return true;
 		}
+
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}
+
 		CalendarData value = (CalendarData) obj;
 		return menstruation == value.menstruation && sex == value.sex
 				&& tookPill == value.tookPill
