@@ -24,7 +24,7 @@ import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 public abstract class DataKeeperActivity extends StateSaverActivity implements
 		DataKeeper {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -47,11 +47,11 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	private class StartProgressTask extends TimerTask {
-		private String mMessage;
+		private String mTitle;
 
-		public StartProgressTask(String message) {
+		public StartProgressTask(String title) {
 			super();
-			mMessage = message;
+			mTitle = title;
 		}
 
 		@Override
@@ -67,8 +67,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 					log("ShowProgressTask on ui thread");
 					if (mProgressDialog == null) {
 						mProgressDialog = ProgressDialog.show(
-								DataKeeperActivity.this, mMessage, mMessage,
-								false, false);
+								DataKeeperActivity.this, mTitle, "", false,
+								false);
 					}
 				}
 			});
