@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 
+import com.anna.sent.soft.womancyc.fragments.DatePickerDialogFragment;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
@@ -33,7 +36,7 @@ import com.anna.sent.soft.womancyc.superclasses.DataKeeperActivity;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class MainActivity extends DataKeeperActivity implements
-		MonthViewFragment.Listener, DayViewFragment.Listener {
+		MonthViewFragment.Listener, DayViewFragment.Listener, OnDateSetListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -87,7 +90,10 @@ public class MainActivity extends DataKeeperActivity implements
 			mDateToShow = Calendar.getInstance();
 		}
 
-		showDate(mDateToShow);
+		mMonthView.setSelectedDate(mDateToShow);
+		if (mIsLargeLayout) {
+			showAsEmbeddedFragment(mDateToShow);
+		}
 	}
 
 	public void onStop() {
@@ -129,7 +135,8 @@ public class MainActivity extends DataKeeperActivity implements
 		}
 	}
 
-	private final static String TAG_DAY_VIEW = "day_view_as_dialog";
+	private final static String TAG_DAY_VIEW = "day_view_dialog";
+	private final static String TAG_DATE_PICKER = "date_picker_dialog";
 
 	private void showAsDialogFragment(Calendar date) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -160,7 +167,7 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public void onMonthViewItemChangedByUser(Calendar date) {
 		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(date);
+			mDayView.setSelectedDate(date);
 		}
 	}
 
@@ -174,13 +181,6 @@ public class MainActivity extends DataKeeperActivity implements
 	@Override
 	public void onDayViewItemChangedByUser(Calendar date) {
 		mMonthView.setSelectedDate(date);
-	}
-
-	private void showDate(Calendar date) {
-		mMonthView.setSelectedDate(date);
-		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(date);
-		}
 	}
 
 	@Override
@@ -450,6 +450,28 @@ public class MainActivity extends DataKeeperActivity implements
 			builder.create().show();
 		} else {
 			restore(absoluteFileName);
+		}
+	}
+
+	@Override
+	public void showDatePicker() {
+		Bundle args = new Bundle();
+		args.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
+		DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+		dialog.setArguments(args);
+		dialog.setOnDateSetListener(this);
+		dialog.show(getSupportFragmentManager(), TAG_DATE_PICKER);
+	}
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int month, int day) {
+		Calendar dateToShow = Calendar.getInstance();
+		dateToShow.set(year, month, day);
+		if (!DateUtils.datesAreEqual(dateToShow, mMonthView.getSelectedDate())) {
+			mMonthView.setSelectedDate(dateToShow);
+			if (mIsLargeLayout) {
+				mDayView.setSelectedDate(dateToShow);
+			}
 		}
 	}
 }

@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import java.util.Calendar;
 
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -15,20 +14,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.GridView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 public class MonthViewFragment extends Fragment implements OnItemClickListener,
-		OnItemLongClickListener, OnClickListener, OnDateSetListener,
-		DataKeeperClient {
+		OnItemLongClickListener, OnClickListener, DataKeeperClient {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -53,6 +49,8 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		public void onMonthViewItemChangedByUser(Calendar date);
 
 		public void onMonthViewItemLongClick(Calendar date);
+
+		public void showDatePicker();
 	}
 
 	private Listener mListener = null;
@@ -204,23 +202,11 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 			toNextMonth();
 			break;
 		case R.id.currentMonth:
-			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, adapter.getSelectedDate());
-			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-			dialog.setArguments(args);
-			dialog.setOnDateSetListener(this);
-			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
-			break;
-		}
-	}
+			if (mListener != null) {
+				mListener.showDatePicker();
+			}
 
-	@Override
-	public void onDateSet(DatePicker view, int year, int month, int day) {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(year, month, day);
-		setSelectedDate(dateToShow);
-		if (mListener != null) {
-			mListener.onMonthViewItemChangedByUser(dateToShow);
+			break;
 		}
 	}
 }

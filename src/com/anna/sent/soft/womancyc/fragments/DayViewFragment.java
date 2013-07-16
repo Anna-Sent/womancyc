@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -22,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.anna.sent.soft.womancyc.R;
@@ -35,7 +33,7 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,
-		DataKeeperClient, OnDateSetListener, OnItemSelectedListener {
+		DataKeeperClient, OnItemSelectedListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = true;
 
@@ -58,6 +56,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	public interface Listener {
 		public void onDayViewItemChangedByUser(Calendar date);
+
+		public void showDatePicker();
 	}
 
 	private Listener mListener = null;
@@ -224,11 +224,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		spinner.setOnItemSelectedListener(this);
 	}
 
-	public Calendar getSelectedDate() {
-		return mDateToShow;
-	}
-
 	public void setSelectedDate(Calendar value) {
+		tryToSave();
 		mDateToShow = value;
 		update();
 	}
@@ -259,7 +256,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		String note = textViewNote.getText().toString();
-		if (!isEqual(note, mValue.getNote())) {
+		if (!mValue.getNote().equals(note)) {
 			textViewNote.setText(mValue.getNote());
 		}
 	}
@@ -279,12 +276,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			update();
 			break;
 		case R.id.currentDay:
-			Bundle args = new Bundle();
-			args.putSerializable(Shared.DATE_TO_SHOW, mDateToShow);
-			DatePickerDialogFragment dialog = new DatePickerDialogFragment();
-			dialog.setArguments(args);
-			dialog.setOnDateSetListener(this);
-			dialog.show(getFragmentManager(), dialog.getClass().getSimpleName());
+			if (mListener != null) {
+				mListener.showDatePicker();
+			}
+
 			break;
 		case R.id.nextDay:
 			toNextDay();
@@ -329,20 +324,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 	}
 
-	@Override
-	public void onDateSet(DatePicker view, int year, int month, int day) {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(year, month, day);
-		if (!DateUtils.datesAreEqual(dateToShow, mDateToShow)) {
-			if (mListener != null) {
-				mListener.onDayViewItemChangedByUser(dateToShow);
-			}
-
-			tryToSave();
-			setSelectedDate(dateToShow);
-		}
-	}
-
 	private void toPrevDay() {
 		Calendar dateToShow = (Calendar) mDateToShow.clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
@@ -350,7 +331,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
 
-		tryToSave();
 		setSelectedDate(dateToShow);
 	}
 
@@ -361,7 +341,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mListener.onDayViewItemChangedByUser(dateToShow);
 		}
 
-		tryToSave();
 		setSelectedDate(dateToShow);
 	}
 
@@ -373,7 +352,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 		boolean isDataChanged = menstruation != mValue.getMenstruation()
 				|| sex != mValue.getSex() || tookPill != mValue.getTookPill()
-				|| !isEqual(note, mValue.getNote());
+				|| !mValue.getNote().equals(note);
 		if (isDataChanged) {
 			mValue.setMenstruation(menstruation);
 			mValue.setSex(sex);
@@ -383,18 +362,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 			mDataKeeper.insertOrUpdate(mValue);
 		}
-	}
-
-	private boolean isEqual(String s1, String s2) {
-		if (s1 == null) {
-			s1 = "";
-		}
-
-		if (s2 == null) {
-			s2 = "";
-		}
-
-		return s1.equals(s2);
 	}
 
 	@Override
