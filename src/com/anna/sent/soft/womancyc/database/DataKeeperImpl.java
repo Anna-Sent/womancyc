@@ -13,9 +13,9 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class DataKeeperImpl implements DataKeeper {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG_SYNC = true;
+	private static final boolean DEBUG_SYNC = false;
 	private static final boolean DEBUG_BIN = false;
-	private static final boolean DEBUG_CRUD = true;
+	private static final boolean DEBUG_CRUD = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;

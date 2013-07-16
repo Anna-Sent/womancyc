@@ -240,6 +240,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mValue = new CalendarData(mDateToShow);
 		}
 
+		log(mValue.toString());
 		buttonCurrentDay
 				.setText(DateUtils.toString(getActivity(), mDateToShow));
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
