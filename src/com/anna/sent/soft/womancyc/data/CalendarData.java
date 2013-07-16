@@ -163,14 +163,45 @@ public class CalendarData implements Serializable {
 
 	public boolean isEmpty() {
 		return menstruation == 0 && sex == 0 && !tookPill
-				&& (note == null || note.equals(""));
+				&& getNote().equals("");
 	}
 
 	@Override
 	public String toString() {
-		return getDateString() + ":: \n" + "\tmenstruation: "
-				+ getMenstruationString() + ", \n" + "\tsex: " + getSexString()
-				+ ", \n" + "\ttook pill: " + getTookPillString() + ", \n"
-				+ "note: \"" + (note == null ? "" : note) + "\";\n";
+		return getDateString() + ":: menstruation: " + getMenstruationString()
+				+ ", sex: " + getSexString() + ", took pill: "
+				+ getTookPillString() + ", note: \"" + getNote() + "\"";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+		CalendarData value = (CalendarData) obj;
+		return menstruation == value.menstruation && sex == value.sex
+				&& tookPill == value.tookPill
+				&& DateUtils.datesAreEqual(date, value.date)
+				&& (getNote().equals(value.getNote()));
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + menstruation;
+		result = prime * result + sex;
+		result = prime * result + (tookPill ? 1 : 0);
+		int d = date.get(Calendar.DAY_OF_MONTH);
+		int m = date.get(Calendar.MONTH);
+		int y = date.get(Calendar.YEAR);
+		result = prime * result + d;
+		result = prime * result + m;
+		result = prime * result + y;
+		result = prime * result + getNote().hashCode();
+		return result;
 	}
 }
