@@ -24,7 +24,7 @@ import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 public abstract class DataKeeperActivity extends StateSaverActivity implements
 		DataKeeper {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -380,6 +380,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 					index = 1;
 				}
 
+				date = (Calendar) date.clone();
 				date.add(Calendar.DAY_OF_MONTH, 1);
 
 				int currentYear = date.get(Calendar.YEAR);
