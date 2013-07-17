@@ -10,7 +10,7 @@ import android.annotation.SuppressLint;
 
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 
-public class CalendarData implements Serializable {
+public class CalendarData implements Serializable, Cloneable {
 	private static final String DATE_FORMAT = "dd-MM-yyyy";
 	private static final long serialVersionUID = -4217182666477849206L;
 
@@ -209,5 +209,15 @@ public class CalendarData implements Serializable {
 		result = prime * result + y;
 		result = prime * result + getNote().hashCode();
 		return result;
+	}
+
+	@Override
+	public CalendarData clone() {
+		CalendarData obj = new CalendarData(date);
+		obj.menstruation = menstruation;
+		obj.sex = sex;
+		obj.tookPill = tookPill;
+		obj.note = note;
+		return obj;
 	}
 }

@@ -120,7 +120,6 @@ public class DataKeeperImpl implements DataKeeper {
 			if (updated) {
 				log("updated", DEBUG_CRUD);
 				mValues.set(index, value);
-				checkSync();
 				mDataSource.getAllNotes(mNotes);
 			}
 		} else {
@@ -128,10 +127,11 @@ public class DataKeeperImpl implements DataKeeper {
 			if (inserted) {
 				log("inserted", DEBUG_CRUD);
 				mValues.add(-index - 1, value);
-				checkSync();
 				mDataSource.getAllNotes(mNotes);
 			}
 		}
+
+		checkSync();
 	}
 
 	private void checkSync() {
@@ -147,21 +147,19 @@ public class DataKeeperImpl implements DataKeeper {
 				printValues(dbValues);
 			} else {
 				boolean synced = true;
-				for (int i = 0; i < count && synced; ++i) {
+				for (int i = 0; i < count; ++i) {
 					CalendarData value = mValues.get(i);
 					CalendarData dbValue = dbValues.get(i);
 					if (!value.equals(dbValue)) {
 						synced = false;
+						log("in db: " + dbValue.toString() + "; in memory: "
+								+ value.toString(), DEBUG_SYNC);
 					}
 				}
 
 				if (synced) {
 					log("synced!", DEBUG_SYNC);
 				} else {
-					log("in memory", DEBUG_SYNC);
-					printValues(mValues);
-					log("in db", DEBUG_SYNC);
-					printValues(dbValues);
 					log("elements differ!", DEBUG_SYNC);
 				}
 			}
@@ -189,10 +187,11 @@ public class DataKeeperImpl implements DataKeeper {
 			if (deleted) {
 				log("deleted", DEBUG_CRUD);
 				mValues.remove(index);
-				checkSync();
 				mDataSource.getAllNotes(mNotes);
 			}
 		}
+
+		checkSync();
 	}
 
 	@Override

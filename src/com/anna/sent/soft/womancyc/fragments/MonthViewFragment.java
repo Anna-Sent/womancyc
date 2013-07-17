@@ -26,7 +26,7 @@ import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		OnItemLongClickListener, OnClickListener, DataKeeperClient {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -45,17 +45,9 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		}
 	}
 
-	public interface Listener {
-		public void onMonthViewItemChangedByUser(Calendar date);
+	private CalendarListener mListener = null;
 
-		public void onMonthViewItemLongClick(Calendar date);
-
-		public void showDatePicker();
-	}
-
-	private Listener mListener = null;
-
-	public void setListener(Listener listener) {
+	public void setListener(CalendarListener listener) {
 		mListener = listener;
 	}
 
@@ -140,10 +132,8 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		Object item = adapter.getItem(position);
 		if (item != null) {
 			Calendar date = (Calendar) item;
-			setSelectedDate(date);
-
 			if (mListener != null) {
-				mListener.onMonthViewItemChangedByUser(date);
+				mListener.showDate(date);
 			}
 		}
 	}
@@ -154,14 +144,13 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		Object item = adapter.getItem(position);
 		if (item != null) {
 			Calendar date = (Calendar) item;
-			setSelectedDate(date);
 
 			if (mListener != null) {
-				mListener.onMonthViewItemChangedByUser(date);
+				mListener.showDate(date);
 			}
 
 			if (mListener != null) {
-				mListener.onMonthViewItemLongClick(date);
+				mListener.showDetailedView(date);
 			}
 		}
 
@@ -176,9 +165,8 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, -1);
-		setSelectedDate(dateToShow);
 		if (mListener != null) {
-			mListener.onMonthViewItemChangedByUser(dateToShow);
+			mListener.showDate(dateToShow);
 		}
 	}
 
@@ -186,9 +174,8 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
 		dateToShow.add(Calendar.MONTH, 1);
-		setSelectedDate(dateToShow);
 		if (mListener != null) {
-			mListener.onMonthViewItemChangedByUser(dateToShow);
+			mListener.showDate(dateToShow);
 		}
 	}
 
@@ -203,7 +190,7 @@ public class MonthViewFragment extends Fragment implements OnItemClickListener,
 			break;
 		case R.id.currentMonth:
 			if (mListener != null) {
-				mListener.showDatePicker();
+				mListener.showDatePickerToChangeDate();
 			}
 
 			break;

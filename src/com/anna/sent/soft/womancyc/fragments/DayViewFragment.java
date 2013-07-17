@@ -54,15 +54,9 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 	}
 
-	public interface Listener {
-		public void onDayViewItemChangedByUser(Calendar date);
+	private CalendarListener mListener = null;
 
-		public void showDatePicker();
-	}
-
-	private Listener mListener = null;
-
-	public void setListener(Listener listener) {
+	public void setListener(CalendarListener listener) {
 		mListener = listener;
 	}
 
@@ -189,17 +183,16 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			}
 		});
 
-		Calendar value = null;
 		if (getArguments() != null) {
-			value = (Calendar) getArguments().getSerializable(
+			mDateToShow = (Calendar) getArguments().getSerializable(
 					Shared.DATE_TO_SHOW);
 		}
 
-		if (value == null) {
-			value = Calendar.getInstance();
+		if (mDateToShow == null) {
+			mDateToShow = Calendar.getInstance();
 		}
 
-		setSelectedDate(value);
+		update();
 	}
 
 	private void fillSpinner(int stringsArray, int imagesArray, Spinner spinner) {
@@ -227,6 +220,12 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	public void setSelectedDate(Calendar value) {
 		tryToSave();
 		mDateToShow = value;
+		int year = value.get(Calendar.YEAR);
+		int month = value.get(Calendar.MONTH);
+		int day = value.get(Calendar.DAY_OF_MONTH);
+		mDateToShow.set(Calendar.YEAR, year);
+		mDateToShow.set(Calendar.MONTH, month);
+		mDateToShow.set(Calendar.DAY_OF_MONTH, day);
 		update();
 	}
 
@@ -235,6 +234,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		mValue = mDataKeeper.get(mDateToShow);
 		if (mValue == null) {
 			mValue = new CalendarData(mDateToShow);
+		} else {
+			mValue = mValue.clone(); // to update properly
 		}
 
 		log(mValue.toString());
@@ -273,11 +274,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.buttonClear:
 			mDataKeeper.delete(mValue);
-			update();
 			break;
 		case R.id.currentDay:
 			if (mListener != null) {
-				mListener.showDatePicker();
+				mListener.showDatePickerToChangeDate();
 			}
 
 			break;
@@ -328,20 +328,16 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		Calendar dateToShow = (Calendar) mDateToShow.clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
 		if (mListener != null) {
-			mListener.onDayViewItemChangedByUser(dateToShow);
+			mListener.showDate(dateToShow);
 		}
-
-		setSelectedDate(dateToShow);
 	}
 
 	private void toNextDay() {
 		Calendar dateToShow = (Calendar) mDateToShow.clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
 		if (mListener != null) {
-			mListener.onDayViewItemChangedByUser(dateToShow);
+			mListener.showDate(dateToShow);
 		}
-
-		setSelectedDate(dateToShow);
 	}
 
 	private void tryToSave() {
