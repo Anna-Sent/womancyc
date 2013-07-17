@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc.fragments;
+package com.anna.sent.soft.womancyc.preferences;
 
 import android.content.Context;
 import android.content.res.TypedArray;
