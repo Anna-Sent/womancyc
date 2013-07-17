@@ -37,6 +37,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	private MonthViewFragment mMonthView;
 	private boolean mIsLargeLayout;
+	private FragmentManager mFragmentManager;
 
 	@Override
 	public void onAttachFragment(Fragment fragment) {
@@ -56,6 +57,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		setContentView(R.layout.activity_main);
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 		Settings.isBlocked(this, false);
+		mFragmentManager = getSupportFragmentManager();
 	}
 
 	private Calendar mDateToShow = null;
@@ -94,8 +96,13 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	public void beforeOnSaveInstanceState() {
 		DayViewFragment dayView = getDayView();
 		if (dayView != null) {
-			FragmentManager fm = getSupportFragmentManager();
-			fm.beginTransaction().remove(dayView).commit();
+			mFragmentManager.beginTransaction().remove(dayView).commit();
+		}
+
+		DatePickerDialogFragment datePickerDialog = getDatePickerDialog();
+		if (datePickerDialog != null) {
+			mFragmentManager.beginTransaction().remove(datePickerDialog)
+					.commit();
 		}
 	}
 
@@ -112,21 +119,18 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	private final static String TAG_DATE_PICKER = "date_picker_dialog";
 
 	private void showAsDialogFragment(Calendar date) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogFragment dayView = createDayView(date);
-		dayView.show(fragmentManager, TAG_DAY_VIEW);
+		dayView.show(mFragmentManager, TAG_DAY_VIEW);
 	}
 
 	private void showAsEmbeddedFragment(Calendar date) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-
-		Fragment dayView = fragmentManager.findFragmentById(R.id.dayView);
+		Fragment dayView = mFragmentManager.findFragmentById(R.id.dayView);
 		if (dayView != null) {
-			fragmentManager.beginTransaction().remove(dayView).commit();
+			mFragmentManager.beginTransaction().remove(dayView).commit();
 		}
 
 		dayView = createDayView(date);
-		fragmentManager.beginTransaction().add(R.id.dayView, dayView).commit();
+		mFragmentManager.beginTransaction().add(R.id.dayView, dayView).commit();
 	}
 
 	private DayViewFragment createDayView(Calendar date) {
@@ -145,7 +149,12 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		DatePickerDialogFragment dialog = new DatePickerDialogFragment();
 		dialog.setArguments(args);
 		dialog.setOnDateSetListener(this);
-		dialog.show(getSupportFragmentManager(), TAG_DATE_PICKER);
+		dialog.show(mFragmentManager, TAG_DATE_PICKER);
+	}
+
+	private DatePickerDialogFragment getDatePickerDialog() {
+		return (DatePickerDialogFragment) mFragmentManager
+				.findFragmentByTag(TAG_DATE_PICKER);
 	}
 
 	@Override
@@ -174,11 +183,11 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	}
 
 	private DayViewFragment getDayView() {
-		FragmentManager fm = getSupportFragmentManager();
-		DayViewFragment dayView = (DayViewFragment) fm
+		DayViewFragment dayView = (DayViewFragment) mFragmentManager
 				.findFragmentByTag(TAG_DAY_VIEW);
 		if (dayView == null) {
-			dayView = (DayViewFragment) fm.findFragmentById(R.id.dayView);
+			dayView = (DayViewFragment) mFragmentManager
+					.findFragmentById(R.id.dayView);
 		}
 
 		return dayView;
