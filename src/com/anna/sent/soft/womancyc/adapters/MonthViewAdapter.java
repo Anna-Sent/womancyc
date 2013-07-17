@@ -27,7 +27,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthViewAdapter extends BaseAdapter {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
