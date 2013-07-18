@@ -14,7 +14,9 @@ import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -25,7 +27,8 @@ import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
-public class MonthViewAdapter extends BaseAdapter {
+public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
+		OnLongClickListener {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -45,6 +48,7 @@ public class MonthViewAdapter extends BaseAdapter {
 	private String[] mDayOfWeekNames;
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
+	private View mSelectedView = null;
 
 	/**
 	 * Must be not null.
@@ -52,10 +56,20 @@ public class MonthViewAdapter extends BaseAdapter {
 	private DataKeeper mDataKeeper;
 	private Calculator mCalculator;
 
-	public MonthViewAdapter(Context context, DataKeeper dataKeeper) {
+	public interface Listener {
+		public void onItemClick(Calendar item);
+
+		public void onItemLongClick(Calendar item);
+	}
+
+	private Listener mListener;
+
+	public MonthViewAdapter(Context context, DataKeeper dataKeeper,
+			Listener listener) {
 		super();
 		mContext = context;
 		mDataKeeper = dataKeeper;
+		mListener = listener;
 		mCalculator = new Calculator(context, mDataKeeper);
 		mToday = Calendar.getInstance();
 		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
@@ -96,6 +110,7 @@ public class MonthViewAdapter extends BaseAdapter {
 			initMonthCalendar(month, year);
 		}
 
+		mSelectedView = null;
 		notifyDataSetChanged();
 	}
 
@@ -197,7 +212,7 @@ public class MonthViewAdapter extends BaseAdapter {
 
 			Calendar item = mMonthCalendarValues.get(position
 					- mDayOfWeekValues.size());
-			initDayOfMonth(cell, position, item);
+			initDayOfMonth(cell, item);
 		}
 
 		return cell;
@@ -227,8 +242,10 @@ public class MonthViewAdapter extends BaseAdapter {
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void initDayOfMonth(View cell, int position, Calendar item) {
+	protected void initDayOfMonth(View cell, Calendar item) {
 		int themeId = ThemeUtils.getThemeId(mContext);
+
+		cell.setTag(item);
 
 		CalendarData cellData = mDataKeeper.get(item);
 		int dayOfCycle = mCalculator.getDayOfCycle(item);
@@ -304,11 +321,14 @@ public class MonthViewAdapter extends BaseAdapter {
 
 		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
 			layers.add(getDrawable(R.drawable.bg_selected_view));
+			mSelectedView = cell;
 		}
 
 		LayerDrawable background = new LayerDrawable(
 				layers.toArray(new Drawable[] {}));
 		cell.setBackgroundDrawable(background);
+		cell.setOnClickListener(this);
+		cell.setOnLongClickListener(this);
 	}
 
 	private Drawable getDrawableFromTheme(int attribute) {
@@ -327,6 +347,33 @@ public class MonthViewAdapter extends BaseAdapter {
 	public void update() {
 		log("update");
 		mCalculator = new Calculator(mContext, mDataKeeper);
+		mSelectedView = null;
 		notifyDataSetChanged();
+	}
+
+	@Override
+	public void onClick(View v) {
+		Calendar item = (Calendar) v.getTag();
+		mSelectedDate = (Calendar) item.clone();
+		if (mSelectedView != null) {
+			initDayOfMonth(mSelectedView, (Calendar) mSelectedView.getTag());
+		}
+
+		initDayOfMonth(v, mSelectedDate);
+
+		if (mListener != null) {
+			mListener.onItemClick(item);
+		}
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		onClick(v);
+		if (mListener != null) {
+			Calendar item = (Calendar) v.getTag();
+			mListener.onItemLongClick(item);
+		}
+
+		return true;
 	}
 }

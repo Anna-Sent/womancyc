@@ -5,7 +5,9 @@ import java.util.Calendar;
 public interface CalendarListener {
 	public void showDatePickerToChangeDate();
 
-	public void showDate(Calendar date);
+	public void navigateToDate(Calendar date);
 
-	public void showDetailedView(Calendar date);
+	public void showDetailedView();
+
+	public void updateDetailedView();
 }

@@ -78,7 +78,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 		mMonthView.setSelectedDate(mDateToShow);
 		if (mIsLargeLayout) {
-			showAsEmbeddedFragment(mDateToShow);
+			showAsEmbeddedFragment();
 		}
 	}
 
@@ -126,24 +126,24 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	private final static String TAG_DAY_VIEW = "day_view_dialog";
 	private final static String TAG_DATE_PICKER = "date_picker_dialog";
 
-	private void showAsDialogFragment(Calendar date) {
-		DialogFragment dayView = createDayView(date);
+	private void showAsDialogFragment() {
+		DialogFragment dayView = createDayView();
 		dayView.show(mFragmentManager, TAG_DAY_VIEW);
 	}
 
-	private void showAsEmbeddedFragment(Calendar date) {
+	private void showAsEmbeddedFragment() {
 		Fragment dayView = mFragmentManager.findFragmentById(R.id.dayView);
 		if (dayView != null) {
 			mFragmentManager.beginTransaction().remove(dayView).commit();
 		}
 
-		dayView = createDayView(date);
+		dayView = createDayView();
 		mFragmentManager.beginTransaction().add(R.id.dayView, dayView).commit();
 	}
 
-	private DayViewFragment createDayView(Calendar date) {
+	private DayViewFragment createDayView() {
 		Bundle args = new Bundle();
-		args.putSerializable(Shared.DATE_TO_SHOW, date);
+		args.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
 		DayViewFragment newFragment = new DayViewFragment();
 		newFragment.setArguments(args);
 		newFragment.setListener(this);
@@ -169,23 +169,36 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(year, month, day);
-		showDate(dateToShow);
+		navigateToDate(dateToShow);
 	}
 
 	@Override
-	public void showDate(Calendar date) {
-		log("show date");
-		mMonthView.setSelectedDate(date);
-		DayViewFragment dayView = getDayView();
-		if (dayView != null) {
-			dayView.setSelectedDate(date);
+	public void navigateToDate(Calendar date) {
+		if (!DateUtils.datesAreEqual(date, mMonthView.getSelectedDate())) {
+			log("navigate to date");
+			mMonthView.setSelectedDate(date);
+			setDayViewToDate();
 		}
 	}
 
 	@Override
-	public void showDetailedView(Calendar date) {
+	public void showDetailedView() {
 		if (!mIsLargeLayout) {
-			showAsDialogFragment(date);
+			showAsDialogFragment();
+		}
+	}
+
+	@Override
+	public void updateDetailedView() {
+		if (mIsLargeLayout) {
+			setDayViewToDate();
+		}
+	}
+
+	private void setDayViewToDate() {
+		DayViewFragment dayView = getDayView();
+		if (dayView != null) {
+			dayView.setSelectedDate(mMonthView.getSelectedDate());
 		}
 	}
 

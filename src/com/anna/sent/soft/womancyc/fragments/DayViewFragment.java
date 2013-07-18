@@ -217,10 +217,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		spinner.setOnItemSelectedListener(this);
 	}
 
-	public Calendar getSelectedDate() {
-		return mDateToShow;
-	}
-
 	public void setSelectedDate(Calendar value) {
 		tryToSave();
 		mDateToShow = value;
@@ -332,7 +328,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		Calendar dateToShow = (Calendar) mDateToShow.clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
 		if (mListener != null) {
-			mListener.showDate(dateToShow);
+			mListener.navigateToDate(dateToShow);
 		}
 	}
 
@@ -340,7 +336,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		Calendar dateToShow = (Calendar) mDateToShow.clone();
 		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
 		if (mListener != null) {
-			mListener.showDate(dateToShow);
+			mListener.navigateToDate(dateToShow);
 		}
 	}
 
