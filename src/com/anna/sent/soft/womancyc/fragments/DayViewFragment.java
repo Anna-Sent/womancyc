@@ -35,7 +35,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 public class DayViewFragment extends DialogFragment implements OnClickListener,
 		DataKeeperClient, OnItemSelectedListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -215,6 +215,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
+	}
+
+	public Calendar getSelectedDate() {
+		return mDateToShow;
 	}
 
 	public void setSelectedDate(Calendar value) {

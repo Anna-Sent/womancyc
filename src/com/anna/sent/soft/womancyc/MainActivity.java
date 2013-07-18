@@ -35,6 +35,12 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		}
 	}
 
+	private void log(String msg, boolean debug) {
+		if (DEBUG && debug) {
+			Log.d(TAG, wrapMsg(msg));
+		}
+	}
+
 	private MonthViewFragment mMonthView;
 	private boolean mIsLargeLayout;
 	private FragmentManager mFragmentManager;
@@ -64,7 +70,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void onStart() {
-		log("onStart");
+		log("onStart", false);
 		super.onStart();
 		if (mDateToShow == null) {
 			mDateToShow = Calendar.getInstance();
@@ -88,7 +94,8 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void saveActivityState(Bundle state) {
-		log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()));
+		log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()),
+				false);
 		state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
 	}
 
@@ -108,6 +115,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	protected void dataChanged() {
+		log("data changed");
 		mMonthView.update();
 		DayViewFragment dayView = getDayView();
 		if (dayView != null) {
@@ -166,12 +174,11 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void showDate(Calendar date) {
-		if (!DateUtils.datesAreEqual(date, mMonthView.getSelectedDate())) {
-			mMonthView.setSelectedDate(date);
-			DayViewFragment dayView = getDayView();
-			if (dayView != null) {
-				dayView.setSelectedDate(date);
-			}
+		log("show date");
+		mMonthView.setSelectedDate(date);
+		DayViewFragment dayView = getDayView();
+		if (dayView != null) {
+			dayView.setSelectedDate(date);
 		}
 	}
 
