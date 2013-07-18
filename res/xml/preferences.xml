@@ -3,7 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto" >
 
     <PreferenceCategory android:title="@string/pref_calculation_settings_title" >
-        <com.anna.sent.soft.womancyc.fragments.NumberPickerPreference
+        <com.anna.sent.soft.womancyc.preferences.NumberPickerPreference
             android:defaultValue="@integer/defaultMenstrualCycleLen"
             android:key="pref_default_menstrual_cycle_len"
             android:max="@integer/maxMenstrualCycleLen"
@@ -17,7 +17,7 @@
             android:title="@string/pref_use_average_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_safety_settings_title" >
-        <com.anna.sent.soft.womancyc.fragments.PasswordPreference
+        <com.anna.sent.soft.womancyc.preferences.PasswordPreference
             android:defaultValue=""
             android:key="pref_password"
             android:title="@string/pref_password_title" />
@@ -60,7 +60,7 @@
             android:title="@string/pref_support_title" >
             <intent
                 android:action="android.intent.action.SENDTO"
-                android:data="mailto:anna.sent@gmail.com"
+                android:data="@string/supportData"
                 android:launchMode="singleInstance" >
                 <extra
                     android:name="android.intent.extra.SUBJECT"

@@ -16,6 +16,13 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/buttonSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/pref_support_title" />
     </LinearLayout>
 
 </ScrollView>
