@@ -88,10 +88,7 @@ public class MonthViewAdapter extends BaseAdapter {
 	public void setSelectedDate(Calendar value) {
 		int year = value.get(Calendar.YEAR);
 		int month = value.get(Calendar.MONTH);
-		int day = value.get(Calendar.DAY_OF_MONTH);
-		mSelectedDate.set(Calendar.YEAR, year);
-		mSelectedDate.set(Calendar.MONTH, month);
-		mSelectedDate.set(Calendar.DAY_OF_MONTH, day);
+		mSelectedDate = value;
 		if (mYear != year || mMonth != month) {
 			initMonthCalendar(month, year);
 		}

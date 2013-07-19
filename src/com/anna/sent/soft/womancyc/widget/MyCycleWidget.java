@@ -2,6 +2,8 @@ package com.anna.sent.soft.womancyc.widget;
 
 import java.util.Calendar;
 
+import com.anna.sent.soft.womancyc.utils.DateUtils;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
@@ -123,12 +125,7 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 		AlarmManager alarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		Calendar midnight = Calendar.getInstance();
-		midnight.set(Calendar.HOUR, 0);
-		midnight.set(Calendar.MINUTE, 0);
-		midnight.set(Calendar.SECOND, 0);
-		midnight.set(Calendar.MILLISECOND, 0);
-		midnight.set(Calendar.AM_PM, Calendar.AM);
-		midnight.add(Calendar.DAY_OF_MONTH, 1);
+		DateUtils.zeroTime(midnight);
 		PendingIntent operation = getPendingIntent(context, cls);
 		alarmManager.cancel(operation);
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,

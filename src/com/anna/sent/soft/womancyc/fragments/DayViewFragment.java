@@ -220,12 +220,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	public void setSelectedDate(Calendar value) {
 		tryToSave();
 		mDateToShow = value;
-		int year = value.get(Calendar.YEAR);
-		int month = value.get(Calendar.MONTH);
-		int day = value.get(Calendar.DAY_OF_MONTH);
-		mDateToShow.set(Calendar.YEAR, year);
-		mDateToShow.set(Calendar.MONTH, month);
-		mDateToShow.set(Calendar.DAY_OF_MONTH, day);
 		update();
 	}
 

@@ -83,7 +83,6 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	}
 
 	public void onStop() {
-		mDateToShow = mMonthView.getSelectedDate();
 		super.onStop();
 	}
 
