@@ -191,7 +191,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View cell = null;
 
-		if (position < mDayOfWeekValues.size()) {
+		if (position < 7) {
 			if (convertView != null
 					&& convertView.getId() == getDayOfWeekViewId()) {
 				cell = convertView;
@@ -205,7 +205,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 			}
 
 			initDayOfWeekItem(cell, position);
-		} else if (mMonthCalendarValues.size() > 0) {
+		} else {
 			if (convertView != null
 					&& convertView.getId() == getDayOfMonthViewId()) {
 				cell = convertView;
