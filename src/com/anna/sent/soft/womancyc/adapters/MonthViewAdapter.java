@@ -3,7 +3,6 @@ package com.anna.sent.soft.womancyc.adapters;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
