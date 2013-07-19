@@ -102,6 +102,14 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		initMonthCalendar(month, year);
 	}
 
+	public int getMonth() {
+		return mMonth;
+	}
+
+	public int getYear() {
+		return mYear;
+	}
+
 	public void setSelectedDate(Calendar value) {
 		int year = value.get(Calendar.YEAR);
 		int month = value.get(Calendar.MONTH);

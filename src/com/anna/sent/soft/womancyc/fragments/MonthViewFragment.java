@@ -139,8 +139,10 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	private void toPrevMonth() {
-		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
+		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
+		dateToShow.set(Calendar.MONTH, adapter.getMonth());
+		dateToShow.set(Calendar.YEAR, adapter.getYear());
 		dateToShow.add(Calendar.MONTH, -1);
 		if (mListener != null) {
 			mListener.navigateToDate(dateToShow);
@@ -148,8 +150,10 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	private void toNextMonth() {
-		Calendar dateToShow = (Calendar) adapter.getSelectedDate().clone();
+		Calendar dateToShow = Calendar.getInstance();
 		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
+		dateToShow.set(Calendar.MONTH, adapter.getMonth());
+		dateToShow.set(Calendar.YEAR, adapter.getYear());
 		dateToShow.add(Calendar.MONTH, 1);
 		if (mListener != null) {
 			mListener.navigateToDate(dateToShow);
