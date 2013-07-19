@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -20,8 +23,8 @@ import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
-public class MonthViewFragment extends Fragment implements
-		MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
+public class MonthViewFragment extends Fragment implements OnItemClickListener,
+		OnItemLongClickListener, OnClickListener, DataKeeperClient {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG = false;
 
@@ -79,7 +82,7 @@ public class MonthViewFragment extends Fragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		log("onActivityCreated");
-		adapter = new MonthViewAdapter(getActivity(), mDataKeeper, this);
+		adapter = new MonthViewAdapter(getActivity(), mDataKeeper);
 
 		Button prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
@@ -93,6 +96,9 @@ public class MonthViewFragment extends Fragment implements
 		calendarView = (GridView) getActivity().findViewById(
 				R.id.calendarGridView);
 		calendarView.setAdapter(adapter);
+
+		calendarView.setOnItemClickListener(this);
+		calendarView.setOnItemLongClickListener(this);
 		calendarView
 				.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
 					@Override
@@ -121,17 +127,33 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	@Override
-	public void onItemClick(Calendar item) {
-		if (mListener != null) {
-			mListener.updateDetailedView();
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+		Object item = adapter.getItem(position);
+		if (item != null) {
+			Calendar date = (Calendar) item;
+			setSelectedDate(date);
+
+			if (mListener != null) {
+				mListener.updateDetailedView();
+			}
 		}
 	}
 
 	@Override
-	public void onItemLongClick(Calendar item) {
-		if (mListener != null) {
-			mListener.showDetailedView();
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+			int position, long arg3) {
+		Object item = adapter.getItem(position);
+		if (item != null) {
+			Calendar date = (Calendar) item;
+			setSelectedDate(date);
+
+			if (mListener != null) {
+				mListener.showDetailedView();
+			}
 		}
+
+		return true;
 	}
 
 	public void update() {
