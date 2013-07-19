@@ -3,6 +3,7 @@ package com.anna.sent.soft.womancyc.adapters;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +51,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	protected int mMonth, mYear;
 	private Calendar mSelectedDate, mToday;
 	private View mSelectedView = null;
+	private int mThemeId;
 
 	/**
 	 * Must be not null.
@@ -68,6 +71,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 			Listener listener) {
 		super();
 		mContext = context;
+		mThemeId = ThemeUtils.getThemeId(mContext);
 		mDataKeeper = dataKeeper;
 		mListener = listener;
 		mCalculator = new Calculator(context, mDataKeeper);
@@ -240,8 +244,6 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 	@SuppressWarnings("deprecation")
 	protected void initDayOfMonth(View cell, Calendar item) {
-		int themeId = ThemeUtils.getThemeId(mContext);
-
 		cell.setTag(item);
 
 		CalendarData cellData = mDataKeeper.get(item);
@@ -259,14 +261,14 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 		if (item.get(Calendar.MONTH) != mMonth) {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
-			if (themeId == ThemeUtils.DARK_THEME) {
+			if (mThemeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.LTGRAY);
 			}
 		} else {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
-			if (themeId == ThemeUtils.DARK_THEME) {
+			if (mThemeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
@@ -331,17 +333,34 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		cell.setOnLongClickListener(this);
 	}
 
+	private SparseArray<Drawable> mDrawablesFromTheme = new SparseArray<Drawable>();
+
 	private Drawable getDrawableFromTheme(int attribute) {
-		int[] attrs = new int[] { attribute };
-		TypedArray ta = mContext.obtainStyledAttributes(attrs);
-		Drawable drawableFromTheme = ta.getDrawable(0);
-		ta.recycle();
-		return drawableFromTheme;
+		Drawable result = mDrawablesFromTheme.get(attribute);
+		if (result == null) {
+			int[] attrs = new int[] { attribute };
+			TypedArray ta = mContext.obtainStyledAttributes(attrs);
+			result = ta.getDrawable(0);
+			ta.recycle();
+
+			mDrawablesFromTheme.put(attribute, result);
+		}
+
+		return result;
 	}
 
+	private SparseArray<Drawable> mDrawables = new SparseArray<Drawable>();
+
 	private Drawable getDrawable(int drawable) {
-		Resources resources = mContext.getResources();
-		return resources.getDrawable(drawable);
+		Drawable result = mDrawables.get(drawable);
+		if (result == null) {
+			Resources resources = mContext.getResources();
+			result = resources.getDrawable(drawable);
+
+			mDrawables.put(drawable, result);
+		}
+
+		return result;
 	}
 
 	public void update() {
