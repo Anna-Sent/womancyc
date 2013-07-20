@@ -114,8 +114,7 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	public void setSelectedDate(Calendar date) {
-		// log("set selected date to " + DateUtils.toString(getActivity(),
-		// date));
+		// log("set selected date to " + DateUtils.toString(date));
 		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				date.getTime()));

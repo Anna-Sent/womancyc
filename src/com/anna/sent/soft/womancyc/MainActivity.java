@@ -95,7 +95,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void saveActivityState(Bundle state) {
-		// log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()),
+		// log("save " + DateUtils.toString(mMonthView.getSelectedDate()),
 		// false);
 		state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
 	}

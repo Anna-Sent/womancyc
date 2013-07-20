@@ -82,7 +82,8 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			TextView column2 = (TextView) row.findViewById(R.id.column2);
 			TextView column3 = (TextView) row.findViewById(R.id.column3);
 
-			column1.setText(DateUtils.toString(stat.rows.get(i).firstDayOfCycle));
+			column1.setText(DateUtils.toString(this,
+					stat.rows.get(i).firstDayOfCycle));
 			int mcl = stat.rows.get(i).menstrualCycleLen;
 			column2.setText(String.valueOf(mcl));
 			if (mcl > Calculator.getMaxMenstrualCycleLen(this)) {
