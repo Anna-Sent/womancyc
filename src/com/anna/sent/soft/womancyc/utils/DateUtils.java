@@ -26,46 +26,22 @@ public class DateUtils {
 	}
 
 	public static boolean datesAreEqual(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
-		int y1 = date1.get(Calendar.YEAR);
-		int y2 = date2.get(Calendar.YEAR);
-		return d1 == d2 && m1 == m2 && y1 == y2;
+		return compare(date1, date2) == 0;
 	}
 
 	public static boolean before(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
-		int y1 = date1.get(Calendar.YEAR);
-		int y2 = date2.get(Calendar.YEAR);
-		if (y1 == y2) {
-			if (m1 == m2) {
-				if (d1 == d2) {
-					return false;
-				} else {
-					return d1 < d2;
-				}
-			} else {
-				return m1 < m2;
-			}
-		} else {
-			return y1 < y2;
-		}
+		return compare(date1, date2) < 0;
 	}
 
 	public static int compare(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
 		int y1 = date1.get(Calendar.YEAR);
 		int y2 = date2.get(Calendar.YEAR);
 		if (y1 == y2) {
+			int m1 = date1.get(Calendar.MONTH);
+			int m2 = date2.get(Calendar.MONTH);
 			if (m1 == m2) {
+				int d1 = date1.get(Calendar.DAY_OF_MONTH);
+				int d2 = date2.get(Calendar.DAY_OF_MONTH);
 				if (d1 == d2) {
 					return 0;
 				} else {
@@ -80,76 +56,20 @@ public class DateUtils {
 	}
 
 	public static boolean beforeOrEqual(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
-		int y1 = date1.get(Calendar.YEAR);
-		int y2 = date2.get(Calendar.YEAR);
-		if (y1 == y2) {
-			if (m1 == m2) {
-				if (d1 == d2) {
-					return true;
-				} else {
-					return d1 < d2;
-				}
-			} else {
-				return m1 < m2;
-			}
-		} else {
-			return y1 < y2;
-		}
+		return compare(date1, date2) <= 0;
 	}
 
 	public static boolean after(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
-		int y1 = date1.get(Calendar.YEAR);
-		int y2 = date2.get(Calendar.YEAR);
-		if (y1 == y2) {
-			if (m1 == m2) {
-				if (d1 == d2) {
-					return false;
-				} else {
-					return d1 > d2;
-				}
-			} else {
-				return m1 > m2;
-			}
-		} else {
-			return y1 > y2;
-		}
+		return compare(date1, date2) > 0;
 	}
 
 	public static boolean afterOrEqual(Calendar date1, Calendar date2) {
-		int d1 = date1.get(Calendar.DAY_OF_MONTH);
-		int d2 = date2.get(Calendar.DAY_OF_MONTH);
-		int m1 = date1.get(Calendar.MONTH);
-		int m2 = date2.get(Calendar.MONTH);
-		int y1 = date1.get(Calendar.YEAR);
-		int y2 = date2.get(Calendar.YEAR);
-		if (y1 == y2) {
-			if (m1 == m2) {
-				if (d1 == d2) {
-					return true;
-				} else {
-					return d1 > d2;
-				}
-			} else {
-				return m1 > m2;
-			}
-		} else {
-			return y1 > y2;
-		}
+		return compare(date1, date2) >= 0;
 	}
 
 	public static int getDifferenceInDays(Calendar date1, Calendar date2) {
-		Calendar tmp1 = (Calendar) date1.clone();
-		Calendar tmp2 = (Calendar) date2.clone();
-		zeroTime(tmp1);
-		zeroTime(tmp2);
-		return (int) ((tmp1.getTimeInMillis() - tmp2.getTimeInMillis()) / (3600 * 1000 * 24));
+		zeroTime(date1);
+		zeroTime(date2);
+		return (int) ((date1.getTimeInMillis() - date2.getTimeInMillis()) / (3600 * 1000 * 24));
 	}
 }

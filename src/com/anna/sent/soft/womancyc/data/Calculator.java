@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.data;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -21,6 +20,7 @@ public class Calculator {
 		return Calculator.class.getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private static void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -37,7 +37,6 @@ public class Calculator {
 	private DataKeeper mDataKeeper;
 	private int defaultMenstrualCycleLen;
 	private boolean useAvg;
-	private HashMap<Calendar, Calendar> map = new HashMap<Calendar, Calendar>();
 
 	public Calculator(Context context, DataKeeper dataKeeper) {
 		mDataKeeper = dataKeeper;
@@ -98,13 +97,6 @@ public class Calculator {
 	}
 
 	public Calendar getFirstDayOfCycle(Calendar current) {
-		DateUtils.zeroTime(current);
-		if (map.containsKey(current)) {
-			log("get cashed value");
-			return map.get(current);
-		}
-
-		log("calculate value");
 		int currentIndex = getLeftNeighborIndex(current);
 		CalendarData currentData = mDataKeeper.get(currentIndex);
 
@@ -114,7 +106,6 @@ public class Calculator {
 		}
 
 		if (currentData == null) {
-			map.put(current, null);
 			return null;
 		} else {
 			CalendarData firstDayOfCycleData;
@@ -125,7 +116,6 @@ public class Calculator {
 				currentData = mDataKeeper.get(yesterday);
 			} while (currentData != null && currentData.getMenstruation() != 0);
 
-			map.put(current, firstDayOfCycleData.getDate());
 			return (Calendar) firstDayOfCycleData.getDate().clone();
 		}
 	}

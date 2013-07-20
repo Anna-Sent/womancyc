@@ -14,7 +14,9 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class DataKeeperImpl implements DataKeeper {
 	private static final String TAG = "moo";
 	private static final boolean DEBUG_SYNC = false;
+	@SuppressWarnings("unused")
 	private static final boolean DEBUG_BIN = false;
+	@SuppressWarnings("unused")
 	private static final boolean DEBUG_CRUD = false;
 
 	private String wrapMsg(String msg) {
@@ -65,19 +67,19 @@ public class DataKeeperImpl implements DataKeeper {
 
 	@Override
 	public synchronized int indexOf(Calendar date) {
-		log("search " + DateUtils.toString(date), DEBUG_BIN);
+		// log("search " + DateUtils.toString(date), DEBUG_BIN);
 		int low = 0;
 		int high = mValues.size() - 1;
-		log("low " + low + " high " + high, DEBUG_BIN);
+		// log("low " + low + " high " + high, DEBUG_BIN);
 
 		while (low <= high) {
-			log("low " + low + " high " + high, DEBUG_BIN);
+			// log("low " + low + " high " + high, DEBUG_BIN);
 			int mid = (low + high) >>> 1;
-			log("mid " + mid, DEBUG_BIN);
+			// log("mid " + mid, DEBUG_BIN);
 			Calendar midVal = mValues.get(mid).getDate();
 			int compare = DateUtils.compare(midVal, date);
-			log("miv val " + DateUtils.toString(midVal), DEBUG_BIN);
-			log("compare is " + compare, DEBUG_BIN);
+			// log("miv val " + DateUtils.toString(midVal), DEBUG_BIN);
+			// log("compare is " + compare, DEBUG_BIN);
 
 			if (compare == -1) {
 				low = mid + 1;
@@ -108,24 +110,24 @@ public class DataKeeperImpl implements DataKeeper {
 	@Override
 	public synchronized void insertOrUpdate(CalendarData value) {
 		if (value.isEmpty()) {
-			log("value is empty", DEBUG_CRUD);
+			// log("value is empty", DEBUG_CRUD);
 			delete(value);
 			return;
 		}
 
 		int index = indexOf(value);
-		log("index of value is " + index, DEBUG_CRUD);
+		// log("index of value is " + index, DEBUG_CRUD);
 		if (index >= 0) {
 			boolean updated = mDataSource.update(value);
 			if (updated) {
-				log("updated", DEBUG_CRUD);
+				// log("updated", DEBUG_CRUD);
 				mValues.set(index, value);
 				mDataSource.getAllNotes(mNotes);
 			}
 		} else {
 			boolean inserted = mDataSource.insert(value);
 			if (inserted) {
-				log("inserted", DEBUG_CRUD);
+				// log("inserted", DEBUG_CRUD);
 				mValues.add(-index - 1, value);
 				mDataSource.getAllNotes(mNotes);
 			}
@@ -181,11 +183,11 @@ public class DataKeeperImpl implements DataKeeper {
 	@Override
 	public synchronized void delete(CalendarData value) {
 		int index = indexOf(value);
-		log("index of value is " + index, DEBUG_CRUD);
+		// log("index of value is " + index, DEBUG_CRUD);
 		if (index >= 0) {
 			boolean deleted = mDataSource.delete(value);
 			if (deleted) {
-				log("deleted", DEBUG_CRUD);
+				// log("deleted", DEBUG_CRUD);
 				mValues.remove(index);
 				mDataSource.getAllNotes(mNotes);
 			}
