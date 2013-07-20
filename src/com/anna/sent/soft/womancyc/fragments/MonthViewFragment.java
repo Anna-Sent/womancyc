@@ -17,7 +17,6 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 public class MonthViewFragment extends Fragment implements
@@ -29,6 +28,7 @@ public class MonthViewFragment extends Fragment implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -78,7 +78,7 @@ public class MonthViewFragment extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		log("onActivityCreated");
+		// log("onActivityCreated");
 		adapter = new MonthViewAdapter(getActivity(), mDataKeeper, this);
 
 		Button prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
@@ -114,7 +114,8 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	public void setSelectedDate(Calendar date) {
-		log("set selected date to " + DateUtils.toString(getActivity(), date));
+		// log("set selected date to " + DateUtils.toString(getActivity(),
+		// date));
 		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
 				date.getTime()));

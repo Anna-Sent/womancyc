@@ -15,6 +15,7 @@ public class UpdateWidgetService extends IntentService {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -28,13 +29,13 @@ public class UpdateWidgetService extends IntentService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		log("create widget update service");
+		// log("create widget update service");
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		log("destroy widget update service");
+		// log("destroy widget update service");
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class UpdateWidgetService extends IntentService {
 			AppWidgetProviderInfo info = manager.getAppWidgetInfo(appWidgetId);
 			String className = info.provider.getClassName();
 			Builder builder = MyCycleWidget.getBuilder(className);
-			log("update widget " + className);
+			// log("update widget " + className);
 			if (builder != null) {
 				RemoteViews views = builder.buildViews(this, appWidgetId);
 				manager.updateAppWidget(appWidgetId, views);

@@ -26,6 +26,7 @@ public class CalendarDataManager {
 		return CalendarDataManager.class.getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private static void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -179,30 +180,30 @@ public class CalendarDataManager {
 			DataKeeper dataKeeper) throws XmlPullParserException, IOException {
 		if (eventType == XmlPullParser.START_TAG
 				&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
-			log("start of " + xpp.getName());
+			// log("start of " + xpp.getName());
 			eventType = xpp.nextTag();
 			while (eventType == XmlPullParser.START_TAG
 					&& xpp.getName().equals(TAG_ROW)) {
-				log("start of " + xpp.getName());
+				// log("start of " + xpp.getName());
 				CalendarData data = new CalendarData();
 
 				for (int i = 0; i < xpp.getAttributeCount(); ++i) {
 					String name = xpp.getAttributeName(i);
 					String value = xpp.getAttributeValue(i);
 					if (name.equals(CalendarHelper.COLUMN_ID)) {
-						log(name + " " + value);
+						// log(name + " " + value);
 						data.setDate(value);
 					} else if (name.equals(CalendarHelper.COLUMN_MENSTRUATION)) {
-						log(name + " " + value);
+						// log(name + " " + value);
 						data.setMenstruation(value);
 					} else if (name.equals(CalendarHelper.COLUMN_SEX)) {
-						log(name + " " + value);
+						// log(name + " " + value);
 						data.setSex(value);
 					} else if (name.equals(CalendarHelper.COLUMN_TOOK_PILL)) {
-						log(name + " " + value);
+						// log(name + " " + value);
 						data.setTookPill(value);
 					} else if (name.equals(CalendarHelper.COLUMN_NOTE)) {
-						log(name + " \"" + value + "\"");
+						// log(name + " \"" + value + "\"");
 						data.setNote(value);
 					}
 				}
@@ -211,7 +212,7 @@ public class CalendarDataManager {
 				eventType = xpp.nextTag();
 				if (eventType == XmlPullParser.END_TAG
 						&& xpp.getName().equals(TAG_ROW)) {
-					log("end of " + xpp.getName());
+					// log("end of " + xpp.getName());
 					eventType = xpp.nextTag();
 				} else {
 					break;
@@ -220,7 +221,7 @@ public class CalendarDataManager {
 
 			if (eventType == XmlPullParser.END_TAG
 					&& xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
-				log("end of " + xpp.getName());
+				// log("end of " + xpp.getName());
 				eventType = xpp.next();
 			}
 		}

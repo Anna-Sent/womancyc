@@ -23,18 +23,20 @@ import com.anna.sent.soft.womancyc.utils.DateUtils;
 public class MainActivity extends OptionsActivity implements CalendarListener,
 		OnDateSetListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg, boolean debug) {
 		if (DEBUG && debug) {
 			Log.d(TAG, wrapMsg(msg));
@@ -52,7 +54,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		if (fragment instanceof MonthViewFragment) {
 			mMonthView = (MonthViewFragment) fragment;
 			mMonthView.setListener(this);
-			log("attach month view");
+			// log("attach month view");
 		}
 	}
 
@@ -70,7 +72,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void onStart() {
-		log("onStart", false);
+		// log("onStart", false);
 		super.onStart();
 		if (mDateToShow == null) {
 			mDateToShow = Calendar.getInstance();
@@ -93,8 +95,8 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void saveActivityState(Bundle state) {
-		log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()),
-				false);
+		// log("save " + DateUtils.toString(this, mMonthView.getSelectedDate()),
+		// false);
 		state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
 	}
 
@@ -114,7 +116,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	protected void dataChanged() {
-		log("data changed");
+		// log("data changed");
 		mMonthView.update();
 		DayViewFragment dayView = getDayView();
 		if (dayView != null) {
@@ -174,7 +176,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	@Override
 	public void navigateToDate(Calendar date) {
 		if (!DateUtils.datesAreEqual(date, mMonthView.getSelectedDate())) {
-			log("navigate to date");
+			// log("navigate to date");
 			mMonthView.setSelectedDate(date);
 			setDayViewToDate();
 		}

@@ -21,6 +21,7 @@ public abstract class Builder {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -34,7 +35,7 @@ public abstract class Builder {
 	}
 
 	public RemoteViews buildViews(Context context, int appWidgetId) {
-		log("build views");
+		// log("build views");
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget_layout);
 		setOnClickPendingIntent(context, views);
@@ -55,7 +56,7 @@ public abstract class Builder {
 			}
 		}
 
-		log(result);
+		// log(result);
 		views.setTextViewText(R.id.widgetTextView, result);
 		return views;
 	}

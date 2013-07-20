@@ -23,6 +23,7 @@ public class PasswordPreference extends DialogPreference {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -125,7 +126,7 @@ public class PasswordPreference extends DialogPreference {
 
 	@Override
 	protected Parcelable onSaveInstanceState() {
-		log("save");
+		// log("save");
 		final Parcelable superState = super.onSaveInstanceState();
 
 		/*
@@ -135,10 +136,11 @@ public class PasswordPreference extends DialogPreference {
 		final SavedState myState = new SavedState(superState);
 		if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
 			myState.password = mEditTextPassword.getText().toString();
-			log("save password \"" + myState.password + "\"");
+			// log("save password \"" + myState.password + "\"");
 			myState.confirmedPassword = mEditTextConfirmedPassword.getText()
 					.toString();
-			log("save confirmed password \"" + myState.confirmedPassword + "\"");
+			// log("save confirmed password \"" + myState.confirmedPassword +
+			// "\"");
 		}
 
 		return myState;
@@ -146,10 +148,10 @@ public class PasswordPreference extends DialogPreference {
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
-		log("restore");
+		// log("restore");
 		if (state == null || !state.getClass().equals(SavedState.class)) {
-			log("restore " + state == null ? "null" : state.getClass()
-					.getName());
+			// log("restore " + state == null ? "null" :
+			// state.getClass().getName());
 			super.onRestoreInstanceState(state);
 			return;
 		}
@@ -158,10 +160,10 @@ public class PasswordPreference extends DialogPreference {
 		super.onRestoreInstanceState(myState.getSuperState());
 		if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
 			mEditTextPassword.setText(myState.password);
-			log("restore password \"" + myState.password + "\"");
+			// log("restore password \"" + myState.password + "\"");
 			mEditTextConfirmedPassword.setText(myState.confirmedPassword);
-			log("restore confirmed password \"" + myState.confirmedPassword
-					+ "\"");
+			// log("restore confirmed password \"" + myState.confirmedPassword +
+			// "\"");
 		}
 	}
 

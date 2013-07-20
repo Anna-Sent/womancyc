@@ -13,6 +13,7 @@ public class CalendarHelper extends SQLiteOpenHelper {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -50,15 +51,15 @@ public class CalendarHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		log("Creating database");
+		// log("Creating database");
 		createDatabase(database);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		log("Upgrading database from version " + oldVersion + " to "
-				+ newVersion + ", which will destroy all old data");
+		// log("Upgrading database from version " + oldVersion + " to " +
+		// newVersion + ", which will destroy all old data");
 		recreateDatabase(database);
 	}
 

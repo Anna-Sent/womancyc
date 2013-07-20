@@ -21,6 +21,7 @@ public class NumberPickerPreference extends DialogPreference {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -134,7 +135,7 @@ public class NumberPickerPreference extends DialogPreference {
 
 	@Override
 	protected Parcelable onSaveInstanceState() {
-		log("save");
+		// log("save");
 		final Parcelable superState = super.onSaveInstanceState();
 
 		/*
@@ -144,7 +145,7 @@ public class NumberPickerPreference extends DialogPreference {
 		final SavedState myState = new SavedState(superState);
 		if (mNumberPicker != null) {
 			myState.value = mNumberPicker.getValue();
-			log("save " + myState.value);
+			// log("save " + myState.value);
 		}
 
 		return myState;
@@ -152,10 +153,10 @@ public class NumberPickerPreference extends DialogPreference {
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
-		log("restore");
+		// log("restore");
 		if (state == null || !state.getClass().equals(SavedState.class)) {
-			log("restore " + state == null ? "null" : state.getClass()
-					.getName());
+			// log("restore " + state == null ? "null" :
+			// state.getClass().getName());
 			super.onRestoreInstanceState(state);
 			return;
 		}
@@ -164,7 +165,7 @@ public class NumberPickerPreference extends DialogPreference {
 		super.onRestoreInstanceState(myState.getSuperState());
 		if (mNumberPicker != null) {
 			mNumberPicker.setValue(myState.value);
-			log("restore " + myState.value);
+			// log("restore " + myState.value);
 		}
 	}
 

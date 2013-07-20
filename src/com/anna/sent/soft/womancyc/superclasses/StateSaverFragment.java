@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +12,7 @@ public abstract class StateSaverFragment extends Fragment implements StateSaver 
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -33,12 +33,12 @@ public abstract class StateSaverFragment extends Fragment implements StateSaver 
 		setViews(savedInstanceState);
 
 		if (savedInstanceState != null) {
-			log("restore 1");
+			// log("restore 1");
 			restoreState(savedInstanceState);
 		} else {
 			savedInstanceState = getActivity().getIntent().getExtras();
 			if (savedInstanceState != null) {
-				log("restore 2");
+				// log("restore 2");
 				restoreState(savedInstanceState);
 			}
 		}

@@ -30,6 +30,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -56,7 +57,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		public void run() {
-			log("ShowProgressTask");
+			// log("ShowProgressTask");
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -64,7 +65,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 						return;
 					}
 
-					log("ShowProgressTask on ui thread");
+					// log("ShowProgressTask on ui thread");
 					if (mProgressDialog == null) {
 						mProgressDialog = ProgressDialog.show(
 								DataKeeperActivity.this, mTitle, "", false,
@@ -102,7 +103,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected void onPreExecute() {
-			log("onPreExecute");
+			// log("onPreExecute");
 			mIsDataTaskCompleted = false;
 			if (mShowProgress) {
 				startTimer(mProgressMessage);
@@ -121,7 +122,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected void onPostExecute(String result) {
-			log("onPostExecute");
+			// log("onPostExecute");
 			mIsDataTaskCompleted = true;
 			stopTimer();
 			stopProgress();
@@ -228,9 +229,9 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	}
 
 	private void openDataSource() {
-		log("before open data source task execute");
+		// log("before open data source task execute");
 		new OpenDataSourceTask().execute();
-		log("after open data source task execute");
+		// log("after open data source task execute");
 	}
 
 	private class OpenDataSourceTask extends DataTask {
@@ -368,7 +369,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			int prevYear = initialYear;
 			int index = 1;
 			while (DateUtils.beforeOrEqual(date, today)) {
-				log(index + " " + DateUtils.toString(date));
+				// log(index + " " + DateUtils.toString(date));
 				if (1 <= index && index <= 7) {
 					CalendarData value = new CalendarData(date);
 					value.setMenstruation(1);

@@ -37,6 +37,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -371,7 +372,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	}
 
 	public void update() {
-		log("update");
+		// log("update");
 		mCalculator = new Calculator(mContext, mDataKeeper);
 		mSelectedView = null;
 		notifyDataSetChanged();

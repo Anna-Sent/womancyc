@@ -41,6 +41,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -88,10 +89,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
 		if (mIsEmbedded) {
 			v = createView(inflater);
-			log("onCreateView");
+			// log("onCreateView");
 		} else {
 			v = super.onCreateView(inflater, container, savedInstanceState);
-			log("onCreateView returns null");
+			// log("onCreateView returns null");
 		}
 
 		return v;
@@ -103,7 +104,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		log("onCreateDialog");
+		// log("onCreateDialog");
 		if (mIsEmbedded) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
@@ -129,7 +130,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		log("onActivityCreated");
+		// log("onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
 		if (mIsEmbedded) {
 			spinnerHadMenstruation = (Spinner) getActivity().findViewById(
@@ -224,7 +225,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	}
 
 	public void update() {
-		log("update " + toString());
+		// log("update " + toString());
 		mValue = mDataKeeper.get(mDateToShow);
 		if (mValue == null) {
 			mValue = new CalendarData(mDateToShow);
@@ -232,7 +233,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mValue = mValue.clone(); // to update properly
 		}
 
-		log(mValue.toString());
+		// log(mValue.toString());
 		buttonCurrentDay
 				.setText(DateUtils.toString(getActivity(), mDateToShow));
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
@@ -258,7 +259,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 
 	@Override
 	public void onPause() {
-		log("onPause");
+		// log("onPause");
 		super.onPause();
 		tryToSave();
 	}
@@ -348,7 +349,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			mValue.setSex(sex);
 			mValue.setTookPill(tookPill);
 			mValue.setNote(note);
-			log("data is changed");
+			// log("data is changed");
 
 			mDataKeeper.insertOrUpdate(mValue);
 		}
