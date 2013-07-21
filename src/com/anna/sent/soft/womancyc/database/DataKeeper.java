@@ -1,14 +1,15 @@
 package com.anna.sent.soft.womancyc.database;
 
-import java.util.Calendar;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
 
 public interface DataKeeper {
-	public CalendarData get(Calendar date);
+	public CalendarData get(LocalDate date);
 
-	public int indexOf(Calendar date);
+	public int indexOf(LocalDate date);
 
 	public CalendarData get(int index);
 

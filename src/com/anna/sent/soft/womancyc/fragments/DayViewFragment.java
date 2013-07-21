@@ -1,7 +1,8 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import java.util.Calendar;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,7 +30,6 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,
@@ -78,7 +78,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	private Button buttonCurrentDay, buttonClear, buttonClose, buttonPrevDay,
 			buttonNextDay, buttonViewAsList;
 
-	private Calendar mDateToShow;
+	private LocalDate mDateToShow;
 	private CalendarData mValue;
 	private boolean mIsEmbedded;
 
@@ -185,12 +185,12 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		});
 
 		if (getArguments() != null) {
-			mDateToShow = (Calendar) getArguments().getSerializable(
+			mDateToShow = (LocalDate) getArguments().getSerializable(
 					Shared.DATE_TO_SHOW);
 		}
 
 		if (mDateToShow == null) {
-			mDateToShow = Calendar.getInstance();
+			mDateToShow = LocalDate.now();
 		}
 
 		update();
@@ -218,7 +218,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		spinner.setOnItemSelectedListener(this);
 	}
 
-	public void setSelectedDate(Calendar value) {
+	public void setSelectedDate(LocalDate value) {
 		tryToSave();
 		mDateToShow = value;
 		update();
@@ -234,8 +234,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		// log(mValue.toString());
-		buttonCurrentDay
-				.setText(DateUtils.toString(getActivity(), mDateToShow));
+		buttonCurrentDay.setText(mDateToShow.toString());
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		if (menstruation != mValue.getMenstruation()) {
 			spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
@@ -320,17 +319,15 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	}
 
 	private void toPrevDay() {
-		Calendar dateToShow = (Calendar) mDateToShow.clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, -1);
 		if (mListener != null) {
+			LocalDate dateToShow = mDateToShow.minusDays(1);
 			mListener.navigateToDate(dateToShow);
 		}
 	}
 
 	private void toNextDay() {
-		Calendar dateToShow = (Calendar) mDateToShow.clone();
-		dateToShow.add(Calendar.DAY_OF_MONTH, 1);
 		if (mListener != null) {
+			LocalDate dateToShow = mDateToShow.plusDays(1);
 			mListener.navigateToDate(dateToShow);
 		}
 	}

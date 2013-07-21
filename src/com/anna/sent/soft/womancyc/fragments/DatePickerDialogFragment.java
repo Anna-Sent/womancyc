@@ -1,6 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import java.util.Calendar;
+import org.joda.time.LocalDate;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -26,13 +26,10 @@ public class DatePickerDialogFragment extends DialogFragment implements
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		final Calendar c = (Calendar) getArguments().getSerializable(
+		final LocalDate c = (LocalDate) getArguments().getSerializable(
 				Shared.DATE_TO_SHOW);
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DAY_OF_MONTH);
 		DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-				mListener, year, month, day);
+				mListener, c.getYear(), c.getMonthOfYear(), c.getDayOfYear());
 		dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
 				getString(R.string.today), this);
 		return dialog;
@@ -41,12 +38,10 @@ public class DatePickerDialogFragment extends DialogFragment implements
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_NEUTRAL) {
-			Calendar today = Calendar.getInstance();
-			int year = today.get(Calendar.YEAR);
-			int month = today.get(Calendar.MONTH);
-			int day = today.get(Calendar.DAY_OF_MONTH);
+			LocalDate today = LocalDate.now();
 			if (mListener != null) {
-				mListener.onDateSet(null, year, month, day);
+				mListener.onDateSet(null, today.getYear(),
+						today.getMonthOfYear(), today.getDayOfMonth());
 			}
 		}
 	}

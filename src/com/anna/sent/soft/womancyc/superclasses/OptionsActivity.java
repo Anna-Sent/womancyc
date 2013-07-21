@@ -3,9 +3,10 @@ package com.anna.sent.soft.womancyc.superclasses;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,7 +25,6 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.SettingsActivity;
 import com.anna.sent.soft.womancyc.StatisticActivity;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public abstract class OptionsActivity extends DataKeeperActivity {
 	@Override
@@ -182,8 +182,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, getFilesList());
 		textView.setAdapter(adapter);
-		textView.setText(getString(R.string.bacupFileName,
-				DateUtils.toString(this, Calendar.getInstance())));
+		textView.setText(getString(R.string.bacupFileName, LocalDate.now()
+				.toString()));
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.enterFileNameToWrite)

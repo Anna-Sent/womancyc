@@ -1,56 +1,57 @@
 package com.anna.sent.soft.womancyc.data;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
-import android.annotation.SuppressLint;
-
-import com.anna.sent.soft.womancyc.utils.DateUtils;
+import org.joda.time.LocalDate;
 
 public class CalendarData implements Serializable, Cloneable {
 	private static final String DATE_FORMAT = "dd-MM-yyyy";
 	private static final long serialVersionUID = -4217182666477849206L;
 
-	private Calendar date;
+	private LocalDate date;
 	private int menstruation = 0;
 	private int sex = 0;
 	private boolean tookPill = false;
 	private String note = null;
 
 	public CalendarData() {
-		this(Calendar.getInstance());
+		this(LocalDate.now());
 	}
 
-	public CalendarData(Calendar date) {
+	public CalendarData(LocalDate date) {
 		super();
-		DateUtils.zeroTime(date);
 		this.date = date;
 	}
 
 	public long getId() {
-		return date.getTimeInMillis();
+		return date.getYear() * 10000 + date.getMonthOfYear() * 100
+				+ date.getDayOfMonth();
 	}
 
-	public Calendar getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	public String getDateString() {
-		return new SimpleDateFormat(DATE_FORMAT).format(date.getTime());
+		return date.toString(DATE_FORMAT);
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	public void setDate(String value) {
-		try {
-			Date date = new SimpleDateFormat(DATE_FORMAT).parse(value);
-			this.date.setTime(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		String[] strings = value.split("-");
+		if (strings.length == 3) {
+			int day = Integer.parseInt(strings[0]);
+			int month = Integer.parseInt(strings[1]);
+			int year = Integer.parseInt(strings[2]);
+			date = new LocalDate(year, month, day);
 		}
+	}
+
+	public void setDate(int value) {
+		int year = value / 10000;
+		value = value % 10000;
+		int month = value / 100;
+		int day = value % 100;
+		date = new LocalDate(year, month, day);
 	}
 
 	public int getMenstruation() {
@@ -189,8 +190,7 @@ public class CalendarData implements Serializable, Cloneable {
 
 		CalendarData value = (CalendarData) obj;
 		return menstruation == value.menstruation && sex == value.sex
-				&& tookPill == value.tookPill
-				&& DateUtils.datesAreEqual(date, value.date)
+				&& tookPill == value.tookPill && date.equals(value.date)
 				&& (getNote().equals(value.getNote()));
 	}
 
@@ -201,12 +201,7 @@ public class CalendarData implements Serializable, Cloneable {
 		result = prime * result + menstruation;
 		result = prime * result + sex;
 		result = prime * result + (tookPill ? 1 : 0);
-		int d = date.get(Calendar.DAY_OF_MONTH);
-		int m = date.get(Calendar.MONTH);
-		int y = date.get(Calendar.YEAR);
-		result = prime * result + d;
-		result = prime * result + m;
-		result = prime * result + y;
+		result = prime * result + date.hashCode();
 		result = prime * result + getNote().hashCode();
 		return result;
 	}

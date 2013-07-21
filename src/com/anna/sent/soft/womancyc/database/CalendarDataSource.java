@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.database;
 
-import java.util.Calendar;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -148,9 +147,8 @@ public class CalendarDataSource {
 	}
 
 	private CalendarData cursorToCalendar(Cursor cursor) {
-		Calendar date = Calendar.getInstance();
-		date.setTimeInMillis(cursor.getLong(CalendarHelper.COLUMN_INDEX_ID));
-		CalendarData calendar = new CalendarData(date);
+		CalendarData calendar = new CalendarData();
+		calendar.setDate(cursor.getInt(CalendarHelper.COLUMN_INDEX_ID));
 		calendar.setMenstruation(cursor
 				.getInt(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
 		calendar.setSex(cursor.getInt(CalendarHelper.COLUMN_INDEX_SEX));

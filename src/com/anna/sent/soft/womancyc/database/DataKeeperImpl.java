@@ -1,15 +1,15 @@
 package com.anna.sent.soft.womancyc.database;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class DataKeeperImpl implements DataKeeper {
 	private static final String TAG = "moo";
@@ -56,7 +56,7 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public synchronized CalendarData get(Calendar date) {
+	public synchronized CalendarData get(LocalDate date) {
 		int index = indexOf(date);
 		if (index >= 0) {
 			return mValues.get(index);
@@ -66,7 +66,7 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	@Override
-	public synchronized int indexOf(Calendar date) {
+	public synchronized int indexOf(LocalDate date) {
 		// log("search " + DateUtils.toString(date), DEBUG_BIN);
 		int low = 0;
 		int high = mValues.size() - 1;
@@ -76,14 +76,14 @@ public class DataKeeperImpl implements DataKeeper {
 			// log("low " + low + " high " + high, DEBUG_BIN);
 			int mid = (low + high) >>> 1;
 			// log("mid " + mid, DEBUG_BIN);
-			Calendar midVal = mValues.get(mid).getDate();
-			int compare = DateUtils.compare(midVal, date);
+			LocalDate midVal = mValues.get(mid).getDate();
+			int compare = midVal.compareTo(date);
 			// log("miv val " + DateUtils.toString(midVal), DEBUG_BIN);
 			// log("compare is " + compare, DEBUG_BIN);
 
-			if (compare == -1) {
+			if (compare < 0) {
 				low = mid + 1;
-			} else if (compare == 1) {
+			} else if (compare > 0) {
 				high = mid - 1;
 			} else {
 				return mid; // key found
@@ -202,7 +202,6 @@ public class DataKeeperImpl implements DataKeeper {
 	}
 
 	private int indexOf(CalendarData value) {
-		Calendar date = value.getDate();
-		return indexOf(date);
+		return indexOf(value.getDate());
 	}
 }

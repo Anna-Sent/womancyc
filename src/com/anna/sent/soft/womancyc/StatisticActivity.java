@@ -15,7 +15,6 @@ import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.Calculator.Statistic;
 import com.anna.sent.soft.womancyc.data.Calculator.Value;
 import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class StatisticActivity extends ChildActivity implements OnClickListener {
 	@Override
@@ -82,8 +81,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			TextView column2 = (TextView) row.findViewById(R.id.column2);
 			TextView column3 = (TextView) row.findViewById(R.id.column3);
 
-			column1.setText(DateUtils.toString(this,
-					stat.rows.get(i).firstDayOfCycle));
+			column1.setText(stat.rows.get(i).firstDayOfCycle.toString());
 			int mcl = stat.rows.get(i).menstrualCycleLen;
 			column2.setText(String.valueOf(mcl));
 			if (mcl > Calculator.getMaxMenstrualCycleLen(this)) {

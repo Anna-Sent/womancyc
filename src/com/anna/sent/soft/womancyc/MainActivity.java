@@ -1,6 +1,6 @@
 package com.anna.sent.soft.womancyc;
 
-import java.util.Calendar;
+import org.joda.time.LocalDate;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.OptionsActivity;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 
 public class MainActivity extends OptionsActivity implements CalendarListener,
 		OnDateSetListener {
@@ -68,14 +67,14 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		mFragmentManager = getSupportFragmentManager();
 	}
 
-	private Calendar mDateToShow = null;
+	private LocalDate mDateToShow = null;
 
 	@Override
 	public void onStart() {
 		// log("onStart", false);
 		super.onStart();
 		if (mDateToShow == null) {
-			mDateToShow = Calendar.getInstance();
+			mDateToShow = LocalDate.now();
 		}
 
 		mMonthView.setSelectedDate(mDateToShow);
@@ -90,7 +89,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void restoreState(Bundle state) {
-		mDateToShow = (Calendar) state.getSerializable(Shared.DATE_TO_SHOW);
+		mDateToShow = (LocalDate) state.getSerializable(Shared.DATE_TO_SHOW);
 	}
 
 	@Override
@@ -168,14 +167,13 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int month, int day) {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(year, month, day);
+		LocalDate dateToShow = new LocalDate(year, month, day);
 		navigateToDate(dateToShow);
 	}
 
 	@Override
-	public void navigateToDate(Calendar date) {
-		if (!DateUtils.datesAreEqual(date, mMonthView.getSelectedDate())) {
+	public void navigateToDate(LocalDate date) {
+		if (!date.isEqual(mMonthView.getSelectedDate())) {
 			// log("navigate to date");
 			mMonthView.setSelectedDate(date);
 			setDayViewToDate();

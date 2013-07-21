@@ -1,8 +1,6 @@
 package com.anna.sent.soft.womancyc.widget;
 
-import java.util.Calendar;
-
-import com.anna.sent.soft.womancyc.utils.DateUtils;
+import org.joda.time.DateTime;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -124,12 +122,10 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 	public static void installAlarms(Context context, Class<?> cls) {
 		AlarmManager alarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		Calendar midnight = Calendar.getInstance();
-		DateUtils.zeroTime(midnight);
+		DateTime midnight = DateTime.now().withTimeAtStartOfDay().plusDays(1);
 		PendingIntent operation = getPendingIntent(context, cls);
 		alarmManager.cancel(operation);
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				midnight.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-				operation);
+				midnight.getMillis(), AlarmManager.INTERVAL_DAY, operation);
 	}
 }

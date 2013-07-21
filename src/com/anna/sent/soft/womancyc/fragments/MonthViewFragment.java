@@ -1,6 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import java.util.Calendar;
+import org.joda.time.LocalDate;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -109,15 +109,15 @@ public class MonthViewFragment extends Fragment implements
 				});
 	}
 
-	public Calendar getSelectedDate() {
+	public LocalDate getSelectedDate() {
 		return adapter.getSelectedDate();
 	}
 
-	public void setSelectedDate(Calendar date) {
+	public void setSelectedDate(LocalDate date) {
 		// log("set selected date to " + DateUtils.toString(date));
 		adapter.setSelectedDate(date);
 		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
-				date.getTime()));
+				date.toDate()));
 	}
 
 	@Override
@@ -139,23 +139,17 @@ public class MonthViewFragment extends Fragment implements
 	}
 
 	private void toPrevMonth() {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
-		dateToShow.set(Calendar.MONTH, adapter.getMonth());
-		dateToShow.set(Calendar.YEAR, adapter.getYear());
-		dateToShow.add(Calendar.MONTH, -1);
 		if (mListener != null) {
+			LocalDate dateToShow = new LocalDate(adapter.getYear(),
+					adapter.getMonth(), 1).minusMonths(1);
 			mListener.navigateToDate(dateToShow);
 		}
 	}
 
 	private void toNextMonth() {
-		Calendar dateToShow = Calendar.getInstance();
-		dateToShow.set(Calendar.DAY_OF_MONTH, 1);
-		dateToShow.set(Calendar.MONTH, adapter.getMonth());
-		dateToShow.set(Calendar.YEAR, adapter.getYear());
-		dateToShow.add(Calendar.MONTH, 1);
 		if (mListener != null) {
+			LocalDate dateToShow = new LocalDate(adapter.getYear(),
+					adapter.getMonth(), 1).plusMonths(1);
 			mListener.navigateToDate(dateToShow);
 		}
 	}

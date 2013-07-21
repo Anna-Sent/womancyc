@@ -1,6 +1,6 @@
 package com.anna.sent.soft.womancyc.widget;
 
-import java.util.Calendar;
+import org.joda.time.LocalDate;
 
 import android.content.Context;
 
@@ -12,7 +12,7 @@ public final class BuilderMedium extends Builder {
 	@Override
 	protected String getResult(Context context, DataKeeper dataKeeper) {
 		Calculator calc = new Calculator(context, dataKeeper);
-		Calendar today = Calendar.getInstance();
+		LocalDate today = LocalDate.now();
 		int dayOfCycle = calc.getDayOfCycle(today);
 		int avgLen = 0;
 		if (dayOfCycle != 0) {

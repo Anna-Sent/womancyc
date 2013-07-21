@@ -1,9 +1,10 @@
 package com.anna.sent.soft.womancyc.superclasses;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.joda.time.LocalDate;
 
 import android.app.ProgressDialog;
 import android.database.SQLException;
@@ -18,7 +19,6 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.CalendarDataManager;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
@@ -192,12 +192,12 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 	protected abstract void dataChanged();
 
 	@Override
-	public CalendarData get(Calendar date) {
+	public CalendarData get(LocalDate date) {
 		return mDataKeeper.get(date);
 	}
 
 	@Override
-	public int indexOf(Calendar date) {
+	public int indexOf(LocalDate date) {
 		return mDataKeeper.indexOf(date);
 	}
 
@@ -362,13 +362,13 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 
 		@Override
 		protected String doInBackground(String... params) {
-			Calendar today = Calendar.getInstance();
-			Calendar date = (Calendar) today.clone();
-			date.add(Calendar.YEAR, -25);
-			int initialYear = date.get(Calendar.YEAR);
+			LocalDate today = LocalDate.now();
+			org.joda.time.LocalDate date = today;
+			date = date.minusYears(25);
+			int initialYear = date.getYear();
 			int prevYear = initialYear;
 			int index = 1;
-			while (DateUtils.beforeOrEqual(date, today)) {
+			while (date.isBefore(today) || date.isEqual(today)) {
 				// log(index + " " + DateUtils.toString(date));
 				if (1 <= index && index <= 7) {
 					CalendarData value = new CalendarData(date);
@@ -381,10 +381,9 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 					index = 1;
 				}
 
-				date = (Calendar) date.clone();
-				date.add(Calendar.DAY_OF_MONTH, 1);
+				date = date.plusDays(1);
 
-				int currentYear = date.get(Calendar.YEAR);
+				int currentYear = date.getYear();
 				if (currentYear != prevYear) {
 					String progress = String.valueOf(currentYear - initialYear);
 					publishProgress(new String[] { progress });

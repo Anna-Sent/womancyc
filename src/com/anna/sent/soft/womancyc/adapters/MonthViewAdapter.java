@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -25,7 +27,6 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.utils.DateUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
@@ -45,11 +46,11 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	}
 
 	private final Context mContext;
-	private final List<Calendar> mMonthCalendarValues = new ArrayList<Calendar>();
-	private List<Integer> mDayOfWeekValues = new ArrayList<Integer>();
+	private final List<LocalDate> mMonthCalendarValues = new ArrayList<LocalDate>();
+	private int[] mDayOfWeekValues = new int[7];
 	private String[] mDayOfWeekNames;
 	protected int mMonth, mYear;
-	private Calendar mSelectedDate, mToday;
+	private LocalDate mSelectedDate, mToday;
 	private View mSelectedView = null;
 	private int mThemeId;
 
@@ -75,31 +76,31 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		mDataKeeper = dataKeeper;
 		mListener = listener;
 		mCalculator = new Calculator(context, mDataKeeper);
-		mToday = Calendar.getInstance();
-		if (mToday.getFirstDayOfWeek() == Calendar.SUNDAY) {
-			mDayOfWeekValues.add(Calendar.SUNDAY);
-			mDayOfWeekValues.add(Calendar.MONDAY);
-			mDayOfWeekValues.add(Calendar.TUESDAY);
-			mDayOfWeekValues.add(Calendar.WEDNESDAY);
-			mDayOfWeekValues.add(Calendar.THURSDAY);
-			mDayOfWeekValues.add(Calendar.FRIDAY);
-			mDayOfWeekValues.add(Calendar.SATURDAY);
+		mToday = LocalDate.now();
+		if (Calendar.getInstance().getFirstDayOfWeek() == Calendar.SUNDAY) {
+			mDayOfWeekValues[0] = Calendar.SUNDAY;
+			mDayOfWeekValues[1] = Calendar.MONDAY;
+			mDayOfWeekValues[2] = Calendar.TUESDAY;
+			mDayOfWeekValues[3] = Calendar.WEDNESDAY;
+			mDayOfWeekValues[4] = Calendar.THURSDAY;
+			mDayOfWeekValues[5] = Calendar.FRIDAY;
+			mDayOfWeekValues[6] = Calendar.SATURDAY;
 		} else {
-			mDayOfWeekValues.add(Calendar.MONDAY);
-			mDayOfWeekValues.add(Calendar.TUESDAY);
-			mDayOfWeekValues.add(Calendar.WEDNESDAY);
-			mDayOfWeekValues.add(Calendar.THURSDAY);
-			mDayOfWeekValues.add(Calendar.FRIDAY);
-			mDayOfWeekValues.add(Calendar.SATURDAY);
-			mDayOfWeekValues.add(Calendar.SUNDAY);
+			mDayOfWeekValues[0] = Calendar.MONDAY;
+			mDayOfWeekValues[1] = Calendar.TUESDAY;
+			mDayOfWeekValues[2] = Calendar.WEDNESDAY;
+			mDayOfWeekValues[3] = Calendar.THURSDAY;
+			mDayOfWeekValues[4] = Calendar.FRIDAY;
+			mDayOfWeekValues[5] = Calendar.SATURDAY;
+			mDayOfWeekValues[6] = Calendar.SUNDAY;
 		}
 
 		DateFormatSymbols symbols = new DateFormatSymbols();
 		mDayOfWeekNames = symbols.getShortWeekdays();
 
-		mSelectedDate = (Calendar) mToday.clone();
-		int month = mToday.get(Calendar.MONTH);
-		int year = mToday.get(Calendar.YEAR);
+		mSelectedDate = mToday;
+		int month = mToday.getMonthOfYear();
+		int year = mToday.getYear();
 		initMonthCalendar(month, year);
 	}
 
@@ -111,9 +112,9 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		return mYear;
 	}
 
-	public void setSelectedDate(Calendar value) {
-		int year = value.get(Calendar.YEAR);
-		int month = value.get(Calendar.MONTH);
+	public void setSelectedDate(LocalDate value) {
+		int year = value.getYear();
+		int month = value.getMonthOfYear();
 		mSelectedDate = value;
 		if (mYear != year || mMonth != month) {
 			initMonthCalendar(month, year);
@@ -123,14 +124,14 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		notifyDataSetChanged();
 	}
 
-	public Calendar getSelectedDate() {
+	public LocalDate getSelectedDate() {
 		return mSelectedDate;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		if (position >= mDayOfWeekValues.size()) {
-			return mMonthCalendarValues.get(position - mDayOfWeekValues.size());
+		if (position >= 7) {
+			return mMonthCalendarValues.get(position - 7);
 		} else {
 			return null;
 		}
@@ -143,16 +144,26 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 	@Override
 	public int getCount() {
-		return mMonthCalendarValues.size() + mDayOfWeekValues.size();
+		return mMonthCalendarValues.size() + 7;
 	}
 
-	private void initMonthCalendar(int month, int year) {
+	private int indexOfDayOfWeek(Calendar date) {
+		int dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
+		int i = 0;
+		while (i < 7 && mDayOfWeekValues[i] != dayOfWeek) {
+			++i;
+		}
+
+		return i;
+	}
+
+	private void initMonthCalendar(final int month, final int year) {
 		mYear = year;
 		mMonth = month;
 		mMonthCalendarValues.clear();
 
 		Calendar current = Calendar.getInstance();
-		current.set(year, month, 1);
+		current.set(year, month - 1, 1);
 
 		Calendar prevMonth = (Calendar) current.clone();
 		prevMonth.add(Calendar.MONTH, -1);
@@ -160,30 +171,26 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		Calendar nextMonth = (Calendar) current.clone();
 		nextMonth.add(Calendar.MONTH, 1);
 
-		int trailing = mDayOfWeekValues.indexOf(current
-				.get(Calendar.DAY_OF_WEEK));
+		int trailing = indexOfDayOfWeek(current);
 		int daysInPrevMonth = prevMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		for (int i = 1; i <= trailing; ++i) {
-			Calendar item = Calendar.getInstance();
-			item.set(prevMonth.get(Calendar.YEAR),
-					prevMonth.get(Calendar.MONTH), daysInPrevMonth - trailing
-							+ i);
+			LocalDate item = new LocalDate(prevMonth.get(Calendar.YEAR),
+					prevMonth.get(Calendar.MONTH) + 1, daysInPrevMonth
+							- trailing + i);
 			mMonthCalendarValues.add(item);
 		}
 
 		int daysInCurrentMonth = current
 				.getActualMaximum(Calendar.DAY_OF_MONTH);
 		for (int i = 1; i <= daysInCurrentMonth; ++i) {
-			Calendar item = Calendar.getInstance();
-			item.set(year, month, i);
+			LocalDate item = new LocalDate(year, month, i);
 			mMonthCalendarValues.add(item);
 		}
 
-		int leading = mDayOfWeekValues.size() * 6 - mMonthCalendarValues.size();
+		int leading = 42 - mMonthCalendarValues.size();
 		for (int i = 1; i <= leading; ++i) {
-			Calendar item = Calendar.getInstance();
-			item.set(nextMonth.get(Calendar.YEAR),
-					nextMonth.get(Calendar.MONTH), i);
+			LocalDate item = new LocalDate(nextMonth.get(Calendar.YEAR),
+					nextMonth.get(Calendar.MONTH) + 1, i);
 			mMonthCalendarValues.add(item);
 		}
 	}
@@ -219,8 +226,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 						false);
 			}
 
-			Calendar item = mMonthCalendarValues.get(position
-					- mDayOfWeekValues.size());
+			LocalDate item = mMonthCalendarValues.get(position - 7);
 			initDayOfMonth(cell, item);
 		}
 
@@ -238,8 +244,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	private void initDayOfWeekItem(View cell, int position) {
 		TextView dayOfWeekTextView = (TextView) cell
 				.findViewById(R.id.dayOfWeekTextView);
-		dayOfWeekTextView.setText(mDayOfWeekNames[mDayOfWeekValues
-				.get(position)]);
+		dayOfWeekTextView.setText(mDayOfWeekNames[mDayOfWeekValues[position]]);
 	}
 
 	protected int getDayOfMonthLayoutResource() {
@@ -251,7 +256,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void initDayOfMonth(View cell, Calendar item) {
+	protected void initDayOfMonth(View cell, LocalDate item) {
 		cell.setTag(item);
 
 		CalendarData cellData = mDataKeeper.get(item);
@@ -264,26 +269,25 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 		TextView dayOfMonthTextView = (TextView) cell
 				.findViewById(R.id.dayOfMonthTextView);
-		dayOfMonthTextView.setText(String.valueOf(item
-				.get(Calendar.DAY_OF_MONTH)));
+		dayOfMonthTextView.setText(String.valueOf(item.getDayOfMonth()));
 
-		if (item.get(Calendar.MONTH) != mMonth) {
-			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
-			if (mThemeId == ThemeUtils.DARK_THEME) {
-				dayOfMonthTextView.setTextColor(Color.DKGRAY);
-			} else {
-				dayOfMonthTextView.setTextColor(Color.LTGRAY);
-			}
-		} else {
+		if (item.getMonthOfYear() == mMonth) {
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
 			if (mThemeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
 			}
+		} else {
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
+			if (mThemeId == ThemeUtils.DARK_THEME) {
+				dayOfMonthTextView.setTextColor(Color.DKGRAY);
+			} else {
+				dayOfMonthTextView.setTextColor(Color.LTGRAY);
+			}
 		}
 
-		if (DateUtils.datesAreEqual(item, mToday)) {
+		if (item.isEqual(mToday)) {
 			dayOfMonthTextView.setTextColor(Color.BLUE);
 		}
 
@@ -326,7 +330,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 			}
 		}
 
-		if (DateUtils.datesAreEqual(item, mSelectedDate)) {
+		if (item.isEqual(mSelectedDate)) {
 			layers.add(getDrawable(R.drawable.bg_selected_view));
 			mSelectedView = cell;
 		}
@@ -380,9 +384,9 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		mSelectedDate = (Calendar) v.getTag();
+		mSelectedDate = (LocalDate) v.getTag();
 		if (mSelectedView != null) {
-			initDayOfMonth(mSelectedView, (Calendar) mSelectedView.getTag());
+			initDayOfMonth(mSelectedView, (LocalDate) mSelectedView.getTag());
 		}
 
 		initDayOfMonth(v, mSelectedDate);
