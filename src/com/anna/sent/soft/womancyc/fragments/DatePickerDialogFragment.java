@@ -42,7 +42,7 @@ public class DatePickerDialogFragment extends DialogFragment implements
 			LocalDate today = LocalDate.now();
 			if (mListener != null) {
 				mListener.onDateSet(null, today.getYear(),
-						today.getMonthOfYear(), today.getDayOfMonth());
+						today.getMonthOfYear() - 1, today.getDayOfMonth());
 			}
 		}
 	}
