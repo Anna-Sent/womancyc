@@ -167,7 +167,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int month, int day) {
-		LocalDate dateToShow = new LocalDate(year, month, day);
+		LocalDate dateToShow = new LocalDate(year, month + 1, day);
 		navigateToDate(dateToShow);
 	}
 

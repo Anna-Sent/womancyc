@@ -29,7 +29,8 @@ public class DatePickerDialogFragment extends DialogFragment implements
 		final LocalDate c = (LocalDate) getArguments().getSerializable(
 				Shared.DATE_TO_SHOW);
 		DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-				mListener, c.getYear(), c.getMonthOfYear(), c.getDayOfYear());
+				mListener, c.getYear(), c.getMonthOfYear() - 1,
+				c.getDayOfMonth());
 		dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
 				getString(R.string.today), this);
 		return dialog;
