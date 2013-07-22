@@ -3,6 +3,7 @@ package com.anna.sent.soft.womancyc;
 import org.joda.time.LocalDate;
 
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -71,12 +72,13 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 
 	@Override
 	public void onStart() {
-		// log("onStart", false);
+		// log("onStart");
 		super.onStart();
 		if (mDateToShow == null) {
 			mDateToShow = LocalDate.now();
 		}
 
+		// log("date is " + mDateToShow.toString());
 		mMonthView.setSelectedDate(mDateToShow);
 		if (mIsLargeLayout) {
 			showAsEmbeddedFragment();
@@ -84,18 +86,45 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	}
 
 	public void onStop() {
+		// log("onStop");
+		mDateToShow = mMonthView.getSelectedDate();
 		super.onStop();
+	}
+
+	@Override
+	protected void onPause() {
+		// log("onPause");
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// log("onResume");
+		super.onResume();
+	}
+
+	@Override
+	protected void onRestart() {
+		// log("onRestart");
+		super.onRestart();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// log("onNewIntent");
+		super.onNewIntent(intent);
 	}
 
 	@Override
 	public void restoreState(Bundle state) {
 		mDateToShow = (LocalDate) state.getSerializable(Shared.DATE_TO_SHOW);
+		// log("restore " + (mDateToShow == null ? "null" :
+		// mDateToShow.toString()));
 	}
 
 	@Override
 	public void saveActivityState(Bundle state) {
-		// log("save " + DateUtils.toString(mMonthView.getSelectedDate()),
-		// false);
+		// log("save " + mMonthView.getSelectedDate().toString());
 		state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
 	}
 
