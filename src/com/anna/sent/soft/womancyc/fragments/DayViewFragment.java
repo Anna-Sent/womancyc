@@ -30,6 +30,7 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
 import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
@@ -158,7 +159,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		fillSpinner(R.array.menstruationTypes, drawablesId,
 				spinnerHadMenstruation);
 
-		drawablesId = ThemeUtils.getThemeId(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
+		drawablesId = Settings.getTheme(getActivity()) == ThemeUtils.DARK_THEME ? R.array.sexDrawablesDark
 				: R.array.sexDrawablesLight;
 		fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 

@@ -27,6 +27,7 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
+import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
@@ -72,7 +73,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 			Listener listener) {
 		super();
 		mContext = context;
-		mThemeId = ThemeUtils.getThemeId(mContext);
+		mThemeId = Settings.getTheme(mContext);
 		mDataKeeper = dataKeeper;
 		mListener = listener;
 		mCalculator = new Calculator(context, mDataKeeper);
