@@ -1,9 +1,12 @@
 package com.anna.sent.soft.womancyc;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,7 +84,10 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 			TextView column2 = (TextView) row.findViewById(R.id.column2);
 			TextView column3 = (TextView) row.findViewById(R.id.column3);
 
-			column1.setText(stat.rows.get(i).firstDayOfCycle.toString());
+			Date date = stat.rows.get(i).firstDayOfCycle.toDate();
+			String formattedString = DateFormat.getDateFormat(this)
+					.format(date);
+			column1.setText(formattedString);
 			int mcl = stat.rows.get(i).menstrualCycleLen;
 			column2.setText(String.valueOf(mcl));
 			if (mcl > Calculator.getMaxMenstrualCycleLen(this)) {

@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import org.joda.time.LocalDate;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -22,7 +23,7 @@ import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 public class MonthViewFragment extends Fragment implements
 		MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -113,6 +114,7 @@ public class MonthViewFragment extends Fragment implements
 		return adapter.getSelectedDate();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public void setSelectedDate(LocalDate date) {
 		// log("set selected date to " + DateUtils.toString(date));
 		adapter.setSelectedDate(date);

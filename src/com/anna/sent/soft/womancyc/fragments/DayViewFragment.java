@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -11,6 +12,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -234,7 +236,10 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		}
 
 		// log(mValue.toString());
-		buttonCurrentDay.setText(mDateToShow.toString());
+		Date date = mDateToShow.toDate();
+		String formattedString = DateFormat.getDateFormat(getActivity())
+				.format(date);
+		buttonCurrentDay.setText(formattedString);
 		int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
 		if (menstruation != mValue.getMenstruation()) {
 			spinnerHadMenstruation.setSelection((int) mValue.getMenstruation());
