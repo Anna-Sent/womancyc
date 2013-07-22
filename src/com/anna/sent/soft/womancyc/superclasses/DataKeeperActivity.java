@@ -369,12 +369,14 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 			int prevYear = initialYear;
 			int index = 1;
 			while (date.isBefore(today) || date.isEqual(today)) {
+				int currentYear = date.getYear();
 				// log(index + " " + DateUtils.toString(date));
-				if (1 <= index && index <= 7) {
-					CalendarData value = new CalendarData(date);
-					value.setMenstruation(1);
-					mDataKeeper.insertOrUpdate(value);
-				}
+				CalendarData value = new CalendarData(date);
+				value.setMenstruation(1 <= index && index <= 7 ? 1 : 0);
+				value.setSex(index % 7 == 0 ? 1 : 0);
+				value.setTookPill(currentYear % 2 == 0);
+				value.setNote(index % 4 == 0 ? "note " + index : "");
+				mDataKeeper.insertOrUpdate(value);
 
 				++index;
 				if (index == 29) {
@@ -382,8 +384,6 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
 				}
 
 				date = date.plusDays(1);
-
-				int currentYear = date.getYear();
 				if (currentYear != prevYear) {
 					String progress = String.valueOf(currentYear - initialYear);
 					publishProgress(new String[] { progress });
