@@ -90,7 +90,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		View v = null;
 		mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
 		if (mIsEmbedded) {
-			v = createView(inflater);
+			v = inflater.inflate(R.layout.view_day_embedded, null);
 			// log("onCreateView");
 		} else {
 			v = super.onCreateView(inflater, container, savedInstanceState);
@@ -100,17 +100,14 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		return v;
 	}
 
-	private View createView(LayoutInflater inflater) {
-		return inflater.inflate(R.layout.view_day, null);
-	}
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// log("onCreateDialog");
 		if (mIsEmbedded) {
 			return super.onCreateDialog(savedInstanceState);
 		} else {
-			View v = createView(getActivity().getLayoutInflater());
+			LayoutInflater inflater = getActivity().getLayoutInflater();
+			View v = inflater.inflate(R.layout.view_day_dialog, null);
 			spinnerHadMenstruation = (Spinner) v
 					.findViewById(R.id.spinnerHadMenstruation);
 			spinnerHadSex = (Spinner) v.findViewById(R.id.spinnerSex);
@@ -124,8 +121,9 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			buttonNextDay = (Button) v.findViewById(R.id.nextDay);
 			buttonViewAsList = (Button) v.findViewById(R.id.buttonViewAsList);
 			setupView();
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setView(v).setTitle("");
+			builder.setView(v);
 			return builder.create();
 		}
 	}

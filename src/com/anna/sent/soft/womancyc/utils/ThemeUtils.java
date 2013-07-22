@@ -41,20 +41,4 @@ public class ThemeUtils {
 			break;
 		}
 	}
-
-	/**
-	 * Set the theme of the dialog-style activity, according to the
-	 * configuration.
-	 */
-	public static void onDialogStyleActivityCreateSetTheme(Activity activity) {
-		switch (getThemeId(activity)) {
-		case LIGHT_THEME:
-			activity.setTheme(R.style.DialogThemeLight);
-			break;
-		case DARK_THEME:
-		default:
-			activity.setTheme(R.style.DialogTheme);
-			break;
-		}
-	}
 }

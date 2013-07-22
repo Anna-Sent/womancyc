@@ -14,6 +14,14 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/black</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_light</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_light</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_light</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
 
 </resources>

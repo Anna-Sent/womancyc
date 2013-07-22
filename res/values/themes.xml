@@ -26,6 +26,14 @@
         <attr name="spinnerItemTextColor" format="color|reference" />
         <attr name="textViewTextColor" format="color|reference" />
         <attr name="editableTextViewTextColor" format="color|reference" />
+        <attr name="dialog_spinnerItemTextColor" format="color|reference" />
+        <attr name="dialog_textViewTextColor" format="color|reference" />
+        <attr name="dialog_editableTextViewTextColor" format="color|reference" />
+        <attr name="dialog_nextItemIcon" format="reference" />
+        <attr name="dialog_prevItemIcon" format="reference" />
+        <attr name="dialog_goToTodayIcon" format="reference" />
+        <attr name="dialog_listIcon" format="reference" />
+        <attr name="dialog_removeContentIcon" format="reference" />
     </declare-styleable>
 
     <style name="AppBaseTheme" parent="android:Theme">
@@ -41,6 +49,14 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/white</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/white</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_dark</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_dark</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
 
     <style name="AppBaseThemeLight" parent="android:Theme.Light">
@@ -56,6 +72,14 @@
         <item name="spinnerItemTextColor">@android:color/black</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/white</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_dark</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_dark</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
@@ -88,38 +112,6 @@
         <item name="sex">@drawable/sex_light</item>
         <item name="protected_sex">@drawable/sex_protected_light</item>
         <item name="unprotected_sex">@drawable/sex_unprotected_light</item>
-    </style>
-
-    <style name="DialogBaseTheme" parent="android:Theme.Dialog">
-        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
-        <item name="spinnerItemTextColor">@android:color/black</item>
-        <item name="textViewTextColor">@android:color/white</item>
-        <item name="editableTextViewTextColor">@android:color/black</item>
-        <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
-        <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
-        <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
-        <item name="listIcon">@drawable/ic_list_light</item>
-        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
-    </style>
-
-    <style name="DialogBaseThemeLight" parent="android:Theme.Dialog">
-        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
-        <item name="spinnerItemTextColor">@android:color/black</item>
-        <item name="textViewTextColor">@android:color/white</item>
-        <item name="editableTextViewTextColor">@android:color/black</item>
-        <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
-        <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
-        <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
-        <item name="listIcon">@drawable/ic_list_light</item>
-        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
-    </style>
-
-    <style name="DialogTheme" parent="DialogBaseTheme">
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="DialogThemeLight" parent="DialogBaseThemeLight">
-        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>
