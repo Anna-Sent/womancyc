@@ -13,10 +13,10 @@
     <string name="bacupFileName">backup_%s</string>
     <string name="openDataSourceTask">Загрузка базы данных</string>
     <string name="restoreDataTask">Восстановление данных</string>
-    <string name="pref_calculation_settings_title">Расчет</string>
+    <string name="pref_calculation_settings_title">Прогноз</string>
     <string name="pref_default_menstrual_cycle_len_title">Менструальный цикл</string>
-    <string name="pref_default_menstrual_cycle_len_summary_on">Использовать для прогноза значение %1$s д., если данных для расчета средней продолжительности недостаточно.</string>
-    <string name="pref_default_menstrual_cycle_len_summary_off">Использовать для прогноза значение %1$s д.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_on">%1$s д., если данных для расчета средней продолжительности недостаточно.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_off">%1$s д.</string>
     <string name="pref_use_average_title">На основе текущих данных</string>
     <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
     <string name="pref_safety_settings_title">Безопасность</string>
