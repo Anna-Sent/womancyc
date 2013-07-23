@@ -18,7 +18,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_womancyc"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
         <receiver
             android:name="com.anna.sent.soft.womancyc.widget.MyCycleWidgetSmall"
             android:label="@string/widget_small_name" >
