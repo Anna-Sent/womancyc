@@ -109,10 +109,20 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		super.onRestart();
 	}
 
+	public final static String EXTRA_THEME_CHANGED = "extra_theme_changed";
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// log("onNewIntent");
 		super.onNewIntent(intent);
+		Bundle extras = intent.getExtras();
+		if (extras != null && extras.containsKey(EXTRA_THEME_CHANGED)) {
+			Bundle state = new Bundle();
+			saveState(state);
+			finish();
+			intent.putExtras(state);
+			startActivity(intent);
+		}
 	}
 
 	@Override

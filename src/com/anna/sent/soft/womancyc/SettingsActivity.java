@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.anna.sent.soft.womancyc.data.Calculator;
@@ -130,7 +132,17 @@ public class SettingsActivity extends PreferenceActivity implements
 			setupPasswordPreference();
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
 			setupThemePreference();
-			ThemeUtils.applyChanges(this);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				Intent intent = new Intent(this, getClass());
+				TaskStackBuilder.create(this)
+						.addNextIntentWithParentStack(intent).startActivities();
+			} else {
+				finish();
+				Intent intent = new Intent(this, MainActivity.class);
+				intent.putExtra(MainActivity.EXTRA_THEME_CHANGED, true);
+				TaskStackBuilder.create(this).addNextIntent(intent)
+						.startActivities();
+			}
 		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
 			setupLockAutomaticallyPreference();
 		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
