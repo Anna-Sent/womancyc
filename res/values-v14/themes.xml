@@ -12,6 +12,7 @@
         <item name="importIcon">@drawable/ic_menu_import_dark</item>
         <item name="exportIcon">@drawable/ic_menu_export_dark</item>
         <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="android:windowActionBar">true</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
         <item name="dialog_spinnerItemTextColor">@android:color/black</item>
