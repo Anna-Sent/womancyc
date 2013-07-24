@@ -117,6 +117,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 					.findViewById(R.id.textViewNote);
 			buttonClear = (Button) v.findViewById(R.id.buttonClear);
 			buttonClose = (Button) v.findViewById(R.id.buttonClose);
+			buttonClose.setOnClickListener(this);
 			buttonCurrentDay = (Button) v.findViewById(R.id.currentDay);
 			buttonPrevDay = (Button) v.findViewById(R.id.prevDay);
 			buttonNextDay = (Button) v.findViewById(R.id.nextDay);
@@ -143,7 +144,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			textViewNote = (AutoCompleteTextView) getActivity().findViewById(
 					R.id.textViewNote);
 			buttonClear = (Button) getActivity().findViewById(R.id.buttonClear);
-			buttonClose = (Button) getActivity().findViewById(R.id.buttonClose);
 			buttonCurrentDay = (Button) getActivity().findViewById(
 					R.id.currentDay);
 			buttonPrevDay = (Button) getActivity().findViewById(R.id.prevDay);
@@ -172,18 +172,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		buttonCurrentDay.setOnClickListener(this);
 		buttonPrevDay.setOnClickListener(this);
 		buttonNextDay.setOnClickListener(this);
-
 		buttonClear.setOnClickListener(this);
-
 		buttonViewAsList.setOnClickListener(this);
-
-		buttonClose.setVisibility(mIsEmbedded ? View.GONE : View.VISIBLE);
-		buttonClose.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
 
 		if (getArguments() != null) {
 			mDateToShow = (LocalDate) getArguments().getSerializable(
@@ -272,6 +262,9 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.buttonClear:
 			mDataKeeper.delete(mValue);
+			break;
+		case R.id.buttonClose:
+			dismiss();
 			break;
 		case R.id.currentDay:
 			if (mListener != null) {

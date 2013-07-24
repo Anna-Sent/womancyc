@@ -5,7 +5,6 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/dayViewGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minWidth="240dp"
@@ -153,22 +152,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:paddingTop="@dimen/view_padding" >
 
             <Button
                 android:id="@+id/buttonClear"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:drawableLeft="?attr/dialog_removeContentIcon"
                 android:text="@string/clear"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
                 android:id="@+id/buttonClose"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="@string/close"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
