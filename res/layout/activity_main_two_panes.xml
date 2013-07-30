@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false" >
@@ -12,26 +11,10 @@
         android:layout_weight="1"
         class="com.anna.sent.soft.womancyc.fragments.MonthViewFragment" />
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/dayView"
         android:layout_width="0px"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <FrameLayout
-            android:id="@+id/dayView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.google.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/adUnitId"
-            ads:loadAdOnCreate="true"
-            android:gravity="center"
-            android:paddingTop="@dimen/view_padding" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>
