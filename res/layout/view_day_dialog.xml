@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:minWidth="240dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/view_padding"
+    android:paddingRight="@dimen/view_padding" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minWidth="240dp"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/view_padding"
-        android:paddingRight="@dimen/view_padding" >
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            android:orientation="horizontal" >
+        <Button
+            android:id="@+id/prevDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/prevDay"
+            android:drawableRight="?attr/dialog_prevItemIcon" />
 
-            <Button
-                android:id="@+id/prevDay"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height"
-                android:layout_gravity="center"
-                android:layout_weight="0.2"
-                android:background="@drawable/bg_transparent_button"
-                android:contentDescription="@string/prevDay"
-                android:drawableRight="?attr/dialog_prevItemIcon" />
+        <Button
+            android:id="@+id/currentDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/currentDay"
+            android:drawableLeft="?attr/dialog_goToTodayIcon"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
 
-            <Button
-                android:id="@+id/currentDay"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height"
-                android:layout_gravity="center"
-                android:layout_weight="0.6"
-                android:background="@drawable/bg_transparent_button"
-                android:contentDescription="@string/currentDay"
-                android:drawableLeft="?attr/dialog_goToTodayIcon"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/blue" />
+        <Button
+            android:id="@+id/nextDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/nextDay"
+            android:drawableLeft="?attr/dialog_nextItemIcon" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/nextDay"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height"
-                android:layout_gravity="center"
-                android:layout_weight="0.2"
-                android:background="@drawable/bg_transparent_button"
-                android:contentDescription="@string/nextDay"
-                android:drawableLeft="?attr/dialog_nextItemIcon" />
-        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,117 +61,124 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:baselineAligned="false"
+                android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/view_padding"
-                    android:text="@string/menstruation"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="?attr/dialog_textViewTextColor" />
+                    android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/view_padding"
+                        android:text="@string/menstruation"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/dialog_textViewTextColor" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/view_padding"
+                        android:text="@string/sex"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/dialog_textViewTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/view_padding"
-                    android:text="@string/sex"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="?attr/dialog_textViewTextColor" />
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/spinnerHadMenstruation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:textColor="?attr/dialog_spinnerItemTextColor" />
+
+                    <Spinner
+                        android:id="@+id/spinnerSex"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:textColor="?attr/dialog_spinnerItemTextColor" />
+                </LinearLayout>
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBoxTookPill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tookPill"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/dialog_textViewTextColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/view_padding"
+                android:text="@string/note"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/dialog_textViewTextColor" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <AutoCompleteTextView
+                    android:id="@+id/textViewNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonViewAsList"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?attr/dialog_editableTextViewTextColor" />
+
+                <Button
+                    android:id="@id/buttonViewAsList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="?attr/dialog_listIcon"
+                    android:text="" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/view_padding" >
 
-                <Spinner
-                    android:id="@+id/spinnerHadMenstruation"
+                <Button
+                    android:id="@+id/buttonClear"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="?attr/dialog_spinnerItemTextColor" />
+                    android:drawableLeft="?attr/dialog_removeContentIcon"
+                    android:text="@string/clear"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <Spinner
-                    android:id="@+id/spinnerSex"
+                <Button
+                    android:id="@+id/buttonClose"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="?attr/dialog_spinnerItemTextColor" />
+                    android:text="@string/close"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <CheckBox
-            android:id="@+id/checkBoxTookPill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tookPill"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?attr/dialog_textViewTextColor" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/view_padding"
-            android:text="@string/note"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?attr/dialog_textViewTextColor" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <AutoCompleteTextView
-                android:id="@+id/textViewNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/buttonViewAsList"
-                android:inputType="textMultiLine"
-                android:textAppearance="?android:attr/textAppearance"
-                android:textColor="?attr/dialog_editableTextViewTextColor" />
-
-            <Button
-                android:id="@id/buttonViewAsList"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="?attr/dialog_listIcon"
-                android:text="" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/view_padding" >
-
-            <Button
-                android:id="@+id/buttonClear"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableLeft="?attr/dialog_removeContentIcon"
-                android:text="@string/clear"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <Button
-                android:id="@+id/buttonClose"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/close"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
