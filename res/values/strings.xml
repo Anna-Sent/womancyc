@@ -23,10 +23,6 @@
     <string name="pref_password_title">Пароль</string>
     <string name="pref_send_password_to_email_title">Отправить пароль по email</string>
     <string name="pref_send_password_to_email_summary">Для восстановления пароля</string>
-    <string name="to">Кому:</string>
-    <string name="subject">Тема:</string>
-    <string name="message">Сообщение:</string>
-    <string name="send">Отправить</string>
     <string name="pref_lock_automatically_title">Автоматическая блокировка</string>
     <string name="pref_lock_automatically_summary_on">Да: запрашивать пароль при каждом запуске приложения.</string>
     <string name="pref_lock_automatically_summary_off">Нет: запрашивать пароль, если выход из приложения осуществлен с помощью пункта меню \"%s\".</string>
@@ -59,7 +55,6 @@
     <string name="clearAllDataConfirmation">Удалить все данные?</string>
     <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления. Сохраните данные в файл, если необходимо.</string>
     <string name="statistic">Статистика</string>
-    <string name="marketNotFound">Приложение market не найдено</string>
     <string name="help">Справка</string>
     <string name="lockAndExit">Блокировка и выход</string>
     <string name="backupData">Сохранить данные</string>
