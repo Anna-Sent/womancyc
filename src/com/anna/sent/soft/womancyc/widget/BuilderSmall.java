@@ -4,7 +4,6 @@ import org.joda.time.LocalDate;
 
 import android.content.Context;
 
-import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 
@@ -14,7 +13,6 @@ public class BuilderSmall extends Builder {
 		Calculator calc = new Calculator(context, dataKeeper);
 		LocalDate today = LocalDate.now();
 		int dayOfCycle = calc.getDayOfCycle(today);
-		return dayOfCycle > 0 ? String.valueOf(dayOfCycle) : context
-				.getString(R.string.thereIsNoData);
+		return dayOfCycle > 0 ? String.valueOf(dayOfCycle) : THERE_IS_NO_DATA;
 	}
 }

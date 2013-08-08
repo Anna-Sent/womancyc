@@ -4,7 +4,6 @@ import org.joda.time.LocalDate;
 
 import android.content.Context;
 
-import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 
@@ -20,7 +19,6 @@ public final class BuilderMedium extends Builder {
 		}
 
 		return dayOfCycle > 0 ? String.valueOf(dayOfCycle) + " ("
-				+ String.valueOf(avgLen) + ")" : context
-				.getString(R.string.thereIsNoData);
+				+ String.valueOf(avgLen) + ")" : THERE_IS_NO_DATA;
 	}
 }

@@ -34,6 +34,9 @@ public abstract class Builder {
 		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 	}
 
+	private static final String APP_IS_LOCKED = "?";
+	protected static final String THERE_IS_NO_DATA = "";
+
 	public RemoteViews buildViews(Context context, int appWidgetId) {
 		// log("build views");
 		RemoteViews views = new RemoteViews(context.getPackageName(),
@@ -43,7 +46,7 @@ public abstract class Builder {
 		String result;
 		if (Settings.hideWidget(context)
 				&& Settings.isApplicationLocked(context)) {
-			result = "?";
+			result = APP_IS_LOCKED;
 		} else {
 			DataKeeperImpl dataKeeper = new DataKeeperImpl(context);
 			try {
