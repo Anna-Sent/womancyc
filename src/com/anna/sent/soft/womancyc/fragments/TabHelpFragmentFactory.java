@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
 
@@ -133,7 +134,14 @@ public class TabHelpFragmentFactory {
 					intent.putExtra(Intent.EXTRA_SUBJECT,
 							getString(R.string.app_name));
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent);
+					if (intent.resolveActivity(getActivity()
+							.getPackageManager()) != null) {
+						startActivity(intent);
+					} else {
+						Toast.makeText(getActivity(),
+								R.string.sendto_app_not_available,
+								Toast.LENGTH_LONG).show();
+					}
 				}
 			});
 		}
