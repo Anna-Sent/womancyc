@@ -39,8 +39,8 @@
     <style name="AppBaseTheme" parent="android:Theme">
         <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
         <item name="helpIcon">@drawable/ic_menu_help_light</item>
-        <item name="lockIcon">@drawable/ic_lock_light</item>
-        <item name="settingsIcon">@drawable/ic_settings_light</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_light</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
         <item name="rateIcon">@drawable/ic_menu_rate_light</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
         <item name="clearAllDataIcon">@drawable/ic_menu_discard_light</item>
@@ -64,8 +64,8 @@
     <style name="AppBaseThemeLight" parent="android:Theme.Light">
         <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
         <item name="helpIcon">@drawable/ic_menu_help_light</item>
-        <item name="lockIcon">@drawable/ic_lock_light</item>
-        <item name="settingsIcon">@drawable/ic_settings_light</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_light</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
         <item name="rateIcon">@drawable/ic_menu_rate_light</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
         <item name="clearAllDataIcon">@drawable/ic_menu_discard_light</item>
