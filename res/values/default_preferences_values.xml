@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="supportData">mailto:anna.sent@gmail.com</string>
+    <string name="supportEmail">anna.sent@gmail.com</string>
+
     <integer name="defaultMenstrualCycleLen">28</integer>
     <integer name="maxMenstrualCycleLen">60</integer>
     <integer name="minMenstrualCycleLen">10</integer>

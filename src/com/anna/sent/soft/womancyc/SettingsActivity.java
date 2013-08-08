@@ -5,23 +5,19 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
-import com.anna.sent.soft.womancyc.utils.UserEmailFetcher;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity implements
@@ -127,30 +123,6 @@ public class SettingsActivity extends PreferenceActivity implements
 			Preference pref_i = findPreference(keys[i]);
 			pref_i.setEnabled(isPasswordSet);
 		}
-
-		Preference pref0 = findPreference(KEY_PREF_SEND_PASSWORD_TO_EMAIL);
-		pref0.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				Intent intent = new Intent(Intent.ACTION_SENDTO);
-				if (intent.resolveActivity(getPackageManager()) != null) {
-					intent.setData(Uri.parse("mailto:"
-							+ UserEmailFetcher.getEmail(SettingsActivity.this)));
-					intent.putExtra(Intent.EXTRA_SUBJECT,
-							getString(R.string.app_name));
-					intent.putExtra(Intent.EXTRA_TEXT,
-							Settings.getPassword(SettingsActivity.this));
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent);
-				} else {
-					Toast.makeText(SettingsActivity.this,
-							R.string.sendto_app_not_available,
-							Toast.LENGTH_LONG).show();
-				}
-
-				return true;
-			}
-		});
 	}
 
 	private void setupLockAutomaticallyPreference() {

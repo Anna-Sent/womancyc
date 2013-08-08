@@ -2,6 +2,7 @@
 <resources>
 
     <string name="sendto_app_not_available">Приложение \"Почтовый клиент\" недоступно</string>
+    <string name="market_app_not_available">Приложение market недоступно</string>
     <string name="days">д.</string>
     <string name="isSet">Установлен</string>
     <string name="isNotSet">Не установлен</string>

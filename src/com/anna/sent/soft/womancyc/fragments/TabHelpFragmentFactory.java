@@ -1,7 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -11,9 +10,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.actions.EmailSupportActionActivity;
 
 public class TabHelpFragmentFactory {
 	public static Fragment newInstance(int position) {
@@ -129,19 +128,9 @@ public class TabHelpFragmentFactory {
 			buttonSupport.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(Intent.ACTION_SENDTO);
-					intent.setData(Uri.parse(getString(R.string.supportData)));
-					intent.putExtra(Intent.EXTRA_SUBJECT,
-							getString(R.string.app_name));
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					if (intent.resolveActivity(getActivity()
-							.getPackageManager()) != null) {
-						startActivity(intent);
-					} else {
-						Toast.makeText(getActivity(),
-								R.string.sendto_app_not_available,
-								Toast.LENGTH_LONG).show();
-					}
+					Intent intent = new Intent(getActivity(),
+							EmailSupportActionActivity.class);
+					startActivity(intent);
 				}
 			});
 		}
