@@ -6,7 +6,6 @@
         <item name="helpIcon">@drawable/ic_menu_help_dark</item>
         <item name="lockIcon">@drawable/ic_menu_lock_dark</item>
         <item name="settingsIcon">@drawable/ic_menu_settings_dark</item>
-        <item name="rateIcon">@drawable/ic_menu_rate_dark</item>
         <item name="statisticIcon">@drawable/ic_menu_statistic_dark</item>
         <item name="clearAllDataIcon">@drawable/ic_menu_discard_dark</item>
         <item name="importIcon">@drawable/ic_menu_import_dark</item>
