@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anna.sent.soft.womancyc"
-    android:versionCode="5"
-    android:versionName="1.0.4" >
+    android:versionCode="6"
+    android:versionName="1.0.5" >
 
     <uses-sdk
         android:minSdkVersion="4"
@@ -76,6 +76,7 @@
         </activity>
         <activity
             android:name="com.anna.sent.soft.womancyc.StatisticActivity"
+            android:label="@string/statistic"
             android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -83,6 +84,7 @@
         </activity>
         <activity
             android:name="com.anna.sent.soft.womancyc.SettingsActivity"
+            android:label="@string/settings"
             android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -90,6 +92,7 @@
         </activity>
         <activity
             android:name="com.anna.sent.soft.womancyc.HelpActivity"
+            android:label="@string/help"
             android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
