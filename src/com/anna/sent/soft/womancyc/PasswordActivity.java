@@ -41,7 +41,7 @@ public class PasswordActivity extends StateSaverActivity implements
 			startProtectedActivity();
 		} else {
 			Toast.makeText(this, getString(R.string.incorrectPassword),
-					Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
