@@ -184,7 +184,7 @@ public class CalendarData implements Serializable, Cloneable {
 			return true;
 		}
 
-		if (obj == null || obj.getClass() != this.getClass()) {
+		if (obj == null || obj.getClass() != getClass()) {
 			return false;
 		}
 
