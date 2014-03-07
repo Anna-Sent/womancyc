@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anna.sent.soft.womancyc.base.StateSaverActivity;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.superclasses.StateSaverActivity;
 
 public class PasswordActivity extends StateSaverActivity implements
 		OnClickListener {

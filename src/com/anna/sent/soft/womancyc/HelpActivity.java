@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.adapters.HelpPagerAdapter;
-import com.anna.sent.soft.womancyc.superclasses.StateSaverActivity;
+import com.anna.sent.soft.womancyc.base.StateSaverActivity;
 
 public final class HelpActivity extends StateSaverActivity {
 	private static final String TAG = "moo";

@@ -14,10 +14,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.anna.sent.soft.womancyc.base.ChildActivity;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.Calculator.Statistic;
 import com.anna.sent.soft.womancyc.data.Calculator.Value;
-import com.anna.sent.soft.womancyc.superclasses.ChildActivity;
 
 public class StatisticActivity extends ChildActivity implements OnClickListener {
 	@Override

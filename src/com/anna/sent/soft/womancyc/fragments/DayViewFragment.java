@@ -28,11 +28,11 @@ import android.widget.Spinner;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
+import com.anna.sent.soft.womancyc.base.DataKeeperClient;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class DayViewFragment extends DialogFragment implements OnClickListener,

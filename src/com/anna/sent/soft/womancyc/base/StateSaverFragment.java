@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc.superclasses;
+package com.anna.sent.soft.womancyc.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

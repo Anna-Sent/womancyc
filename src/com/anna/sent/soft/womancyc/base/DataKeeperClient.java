@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc.superclasses;
+package com.anna.sent.soft.womancyc.base;
 
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 

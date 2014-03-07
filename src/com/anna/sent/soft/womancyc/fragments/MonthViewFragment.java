@@ -16,8 +16,8 @@ import android.widget.GridView;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
+import com.anna.sent.soft.womancyc.base.DataKeeperClient;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.superclasses.DataKeeperClient;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 public class MonthViewFragment extends Fragment implements

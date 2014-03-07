@@ -12,13 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.DatePicker;
 
+import com.anna.sent.soft.womancyc.base.OptionsActivity;
 import com.anna.sent.soft.womancyc.fragments.CalendarListener;
 import com.anna.sent.soft.womancyc.fragments.DatePickerDialogFragment;
 import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.superclasses.OptionsActivity;
 
 public class MainActivity extends OptionsActivity implements CalendarListener,
 		OnDateSetListener {

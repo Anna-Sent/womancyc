@@ -1,4 +1,4 @@
-package com.anna.sent.soft.womancyc.superclasses;
+package com.anna.sent.soft.womancyc.base;
 
 import java.io.File;
 import java.io.FilenameFilter;
