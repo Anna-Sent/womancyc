@@ -48,9 +48,9 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		super.onCreate(savedInstanceState);
 
-		new ActionBarUtils().setupActionBar(this);
-
 		addPreferencesFromResource(R.xml.preferences);
+
+		new ActionBarUtils().setupActionBar(this);
 
 		setupDefaultMenstrualCycleLenPreference();
 		setupUseAvgPreference();
@@ -129,22 +129,25 @@ public class SettingsActivity extends PreferenceActivity implements
 		} else if (key.equals(Settings.KEY_PREF_PASSWORD)) {
 			setupPasswordPreference();
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
-			setupThemePreference();
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				Intent intent = new Intent(this, getClass());
-				TaskStackBuilder.create(this)
-						.addNextIntentWithParentStack(intent).startActivities();
-			} else {
-				finish();
-				Intent intent = new Intent(this, MainActivity.class);
-				intent.putExtra(MainActivity.EXTRA_THEME_CHANGED, true);
-				TaskStackBuilder.create(this).addNextIntent(intent)
-						.startActivities();
-			}
+			restart();
 		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
 			setupLockAutomaticallyPreference();
 		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
 			setupDefaultMenstrualCycleLenPreference();
+		}
+	}
+
+	private void restart() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Intent intent = new Intent(this, getClass());
+			TaskStackBuilder.create(this).addNextIntentWithParentStack(intent)
+					.startActivities();
+		} else {
+			finish();
+			Intent intent = new Intent(this, MainActivity.class);
+			intent.putExtra(MainActivity.EXTRA_CONFIGURATION_CHANGED, true);
+			TaskStackBuilder.create(this).addNextIntent(intent)
+					.startActivities();
 		}
 	}
 

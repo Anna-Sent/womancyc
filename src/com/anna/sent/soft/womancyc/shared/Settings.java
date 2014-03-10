@@ -137,7 +137,7 @@ public class Settings {
 		editor.commit();
 	}
 
-	public static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
+	private static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
 
 	public static boolean isBlocked(Context context) {
 		SharedPreferences settings = getDefaultSettings(context);
