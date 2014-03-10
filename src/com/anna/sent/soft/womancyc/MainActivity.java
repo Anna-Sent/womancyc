@@ -61,8 +61,8 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		super.setViews(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		super.setViews(savedInstanceState);
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 		Settings.isBlocked(this, false);
 		mFragmentManager = getSupportFragmentManager();

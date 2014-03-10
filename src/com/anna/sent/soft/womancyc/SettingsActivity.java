@@ -1,7 +1,5 @@
 package com.anna.sent.soft.womancyc;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -10,13 +8,14 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
+import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
+import com.anna.sent.soft.womancyc.utils.NavigationUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 @SuppressWarnings("deprecation")
@@ -46,11 +45,10 @@ public class SettingsActivity extends PreferenceActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.onActivityCreateSetTheme(this);
+
 		super.onCreate(savedInstanceState);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			new ActionBarHelper().setupActionBar();
-		}
+		new ActionBarUtils().setupActionBar(this);
 
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -61,29 +59,11 @@ public class SettingsActivity extends PreferenceActivity implements
 		setupThemePreference();
 	}
 
-	private class ActionBarHelper {
-		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-		private void setupActionBar() {
-			ActionBar actionBar = getActionBar();
-			if (actionBar != null) {
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
-		}
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent upIntent = NavUtils.getParentActivityIntent(this);
-			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-				TaskStackBuilder.create(this)
-						.addNextIntentWithParentStack(upIntent)
-						.startActivities();
-			} else {
-				NavUtils.navigateUpTo(this, upIntent);
-			}
-
+			NavigationUtils.navigateUp(this, item);
 			return true;
 		}
 

@@ -1,18 +1,14 @@
 package com.anna.sent.soft.womancyc;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.adapters.HelpPagerAdapter;
 import com.anna.sent.soft.womancyc.base.StateSaverActivity;
+import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
+import com.anna.sent.soft.womancyc.utils.NavigationUtils;
 
 public final class HelpActivity extends StateSaverActivity {
 	private static final String TAG = "moo";
@@ -35,10 +31,7 @@ public final class HelpActivity extends StateSaverActivity {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_help);
-		super.setViews(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			new ActionBarHelper().setupActionBar();
-		}
+		new ActionBarUtils().setupActionBar(this);
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mTabsAdapter = new HelpPagerAdapter(this, getSupportFragmentManager());
@@ -47,29 +40,11 @@ public final class HelpActivity extends StateSaverActivity {
 		mViewPager.setCurrentItem(0);
 	}
 
-	private class ActionBarHelper {
-		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-		private void setupActionBar() {
-			ActionBar actionBar = getActionBar();
-			if (actionBar != null) {
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
-		}
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent upIntent = NavUtils.getParentActivityIntent(this);
-			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-				TaskStackBuilder.create(this)
-						.addNextIntentWithParentStack(upIntent)
-						.startActivities();
-			} else {
-				NavUtils.navigateUpTo(this, upIntent);
-			}
-
+			NavigationUtils.navigateUp(this, item);
 			return true;
 		}
 
