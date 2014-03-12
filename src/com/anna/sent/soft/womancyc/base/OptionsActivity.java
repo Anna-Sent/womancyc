@@ -148,29 +148,33 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 			builder.create().show();
 		} else {
 			final List<String> list = getFilesList();
-			list.add(0, getString(R.string.newFile));
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.chooseFileNameToWrite)
-					.setItems(list.toArray(new String[] {}),
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									if (which == 0) {
-										backupToNewFile();
-									} else {
-										String filename = list.get(which);
-										backupWithConfirmation(filename);
+			if (list.size() == 0) {
+				backupToNewFile();
+			} else {
+				list.add(0, getString(R.string.newFile));
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(R.string.chooseFileNameToWrite)
+						.setItems(list.toArray(new String[] {}),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										if (which == 0) {
+											backupToNewFile();
+										} else {
+											String filename = list.get(which);
+											backupWithConfirmation(filename);
+										}
 									}
-								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
-			builder.create().show();
+								})
+						.setNegativeButton(android.R.string.cancel,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+									}
+								});
+				builder.create().show();
+			}
 		}
 	}
 
