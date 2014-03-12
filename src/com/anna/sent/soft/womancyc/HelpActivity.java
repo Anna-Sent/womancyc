@@ -31,7 +31,7 @@ public final class HelpActivity extends StateSaverActivity {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_help);
-		new ActionBarUtils().setupActionBar(this);
+		ActionBarUtils.setupActionBar(this);
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mTabsAdapter = new HelpPagerAdapter(this, getSupportFragmentManager());

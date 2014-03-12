@@ -24,7 +24,7 @@ public abstract class ChildActivity extends DataKeeperActivity {
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
-		new ActionBarUtils().setupActionBar(this);
+		ActionBarUtils.setupActionBar(this);
 		super.setViews(savedInstanceState);
 	}
 

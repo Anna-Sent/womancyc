@@ -50,7 +50,7 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		addPreferencesFromResource(R.xml.preferences);
 
-		new ActionBarUtils().setupActionBar(this);
+		ActionBarUtils.setupActionBar(this);
 
 		setupDefaultMenstrualCycleLenPreference();
 		setupUseAvgPreference();
