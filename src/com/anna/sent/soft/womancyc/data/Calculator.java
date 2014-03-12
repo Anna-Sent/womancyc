@@ -224,7 +224,7 @@ public class Calculator {
 		}
 	}
 
-	public class Value {
+	public static class Value {
 		public final int avg, min, max;
 
 		public Value(int avg, int min, int max) {
@@ -234,7 +234,7 @@ public class Calculator {
 		}
 	}
 
-	public class Row {
+	public static class Row {
 		public final LocalDate firstDayOfCycle;
 		public final int menstrualCycleLen;
 		public final int bleedingLen;
@@ -247,7 +247,7 @@ public class Calculator {
 		}
 	}
 
-	public class Statistic {
+	public static class Statistic {
 		public final Value MCL;
 		public final Value BL;
 		public final List<Row> rows;
