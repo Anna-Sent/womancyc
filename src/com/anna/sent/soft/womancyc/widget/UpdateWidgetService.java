@@ -46,12 +46,14 @@ public class UpdateWidgetService extends IntentService {
 		if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 			AppWidgetManager manager = AppWidgetManager.getInstance(this);
 			AppWidgetProviderInfo info = manager.getAppWidgetInfo(appWidgetId);
-			String className = info.provider.getClassName();
-			Builder builder = MyCycleWidget.getBuilder(className);
-			// log("update widget " + className);
-			if (builder != null) {
-				RemoteViews views = builder.buildViews(this, appWidgetId);
-				manager.updateAppWidget(appWidgetId, views);
+			if (info != null) {
+				String className = info.provider.getClassName();
+				Builder builder = MyCycleWidget.getBuilder(className);
+				// log("update widget " + className);
+				if (builder != null) {
+					RemoteViews views = builder.buildViews(this, appWidgetId);
+					manager.updateAppWidget(appWidgetId, views);
+				}
 			}
 		}
 	}
