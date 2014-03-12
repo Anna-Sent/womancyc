@@ -33,7 +33,7 @@ import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		OnLongClickListener {
 	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private String wrapMsg(String msg) {
 		return getClass().getSimpleName() + ": " + msg;
@@ -272,15 +272,26 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 				.findViewById(R.id.dayOfMonthTextView);
 		dayOfMonthTextView.setText(String.valueOf(item.getDayOfMonth()));
 
-		if (item.getMonthOfYear() == mMonth) {
+		LocalDate expectedFirstDayOfNextCycle = mCalculator
+				.getExpectedFirstDayOfNextCycle(mToday);
+		if (dayOfCycle > 0
+				&& (expectedFirstDayOfNextCycle != null
+						&& item.isBefore(expectedFirstDayOfNextCycle)
+						|| item.isBefore(mToday) || item.equals(mToday))) {
+			// orange, current and past cycles
 			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xaa, 0x00));
+		} else {
+			// yellow, future cycles
+			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
+		}
+
+		if (item.getMonthOfYear() == mMonth) {
 			if (mThemeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
 			}
 		} else {
-			dayOfCycleTextView.setTextColor(Color.rgb(0xff, 0xdd, 0x00));
 			if (mThemeId == ThemeUtils.DARK_THEME) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
 			} else {
@@ -293,6 +304,13 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		}
 
 		List<Drawable> layers = new ArrayList<Drawable>();
+
+		if (expectedFirstDayOfNextCycle != null
+				&& (item.isAfter(expectedFirstDayOfNextCycle)
+						&& dayOfCycle == 1 || item
+							.equals(expectedFirstDayOfNextCycle))) {
+			layers.add(getDrawable(R.drawable.bg_menstruation_expected));
+		}
 
 		if (cellData != null) {
 			switch (cellData.getMenstruation()) {

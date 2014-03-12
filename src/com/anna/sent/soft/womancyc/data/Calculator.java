@@ -100,7 +100,7 @@ public class Calculator {
 		}
 	}
 
-	public LocalDate getFirstDayOfCycle(LocalDate current) {
+	private LocalDate getFirstDayOfCycle(LocalDate current) {
 		int currentIndex = getLeftNeighborIndex(current);
 		CalendarData currentData = mDataKeeper.get(currentIndex);
 
@@ -154,6 +154,18 @@ public class Calculator {
 			return null;
 		} else {
 			return currentData.getDate();
+		}
+	}
+
+	public LocalDate getExpectedFirstDayOfNextCycle(LocalDate current) {
+		LocalDate firstDayOfCycle = getFirstDayOfCycle(current);
+		if (firstDayOfCycle == null) {
+			return null;
+		} else {
+			int len = getLenOfCurrentMenstrualCycle(firstDayOfCycle);
+			LocalDate expectedFirstDayOfNextCycle = firstDayOfCycle
+					.plusDays(len);
+			return expectedFirstDayOfNextCycle;
 		}
 	}
 
