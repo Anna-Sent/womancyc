@@ -103,15 +103,13 @@ public class PasswordPreference extends DialogPreference {
 			String message;
 			if (confirmedPassword.equals(newPassword)) {
 				if (newPassword.equals("")) {
-					message = getContext().getResources().getString(
-							R.string.passwordIsNotSet);
+					message = getContext().getString(R.string.passwordIsNotSet);
 				} else {
-					message = getContext().getResources().getString(
-							R.string.passwordIsSet);
+					message = getContext().getString(R.string.passwordIsSet);
 				}
 			} else {
-				message = getContext().getResources().getString(
-						R.string.confirmationUnsuccess);
+				message = getContext()
+						.getString(R.string.confirmationUnsuccess);
 				newPassword = "";
 			}
 
