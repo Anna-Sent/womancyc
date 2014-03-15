@@ -44,7 +44,7 @@ public final class HelpActivity extends StateSaverActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavigationUtils.navigateUp(this, item);
+			NavigationUtils.navigateUp(this);
 			return true;
 		}
 

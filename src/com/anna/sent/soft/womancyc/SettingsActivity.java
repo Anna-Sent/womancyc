@@ -1,14 +1,11 @@
 package com.anna.sent.soft.womancyc;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -16,6 +13,7 @@ import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
 import com.anna.sent.soft.womancyc.utils.NavigationUtils;
+import com.anna.sent.soft.womancyc.utils.TaskStackBuilderUtils;
 import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 @SuppressWarnings("deprecation")
@@ -63,7 +61,7 @@ public class SettingsActivity extends PreferenceActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavigationUtils.navigateUp(this, item);
+			NavigationUtils.navigateUp(this);
 			return true;
 		}
 
@@ -129,25 +127,11 @@ public class SettingsActivity extends PreferenceActivity implements
 		} else if (key.equals(Settings.KEY_PREF_PASSWORD)) {
 			setupPasswordPreference();
 		} else if (key.equals(Settings.KEY_PREF_THEME)) {
-			restart();
+			TaskStackBuilderUtils.restartFromSettings(this);
 		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
 			setupLockAutomaticallyPreference();
 		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
 			setupDefaultMenstrualCycleLenPreference();
-		}
-	}
-
-	private void restart() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Intent intent = new Intent(this, getClass());
-			TaskStackBuilder.create(this).addNextIntentWithParentStack(intent)
-					.startActivities();
-		} else {
-			finish();
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.putExtra(MainActivity.EXTRA_CONFIGURATION_CHANGED, true);
-			TaskStackBuilder.create(this).addNextIntent(intent)
-					.startActivities();
 		}
 	}
 
