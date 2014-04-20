@@ -7,7 +7,7 @@ import android.content.Context;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 
-public class BuilderSmall extends Builder {
+public final class BuilderSmall extends Builder {
 	@Override
 	protected String getResult(Context context, DataKeeper dataKeeper) {
 		Calculator calc = new Calculator(context, dataKeeper);
