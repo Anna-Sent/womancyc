@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.shared;
 
 public class Shared {
-	public static final String DATE_TO_SHOW = "com.anna.sent.soft.womancyc.datetoshow";
+	private static final String PREFIX = "com.anna.sent.soft.womancyc.";
+	public static final String DATE_TO_SHOW = PREFIX + "datetoshow";
 }
