@@ -125,6 +125,7 @@ public class NumberPickerPreference extends DialogPreference {
 		super.onDialogClosed(positiveResult);
 
 		if (positiveResult) {
+			mNumberPicker.clearFocus();
 			int numberPickerValue = mNumberPicker.getValue();
 			if (callChangeListener(numberPickerValue)) {
 				setValue(numberPickerValue);
