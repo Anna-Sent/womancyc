@@ -74,11 +74,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		if (getDataKeeper().getCount() == 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-					android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
+					android.R.string.ok, null);
 			builder.create().show();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -90,13 +86,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 										int id) {
 									clearAllData();
 								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
+							}).setNegativeButton(android.R.string.cancel, null);
 			builder.create().show();
 		}
 	}
@@ -140,11 +130,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		if (getDataKeeper().getCount() == 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-					android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
+					android.R.string.ok, null);
 			builder.create().show();
 		} else {
 			final List<String> list = getFilesList();
@@ -167,12 +153,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 										}
 									}
 								})
-						.setNegativeButton(android.R.string.cancel,
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-									}
-								});
+						.setNegativeButton(android.R.string.cancel, null);
 				builder.create().show();
 			}
 		}
@@ -192,7 +173,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.enterFileNameToWrite)
 				.setView(view)
-				.setPositiveButton(android.R.string.yes,
+				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								String filename = textView.getText().toString();
@@ -203,12 +184,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 
 								backupWithConfirmation(filename);
 							}
-						})
-				.setNegativeButton(android.R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+						}).setNegativeButton(android.R.string.cancel, null);
 		builder.create().show();
 	}
 
@@ -226,14 +202,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 										int id) {
 									backup(absoluteFileName);
 								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
+							}).setNegativeButton(android.R.string.cancel, null);
 			builder.create().show();
 		} else {
 			backup(absoluteFileName);
@@ -245,11 +214,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		if (filenames.isEmpty()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.filesToReadNotFound).setPositiveButton(
-					android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
+					android.R.string.ok, null);
 			builder.create().show();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -263,13 +228,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 											.get(which);
 									restoreWithConfirmation(filename);
 								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
+							}).setNegativeButton(android.R.string.cancel, null);
 			builder.create().show();
 		}
 	}
@@ -287,14 +246,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 										int id) {
 									restore(absoluteFileName);
 								}
-							})
-					.setNegativeButton(android.R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-								}
-							});
+							}).setNegativeButton(android.R.string.cancel, null);
 			builder.create().show();
 		} else {
 			restore(absoluteFileName);

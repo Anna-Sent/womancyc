@@ -284,11 +284,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-						android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+						android.R.string.ok, null);
 				builder.create().show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -300,11 +296,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 									int which) {
 								textViewNote.setText(list.get(which));
 							}
-						}).setNegativeButton(android.R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+						}).setNegativeButton(android.R.string.cancel, null);
 				builder.create().show();
 			}
 
