@@ -3,6 +3,6 @@
 
     <bool name="test">false</bool>
 
-    <string name="test25">Test 25 years</string>
+    <string name="test25" translatable="false">Test 25 years</string>
 
 </resources>

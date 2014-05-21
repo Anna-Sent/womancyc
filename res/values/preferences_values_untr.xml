@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="supportEmail">anna.sent@gmail.com</string>
+    <string name="supportEmail" translatable="false">anna.sent@gmail.com</string>
 
     <integer name="defaultMenstrualCycleLen">28</integer>
     <integer name="maxMenstrualCycleLen">60</integer>
@@ -11,7 +11,7 @@
     <bool name="lockAutomatically">false</bool>
     <bool name="hideWidget">false</bool>
 
-    <string-array name="theme_values">
+    <string-array name="theme_values" translatable="false">
         <item>0</item>
         <item>1</item>
     </string-array>
