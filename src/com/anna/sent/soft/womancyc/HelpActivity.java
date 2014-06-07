@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.womancyc.adapters.HelpPagerAdapter;
@@ -11,20 +10,6 @@ import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
 import com.anna.sent.soft.womancyc.utils.NavigationUtils;
 
 public final class HelpActivity extends StateSaverActivity {
-	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
-
-	private String wrapMsg(String msg) {
-		return getClass().getSimpleName() + ": " + msg;
-	}
-
-	@SuppressWarnings("unused")
-	private void log(String msg) {
-		if (DEBUG) {
-			Log.d(TAG, wrapMsg(msg));
-		}
-	}
-
 	private ViewPager mViewPager;
 	private HelpPagerAdapter mTabsAdapter;
 

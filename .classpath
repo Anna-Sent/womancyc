@@ -12,5 +12,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="/com.anna.sent.soft"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

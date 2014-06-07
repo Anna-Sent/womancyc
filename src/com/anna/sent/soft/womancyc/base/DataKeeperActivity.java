@@ -11,7 +11,6 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
@@ -23,20 +22,6 @@ import com.anna.sent.soft.womancyc.widget.MyCycleWidget;
 
 public abstract class DataKeeperActivity extends StateSaverActivity implements
 		DataKeeper {
-	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
-
-	private String wrapMsg(String msg) {
-		return getClass().getSimpleName() + ": " + msg;
-	}
-
-	@SuppressWarnings("unused")
-	private void log(String msg) {
-		if (DEBUG) {
-			Log.d(TAG, wrapMsg(msg));
-		}
-	}
-
 	private boolean mIsDataTaskCompleted;
 	private ProgressDialog mProgressDialog = null;
 	private Timer mTimer = null;

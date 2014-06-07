@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.widget.DatePicker;
 
 import com.anna.sent.soft.womancyc.base.OptionsActivity;
@@ -22,27 +21,6 @@ import com.anna.sent.soft.womancyc.shared.Shared;
 
 public class MainActivity extends OptionsActivity implements CalendarListener,
 		OnDateSetListener {
-	private static final String TAG = "moo";
-	private static final boolean DEBUG = false;
-
-	private String wrapMsg(String msg) {
-		return getClass().getSimpleName() + ": " + msg;
-	}
-
-	@SuppressWarnings("unused")
-	private void log(String msg) {
-		if (DEBUG) {
-			Log.d(TAG, wrapMsg(msg));
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private void log(String msg, boolean debug) {
-		if (DEBUG && debug) {
-			Log.d(TAG, wrapMsg(msg));
-		}
-	}
-
 	private MonthViewFragment mMonthView;
 	private boolean mIsLargeLayout;
 	private FragmentManager mFragmentManager;
