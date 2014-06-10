@@ -3,7 +3,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="lib" path="lib/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="lib/android-support-v4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/GoogleAdMobAdsSdk-4.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-2.2.jar" sourcepath="lib/joda-time-2.2-sources.jar">
 		<attributes>
@@ -12,6 +12,5 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="src" path="/com.anna.sent.soft"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
