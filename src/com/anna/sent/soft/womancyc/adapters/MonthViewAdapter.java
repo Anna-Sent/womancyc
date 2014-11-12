@@ -356,7 +356,8 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 
 		LayerDrawable background = null;
 		if (layers.size() > 0) {
-			background = new LayerDrawable(layers.toArray(new Drawable[] {}));
+			background = new LayerDrawable(layers.toArray(new Drawable[layers
+					.size()]));
 		}
 
 		cell.setBackgroundDrawable(background);

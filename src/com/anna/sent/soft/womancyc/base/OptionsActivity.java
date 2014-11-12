@@ -140,7 +140,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 				list.add(0, getString(R.string.newFile));
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle(R.string.chooseFileNameToWrite)
-						.setItems(list.toArray(new String[] {}),
+						.setItems(list.toArray(new String[list.size()]),
 								new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,
@@ -219,7 +219,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.chooseFileNameToRead)
-					.setItems(filenames.toArray(new String[] {}),
+					.setItems(filenames.toArray(new String[filenames.size()]),
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,

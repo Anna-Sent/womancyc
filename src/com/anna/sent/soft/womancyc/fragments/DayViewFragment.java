@@ -289,7 +289,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
-				builder.setItems(list.toArray(new String[] {}),
+				builder.setItems(list.toArray(new String[list.size()]),
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
