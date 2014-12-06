@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -159,6 +160,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		}
 	}
 
+	@SuppressLint("InflateParams")
 	private void backupToNewFile() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.dialog_export, null);

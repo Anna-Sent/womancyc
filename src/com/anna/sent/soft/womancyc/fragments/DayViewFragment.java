@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -85,6 +86,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 	private CalendarData mValue;
 	private boolean mIsEmbedded;
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		return v;
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// log("onCreateDialog");

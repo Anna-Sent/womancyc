@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
 		}
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	protected void dataChanged() {
 		TableRow tableRow2 = (TableRow) findViewById(R.id.tableRow2);
