@@ -23,6 +23,7 @@ public class DataKeeperImpl implements DataKeeper {
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
+	@SuppressWarnings("unused")
 	private void log(String msg, boolean scenario) {
 		if (scenario) {
 			Log.d(TAG, wrapMsg(msg));
@@ -143,8 +144,8 @@ public class DataKeeperImpl implements DataKeeper {
 			int count = mValues.size();
 			int dbCount = dbValues.size();
 			if (count != dbCount) {
-				log("counts differ: " + count + " in memory, " + dbCount
-						+ " in db", DEBUG_SYNC);
+				// log("counts differ: " + count + " in memory, " + dbCount
+				// + " in db", DEBUG_SYNC);
 				printValues(mValues);
 				printValues(dbValues);
 			} else {
@@ -154,15 +155,15 @@ public class DataKeeperImpl implements DataKeeper {
 					CalendarData dbValue = dbValues.get(i);
 					if (!value.equals(dbValue)) {
 						synced = false;
-						log("in db: " + dbValue.toString() + "; in memory: "
-								+ value.toString(), DEBUG_SYNC);
+						// log("in db: " + dbValue.toString() + "; in memory: "
+						// + value.toString(), DEBUG_SYNC);
 					}
 				}
 
 				if (synced) {
-					log("synced!", DEBUG_SYNC);
+					// log("synced!", DEBUG_SYNC);
 				} else {
-					log("elements differ!", DEBUG_SYNC);
+					// log("elements differ!", DEBUG_SYNC);
 				}
 			}
 		}
@@ -176,7 +177,7 @@ public class DataKeeperImpl implements DataKeeper {
 				result += values.get(i).toString() + (i == size ? "" : "; ");
 			}
 
-			log(result, DEBUG_SYNC);
+			// log(result, DEBUG_SYNC);
 		}
 	}
 
