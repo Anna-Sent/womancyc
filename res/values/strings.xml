@@ -39,7 +39,6 @@
     <string name="pref_support_summary">Отправить отзыв, замечание, предложение.</string>
     <string name="pref_childbirthdate_title">Дата родов и срок беременности</string>
     <string name="pref_childbirthdate_summary">Приложение \"Калькулятор беременности\": расчет даты родов, срока беременности разными методами.</string>
-    <string name="adUnitId">a151a5351deb085</string>
     <string name="nextMonth">Следующий месяц</string>
     <string name="prevMonth">Предыдущий месяц</string>
     <string name="currentMonth">Текущий месяц</string>
