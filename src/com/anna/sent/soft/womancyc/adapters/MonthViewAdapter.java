@@ -28,7 +28,6 @@ import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		OnLongClickListener {
@@ -73,7 +72,7 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 			Listener listener) {
 		super();
 		mContext = context;
-		mThemeId = Settings.getTheme(mContext);
+		mThemeId = Settings.settingsTheme.getTheme(mContext);
 		mDataKeeper = dataKeeper;
 		mListener = listener;
 		mCalculator = new Calculator(context, mDataKeeper);
@@ -286,13 +285,13 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener,
 		}
 
 		if (item.getMonthOfYear() == mMonth) {
-			if (mThemeId == ThemeUtils.DARK_THEME) {
+			if (Settings.settingsTheme.isDefaultTheme(mContext, mThemeId)) {
 				dayOfMonthTextView.setTextColor(Color.WHITE);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.BLACK);
 			}
 		} else {
-			if (mThemeId == ThemeUtils.DARK_THEME) {
+			if (Settings.settingsTheme.isDefaultTheme(mContext, mThemeId)) {
 				dayOfMonthTextView.setTextColor(Color.DKGRAY);
 			} else {
 				dayOfMonthTextView.setTextColor(Color.LTGRAY);

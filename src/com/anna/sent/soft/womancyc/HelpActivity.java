@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
+import com.anna.sent.soft.utils.ActionBarUtils;
+import com.anna.sent.soft.utils.NavigationUtils;
 import com.anna.sent.soft.womancyc.adapters.HelpPagerAdapter;
 import com.anna.sent.soft.womancyc.base.StateSaverActivity;
-import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
-import com.anna.sent.soft.womancyc.utils.NavigationUtils;
 
 public final class HelpActivity extends StateSaverActivity {
 	private ViewPager mViewPager;

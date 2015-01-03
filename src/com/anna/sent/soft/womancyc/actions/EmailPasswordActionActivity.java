@@ -1,7 +1,7 @@
 package com.anna.sent.soft.womancyc.actions;
 
+import com.anna.sent.soft.utils.UserEmailFetcher;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.UserEmailFetcher;
 
 public class EmailPasswordActionActivity extends EmailActionActivity {
 	@Override

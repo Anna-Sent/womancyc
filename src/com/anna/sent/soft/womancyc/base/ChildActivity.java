@@ -3,8 +3,8 @@ package com.anna.sent.soft.womancyc.base;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
-import com.anna.sent.soft.womancyc.utils.NavigationUtils;
+import com.anna.sent.soft.utils.ActionBarUtils;
+import com.anna.sent.soft.utils.NavigationUtils;
 
 public abstract class ChildActivity extends DataKeeperActivity {
 	@Override

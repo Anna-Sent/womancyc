@@ -9,12 +9,12 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.anna.sent.soft.utils.ActionBarUtils;
+import com.anna.sent.soft.utils.NavigationUtils;
+import com.anna.sent.soft.utils.TaskStackBuilderUtils;
+import com.anna.sent.soft.utils.ThemeUtils;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.ActionBarUtils;
-import com.anna.sent.soft.womancyc.utils.NavigationUtils;
-import com.anna.sent.soft.womancyc.utils.TaskStackBuilderUtils;
-import com.anna.sent.soft.womancyc.utils.ThemeUtils;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity implements
@@ -42,7 +42,9 @@ public class SettingsActivity extends PreferenceActivity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		ThemeUtils.onActivityCreateSetTheme(this);
+		ThemeUtils.setupThemeBeforeOnActivityCreate(this,
+				Settings.settingsTheme.getStyle(this, R.array.style,
+						R.style.AppTheme));
 
 		super.onCreate(savedInstanceState);
 
@@ -115,7 +117,8 @@ public class SettingsActivity extends PreferenceActivity implements
 	}
 
 	private void setupThemePreference() {
-		ListPreference pref = (ListPreference) findPreference(Settings.KEY_PREF_THEME);
+		ListPreference pref = (ListPreference) findPreference(Settings.settingsTheme
+				.getThemeKey(this));
 		pref.setSummary(pref.getEntry());
 	}
 
@@ -126,8 +129,9 @@ public class SettingsActivity extends PreferenceActivity implements
 			setupDefaultMenstrualCycleLenPreference();
 		} else if (key.equals(Settings.KEY_PREF_PASSWORD)) {
 			setupPasswordPreference();
-		} else if (key.equals(Settings.KEY_PREF_THEME)) {
-			TaskStackBuilderUtils.restartFromSettings(this);
+		} else if (key.equals(Settings.settingsTheme.getThemeKey(this))) {
+			TaskStackBuilderUtils.restartFromSettings(this, MainActivity.class,
+					MainActivity.EXTRA_CONFIGURATION_CHANGED);
 		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
 			setupLockAutomaticallyPreference();
 		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {

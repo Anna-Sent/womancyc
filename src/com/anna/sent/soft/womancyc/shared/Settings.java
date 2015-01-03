@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.womancyc.R;
 
 public class Settings {
@@ -110,29 +111,29 @@ public class Settings {
 		editor.commit();
 	}
 
-	public static final String KEY_PREF_THEME = "pref_theme";
+	public static SettingsThemeImpl settingsTheme = new SettingsThemeImpl();
 
-	public static int getTheme(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
-		int defaultValue = context.getResources().getInteger(
-				R.integer.defaultTheme);
-		String value = settings.getString(KEY_PREF_THEME, "");
-		int result = defaultValue;
-		if (!value.equals("")) {
-			try {
-				result = Integer.parseInt(value);
-			} catch (NumberFormatException e) {
-				result = defaultValue;
-			}
+	public static class SettingsThemeImpl extends SettingsTheme {
+		@Override
+		protected SharedPreferences getSettings(Context context) {
+			return Settings.getDefaultSettings(context);
 		}
 
-		return result;
-	}
+		private static final String KEY_PREF_THEME = "pref_theme";
 
-	public static void setTheme(Context context, int value) {
-		SharedPreferences settings = getDefaultSettings(context);
-		Editor editor = settings.edit();
-		editor.putString(KEY_PREF_THEME, String.valueOf(value));
-		editor.commit();
+		@Override
+		public String getThemeKey(Context context) {
+			return KEY_PREF_THEME;
+		}
+
+		@Override
+		protected int getThemeValuesArrayResourceId() {
+			return R.array.theme_values;
+		}
+
+		@Override
+		protected int getDefaultThemeId(Context context) {
+			return context.getResources().getInteger(R.integer.defaultTheme);
+		}
 	}
 }
