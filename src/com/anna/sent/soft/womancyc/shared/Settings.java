@@ -6,11 +6,13 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 import com.anna.sent.soft.settings.SettingsTheme;
+import com.anna.sent.soft.settings.SharedPreferencesWrapper;
 import com.anna.sent.soft.womancyc.R;
 
 public class Settings {
 	private static SharedPreferences getDefaultSettings(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context);
+		return new SharedPreferencesWrapper(
+				PreferenceManager.getDefaultSharedPreferences(context));
 	}
 
 	public static final String KEY_PREF_LOCK_AUTOMATICALLY = "pref_lock_automatically";
