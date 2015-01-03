@@ -10,6 +10,5 @@ public abstract class StateSaverActivity extends StateSaverBaseActivity {
 	}
 
 	protected void setupLanguage() {
-		// LanguageUtils.configurationChanged(this);
 	}
 }
