@@ -5,7 +5,6 @@ import org.joda.time.LocalDate;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +62,6 @@ public class MonthViewFragment extends Fragment implements
 	private Button currentMonth;
 	private GridView calendarView;
 	private MonthViewAdapter adapter;
-	private static final String CURRENT_MONTH_TEMPLATE = "MMMM yyyy";
 
 	public MonthViewFragment() {
 		super();
@@ -119,8 +117,13 @@ public class MonthViewFragment extends Fragment implements
 	public void setSelectedDate(LocalDate date) {
 		// log("set selected date to " + DateUtils.toString(date));
 		adapter.setSelectedDate(date);
-		currentMonth.setText(DateFormat.format(CURRENT_MONTH_TEMPLATE,
-				date.toDate()));
+
+		int month = date.getMonthOfYear();
+		int year = date.getYear();
+		String[] monthNames = getResources().getStringArray(R.array.MonthNames);
+
+		currentMonth.setText(String
+				.format("%s %d", monthNames[month - 1], year));
 	}
 
 	@Override
