@@ -19,6 +19,7 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/adUnitId"
         ads:loadAdOnCreate="true"
+        ads:testDevices="TEST_EMULATOR"
         android:gravity="center"
         android:paddingBottom="@dimen/view_padding"
         tools:ignore="MissingRegistered" />
