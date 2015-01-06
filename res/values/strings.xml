@@ -20,7 +20,7 @@
     <string name="pref_default_menstrual_cycle_len_summary_on">%1$s days, if data for calculation of average duration are not present.</string>
     <string name="pref_default_menstrual_cycle_len_summary_off">%1$s days</string>
     <string name="pref_use_average_title">Use average menstrual cycle length</string>
-    <string name="pref_use_average_summary">Use average menstrual cycle length calculated by three or less cycles, length of which %s or less days.</string>
+    <string name="pref_use_average_summary">Use average menstrual cycle length calculated by three or less cycles, length of which is %s or less days.</string>
     <string name="pref_safety_settings_title">Security</string>
     <string name="pref_password_title">Password</string>
     <string name="pref_send_password_to_email_title">Send password by email</string>
