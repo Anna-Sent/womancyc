@@ -30,7 +30,8 @@ public abstract class Builder {
 
 	private void setOnClickPendingIntent(Context context, RemoteViews views) {
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-				new Intent(context, PasswordActivity.class), 0);
+				new Intent(context, PasswordActivity.class)
+						.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK), 0);
 		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 	}
 
