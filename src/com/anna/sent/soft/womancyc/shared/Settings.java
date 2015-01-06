@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+import com.anna.sent.soft.settings.SettingsLanguage;
 import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.settings.SharedPreferencesWrapper;
 import com.anna.sent.soft.womancyc.R;
@@ -112,6 +113,44 @@ public class Settings {
 		editor.putBoolean(KEY_PREF_USE_AVG, value);
 		editor.commit();
 	}
+
+	public static SettingsLanguageImpl settingsLanguage = new SettingsLanguageImpl();
+
+	public static class SettingsLanguageImpl extends SettingsLanguage {
+		@Override
+		protected SharedPreferences getSettings(Context context) {
+			return Settings.getDefaultSettings(context);
+		}
+
+		private static final String KEY_PREF_LANGUAGE = "pref_language";
+
+		@Override
+		public String getLanguageKey(Context context) {
+			return KEY_PREF_LANGUAGE;
+		}
+
+		private static final String KEY_PREF_IS_LANGUAGE_SET_BY_USER = "pref_is_language_set_by_user";
+
+		@Override
+		protected String getIsLanguageSetByUserKey(Context context) {
+			return KEY_PREF_IS_LANGUAGE_SET_BY_USER;
+		}
+
+		@Override
+		protected int getLocaleArrayResourceId() {
+			return R.array.locale;
+		}
+
+		@Override
+		protected int getLanguageValuesArrayResourceId() {
+			return R.array.language_values;
+		}
+
+		@Override
+		protected int getDefaultLanguageId(Context context) {
+			return context.getResources().getInteger(R.integer.defaultLanguage);
+		}
+	};
 
 	public static SettingsThemeImpl settingsTheme = new SettingsThemeImpl();
 

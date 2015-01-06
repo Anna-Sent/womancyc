@@ -32,6 +32,7 @@
     <string name="pref_hide_widget_summary">Скрывать содержимое виджета, когда приложение заблокировано паролем.</string>
     <string name="pref_ui_settings_title">Внешний вид</string>
     <string name="pref_theme_title">Тема</string>
+    <string name="pref_language_title">Language</string>
     <string name="pref_other_settings_title">Другое</string>
     <string name="pref_rate_title">Оценить приложение</string>
     <string name="pref_rate_summary"></string>

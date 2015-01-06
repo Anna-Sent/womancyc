@@ -39,7 +39,9 @@
             android:summary="@string/pref_hide_widget_summary"
             android:title="@string/pref_hide_widget_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_ui_settings_title" >
+    <PreferenceCategory
+        android:key="pref_ui_settings"
+        android:title="@string/pref_ui_settings_title" >
         <ListPreference
             android:defaultValue="@integer/defaultTheme"
             android:dialogTitle="@string/pref_theme_title"

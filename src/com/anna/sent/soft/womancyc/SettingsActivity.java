@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.utils.ActionBarUtils;
+import com.anna.sent.soft.utils.LanguageUtils;
 import com.anna.sent.soft.utils.NavigationUtils;
 import com.anna.sent.soft.utils.TaskStackBuilderUtils;
 import com.anna.sent.soft.utils.ThemeUtils;
@@ -26,7 +28,6 @@ public class SettingsActivity extends PreferenceActivity implements
 		return getClass().getSimpleName() + ": " + msg;
 	}
 
-	@SuppressWarnings("unused")
 	private void log(String msg) {
 		if (DEBUG) {
 			Log.d(TAG, wrapMsg(msg));
@@ -48,15 +49,21 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		super.onCreate(savedInstanceState);
 
+		LanguageUtils.setupLanguageAfterOnActivityCreate(this,
+				Settings.settingsLanguage.isLanguageSetByUser(this),
+				Settings.settingsLanguage.getLocale(this));
+
 		addPreferencesFromResource(R.xml.preferences);
 
 		ActionBarUtils.setupActionBar(this);
+
+		createLanguagePreference();
+		setupThemePreference();
 
 		setupDefaultMenstrualCycleLenPreference();
 		setupUseAvgPreference();
 		setupPasswordPreference();
 		setupLockAutomaticallyPreference();
-		setupThemePreference();
 	}
 
 	@Override
@@ -68,6 +75,36 @@ public class SettingsActivity extends PreferenceActivity implements
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private final static String KEY_PREF_UI_SETTINGS = "pref_ui_settings";
+
+	private void createLanguagePreference() {
+		log("create language preference");
+		PreferenceCategory category = (PreferenceCategory) findPreference(KEY_PREF_UI_SETTINGS);
+		final ListPreference pref = new ListPreference(this);
+		pref.setKey(Settings.settingsLanguage.getLanguageKey(this));
+		String[] entries = getResources().getStringArray(R.array.language);
+		pref.setEntries(entries);
+		String[] entryValues = getResources().getStringArray(
+				R.array.language_values);
+		pref.setEntryValues(entryValues);
+		String title = getString(R.string.pref_language_title);
+		pref.setDialogTitle(title);
+		pref.setTitle(title);
+		int value = Settings.settingsLanguage.getLanguage(this);
+		pref.setDefaultValue(String.valueOf(value));
+		pref.setValue(String.valueOf(value));
+		Settings.settingsLanguage.setLanguage(this, value);
+		log(pref.getValue() + " " + pref.getEntry());
+		pref.setSummary(pref.getEntry());
+		category.addPreference(pref);
+	}
+
+	private void setupThemePreference() {
+		ListPreference pref = (ListPreference) findPreference(Settings.settingsTheme
+				.getThemeKey(this));
+		pref.setSummary(pref.getEntry());
 	}
 
 	private void setupDefaultMenstrualCycleLenPreference() {
@@ -116,26 +153,23 @@ public class SettingsActivity extends PreferenceActivity implements
 		}
 	}
 
-	private void setupThemePreference() {
-		ListPreference pref = (ListPreference) findPreference(Settings.settingsTheme
-				.getThemeKey(this));
-		pref.setSummary(pref.getEntry());
-	}
-
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		if (key.equals(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN)) {
 			setupDefaultMenstrualCycleLenPreference();
+		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
+			setupDefaultMenstrualCycleLenPreference();
 		} else if (key.equals(Settings.KEY_PREF_PASSWORD)) {
 			setupPasswordPreference();
+		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
+			setupLockAutomaticallyPreference();
+		} else if (key.equals(Settings.settingsLanguage.getLanguageKey(this))) {
+			TaskStackBuilderUtils.restartFromSettings(this, MainActivity.class,
+					MainActivity.EXTRA_CONFIGURATION_CHANGED);
 		} else if (key.equals(Settings.settingsTheme.getThemeKey(this))) {
 			TaskStackBuilderUtils.restartFromSettings(this, MainActivity.class,
 					MainActivity.EXTRA_CONFIGURATION_CHANGED);
-		} else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
-			setupLockAutomaticallyPreference();
-		} else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
-			setupDefaultMenstrualCycleLenPreference();
 		}
 	}
 
