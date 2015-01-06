@@ -2,8 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="google_app_name">WomanCyc</string>
-    <string name="yandex_app_name">WomanCyc: календарь женских циклов</string>
-    <string name="google_marketing_message">WomanCyc: календарь женских циклов</string>
+    <string name="yandex_app_name">WomanCyc</string>
+    <string name="google_marketing_message">WomanCyc: calendar of woman's cycle</string>
     <string name="description">
 <![CDATA[
 WomanCyc — это приложение-календарь, в котором можно отмечать:
@@ -50,18 +50,10 @@ WomanCyc — это приложение-календарь, в котором �
     </string>
     <string name="what_is_new">
 <![CDATA[
-В версии 1.0.6:
-* Обновление в связи с выходом Android 4.4.
-* Доработан интерфейс пользователя.
-
-В версии 1.0.5:
-* Обновление в связи с выходом Android 4.3.
-
-В версии 1.0.3:
-* Исправлено расположение рекламного блока: на устройствах с маленьким экраном реклама не отображается; если размер экрана позволяет, рекламный блок отображается внизу экрана на расстоянии от элементов управления.
-
-В версии 1.0.2:
-* Исправлен цвет иконок кнопок для версий Android 2.*.
+v1.0.7:
+* English translation.
+Please send your comments and suggestions about translation on email anna.sent@gmail.com.
+* Minor improvements.
 ]]>
     </string>
 

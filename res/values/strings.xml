@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="sendto_app_not_available">Приложение \"Почтовый клиент\" недоступно</string>
-    <string name="market_app_not_available">Приложение market недоступно</string>
-    <string name="days">д.</string>
-    <string name="isSet">Установлен</string>
-    <string name="isNotSet">Не установлен</string>
-    <string name="enterPassword">Введите пароль</string>
-    <string name="confirmPassword">Подтвердите пароль</string>
-    <string name="incorrectPassword">Неверный пароль</string>
-    <string name="confirmationUnsuccess">Пароли не совпадают. Пароль не установлен</string>
-    <string name="passwordIsSet">Пароль установлен</string>
-    <string name="passwordIsNotSet">Пароль не установлен</string>
+    <string name="sendto_app_not_available">Mail application is not available</string>
+    <string name="market_app_not_available">Market application is not available</string>
+    <string name="days">days</string>
+    <string name="isSet">Set</string>
+    <string name="isNotSet">Not set</string>
+    <string name="enterPassword">Enter password</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="incorrectPassword">Incorrect password</string>
+    <string name="confirmationUnsuccess">Passwords do not match. Password is not set</string>
+    <string name="passwordIsSet">Password is set</string>
+    <string name="passwordIsNotSet">Password is not set</string>
     <string name="bacupFileName">backup_%s</string>
-    <string name="openDataSourceTask">Загрузка базы данных</string>
-    <string name="restoreDataTask">Восстановление данных</string>
-    <string name="pref_calculation_settings_title">Прогноз</string>
-    <string name="pref_default_menstrual_cycle_len_title">Менструальный цикл</string>
-    <string name="pref_default_menstrual_cycle_len_summary_on">%1$s д., если данных для расчета средней продолжительности недостаточно.</string>
-    <string name="pref_default_menstrual_cycle_len_summary_off">%1$s д.</string>
-    <string name="pref_use_average_title">На основе текущих данных</string>
-    <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
-    <string name="pref_safety_settings_title">Безопасность</string>
-    <string name="pref_password_title">Пароль</string>
-    <string name="pref_send_password_to_email_title">Отправить пароль по email</string>
-    <string name="pref_send_password_to_email_summary">Для восстановления пароля</string>
-    <string name="pref_lock_automatically_title">Автоматическая блокировка</string>
-    <string name="pref_lock_automatically_summary_on">Да: запрашивать пароль при каждом запуске приложения.</string>
-    <string name="pref_lock_automatically_summary_off">Нет: запрашивать пароль, если выход из приложения осуществлен с помощью пункта меню \"%s\".</string>
-    <string name="pref_hide_widget_title">Скрывать виджет</string>
-    <string name="pref_hide_widget_summary">Скрывать содержимое виджета, когда приложение заблокировано паролем.</string>
-    <string name="pref_ui_settings_title">Внешний вид</string>
-    <string name="pref_theme_title">Тема</string>
+    <string name="openDataSourceTask">Database loading</string>
+    <string name="restoreDataTask">Data restoring</string>
+    <string name="pref_calculation_settings_title">Prediction</string>
+    <string name="pref_default_menstrual_cycle_len_title">Menstrual cycle</string>
+    <string name="pref_default_menstrual_cycle_len_summary_on">%1$s days, if data for calculation of average duration are not present.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_off">%1$s days</string>
+    <string name="pref_use_average_title">Use average menstrual cycle length</string>
+    <string name="pref_use_average_summary">Use average menstrual cycle length calculated by three or less cycles, length of which %s or less days.</string>
+    <string name="pref_safety_settings_title">Security</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_send_password_to_email_title">Send password by email</string>
+    <string name="pref_send_password_to_email_summary">To restore password, if necessary</string>
+    <string name="pref_lock_automatically_title">Automatic locking</string>
+    <string name="pref_lock_automatically_summary_on">Yes: request password on each start of application.</string>
+    <string name="pref_lock_automatically_summary_off">No: request password if exit from application was done using menu item \"%s\".</string>
+    <string name="pref_hide_widget_title">Hide widget</string>
+    <string name="pref_hide_widget_summary">Hide content of widget if application is locked with password.</string>
+    <string name="pref_ui_settings_title">User interface</string>
+    <string name="pref_theme_title">Theme</string>
     <string name="pref_language_title">Language</string>
-    <string name="pref_other_settings_title">Другое</string>
-    <string name="pref_rate_title">Оценить приложение</string>
+    <string name="pref_other_settings_title">Other</string>
+    <string name="pref_rate_title">Rate the application</string>
     <string name="pref_rate_summary"></string>
-    <string name="pref_support_title">Написать разработчику</string>
-    <string name="pref_support_summary">Отправить отзыв, замечание, предложение.</string>
-    <string name="pref_childbirthdate_title">Дата родов и срок беременности</string>
-    <string name="pref_childbirthdate_summary">Приложение \"Калькулятор беременности\": расчет даты родов, срока беременности разными методами.</string>
-    <string name="nextMonth">Следующий месяц</string>
-    <string name="prevMonth">Предыдущий месяц</string>
-    <string name="currentMonth">Текущий месяц</string>
-    <string name="nextDay">Следующий день</string>
-    <string name="prevDay">Предыдущий день</string>
-    <string name="currentDay">Текущий день</string>
+    <string name="pref_support_title">Feedback</string>
+    <string name="pref_support_summary">Send review, comment, suggestion.</string>
+    <string name="pref_childbirthdate_title">Pregnancy Calculator</string>
+    <string name="pref_childbirthdate_summary">Calculation of expected date of delivery and expected gestational age by different methods.</string>
+    <string name="nextMonth">Next month</string>
+    <string name="prevMonth">Previous month</string>
+    <string name="currentMonth">Current month</string>
+    <string name="nextDay">Next day</string>
+    <string name="prevDay">Previous day</string>
+    <string name="currentDay">Current day</string>
     <string name="app_name">WomanCyc</string>
     <string name="widget_small_name">WomanCyc Small</string>
     <string name="widget_medium_name">WomanCyc Medium</string>
-    <string name="settings">Настройки</string>
-    <string name="clearAllData">Сброс данных</string>
-    <string name="thereIsNoData">Данных нет</string>
-    <string name="clearAllDataConfirmation">Удалить все данные?</string>
-    <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления. Сохраните данные в файл, если необходимо.</string>
-    <string name="statistic">Статистика</string>
-    <string name="help">Справка</string>
-    <string name="lockAndExit">Блокировка и выход</string>
-    <string name="backupData">Сохранить данные</string>
-    <string name="chooseFileNameToWrite">Выберите файл для экспорта</string>
-    <string name="newFile">Новый файл&#8230;</string>
-    <string name="enterFileNameToWrite">Введите имя файла для экспорта</string>
-    <string name="dataExportSuccessfull">Данные сохранены в файл %s</string>
-    <string name="restoreData">Восстановить данные</string>
-    <string name="chooseFileNameToRead">Выберите файл для импорта</string>
-    <string name="filesToReadNotFound">Файлы для импорта не найдены</string>
-    <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
-    <string name="restoreConfirmation">Восстановить данные из файла %s?</string>
-    <string name="restoreConfirmationMessage">Текущие данные будут заменены новыми. Сохраните данные в файл, если необходимо.</string>
-    <string name="backupConfirmation">Файл %s существует</string>
-    <string name="backupConfirmationMessage">Заменить содержимое файла?</string>
-    <string name="clear">Очистить</string>
-    <string name="close">Закрыть</string>
-    <string name="today">Сегодня</string>
-    <string name="menstruation">Менструация</string>
-    <string name="sex">Секс</string>
-    <string name="note">Заметка</string>
-    <string name="tookPill">Таблетку приняла</string>
-    <string name="menstrualCycleLength">Продолжительность менструального цикла</string>
-    <string name="bleedingLength">Продолжительность менструации</string>
-    <string name="avgValue">Среднее значение</string>
-    <string name="minValue">Минимальное значение</string>
-    <string name="maxValue">Максимальное значение</string>
-    <string name="firstDayOfCycle">Первый день цикла</string>
+    <string name="settings">Settings</string>
+    <string name="clearAllData">Reset data</string>
+    <string name="thereIsNoData">No data</string>
+    <string name="clearAllDataConfirmation">Delete all data?</string>
+    <string name="clearAllDataConfirmationMessage">Data will be permanently deleted. Save current data to file, if necessary.</string>
+    <string name="statistic">Statistics</string>
+    <string name="help">Help</string>
+    <string name="lockAndExit">Lock and exit</string>
+    <string name="backupData">Save data</string>
+    <string name="chooseFileNameToWrite">Select file to export</string>
+    <string name="newFile">New file&#8230;</string>
+    <string name="enterFileNameToWrite">Enter file name for export</string>
+    <string name="dataExportSuccessfull">Data saved in file %s</string>
+    <string name="restoreData">Restore data</string>
+    <string name="chooseFileNameToRead">Select file to import</string>
+    <string name="filesToReadNotFound">No files for import</string>
+    <string name="dataImportSuccessfull">Data restored from file %s</string>
+    <string name="restoreConfirmation">Restore data from file %s?</string>
+    <string name="restoreConfirmationMessage">Current data will be replaced with new. Save current data to file, if necessary.</string>
+    <string name="backupConfirmation">File %s already exist</string>
+    <string name="backupConfirmationMessage">Replace content of this file?</string>
+    <string name="clear">Clear</string>
+    <string name="close">Close</string>
+    <string name="today">Today</string>
+    <string name="menstruation">Menstruation</string>
+    <string name="sex">Intercourse</string>
+    <string name="note">Note</string>
+    <string name="tookPill">Took pill</string>
+    <string name="menstrualCycleLength">Menstrual cycle length</string>
+    <string name="bleedingLength">Bleeding length</string>
+    <string name="avgValue">Average value</string>
+    <string name="minValue">Minimum value</string>
+    <string name="maxValue">Maximum value</string>
+    <string name="firstDayOfCycle">First day of cycle</string>
     <string name="statisticRemark">
 <![CDATA[
-<i>Примечание.</i> В таблице учитываются данные по всем циклам, кроме последнего (по всем полным циклам).<br/>
-Расчет средней, максимальной и минимальной продолжительностей менструального цикла ведется только по  циклам, не превышающим %1$s дней.<br/>
-Продолжительность циклов, превышающая %2$s дней, в таблице выделяется красным.
+<i>Note.</i> Table contains data about all cycles except the last (i.e., all full cycles).<br/>
+Calculation of the average, maximum and minimum length of the menstrual cycle is carried out only in cycles not exceeding %1$s days.<br/>
+Cycles exceeding %2$s days is highlighted in red in the table.
 ]]>
     </string>
 
     <string-array name="menstruationTypes">
-        <item>Нет</item>
-        <item>Да, без доп. пометок</item>
-        <item>Скудные выделения</item>
-        <item>Нормальные выделения</item>
-        <item>Обильные выделения</item>
+        <item>No</item>
+        <item>Yes</item>
+        <item>Light bleeding</item>
+        <item>Normal bleeding</item>
+        <item>Heavy bleeding</item>
     </string-array>
 
     <array name="menstruationDrawables">
@@ -108,10 +108,10 @@
     </array>
 
     <string-array name="sexTypes">
-        <item>Нет</item>
-        <item>Незащищенный</item>
-        <item>Защищенный</item>
-        <item>Да</item>
+        <item>No</item>
+        <item>Unprotected</item>
+        <item>Protected</item>
+        <item>Yes</item>
     </string-array>
 
     <array name="sexDrawablesDark">
@@ -127,14 +127,14 @@
         <item>@drawable/sex_light</item>
     </array>
 
-    <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
-    <string name="errorFileNotFound">Файл %s не найден</string>
-    <string name="errorFileReading">Ошибка чтения файла</string>
-    <string name="errorFileWriting">Ошибка записи файла</string>
-    <string name="errorFileImport">Ошибка импорта файла</string>
-    <string name="errorFileExport">Ошибка экспорта файла</string>
-    <string name="errorExternalStorageReading">Устройство недоступно для чтения</string>
-    <string name="errorExternalStorageWriting">Устройство недоступно для записи</string>
+    <string name="errorWhileOpenningDatabase">Error openning database</string>
+    <string name="errorFileNotFound">File %s not found</string>
+    <string name="errorFileReading">Error reading from file</string>
+    <string name="errorFileWriting">Error writing to file</string>
+    <string name="errorFileImport">Error importing from file</string>
+    <string name="errorFileExport">Error exporting to file</string>
+    <string name="errorExternalStorageReading">External storage is unavailable for reading</string>
+    <string name="errorExternalStorageWriting">External storage is unavailable for writing</string>
 
     <string-array name="MonthNames">
         <item>January</item>
