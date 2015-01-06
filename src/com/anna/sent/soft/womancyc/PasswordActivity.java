@@ -66,6 +66,8 @@ public class PasswordActivity extends StateSaverActivity implements
 
 	private void startProtectedActivity() {
 		finish();
-		startActivity(new Intent(this, MainActivity.class));
+		startActivity(new Intent(this, MainActivity.class)
+				.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 }
