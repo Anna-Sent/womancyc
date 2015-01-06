@@ -87,7 +87,7 @@
 <![CDATA[
 <i>Note.</i> Table contains data about all cycles except the last (i.e., all full cycles).<br/>
 Calculation of the average, maximum and minimum length of the menstrual cycle is carried out only in cycles not exceeding %1$s days.<br/>
-Cycles exceeding %2$s days is highlighted in red in the table.
+Cycles exceeding %2$s days are highlighted in red in the table.
 ]]>
     </string>
 
