@@ -23,6 +23,7 @@ import com.anna.sent.soft.womancyc.data.Calculator.Value;
 public class StatisticActivity extends ChildActivity implements OnClickListener {
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		setTitle(R.string.statistic);
 		setContentView(R.layout.activity_statistic);
 		super.setViews(savedInstanceState);
 	}

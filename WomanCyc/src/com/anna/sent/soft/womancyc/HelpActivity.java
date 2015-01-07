@@ -15,6 +15,7 @@ public final class HelpActivity extends StateSaverActivity {
 
 	@Override
 	public void setViews(Bundle savedInstanceState) {
+		setTitle(R.string.help);
 		setContentView(R.layout.activity_help);
 		ActionBarUtils.setupActionBar(this);
 
