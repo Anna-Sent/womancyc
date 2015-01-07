@@ -74,6 +74,13 @@ public class Settings {
 		editor.commit();
 	}
 
+	public static void clearPassword(Context context) {
+		SharedPreferences settings = getSettings(context);
+		Editor editor = settings.edit();
+		editor.remove(KEY_PREF_PASSWORD);
+		editor.commit();
+	}
+
 	public static boolean isPasswordSet(Context context) {
 		String password = getPassword(context);
 		return !password.equals("");
