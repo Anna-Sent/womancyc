@@ -1,6 +1,4 @@
 syntax: glob
-*.class
 bin//*
 gen//*
 .hgignore
-*.jar
