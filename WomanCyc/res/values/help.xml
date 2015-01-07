@@ -2,43 +2,39 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string-array name="helpTitles">
-        <item>Экспорт и импорт</item>
-        <item>Пароль</item>
-        <item>Виджет</item>
+        <item>Export and import</item>
+        <item>Password</item>
+        <item>Widget</item>
     </string-array>
     <string-array name="helpParts">
         <item>
 <![CDATA[
-Пункты <B>&laquo;Меню-Сохранить данные&raquo;</B> (экспорт) и <B>&laquo;Меню-Восстановить данные&raquo;</B> (импорт).<BR/><BR/>
+Menu items <B>&laquo;Menu-Save data&raquo;</B> (export) and <B>&laquo;Menu-Restore data&raquo;</B> (import).<BR/><BR/>
 
-Файлы для экспорта-импорта хранятся в корне SD-карты, в каталоге WomanCyc. При удалении приложения или очистке данных эти файлы не удаляются.<BR/><BR/>
+Files for export and import are stored in root of SD-card, in directory "WomanCyc". If you clear data of the application or uninstall the application then these files will not be deleted.<BR/><BR/>
 
-Вы можете задать имя файла или выбрать существующий файл из списка.<BR/><BR/>
+You can enter file name or select existing file from the list.<BR/><BR/>
 
-Настройки приложения (все, что в <B>&laquo;Меню-Настройки&raquo;</B>) в этот файл НЕ сохраняются.<BR/><BR/>
+Settings of the application (all that is in <B>&laquo;Menu-Settings&raquo;</B>) are NOT saved in this file.<BR/><BR/>
 
-С помощью пункта <B>&laquo;Меню-Сброс данных&raquo;</B> можно осуществить сброс (очистку) всех данных (настройки при этом НЕ сбрасываются).<BR/><BR/>
+You can clear all entered data by selecting menu item <B>&laquo;Menu-Clear data&raquo;</B> (settings of the application will NOT be cleared).<BR/><BR/>
 
-С помощью экспорта-импорта осуществляются:<BR/><BR/>
+With export and import you can:<BR/><BR/>
 
-<I> * Перенос данных с одного устройства на другое.</I><BR/><BR/>
+<I> * transfer data from one device to another.</I><BR/><BR/>
 
-<I> * Хранение на устройстве данных нескольких пользователей.</I>
-Сохраняйте разные данные в файлы с разными именами и восстанавливайте для редактирования.
-(Не забывайте снова сохранить файл после редактирования.)
-Если есть необходимость в более удобном переключении пользователей, напишите пожелание по адресу
-<A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>.<BR/><BR/>
+<I> * keep data of few users on device.</I>
+Save data into files with different names and restore the data for editing.
+(Don't forget save data after editing again.)<BR/><BR/>
 
-<I> * Автоматизированная система бэкапов.</I>
-Делайте бэкапы данных на SD-карту устройства и переносите их на другие устройства, отправляйте по email, в Dropbox и т.&nbsp;п.
-Если есть необходимость в автоматической системе бэкапов, напишите пожелание по адресу
-<A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>.<BR/><BR/>
+<I> * backup data.</I>
+Make backups of data to SD-card and move the data to another devices, send it by email, save to Dropbox, etc.<BR/><BR/>
 
-<I> * Редактирование порций данных.</I>
-Данные сохраняются в читаемом формате в xml-файл,
-который Вы можете самостоятельно редактировать с помощью текстового редактора и других программных средств.<BR/><BR/>
+<I> * edit pieces of data.</I>
+Data is saved in readable format to xml-file,
+and you can edit this file by text editor or other program.<BR/><BR/>
 
-Формат файла:<BR/><BR/>
+Format of the file:<BR/><BR/>
 
 &lt;calendar&gt;<BR/><BR/>
 
@@ -56,53 +52,53 @@
 
 &lt;/calendar&gt;<BR/><BR/>
 
-Порядок записей по датам и порядок перечисления атрибутов записи не имеет значения.
-Пробелы и символы табуляции не имеют значения. Атрибуты записи могут отсутствовать.<BR/><BR/>
+Order of records by date does not matter, order of record attributes does not matter.
+Spaces and tabs do not matter. Attributes of record may be missing.<BR/><BR/>
 ]]>
         </item>
         <item>
 <![CDATA[
-Если Вы не хотите, чтобы ваши личные данные случайно увидел кто-нибудь, имеющий доступ к вашему устройству,
-установите пароль в <B>&laquo;Меню-Настройки-Пароль&raquo;</B>.<BR/><BR/>
+If you don't want somebody who have access to your device see your personal data,
+then setup password in <B>&laquo;Menu-Settings-Password&raquo;</B>.<BR/><BR/>
 
-<I> * Пароль можно отправить на свой email для восстановления в случае, если Вы его забудете.</I>
-При выборе пункта <B>&laquo;Меню-Настройки-Отправить пароль по email&raquo;</B> откроется почтовый клиент, установленный на устройстве.
-В поле &laquo;Кому&raquo; будет внесен адрес эл.&nbsp;почты владельца устройства
-(на некоторых устройствах это поле может оставаться незаполненным, в этом случае наберите адрес).<BR/><BR/>
+<I> * You can send password by email to yourself in order to restore it if you forget it.</I>
+If you select menu item <B>&laquo;Menu-Settings-Send password by email&raquo;</B> the mail application will be opened.
+Email address of the device owner will be in the field "To"
+(this field will be empty on some devices, in this case you should enter email address by yourself).<BR/><BR/>
 
-<I> * Если Вы забыли пароль, то возможны два сценария:</I><BR/><BR/>
-1) Вы экспортировали свои данные в файл или Вы не вводили важных данных:<BR/><BR/>
-Чтобы сбросить забытый пароль, необходимо удалить приложение и установить его заново или очистить данные приложения
-(Настройки вашего устройства-Приложения-WomanCyc-Очистить данные).
-При этом все внесенные вами данные, кроме сохраненных (экспортированных) файлов, будут потеряны.<BR/><BR/>
-2) Вы НЕ экспортировали свои данные в файл и они для Вас важны:<BR/><BR/>
-Напишите о своей проблеме по адресу
+<I> * If you forget password, and:</I><BR/><BR/>
+1) you have exported your data to the file or you have not entered important data:<BR/><BR/>
+To clear forgotten password you should uninstall and install again the application or clear data of the application
+(settings of your device-Applications-WomanCyc-Clear data).
+All entered data except the saved (exported) data will be lost.<BR/><BR/>
+2) you have NOT exported your data and this data is important for you:<BR/><BR/>
+Send me an email at
 <A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>.<BR/><BR/>
 
-При установке пароля появится пункт <B>&laquo;Меню-Блокировка и выход&raquo;</B>.
-Если выйти из приложения с помощью этого пункта, то при следующем запуске приложения будет запрошен ввод пароля.<BR/><BR/>
+If you set password then menu item <B>&laquo;Menu-Lock and exit&raquo;</B> appear.
+If you exit from the application using this item, the next time you start the application it will prompt you for a password.<BR/><BR/>
 
-Можно установить пункт <B>&laquo;Меню-Настройки-Автоматическая блокировка&raquo;</B>.
-В этом случае пароль будет запрашиваться каждый раз при запуске приложения.<BR/><BR/>
+You can check menu item <B>&laquo;Menu-Settings-Automatic locking&raquo;</B>.
+In this case the application will prompt you for a password every time you start the application.<BR/><BR/>
 
-Кроме того, Вы можете задать с помощью пункта <B>&laquo;Меню-Настройки-Скрывать виджет&raquo;</B>, скрывать ли содержимое виджета при заблокированном приложении.<BR/><BR/>
+If you check menu item <B>&laquo;Menu-Settings-Hide widget&raquo;</B> then content of widget will be hidden if the application is locked with password.<BR/><BR/>
 ]]>
         </item>
         <item>
 <![CDATA[
-Доступны две конфигурации виджета:<BR/><BR/>
+There are two configurations of widget:<BR/><BR/>
 
- * &lt;день цикла&gt;<BR/><BR/>
+ * &lt;day of cycle&gt;<BR/><BR/>
  
- * &lt;день цикла&gt; (&lt;продолжительность цикла&gt;)<BR/><BR/>
+ * &lt;day of cycle&gt; (&lt;cycle length&gt;)<BR/><BR/>
 
-В качестве продолжительности цикла берется заданное или рассчитанное (среднее) значение
-(смотрите пункты <B>&laquo;Меню-Настройки-Менструальный цикл&raquo;</B> и <B>&laquo;Меню-Настройки-На основе текущих данных&raquo;</B>).<BR/><BR/>
+Specified or calculated (average) value is used as a cycle length
+(see menu items <B>&laquo;Menu-Settings-Menstrual cycle&raquo;</B> and <B>&laquo;Menu-Settings-Use average menstrual cycle length&raquo;</B>).<BR/><BR/>
 
-При нажатии на виджет запускается приложение.<BR/><BR/>
+By clicking on the widget the application is started.<BR/><BR/>
 
-С помощью виджета Вы можете определить задержку: например, &laquo;30 (28)&raquo; &mdash;
-сегодня 30-й день цикла при заданной или средней продолжительности цикла 28 дней (2 дня задержки).<BR/><BR/>
+By the widget you can determine a delay in your period: for example, &laquo;30 (28)&raquo; &mdash;
+today is 30th day of cycle while specified or average length of cycle is 28 days (so, you have 2 days delay of period).<BR/><BR/>
 ]]>
         </item>
     </string-array>
