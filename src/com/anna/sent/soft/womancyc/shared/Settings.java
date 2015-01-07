@@ -11,7 +11,7 @@ import com.anna.sent.soft.settings.SharedPreferencesWrapper;
 import com.anna.sent.soft.womancyc.R;
 
 public class Settings {
-	private static SharedPreferences getDefaultSettings(Context context) {
+	private static SharedPreferences getSettings(Context context) {
 		return new SharedPreferencesWrapper(
 				PreferenceManager.getDefaultSharedPreferences(context));
 	}
@@ -19,13 +19,13 @@ public class Settings {
 	public static final String KEY_PREF_LOCK_AUTOMATICALLY = "pref_lock_automatically";
 
 	public static boolean lockAutomatically(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getBoolean(KEY_PREF_LOCK_AUTOMATICALLY, context
 				.getResources().getBoolean(R.bool.lockAutomatically));
 	}
 
 	public static void lockAutomatically(Context context, boolean value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putBoolean(KEY_PREF_LOCK_AUTOMATICALLY, value);
 		editor.commit();
@@ -34,13 +34,13 @@ public class Settings {
 	public static final String KEY_PREF_HIDE_WIDGET = "pref_hide_widget";
 
 	public static boolean hideWidget(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getBoolean(KEY_PREF_HIDE_WIDGET, context.getResources()
 				.getBoolean(R.bool.hideWidget));
 	}
 
 	public static void hideWidget(Context context, boolean value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putBoolean(KEY_PREF_HIDE_WIDGET, value);
 		editor.commit();
@@ -49,12 +49,12 @@ public class Settings {
 	private static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
 
 	public static boolean isBlocked(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getBoolean(KEY_PREF_IS_BLOCKED, false);
 	}
 
 	public static void isBlocked(Context context, boolean value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putBoolean(KEY_PREF_IS_BLOCKED, value);
 		editor.commit();
@@ -63,12 +63,12 @@ public class Settings {
 	public static final String KEY_PREF_PASSWORD = "pref_password";
 
 	public static String getPassword(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getString(KEY_PREF_PASSWORD, "");
 	}
 
 	public static void setPassword(Context context, String value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putString(KEY_PREF_PASSWORD, value);
 		editor.commit();
@@ -87,13 +87,13 @@ public class Settings {
 	public static final String KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN = "pref_default_menstrual_cycle_len";
 
 	public static int getDefaultMenstrualCycleLen(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN, context
 				.getResources().getInteger(R.integer.defaultMenstrualCycleLen));
 	}
 
 	public static void setDefaultMenstrualCycleLen(Context context, int value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN, value);
 		editor.commit();
@@ -102,13 +102,13 @@ public class Settings {
 	public static final String KEY_PREF_USE_AVG = "pref_use_average";
 
 	public static boolean useAverage(Context context) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		return settings.getBoolean(KEY_PREF_USE_AVG, context.getResources()
 				.getBoolean(R.bool.useAverage));
 	}
 
 	public static void useAverage(Context context, boolean value) {
-		SharedPreferences settings = getDefaultSettings(context);
+		SharedPreferences settings = getSettings(context);
 		Editor editor = settings.edit();
 		editor.putBoolean(KEY_PREF_USE_AVG, value);
 		editor.commit();
@@ -119,7 +119,7 @@ public class Settings {
 	public static class SettingsLanguageImpl extends SettingsLanguage {
 		@Override
 		protected SharedPreferences getSettings(Context context) {
-			return Settings.getDefaultSettings(context);
+			return Settings.getSettings(context);
 		}
 
 		private static final String KEY_PREF_LANGUAGE = "pref_language";
@@ -157,7 +157,7 @@ public class Settings {
 	public static class SettingsThemeImpl extends SettingsTheme {
 		@Override
 		protected SharedPreferences getSettings(Context context) {
-			return Settings.getDefaultSettings(context);
+			return Settings.getSettings(context);
 		}
 
 		private static final String KEY_PREF_THEME = "pref_theme";
