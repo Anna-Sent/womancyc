@@ -9,7 +9,7 @@
     <string-array name="helpParts">
         <item>
 <![CDATA[
-Menu items <B>&laquo;Menu-Save data&raquo;</B> (export) and <B>&laquo;Menu-Restore data&raquo;</B> (import).<BR/><BR/>
+"Menu items <B>&laquo;Menu-Save data&raquo;</B> (export) and <B>&laquo;Menu-Restore data&raquo;</B> (import).<BR/><BR/>
 
 Files for export and import are stored in root of SD-card, in directory "WomanCyc". If you clear data of the application or uninstall the application then these files will not be deleted.<BR/><BR/>
 
@@ -53,12 +53,12 @@ Format of the file:<BR/><BR/>
 &lt;/calendar&gt;<BR/><BR/>
 
 Order of records by date does not matter, order of record attributes does not matter.
-Spaces and tabs do not matter. Attributes of record may be missing.<BR/><BR/>
+Spaces and tabs do not matter. Attributes of record may be missing.<BR/><BR/>"
 ]]>
         </item>
         <item>
 <![CDATA[
-If you don't want somebody who have access to your device see your personal data,
+"If you don't want somebody who have access to your device see your personal data,
 then setup password in <B>&laquo;Menu-Settings-Password&raquo;</B>.<BR/><BR/>
 
 <I> * You can send password by email to yourself in order to restore it if you forget it.</I>
@@ -81,7 +81,7 @@ If you exit from the application using this item, the next time you start the ap
 You can check menu item <B>&laquo;Menu-Settings-Automatic locking&raquo;</B>.
 In this case the application will prompt you for a password every time you start the application.<BR/><BR/>
 
-If you check menu item <B>&laquo;Menu-Settings-Hide widget&raquo;</B> then content of widget will be hidden if the application is locked with password.<BR/><BR/>
+If you check menu item <B>&laquo;Menu-Settings-Hide widget&raquo;</B> then content of widget will be hidden if the application is locked with password.<BR/><BR/>"
 ]]>
         </item>
         <item>
