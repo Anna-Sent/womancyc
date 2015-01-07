@@ -1,18 +1,14 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.actions.EmailSupportActionActivity;
 
 public class TabHelpFragmentFactory {
 	public static Fragment newInstance(int position) {
@@ -120,21 +116,6 @@ public class TabHelpFragmentFactory {
 	}
 
 	public static class TabHelpFragment3 extends TabHelpFragment {
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			Button buttonSupport = (Button) getActivity().findViewById(
-					R.id.buttonSupport);
-			buttonSupport.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(getActivity(),
-							EmailSupportActionActivity.class);
-					startActivity(intent);
-				}
-			});
-		}
-
 		@Override
 		protected int getLayoutResourceId() {
 			return R.layout.view_help_3;
