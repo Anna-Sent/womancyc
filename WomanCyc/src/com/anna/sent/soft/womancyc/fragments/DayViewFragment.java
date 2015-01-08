@@ -168,7 +168,8 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
 		checkBoxTookPill.setOnClickListener(this);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, mDataKeeper.getNotes());
+				R.layout.spinner_item, R.id.spinnerItemTextView,
+				mDataKeeper.getNotes());
 		textViewNote.setAdapter(adapter);
 
 		buttonCurrentDay.setOnClickListener(this);

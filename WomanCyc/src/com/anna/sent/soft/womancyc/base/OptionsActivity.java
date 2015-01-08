@@ -167,7 +167,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 		final AutoCompleteTextView textView = (AutoCompleteTextView) view
 				.findViewById(R.id.fileName);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, getFilesList());
+				R.layout.spinner_item, R.id.spinnerItemTextView, getFilesList());
 		textView.setAdapter(adapter);
 		textView.setText(getString(R.string.bacupFileName, LocalDate.now()
 				.toString()));
