@@ -27,12 +27,14 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 		}
 	}
 
-	public static final String UPDATE_ACTION = "UPDATE_MY_PREGNANCY_WIDGET_ACTION";
+	public static final String UPDATE_ACTION_OLD = "UPDATE_MY_PREGNANCY_WIDGET_ACTION";
+	public static final String UPDATE_ACTION_NEW = "UPDATE_MY_CYCLE_WIDGET_ACTION";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
-		if (action.equals(UPDATE_ACTION)
+		if (action.equals(UPDATE_ACTION_OLD)
+				|| action.equals(UPDATE_ACTION_NEW)
 				|| action.equals(Intent.ACTION_TIME_CHANGED)
 				|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
 				|| action.equals(Intent.ACTION_DATE_CHANGED)
@@ -87,7 +89,7 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 
 	private static PendingIntent getPendingIntent(Context context, Class<?> cls) {
 		Intent updateWidget = new Intent(context, cls);
-		updateWidget.setAction(MyCycleWidget.UPDATE_ACTION);
+		updateWidget.setAction(MyCycleWidget.UPDATE_ACTION_NEW);
 		PendingIntent result = PendingIntent.getBroadcast(context, 0,
 				updateWidget, PendingIntent.FLAG_CANCEL_CURRENT);
 		return result;
