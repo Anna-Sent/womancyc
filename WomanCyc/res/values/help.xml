@@ -61,7 +61,7 @@ Spaces and tabs do not matter. Attributes of record may be missing.<BR/><BR/>"
 "If you don't want somebody who have access to your device see your personal data,
 then setup password in <B>&laquo;Menu-Settings-Password&raquo;</B>.<BR/><BR/>
 
-<I> * You can send password by email to yourself in order to restore it if you forget it.</I>
+<I> * You can send password by email to yourself in order to restore it if you will forget it.</I>
 If you select menu item <B>&laquo;Menu-Settings-Send password by email&raquo;</B> the mail application will be opened.
 Email address of the device owner will be in the field "To"
 (this field will be empty on some devices, in this case you should enter email address by yourself).<BR/><BR/>
@@ -75,7 +75,7 @@ All entered data except the saved (exported) data will be lost.<BR/><BR/>
 Send me an email at
 <A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>.<BR/><BR/>
 
-If you set password then menu item <B>&laquo;Menu-Lock and exit&raquo;</B> appear.
+If you set password then menu item <B>&laquo;Menu-Lock and exit&raquo;</B> will appear.
 If you exit from the application using this item, the next time you start the application it will prompt you for a password.<BR/><BR/>
 
 You can check menu item <B>&laquo;Menu-Settings-Automatic locking&raquo;</B>.

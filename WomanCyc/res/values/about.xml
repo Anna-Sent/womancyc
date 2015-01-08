@@ -10,7 +10,7 @@
  * menstruation days and blood flow intensity;
  * intercourses (protected and unprotected);
  * days when you took pill (if you take oral contraceptives once a day);
- * small notes. there is user interface for autocomplete if you repeat the same notes.
+ * small notes. There is user interface for autocomplete if you repeat the same notes.
 
 Features of the application:
 
@@ -18,7 +18,7 @@ Features of the application:
 
  * The application does not impose any restrictions on expected length of cycle, actual length of cycle, or bleeding length. You can edit any days of calendar (also days in future), the application will work correctly.
 
- * Every day of cycle is numbered beginning with the first day of menstruation. You can estimate how many days are left until the next menstrual period or number of days delay lasts. If your period does not come on time, the numbering of the days continue.
+ * Every day of cycle is numbered beginning with the first day of menstruation. You can estimate how many days are left until the next menstrual period or number of days delay lasts. If your period does not come on time, the numbering of the days will continue.
 
  * The application can use specified or average length of cycle.
 
