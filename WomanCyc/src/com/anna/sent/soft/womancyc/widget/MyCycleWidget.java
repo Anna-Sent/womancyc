@@ -33,24 +33,26 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
-		if (action.equals(UPDATE_ACTION_OLD)
-				|| action.equals(UPDATE_ACTION_NEW)
-				|| action.equals(Intent.ACTION_TIME_CHANGED)
-				|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
-				|| action.equals(Intent.ACTION_DATE_CHANGED)
-				|| action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-			AppWidgetManager appWidgetManager = AppWidgetManager
-					.getInstance(context);
-			int[] appWidgetIds = appWidgetManager
-					.getAppWidgetIds(new ComponentName(context, getClass()));
-			if (appWidgetIds.length > 0) {
-				onUpdate(context, appWidgetManager, appWidgetIds);
+		if (action != null) {
+			if (action.equals(UPDATE_ACTION_OLD)
+					|| action.equals(UPDATE_ACTION_NEW)
+					|| action.equals(Intent.ACTION_TIME_CHANGED)
+					|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
+					|| action.equals(Intent.ACTION_DATE_CHANGED)
+					|| action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+				AppWidgetManager appWidgetManager = AppWidgetManager
+						.getInstance(context);
+				int[] appWidgetIds = appWidgetManager
+						.getAppWidgetIds(new ComponentName(context, getClass()));
+				if (appWidgetIds.length > 0) {
+					onUpdate(context, appWidgetManager, appWidgetIds);
 
-				if (action.equals(Intent.ACTION_TIME_CHANGED)
-						|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
-						|| action.equals(Intent.ACTION_DATE_CHANGED)
-						|| action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-					installAlarms(context, getClass());
+					if (action.equals(Intent.ACTION_TIME_CHANGED)
+							|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)
+							|| action.equals(Intent.ACTION_DATE_CHANGED)
+							|| action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+						installAlarms(context, getClass());
+					}
 				}
 			}
 		}
