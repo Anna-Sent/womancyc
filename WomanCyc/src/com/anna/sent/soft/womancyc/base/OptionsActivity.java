@@ -14,12 +14,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.HelpActivity;
 import com.anna.sent.soft.womancyc.R;
@@ -187,7 +192,37 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 								backupWithConfirmation(filename);
 							}
 						}).setNegativeButton(android.R.string.cancel, null);
-		builder.create().show();
+		final AlertDialog dialog = builder.create();
+
+		textView.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					String filename = textView.getText().toString();
+					if (filename.endsWith(EXT)) {
+						filename = filename.substring(0,
+								filename.lastIndexOf(EXT));
+					}
+
+					if (filename.equals("")) {
+						Toast.makeText(OptionsActivity.this,
+								R.string.enterFileNameToWrite,
+								Toast.LENGTH_LONG).show();
+						return false;
+					}
+
+					dialog.dismiss();
+
+					backupWithConfirmation(filename);
+					return true;
+				}
+
+				return false;
+			}
+		});
+
+		dialog.show();
 	}
 
 	private void backupWithConfirmation(String filename) {
