@@ -2,10 +2,12 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import org.joda.time.LocalDate;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
@@ -24,6 +26,7 @@ public class DatePickerDialogFragment extends DialogFragment implements
 		super();
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final LocalDate c = (LocalDate) getArguments().getSerializable(
@@ -33,6 +36,11 @@ public class DatePickerDialogFragment extends DialogFragment implements
 				c.getDayOfMonth());
 		dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
 				getString(R.string.today), this);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			dialog.getDatePicker().setCalendarViewShown(false);
+		}
+
 		return dialog;
 	}
 
