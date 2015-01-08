@@ -66,14 +66,14 @@ If you select menu item <B>&laquo;Menu-Settings-Send password by email&raquo;</B
 Email address of the device owner will be in the field "To"
 (this field will be empty on some devices, in this case you should enter email address by yourself).<BR/><BR/>
 
-<I> * If you forget password, and:</I><BR/><BR/>
+<I> * If you forgot password, and:</I><BR/><BR/>
 1) you have exported your data to the file or you have not entered important data:<BR/><BR/>
 To clear forgotten password you should uninstall and install again the application or clear data of the application
 (settings of your device-Applications-WomanCyc-Clear data).
 All entered data except the saved (exported) data will be lost.<BR/><BR/>
 2) you have NOT exported your data and this data is important for you:<BR/><BR/>
 Send me an email at
-<A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>.<BR/><BR/>
+<A HREF="mailto:anna.sent@gmail.com">anna.sent@gmail.com</A>, you will receive instructions in response.<BR/><BR/>
 
 If you set password then menu item <B>&laquo;Menu-Lock and exit&raquo;</B> will appear.
 If you exit from the application using this item, the next time you start the application it will prompt you for a password.<BR/><BR/>
