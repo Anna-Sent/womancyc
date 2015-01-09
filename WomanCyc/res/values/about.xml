@@ -6,7 +6,7 @@
     <string name="google_marketing_message">"WomanCyc: calendar of woman's cycle"</string>
     <string name="description">
 <![CDATA[
-WomanCyc is a simple period tracker application, you can mark in calendar:
+"WomanCyc is a simple period tracker application, you can mark in calendar:
  * menstruation days and blood flow intensity;
  * intercourses (protected and unprotected);
  * days when you took pill (if you take oral contraceptives once a day);
@@ -50,7 +50,7 @@ Additional information is available in the help part of the application.
 
 The application is useful for women and men watching the cycle of their girlfriends.
 
-Please send your comments and suggestions at anna.sent@gmail.com.
+Please send your comments and suggestions at anna.sent@gmail.com."
 ]]>
     </string>
     <string name="what_is_new">
