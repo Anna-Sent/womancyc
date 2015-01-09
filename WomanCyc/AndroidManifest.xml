@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.anna.sent.soft.womancyc"
-    android:versionCode="8"
-    android:versionName="1.0.7" >
+    android:versionCode="9"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="7"
