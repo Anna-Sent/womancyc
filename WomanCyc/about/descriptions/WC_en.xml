@@ -6,7 +6,7 @@
     <string name="google_marketing_message">"WomanCyc: calendar of woman's cycle"</string>
     <string name="description">
 <![CDATA[
-"WomanCyc is a simple period tracker application, you can mark in calendar:
+WomanCyc is a simple period tracker application, you can mark in calendar:
  * menstruation days and blood flow intensity;
  * intercourses (protected and unprotected);
  * days when you took pill (if you take oral contraceptives once a day);
@@ -16,7 +16,7 @@ Features of the application:
 
  * The application can be used by women with regular and irregular menstruation.
 
- * The application does not impose any restrictions on expected length of cycle, actual length of cycle, or bleeding length.
+ * The application does not impose any restrictions on actual length of cycle or bleeding length.
  You can edit any days of calendar (also days in future), the application will work correctly.
 
  * Every day of cycle is numbered beginning with the first day of menstruation.
@@ -24,33 +24,25 @@ Features of the application:
  If your period does not come on time, the numbering of the days will continue.
 
  * The application can use specified or average length of cycle.
- See settings of the application.
 
- * Calculation of fertile-infertile periods are not made.
- Reasons:
- 1) if you want to get pregnant, you should have sex in the middle of your cycle plus or minus one week - in these days an ovulation occurs;
- 2) if you don't want to get pregnant, you should not use the calendar-method of identifying fertile-infertile days - it's unsafe.
+ * Calculation of fertile-infertile periods are NOT made.
 
 Features of user interface:
 
- * to edit cell of calendar make long click (in one-panel mode);
- * to navigate in calendar use buttons «Next/Previous month/day», also you can navigate to specified date;
+ * to edit cell of calendar make long tap (in one-panel mode);
 
- * user interface is strict, minimalistic, there are two themes available (dark and light);
+ * user interface is strict, dark and light themes are available;
  * one-panel or two-panel mode is used depending on size and orientation of the device screen.
 
 Additional features:
-
  * Statistics.
  * Export and import of user data.
  * Ability to setup password.
  * Widget.
 
-Additional information is available in the help part of the application.
-
 The application is useful for women and men watching the cycle of their girlfriends.
 
-Please send your comments and suggestions at anna.sent@gmail.com."
+Please send your comments and suggestions at anna.sent@gmail.com.
 ]]>
     </string>
     <string name="what_is_new">
