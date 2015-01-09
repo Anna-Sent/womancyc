@@ -6,7 +6,7 @@
     <string name="google_marketing_message">"WomanCyc: calendar of woman's cycle"</string>
     <string name="description">
 <![CDATA[
-"WomanCyc is a simple period tracker application, you can mark in calendar:
+WomanCyc is a simple period tracker application, you can mark in calendar:
  * menstruation days and blood flow intensity;
  * intercourses (protected and unprotected);
  * days when you took pill (if you take oral contraceptives once a day);
@@ -16,11 +16,15 @@ Features of the application:
 
  * The application can be used by women with regular and irregular menstruation.
 
- * The application does not impose any restrictions on expected length of cycle, actual length of cycle, or bleeding length. You can edit any days of calendar (also days in future), the application will work correctly.
+ * The application does not impose any restrictions on expected length of cycle, actual length of cycle, or bleeding length.
+ You can edit any days of calendar (also days in future), the application will work correctly.
 
- * Every day of cycle is numbered beginning with the first day of menstruation. You can estimate how many days are left until the next menstrual period or number of days delay lasts. If your period does not come on time, the numbering of the days will continue.
+ * Every day of cycle is numbered beginning with the first day of menstruation.
+ You can estimate how many days are left until the next menstrual period or number of days delay lasts.
+ If your period does not come on time, the numbering of the days will continue.
 
  * The application can use specified or average length of cycle.
+ See settings of the application.
 
  * Calculation of fertile-infertile periods are not made.
  Reasons:
