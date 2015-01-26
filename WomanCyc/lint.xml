@@ -5,4 +5,12 @@
         id="IconDensities"
         severity="ignore" />
 
+    <issue
+        id="RtlHardcoded"
+        severity="ignore" />
+
+    <issue
+        id="RtlSymmetry"
+        severity="ignore" />
+
 </lint>
