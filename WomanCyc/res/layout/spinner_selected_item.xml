@@ -12,6 +12,7 @@
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_gravity="center"
         android:drawablePadding="@dimen/view_padding"
+        android:gravity="center_vertical|left"
         android:paddingLeft="@dimen/view_padding"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/spinnerItemTextColor"
