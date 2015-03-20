@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseThemeLight" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="numberPickerStyle">@style/Widget.Holo.Light.NumberPicker</item>
+        <item name="helpIcon">@drawable/ic_menu_help_dark</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_dark</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_dark</item>
+        <item name="statisticIcon">@drawable/ic_menu_statistic_dark</item>
+        <item name="clearAllDataIcon">@drawable/ic_menu_discard_dark</item>
+        <item name="importIcon">@drawable/ic_menu_import_dark</item>
+        <item name="exportIcon">@drawable/ic_menu_export_dark</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="textViewTextColor">@android:color/black</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="listIcon">@drawable/ic_list_light</item>
+        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/black</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_light</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_light</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_light</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
+    </style>
+
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_shortAnimTime" tools:ignore="UnusedAttribute">
+
+    <item android:drawable="@color/blue" android:state_pressed="true"/>
+    <item android:drawable="@android:color/transparent"/>
+
+</selector>

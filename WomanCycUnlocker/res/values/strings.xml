@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WomanCycUnlocker</string>
+    <string name="clear_password">Clear password</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

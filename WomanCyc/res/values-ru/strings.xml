@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sendto_app_not_available">Приложение \"Почтовый клиент\" недоступно</string>
+    <string name="market_app_not_available">Приложение market недоступно</string>
+    <string name="days">д.</string>
+    <string name="isSet">Установлен</string>
+    <string name="isNotSet">Не установлен</string>
+    <string name="enterPassword">Введите пароль</string>
+    <string name="confirmPassword">Подтвердите пароль</string>
+    <string name="incorrectPassword">Неверный пароль</string>
+    <string name="confirmationUnsuccess">Пароли не совпадают. Пароль не установлен</string>
+    <string name="passwordIsSet">Пароль установлен</string>
+    <string name="passwordIsNotSet">Пароль не установлен</string>
+    <string name="bacupFileName">backup_%s</string>
+    <string name="openDataSourceTask">Загрузка базы данных</string>
+    <string name="restoreDataTask">Восстановление данных</string>
+    <string name="pref_calculation_settings_title">Прогноз</string>
+    <string name="pref_default_menstrual_cycle_len_title">Менструальный цикл</string>
+    <string name="pref_default_menstrual_cycle_len_summary_on">%1$s д., если данных для расчета средней продолжительности недостаточно.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_off">%1$s д.</string>
+    <string name="pref_use_average_title">На основе текущих данных</string>
+    <string name="pref_use_average_summary">Использовать для прогноза среднюю продолжительность цикла, рассчитываемую не более, чем по трем последним циклам, продолжительность которых не превышала %s дней.</string>
+    <string name="pref_safety_settings_title">Безопасность</string>
+    <string name="pref_password_title">Пароль</string>
+    <string name="pref_send_password_to_email_title">Отправить пароль по email</string>
+    <string name="pref_send_password_to_email_summary">Для восстановления пароля</string>
+    <string name="pref_lock_automatically_title">Автоматическая блокировка</string>
+    <string name="pref_lock_automatically_summary_on">Да: запрашивать пароль при каждом запуске приложения.</string>
+    <string name="pref_lock_automatically_summary_off">Нет: запрашивать пароль, если выход из приложения осуществлен с помощью пункта меню \"%s\".</string>
+    <string name="pref_hide_widget_title">Скрывать виджет</string>
+    <string name="pref_hide_widget_summary">Скрывать содержимое виджета, когда приложение заблокировано паролем.</string>
+    <string name="pref_ui_settings_title">Внешний вид</string>
+    <string name="pref_theme_title">Тема</string>
+    <string name="pref_language_title">Язык</string>
+    <string name="pref_other_settings_title">Другое</string>
+    <string name="pref_rate_title">Оценить приложение</string>
+    <string name="pref_rate_summary"></string>
+    <string name="pref_support_title">Написать разработчику</string>
+    <string name="pref_support_summary">Отправить отзыв, замечание, предложение.</string>
+    <string name="pref_childbirthdate_title">Дата родов и срок беременности</string>
+    <string name="pref_childbirthdate_summary">Приложение \"Калькулятор беременности\": расчет даты родов, срока беременности разными методами.</string>
+    <string name="nextMonth">Следующий месяц</string>
+    <string name="prevMonth">Предыдущий месяц</string>
+    <string name="currentMonth">Текущий месяц</string>
+    <string name="nextDay">Следующий день</string>
+    <string name="prevDay">Предыдущий день</string>
+    <string name="currentDay">Текущий день</string>
+    <string name="app_name">WomanCyc</string>
+    <string name="widget_small_name">WomanCyc Small</string>
+    <string name="widget_medium_name">WomanCyc Medium</string>
+    <string name="settings">Настройки</string>
+    <string name="clearAllData">Сброс данных</string>
+    <string name="thereIsNoData">Данных нет</string>
+    <string name="clearAllDataConfirmation">Удалить все данные?</string>
+    <string name="clearAllDataConfirmationMessage">Данные будут удалены без возможности восстановления. Сохраните данные в файл, если необходимо.</string>
+    <string name="statistic">Статистика</string>
+    <string name="help">Справка</string>
+    <string name="lockAndExit">Блокировка и выход</string>
+    <string name="backupData">Сохранить данные</string>
+    <string name="chooseFileNameToWrite">Выберите файл для экспорта</string>
+    <string name="newFile">Новый файл&#8230;</string>
+    <string name="enterFileNameToWrite">Введите имя файла для экспорта</string>
+    <string name="dataExportSuccessfull">Данные сохранены в файл %s</string>
+    <string name="restoreData">Восстановить данные</string>
+    <string name="chooseFileNameToRead">Выберите файл для импорта</string>
+    <string name="filesToReadNotFound">Файлы для импорта не найдены</string>
+    <string name="dataImportSuccessfull">Данные восстановлены из файла %s</string>
+    <string name="restoreConfirmation">Восстановить данные из файла %s?</string>
+    <string name="restoreConfirmationMessage">Текущие данные будут заменены новыми. Сохраните данные в файл, если необходимо.</string>
+    <string name="backupConfirmation">Файл %s существует</string>
+    <string name="backupConfirmationMessage">Заменить содержимое файла?</string>
+    <string name="clear">Очистить</string>
+    <string name="close">Закрыть</string>
+    <string name="today">Сегодня</string>
+    <string name="menstruation">Менструация</string>
+    <string name="sex">Секс</string>
+    <string name="note">Заметка</string>
+    <string name="tookPill">Таблетку приняла</string>
+    <string name="menstrualCycleLength">Продолжительность менструального цикла</string>
+    <string name="bleedingLength">Продолжительность менструации</string>
+    <string name="avgValue">Среднее значение</string>
+    <string name="minValue">Минимальное значение</string>
+    <string name="maxValue">Максимальное значение</string>
+    <string name="firstDayOfCycle">Первый день цикла</string>
+    <string name="statisticRemark">
+<![CDATA[
+<i>Примечание.</i> В таблице учитываются данные по всем циклам, кроме последнего (т.е. по всем полным циклам).<br/>
+Расчет средней, максимальной и минимальной продолжительностей менструального цикла ведется только по  циклам, не превышающим %1$s дней.<br/>
+Продолжительность циклов, превышающая %2$s дней, в таблице выделяется красным.
+]]>
+    </string>
+
+    <string-array name="menstruationTypes">
+        <item>Нет</item>
+        <item>Да, без доп. пометок</item>
+        <item>Скудные выделения</item>
+        <item>Нормальные выделения</item>
+        <item>Обильные выделения</item>
+    </string-array>
+
+    <array name="menstruationDrawables">
+        <item>0</item>
+        <item>@drawable/menstruation</item>
+        <item>@drawable/menstruation_one_drop</item>
+        <item>@drawable/menstruation_two_drops</item>
+        <item>@drawable/menstruation_three_drops</item>
+    </array>
+
+    <string-array name="sexTypes">
+        <item>Нет</item>
+        <item>Незащищенный</item>
+        <item>Защищенный</item>
+        <item>Да</item>
+    </string-array>
+
+    <array name="sexDrawablesDark">
+        <item>0</item>
+        <item>@drawable/sex_unprotected_dark</item>
+        <item>@drawable/sex_protected_dark</item>
+        <item>@drawable/sex_dark</item>
+    </array>
+    <array name="sexDrawablesLight">
+        <item>0</item>
+        <item>@drawable/sex_unprotected_light</item>
+        <item>@drawable/sex_protected_light</item>
+        <item>@drawable/sex_light</item>
+    </array>
+
+    <string name="errorWhileOpenningDatabase">Ошибка при открытии базы данных</string>
+    <string name="errorFileNotFound">Файл %s не найден</string>
+    <string name="errorFileReading">Ошибка чтения файла</string>
+    <string name="errorFileWriting">Ошибка записи файла</string>
+    <string name="errorFileImport">Ошибка импорта файла</string>
+    <string name="errorFileExport">Ошибка экспорта файла</string>
+    <string name="errorExternalStorageReading">Устройство недоступно для чтения</string>
+    <string name="errorExternalStorageWriting">Устройство недоступно для записи</string>
+
+    <string-array name="MonthNames">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <declare-styleable name="Theme">
+        <attr name="helpIcon" format="reference" />
+        <attr name="lockIcon" format="reference" />
+        <attr name="settingsIcon" format="reference" />
+        <attr name="statisticIcon" format="reference" />
+        <attr name="clearAllDataIcon" format="reference" />
+        <attr name="importIcon" format="reference" />
+        <attr name="exportIcon" format="reference" />
+        <attr name="nextItemIcon" format="reference" />
+        <attr name="prevItemIcon" format="reference" />
+        <attr name="goToTodayIcon" format="reference" />
+        <attr name="listIcon" format="reference" />
+        <attr name="removeContentIcon" format="reference" />
+        <attr name="note_bg" format="reference" />
+        <attr name="sex_bg" format="reference" />
+        <attr name="protected_sex_bg" format="reference" />
+        <attr name="unprotected_sex_bg" format="reference" />
+        <attr name="took_pill_bg" format="reference" />
+        <attr name="sex" format="reference" />
+        <attr name="protected_sex" format="reference" />
+        <attr name="unprotected_sex" format="reference" />
+        <attr name="spinnerItemTextColor" format="color|reference" />
+        <attr name="textViewTextColor" format="color|reference" />
+        <attr name="editableTextViewTextColor" format="color|reference" />
+        <attr name="dialog_spinnerItemTextColor" format="color|reference" />
+        <attr name="dialog_textViewTextColor" format="color|reference" />
+        <attr name="dialog_editableTextViewTextColor" format="color|reference" />
+        <attr name="dialog_nextItemIcon" format="reference" />
+        <attr name="dialog_prevItemIcon" format="reference" />
+        <attr name="dialog_goToTodayIcon" format="reference" />
+        <attr name="dialog_listIcon" format="reference" />
+        <attr name="dialog_removeContentIcon" format="reference" />
+    </declare-styleable>
+
+    <style name="AppBaseTheme" parent="android:Theme">
+        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
+        <item name="helpIcon">@drawable/ic_menu_help_light</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_light</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
+        <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
+        <item name="clearAllDataIcon">@drawable/ic_menu_discard_light</item>
+        <item name="importIcon">@drawable/ic_menu_import_light</item>
+        <item name="exportIcon">@drawable/ic_menu_export_light</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="textViewTextColor">@android:color/white</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="listIcon">@drawable/ic_list_light</item>
+        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/white</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_dark</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_dark</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
+    </style>
+
+    <style name="AppBaseThemeLight" parent="android:Theme.Light">
+        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
+        <item name="helpIcon">@drawable/ic_menu_help_light</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_light</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
+        <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
+        <item name="clearAllDataIcon">@drawable/ic_menu_discard_light</item>
+        <item name="importIcon">@drawable/ic_menu_import_light</item>
+        <item name="exportIcon">@drawable/ic_menu_export_light</item>
+        <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="textViewTextColor">@android:color/black</item>
+        <item name="editableTextViewTextColor">@android:color/black</item>
+        <item name="listIcon">@drawable/ic_list_light</item>
+        <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
+        <item name="dialog_spinnerItemTextColor">@android:color/black</item>
+        <item name="dialog_textViewTextColor">@android:color/white</item>
+        <item name="dialog_editableTextViewTextColor">@android:color/black</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_dark</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_dark</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="dialog_listIcon">@drawable/ic_list_light</item>
+        <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="nextItemIcon">@drawable/ic_next_item_dark</item>
+        <item name="prevItemIcon">@drawable/ic_previous_item_dark</item>
+        <item name="goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="note_bg">@drawable/bg_note_dark</item>
+        <item name="sex_bg">@drawable/bg_sex_dark</item>
+        <item name="protected_sex_bg">@drawable/bg_protected_sex_dark</item>
+        <item name="unprotected_sex_bg">@drawable/bg_unprotected_sex_dark</item>
+        <item name="took_pill_bg">@drawable/bg_pill_dark</item>
+        <item name="sex">@drawable/sex_dark</item>
+        <item name="protected_sex">@drawable/sex_protected_dark</item>
+        <item name="unprotected_sex">@drawable/sex_unprotected_dark</item>
+    </style>
+
+    <style name="AppThemeLight" parent="AppBaseThemeLight">
+        <item name="nextItemIcon">@drawable/ic_next_item_light</item>
+        <item name="prevItemIcon">@drawable/ic_previous_item_light</item>
+        <item name="goToTodayIcon">@drawable/ic_go_to_today_light</item>
+        <item name="note_bg">@drawable/bg_note_light</item>
+        <item name="sex_bg">@drawable/bg_sex_light</item>
+        <item name="protected_sex_bg">@drawable/bg_protected_sex_light</item>
+        <item name="unprotected_sex_bg">@drawable/bg_unprotected_sex_light</item>
+        <item name="took_pill_bg">@drawable/bg_pill_light</item>
+        <item name="sex">@drawable/sex_light</item>
+        <item name="protected_sex">@drawable/sex_protected_light</item>
+        <item name="unprotected_sex">@drawable/sex_unprotected_light</item>
+    </style>
+
+</resources>
