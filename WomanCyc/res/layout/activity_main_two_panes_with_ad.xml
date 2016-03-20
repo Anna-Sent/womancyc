@@ -31,7 +31,7 @@
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
             ads:adUnitId="@string/adUnitId"
-            ads:loadAdOnCreate="true"
+            ads:loadAdOnCreate="false"
             ads:testDevices="TEST_EMULATOR"
             android:gravity="center"
             android:paddingBottom="@dimen/view_padding"

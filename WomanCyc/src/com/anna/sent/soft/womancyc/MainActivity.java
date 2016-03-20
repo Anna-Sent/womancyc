@@ -18,6 +18,7 @@ import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
+import com.anna.sent.soft.womancyc.utils.AdUtils;
 
 public class MainActivity extends OptionsActivity implements CalendarListener,
 		OnDateSetListener {
@@ -42,6 +43,9 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
 		setTitle(R.string.app_name);
 		setContentView(R.layout.activity_main);
 		super.setViews(savedInstanceState);
+
+		AdUtils.setupAd(this, R.id.adView);
+
 		mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
 		Settings.isBlocked(this, false);
 		mFragmentManager = getSupportFragmentManager();
