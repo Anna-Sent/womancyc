@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="240dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/view_padding"
+    android:paddingRight="@dimen/view_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/prevDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/prevDay"
+            android:drawableRight="?attr/prevItemIcon" />
+
+        <Button
+            android:id="@+id/currentDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/currentDay"
+            android:drawableLeft="?attr/goToTodayIcon"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+
+        <Button
+            android:id="@+id/nextDay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_transparent_button"
+            android:contentDescription="@string/nextDay"
+            android:drawableLeft="?attr/nextItemIcon" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/view_padding"
+                        android:text="@string/menstruation"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/textViewTextColor" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/view_padding"
+                        android:text="@string/sex"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/textViewTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinnerHadMenstruation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:textColor="?attr/spinnerItemTextColor" />
+
+                    <Spinner
+                        android:id="@+id/spinnerSex"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:textColor="?attr/spinnerItemTextColor" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBoxTookPill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tookPill"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/textViewTextColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/view_padding"
+                android:text="@string/note"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/textViewTextColor" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/textViewNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonViewAsList"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?attr/editableTextViewTextColor" />
+
+                <Button
+                    android:id="@id/buttonViewAsList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="?attr/listIcon"
+                    android:text="" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/buttonClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="?attr/removeContentIcon"
+                android:text="@string/clear"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

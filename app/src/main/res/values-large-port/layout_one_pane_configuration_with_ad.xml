@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="isLargeLayout">false</bool>
+
+    <item name="activity_main" type="layout">@layout/activity_main_one_pane_with_ad</item>
+
+</resources>

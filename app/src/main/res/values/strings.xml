@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" tools:locale="en">
+
+    <string name="sendto_app_not_available">Mail application is not available</string>
+    <string name="market_app_not_available">Market application is not available</string>
+    <string name="days">days</string>
+    <string name="isSet">Set</string>
+    <string name="isNotSet">Not set</string>
+    <string name="enterPassword">Enter password</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="incorrectPassword">Incorrect password</string>
+    <string name="confirmationUnsuccess">Passwords do not match. Password is not set</string>
+    <string name="passwordIsSet">Password is set</string>
+    <string name="passwordIsNotSet">Password is not set</string>
+    <string name="backupFileName">backup_%s</string>
+    <string name="openDataSourceTask">Database loading</string>
+    <string name="restoreDataTask">Data restoring</string>
+    <string name="pref_calculation_settings_title">Prediction</string>
+    <string name="pref_default_menstrual_cycle_len_title">Menstrual cycle</string>
+    <string name="pref_default_menstrual_cycle_len_summary_on">%1$s days, if data for calculation of average duration are not present.</string>
+    <string name="pref_default_menstrual_cycle_len_summary_off">%1$s days</string>
+    <string name="pref_use_average_title">Use average menstrual cycle length</string>
+    <string name="pref_use_average_summary">Use average menstrual cycle length calculated by three or less cycles, length of which is %s or less days.</string>
+    <string name="pref_safety_settings_title">Security</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_send_password_to_email_title">Send password by email</string>
+    <string name="pref_send_password_to_email_summary">To restore password, if necessary</string>
+    <string name="pref_lock_automatically_title">Automatic locking</string>
+    <string name="pref_lock_automatically_summary_on">Yes: request password on each start of application.</string>
+    <string name="pref_lock_automatically_summary_off">No: request password if exit from application was done using menu item \"%s\".</string>
+    <string name="pref_hide_widget_title">Hide widget</string>
+    <string name="pref_hide_widget_summary">Hide content of widget if application is locked with password.</string>
+    <string name="pref_ui_settings_title">User interface</string>
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_language_title">Language</string>
+    <string name="pref_other_settings_title">Other</string>
+    <string name="pref_rate_title">Rate the application</string>
+    <string name="pref_rate_summary" />
+    <string name="pref_support_title">Feedback</string>
+    <string name="pref_support_summary">Send review, comment, suggestion.</string>
+    <string name="pref_childbirthdate_title">Pregnancy Calculator</string>
+    <string name="pref_childbirthdate_summary">Calculation of expected date of delivery and expected gestational age by different methods.</string>
+    <string name="nextMonth">Next month</string>
+    <string name="prevMonth">Previous month</string>
+    <string name="currentMonth">Current month</string>
+    <string name="nextDay">Next day</string>
+    <string name="prevDay">Previous day</string>
+    <string name="currentDay">Current day</string>
+    <string name="app_name">WomanCyc</string>
+    <string name="widget_small_name">WomanCyc Small</string>
+    <string name="widget_medium_name">WomanCyc Medium</string>
+    <string name="settings">Settings</string>
+    <string name="clearAllData">Clear data</string>
+    <string name="thereIsNoData">No data</string>
+    <string name="clearAllDataConfirmation">Delete all data?</string>
+    <string name="clearAllDataConfirmationMessage">Data will be permanently deleted. Save current data to file, if necessary.</string>
+    <string name="statistic">Statistics</string>
+    <string name="help">Help</string>
+    <string name="lockAndExit">Lock and exit</string>
+    <string name="backupData">Save data</string>
+    <string name="chooseFileNameToWrite">Select file to export</string>
+    <string name="newFile">New file&#8230;</string>
+    <string name="enterFileNameToWrite">Enter file name for export</string>
+    <string name="dataExportSuccessful">Data saved in file %s</string>
+    <string name="restoreData">Restore data</string>
+    <string name="chooseFileNameToRead">Select file to import</string>
+    <string name="filesToReadNotFound">No files for import</string>
+    <string name="dataImportSuccessful">Data restored from file %s</string>
+    <string name="restoreConfirmation">Restore data from file %s?</string>
+    <string name="restoreConfirmationMessage">Current data will be replaced with new. Save current data to file, if necessary.</string>
+    <string name="backupConfirmation">File %s already exist</string>
+    <string name="backupConfirmationMessage">Replace content of this file?</string>
+    <string name="clear">Clear</string>
+    <string name="close">Close</string>
+    <string name="today">Today</string>
+    <string name="menstruation">Menstruation</string>
+    <string name="sex">Intercourse</string>
+    <string name="note">Note</string>
+    <string name="tookPill">Took pill</string>
+    <string name="menstrualCycleLength">Menstrual cycle length</string>
+    <string name="bleedingLength">Bleeding length</string>
+    <string name="avgValue">Average value</string>
+    <string name="minValue">Minimum value</string>
+    <string name="maxValue">Maximum value</string>
+    <string name="firstDayOfCycle">First day of cycle</string>
+    <string name="statisticRemark">
+<![CDATA[
+<i>Note.</i> Table contains data about all cycles except the last (i.e., all full cycles).<br/>
+Calculation of the average, maximum and minimum length of the menstrual cycle is carried out only in cycles not exceeding %1$d days.<br/>
+Cycles exceeding %2$d days are highlighted in red in the table.
+]]>
+    </string>
+
+    <string-array name="menstruationTypes">
+        <item>No</item>
+        <item>Yes</item>
+        <item>Light bleeding</item>
+        <item>Normal bleeding</item>
+        <item>Heavy bleeding</item>
+    </string-array>
+
+    <array name="menstruationDrawables">
+        <item>0</item>
+        <item>@drawable/menstruation</item>
+        <item>@drawable/menstruation_one_drop</item>
+        <item>@drawable/menstruation_two_drops</item>
+        <item>@drawable/menstruation_three_drops</item>
+    </array>
+
+    <string-array name="sexTypes">
+        <item>No</item>
+        <item>Unprotected</item>
+        <item>Protected</item>
+        <item>Yes</item>
+    </string-array>
+
+    <array name="sexDrawablesDark">
+        <item>0</item>
+        <item>@drawable/sex_unprotected_dark</item>
+        <item>@drawable/sex_protected_dark</item>
+        <item>@drawable/sex_dark</item>
+    </array>
+    <array name="sexDrawablesLight">
+        <item>0</item>
+        <item>@drawable/sex_unprotected_light</item>
+        <item>@drawable/sex_protected_light</item>
+        <item>@drawable/sex_light</item>
+    </array>
+
+    <string name="errorWhileOpeningDatabase">Error opening database</string>
+    <string name="errorFileNotFound">File %s not found</string>
+    <string name="errorFileReading">Error reading from file</string>
+    <string name="errorFileWriting">Error writing to file</string>
+    <string name="errorFileImport">Error importing from file</string>
+    <string name="errorFileExport">Error exporting to file</string>
+    <string name="errorExternalStorageReading">External storage is unavailable for reading</string>
+    <string name="errorExternalStorageWriting">External storage is unavailable for writing</string>
+
+    <string-array name="MonthNames">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+</resources>

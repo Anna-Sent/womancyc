@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedAttribute">
+
+    <item
+        android:id="@+id/statistic"
+        android:icon="?attr/statisticIcon"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/statistic" />
+    <item
+        android:id="@+id/lockAndExit"
+        android:icon="?attr/lockIcon"
+        android:showAsAction="never"
+        android:title="@string/lockAndExit" />
+    <item
+        android:id="@+id/test25"
+        android:showAsAction="never"
+        android:title="@string/test25"
+        android:visible="@bool/test" />
+    <item
+        android:id="@+id/backupData"
+        android:icon="?attr/exportIcon"
+        android:showAsAction="never"
+        android:title="@string/backupData" />
+    <item
+        android:id="@+id/restoreData"
+        android:icon="?attr/importIcon"
+        android:showAsAction="never"
+        android:title="@string/restoreData" />
+    <item
+        android:id="@+id/clearAllData"
+        android:icon="?attr/clearAllDataIcon"
+        android:showAsAction="never"
+        android:title="@string/clearAllData" />
+    <item
+        android:id="@+id/settings"
+        android:icon="?attr/settingsIcon"
+        android:showAsAction="never"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/help"
+        android:icon="?attr/helpIcon"
+        android:showAsAction="never"
+        android:title="@string/help" />
+
+</menu>
