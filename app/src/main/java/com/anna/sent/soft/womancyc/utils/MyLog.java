@@ -68,9 +68,10 @@ public class MyLog {
 
     public void report(Throwable throwable) {
         if (mIsInitialized && mIsGooglePlayServicesAvailable) {
+            FirebaseCrash.logcat(Log.WARN, DEFAULT_TAG, Log.getStackTraceString(throwable));
             FirebaseCrash.report(throwable);
         } else {
-            noFirebaseLogcat(Log.WARN, DEFAULT_TAG, throwable.toString());
+            noFirebaseLogcat(Log.WARN, DEFAULT_TAG, Log.getStackTraceString(throwable));
         }
     }
 }
