@@ -1,11 +1,15 @@
 package com.anna.sent.soft.womancyc.base;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,11 +33,14 @@ import org.joda.time.LocalDate;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class OptionsActivity extends DataKeeperActivity {
     private final static String EXT = ".xml";
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private static final int REQUEST_READ_EXTERNAL_STORAGE = 2;
 
     private static String getAppDirName() {
         String dir = Environment.getExternalStorageDirectory()
@@ -57,15 +64,16 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int itemId = item.getItemId();
+        switch (itemId) {
             case R.id.statistic:
                 startActivity(new Intent(this, StatisticActivity.class));
                 return true;
             case R.id.backupData:
-                backupAction();
+                checkPermissionForAction(itemId);
                 return true;
             case R.id.restoreData:
-                restoreAction();
+                checkPermissionForAction(itemId);
                 return true;
             case R.id.clearAllData:
                 clearAllDataAction();
@@ -88,6 +96,70 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         }
     }
 
+    private void checkPermissionForAction(final int itemId) {
+        final String permission;
+        final int requestCode;
+        final int requestPermissionTitle;
+        final int requestPermissionMessage;
+
+        switch (itemId) {
+            case R.id.backupData:
+                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+                requestCode = REQUEST_WRITE_EXTERNAL_STORAGE;
+                requestPermissionTitle = R.string.request_write_external_storage_permission_title;
+                requestPermissionMessage = R.string.request_write_external_storage_permission_message;
+                break;
+            case R.id.restoreData:
+                permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                requestCode = REQUEST_READ_EXTERNAL_STORAGE;
+                requestPermissionTitle = R.string.request_read_external_storage_permission_title;
+                requestPermissionMessage = R.string.request_read_external_storage_permission_message;
+                break;
+            default:
+                return;
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(requestPermissionTitle)
+                        .setMessage(requestPermissionMessage)
+                        .setPositiveButton(android.R.string.yes,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        ActivityCompat.requestPermissions(OptionsActivity.this, new String[]{permission}, requestCode);
+                                    }
+                                }).setNegativeButton(android.R.string.cancel, null);
+                builder.create().show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            doAction(requestCode);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            doAction(requestCode);
+        } else {
+            log(Arrays.toString(permissions) + ": Permission was denied or request was cancelled");
+        }
+    }
+
+    private void doAction(int requestCode) {
+        switch (requestCode) {
+            case REQUEST_WRITE_EXTERNAL_STORAGE:
+                backupAction();
+                break;
+            case REQUEST_READ_EXTERNAL_STORAGE:
+                restoreAction();
+                break;
+        }
+    }
+
     private void clearAllDataAction() {
         if (getDataKeeper().getCount() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -100,8 +172,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     .setMessage(R.string.clearAllDataConfirmationMessage)
                     .setPositiveButton(android.R.string.yes,
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                                    int id) {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
                                     clearAllData();
                                 }
                             }).setNegativeButton(android.R.string.cancel, null);
@@ -149,8 +221,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                         .setItems(list.toArray(new String[list.size()]),
                                 new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
+                                    public void onClick(DialogInterface dialog, int which) {
                                         if (which == 0) {
                                             backupToNewFile();
                                         } else {
@@ -182,6 +253,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                 .setView(view)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 String filename = textView.getText().toString();
                                 if (filename.endsWith(EXT)) {
@@ -235,8 +307,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     .setMessage(R.string.backupConfirmationMessage)
                     .setPositiveButton(android.R.string.yes,
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                                    int id) {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
                                     backup(absoluteFileName);
                                 }
                             }).setNegativeButton(android.R.string.cancel, null);
@@ -259,8 +331,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     .setItems(filenames.toArray(new String[filenames.size()]),
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
+                                public void onClick(DialogInterface dialog, int which) {
                                     final String filename = filenames
                                             .get(which);
                                     restoreWithConfirmation(filename);
@@ -279,8 +350,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     .setMessage(R.string.restoreConfirmationMessage)
                     .setPositiveButton(android.R.string.yes,
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                                    int id) {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
                                     restore(absoluteFileName);
                                 }
                             }).setNegativeButton(android.R.string.cancel, null);

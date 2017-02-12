@@ -90,6 +90,10 @@ Calculation of the average, maximum and minimum length of the menstrual cycle is
 Cycles exceeding %2$d days are highlighted in red in the table.
 ]]>
     </string>
+    <string name="request_read_external_storage_permission_title">Request for SD-card reading</string>
+    <string name="request_read_external_storage_permission_message">To read backups with previously stored data.</string>
+    <string name="request_write_external_storage_permission_title">Request for SD-card writing</string>
+    <string name="request_write_external_storage_permission_message">To write backups to restore data in the future.</string>
 
     <string-array name="menstruationTypes">
         <item>No</item>

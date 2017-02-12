@@ -90,6 +90,10 @@
 Продолжительность циклов, превышающая %2$d дней, в таблице выделяется красным.
 ]]>
     </string>
+    <string name="request_read_external_storage_permission_title">Запрос на чтение SD-карты</string>
+    <string name="request_read_external_storage_permission_message">Необходимо, чтобы прочитать бэкапы с сохраненными ранее данными.</string>
+    <string name="request_write_external_storage_permission_title">Запрос на запись в SD-карту</string>
+    <string name="request_write_external_storage_permission_message">Необходимо, чтобы записать бэкапы для восстановления данных в будущем.</string>
 
     <string-array name="menstruationTypes">
         <item>Нет</item>
