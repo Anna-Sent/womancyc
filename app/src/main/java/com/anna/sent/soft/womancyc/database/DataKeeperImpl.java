@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
+import com.anna.sent.soft.womancyc.BuildConfig;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.utils.MyLog;
 
@@ -131,7 +132,7 @@ public class DataKeeperImpl implements DataKeeper {
     }
 
     private void checkSync() {
-        if (DEBUG_SYNC) {
+        if (DEBUG_SYNC&& BuildConfig.DEBUG) {
             List<CalendarData> dbValues = new ArrayList<>();
             mDataSource.getAllRows(dbValues);
             int count = mValues.size();
@@ -147,7 +148,7 @@ public class DataKeeperImpl implements DataKeeper {
                     CalendarData dbValue = dbValues.get(i);
                     if (!value.equals(dbValue)) {
                         synced = false;
-                        log("in db: " + dbValue.toString() + "; in memory: " + value.toString());
+                        log("in db: " + dbValue + "; in memory: " + value);
                     }
                 }
 
@@ -161,11 +162,11 @@ public class DataKeeperImpl implements DataKeeper {
     }
 
     private void printValues(List<CalendarData> values) {
-        if (DEBUG_SYNC) {
+        if (DEBUG_SYNC&& BuildConfig.DEBUG) {
             String result = "";
             int size = values.size() - 1;
             for (int i = 0; i <= size; ++i) {
-                result += values.get(i).toString() + (i == size ? "" : "; ");
+                result += values.get(i) + (i == size ? "" : "; ");
             }
 
             log(result);

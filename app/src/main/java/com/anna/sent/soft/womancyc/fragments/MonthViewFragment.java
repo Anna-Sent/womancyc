@@ -101,7 +101,6 @@ public class MonthViewFragment extends Fragment implements
         return adapter.getSelectedDate();
     }
 
-    @SuppressLint("SimpleDateFormat")
     public void setSelectedDate(LocalDate date) {
         log("set selected date to " + date);
         adapter.setSelectedDate(date);
