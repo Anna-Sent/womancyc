@@ -6,6 +6,7 @@ import android.content.Context;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.anna.sent.soft.womancyc.BuildConfig;
 import com.anna.sent.soft.womancyc.R;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -33,15 +34,20 @@ public class AdUtils {
                 }
 
                 MobileAds.initialize(activity.getApplicationContext(), activity.getString(R.string.adUnitId));
-                com.google.android.gms.ads.AdRequest adRequest = new com.google.android.gms.ads.AdRequest.Builder()
-                        .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE)
-                        .addTestDevice("2600D922057328C48F2E6DBAB33639C1")
-                        .addTestDevice("9181DC11966389868E60DE66CAC818A3")
-                        .addTestDevice("0A2245B8887D4B05DF59EB37AD741C46")
-                        .addTestDevice("47D9C39F51DAC2173986C7832B6CAB57")
-                        .addTestDevice("2F2B82AD62F209D48AFC29A0C88065FA")
-                        .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)
-                        .build();
+                com.google.android.gms.ads.AdRequest.Builder adRequestBuilder = new com.google.android.gms.ads.AdRequest.Builder()
+                        .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE);
+
+                if (BuildConfig.DEBUG) {
+                    adRequestBuilder
+                            .addTestDevice("2600D922057328C48F2E6DBAB33639C1")
+                            .addTestDevice("9181DC11966389868E60DE66CAC818A3")
+                            .addTestDevice("0A2245B8887D4B05DF59EB37AD741C46")
+                            .addTestDevice("47D9C39F51DAC2173986C7832B6CAB57")
+                            .addTestDevice("2F2B82AD62F209D48AFC29A0C88065FA")
+                            .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
+                }
+
+                com.google.android.gms.ads.AdRequest adRequest = adRequestBuilder.build();
 
                 MyLog.getInstance().logcat(Log.INFO, "ad: isTestDevice = " + adRequest.isTestDevice(activity));
 
