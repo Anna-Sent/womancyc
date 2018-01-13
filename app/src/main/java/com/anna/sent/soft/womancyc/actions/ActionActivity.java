@@ -15,12 +15,10 @@ public abstract class ActionActivity extends Activity {
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             } else {
-                Toast.makeText(this, getErrorStringResourceId(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getErrorStringResourceId(), Toast.LENGTH_LONG).show();
             }
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, getErrorStringResourceId(), Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(this, getErrorStringResourceId(), Toast.LENGTH_LONG).show();
         }
 
         finish();

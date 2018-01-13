@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="sendto_app_not_available">Почтовый клиент недоступен</string>
     <string name="market_app_not_available">Приложение market недоступно</string>
     <string name="days">д.</string>
@@ -94,7 +93,6 @@
     <string name="request_read_external_storage_permission_message">Необходимо, чтобы прочитать бэкапы с сохраненными ранее данными.</string>
     <string name="request_write_external_storage_permission_title">Запрос на запись в SD-карту</string>
     <string name="request_write_external_storage_permission_message">Необходимо, чтобы записать бэкапы для восстановления данных в будущем.</string>
-
     <string-array name="menstruationTypes">
         <item>Нет</item>
         <item>Да, без доп. пометок</item>
@@ -102,35 +100,31 @@
         <item>Нормальные выделения</item>
         <item>Обильные выделения</item>
     </string-array>
-
     <array name="menstruationDrawables">
         <item>0</item>
-        <item>@drawable/menstruation</item>
-        <item>@drawable/menstruation_one_drop</item>
-        <item>@drawable/menstruation_two_drops</item>
-        <item>@drawable/menstruation_three_drops</item>
+        <item>@drawable/ic_menstruation</item>
+        <item>@drawable/ic_menstruation_one_drop</item>
+        <item>@drawable/ic_menstruation_two_drops</item>
+        <item>@drawable/ic_menstruation_three_drops</item>
     </array>
-
     <string-array name="sexTypes">
         <item>Нет</item>
         <item>Незащищенный</item>
         <item>Защищенный</item>
         <item>Да</item>
     </string-array>
-
     <array name="sexDrawablesDark">
         <item>0</item>
-        <item>@drawable/sex_unprotected_dark</item>
-        <item>@drawable/sex_protected_dark</item>
-        <item>@drawable/sex_dark</item>
+        <item>@drawable/ic_sex_unprotected_dark</item>
+        <item>@drawable/ic_sex_protected_dark</item>
+        <item>@drawable/ic_sex_dark</item>
     </array>
     <array name="sexDrawablesLight">
         <item>0</item>
-        <item>@drawable/sex_unprotected_light</item>
-        <item>@drawable/sex_protected_light</item>
-        <item>@drawable/sex_light</item>
+        <item>@drawable/ic_sex_unprotected_light</item>
+        <item>@drawable/ic_sex_protected_light</item>
+        <item>@drawable/ic_sex_light</item>
     </array>
-
     <string name="errorWhileOpeningDatabase">Ошибка при открытии базы данных</string>
     <string name="errorFileNotFound">Файл %s не найден</string>
     <string name="errorFileReading">Ошибка чтения файла</string>
@@ -139,7 +133,6 @@
     <string name="errorFileExport">Ошибка экспорта файла</string>
     <string name="errorExternalStorageReading">Устройство недоступно для чтения</string>
     <string name="errorExternalStorageWriting">Устройство недоступно для записи</string>
-
     <string-array name="MonthNames">
         <item>Январь</item>
         <item>Февраль</item>
@@ -154,5 +147,4 @@
         <item>Ноябрь</item>
         <item>Декабрь</item>
     </string-array>
-
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" tools:locale="en">
-
+<resources>
     <string name="sendto_app_not_available">Mail application is not available</string>
     <string name="market_app_not_available">Market application is not available</string>
     <string name="days">days</string>
@@ -94,7 +93,6 @@ Cycles exceeding %2$d days are highlighted in red in the table.
     <string name="request_read_external_storage_permission_message">To read backups with previously stored data.</string>
     <string name="request_write_external_storage_permission_title">Request for SD-card writing</string>
     <string name="request_write_external_storage_permission_message">To write backups to restore data in the future.</string>
-
     <string-array name="menstruationTypes">
         <item>No</item>
         <item>Yes</item>
@@ -102,35 +100,31 @@ Cycles exceeding %2$d days are highlighted in red in the table.
         <item>Normal bleeding</item>
         <item>Heavy bleeding</item>
     </string-array>
-
     <array name="menstruationDrawables">
         <item>0</item>
-        <item>@drawable/menstruation</item>
-        <item>@drawable/menstruation_one_drop</item>
-        <item>@drawable/menstruation_two_drops</item>
-        <item>@drawable/menstruation_three_drops</item>
+        <item>@drawable/ic_menstruation</item>
+        <item>@drawable/ic_menstruation_one_drop</item>
+        <item>@drawable/ic_menstruation_two_drops</item>
+        <item>@drawable/ic_menstruation_three_drops</item>
     </array>
-
     <string-array name="sexTypes">
         <item>No</item>
         <item>Unprotected</item>
         <item>Protected</item>
         <item>Yes</item>
     </string-array>
-
     <array name="sexDrawablesDark">
         <item>0</item>
-        <item>@drawable/sex_unprotected_dark</item>
-        <item>@drawable/sex_protected_dark</item>
-        <item>@drawable/sex_dark</item>
+        <item>@drawable/ic_sex_unprotected_dark</item>
+        <item>@drawable/ic_sex_protected_dark</item>
+        <item>@drawable/ic_sex_dark</item>
     </array>
     <array name="sexDrawablesLight">
         <item>0</item>
-        <item>@drawable/sex_unprotected_light</item>
-        <item>@drawable/sex_protected_light</item>
-        <item>@drawable/sex_light</item>
+        <item>@drawable/ic_sex_unprotected_light</item>
+        <item>@drawable/ic_sex_protected_light</item>
+        <item>@drawable/ic_sex_light</item>
     </array>
-
     <string name="errorWhileOpeningDatabase">Error opening database</string>
     <string name="errorFileNotFound">File %s not found</string>
     <string name="errorFileReading">Error reading from file</string>
@@ -139,7 +133,6 @@ Cycles exceeding %2$d days are highlighted in red in the table.
     <string name="errorFileExport">Error exporting to file</string>
     <string name="errorExternalStorageReading">External storage is unavailable for reading</string>
     <string name="errorExternalStorageWriting">External storage is unavailable for writing</string>
-
     <string-array name="MonthNames">
         <item>January</item>
         <item>February</item>
@@ -154,5 +147,4 @@ Cycles exceeding %2$d days are highlighted in red in the table.
         <item>November</item>
         <item>December</item>
     </string-array>
-
 </resources>

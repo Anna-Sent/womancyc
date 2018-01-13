@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.3"
 
     defaultConfig {
         applicationId "com.anna.sent.soft.womancyc"
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 27
         versionCode 15
         versionName "1.1.5"
     }
@@ -21,13 +21,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.1.1'
-    compile 'com.google.firebase:firebase-ads:10.0.0'
-    compile 'com.google.firebase:firebase-crash:10.0.0'
-    compile 'com.github.Anna-Sentyakova:NumberPickerLibrary:-SNAPSHOT'
-    compile 'com.github.Anna-Sentyakova:CommonLibrary:-SNAPSHOT'
+    implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.google.firebase:firebase-ads:11.8.0'
+    implementation 'com.google.firebase:firebase-crash:11.8.0'
+    implementation 'com.github.Anna-Sentyakova:CommonLibrary:-SNAPSHOT'
 
-    compile 'joda-time:joda-time:2.9.7'
+    implementation 'joda-time:joda-time:2.9.9'
 }
 
 apply plugin: 'com.google.gms.google-services'

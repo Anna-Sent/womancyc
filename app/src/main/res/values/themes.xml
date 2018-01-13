@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
     <declare-styleable name="Theme">
         <attr name="helpIcon" format="reference" />
         <attr name="lockIcon" format="reference" />
@@ -35,8 +34,7 @@
         <attr name="dialog_removeContentIcon" format="reference" />
     </declare-styleable>
 
-    <style name="AppBaseTheme" parent="android:Theme">
-        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
         <item name="helpIcon">@drawable/ic_menu_help_light</item>
         <item name="lockIcon">@drawable/ic_menu_lock_light</item>
         <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
@@ -59,26 +57,26 @@
         <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
 
-    <style name="AppBaseThemeLight" parent="android:Theme.Light">
-        <item name="numberPickerStyle">@style/Widget.NumberPicker</item>
-        <item name="helpIcon">@drawable/ic_menu_help_light</item>
-        <item name="lockIcon">@drawable/ic_menu_lock_light</item>
-        <item name="settingsIcon">@drawable/ic_menu_settings_light</item>
-        <item name="statisticIcon">@drawable/ic_menu_statistic_light</item>
-        <item name="clearAllDataIcon">@drawable/ic_menu_discard_light</item>
-        <item name="importIcon">@drawable/ic_menu_import_light</item>
-        <item name="exportIcon">@drawable/ic_menu_export_light</item>
+    <style name="AppBaseThemeLight" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="helpIcon">@drawable/ic_menu_help_dark</item>
+        <item name="lockIcon">@drawable/ic_menu_lock_dark</item>
+        <item name="settingsIcon">@drawable/ic_menu_settings_dark</item>
+        <item name="statisticIcon">@drawable/ic_menu_statistic_dark</item>
+        <item name="clearAllDataIcon">@drawable/ic_menu_discard_dark</item>
+        <item name="importIcon">@drawable/ic_menu_import_dark</item>
+        <item name="exportIcon">@drawable/ic_menu_export_dark</item>
         <item name="spinnerItemTextColor">@android:color/black</item>
+        <item name="android:windowActionBar">true</item>
         <item name="textViewTextColor">@android:color/black</item>
         <item name="editableTextViewTextColor">@android:color/black</item>
         <item name="listIcon">@drawable/ic_list_light</item>
         <item name="removeContentIcon">@drawable/ic_remove_content_light</item>
         <item name="dialog_spinnerItemTextColor">@android:color/black</item>
-        <item name="dialog_textViewTextColor">@android:color/white</item>
+        <item name="dialog_textViewTextColor">@android:color/black</item>
         <item name="dialog_editableTextViewTextColor">@android:color/black</item>
-        <item name="dialog_nextItemIcon">@drawable/ic_next_item_dark</item>
-        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_dark</item>
-        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_dark</item>
+        <item name="dialog_nextItemIcon">@drawable/ic_next_item_light</item>
+        <item name="dialog_prevItemIcon">@drawable/ic_previous_item_light</item>
+        <item name="dialog_goToTodayIcon">@drawable/ic_go_to_today_light</item>
         <item name="dialog_listIcon">@drawable/ic_list_light</item>
         <item name="dialog_removeContentIcon">@drawable/ic_remove_content_light</item>
     </style>
@@ -92,9 +90,9 @@
         <item name="protected_sex_bg">@drawable/bg_protected_sex_dark</item>
         <item name="unprotected_sex_bg">@drawable/bg_unprotected_sex_dark</item>
         <item name="took_pill_bg">@drawable/bg_pill_dark</item>
-        <item name="sex">@drawable/sex_dark</item>
-        <item name="protected_sex">@drawable/sex_protected_dark</item>
-        <item name="unprotected_sex">@drawable/sex_unprotected_dark</item>
+        <item name="sex">@drawable/ic_sex_dark</item>
+        <item name="protected_sex">@drawable/ic_sex_protected_dark</item>
+        <item name="unprotected_sex">@drawable/ic_sex_unprotected_dark</item>
     </style>
 
     <style name="AppThemeLight" parent="AppBaseThemeLight">
@@ -106,9 +104,8 @@
         <item name="protected_sex_bg">@drawable/bg_protected_sex_light</item>
         <item name="unprotected_sex_bg">@drawable/bg_unprotected_sex_light</item>
         <item name="took_pill_bg">@drawable/bg_pill_light</item>
-        <item name="sex">@drawable/sex_light</item>
-        <item name="protected_sex">@drawable/sex_protected_light</item>
-        <item name="unprotected_sex">@drawable/sex_unprotected_light</item>
+        <item name="sex">@drawable/ic_sex_light</item>
+        <item name="protected_sex">@drawable/ic_sex_protected_light</item>
+        <item name="unprotected_sex">@drawable/ic_sex_unprotected_light</item>
     </style>
-
 </resources>

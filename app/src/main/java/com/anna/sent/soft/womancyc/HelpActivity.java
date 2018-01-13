@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ public final class HelpActivity extends StateSaverActivity {
         setContentView(R.layout.activity_help);
         ActionBarUtils.setupActionBar(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
         mTabsAdapter = new HelpPagerAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
         mViewPager.setOffscreenPageLimit(mTabsAdapter.getCount() - 1);

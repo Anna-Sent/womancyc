@@ -13,5 +13,4 @@
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearance"
         android:textColor="?attr/dialog_editableTextViewTextColor" />
-
 </LinearLayout>

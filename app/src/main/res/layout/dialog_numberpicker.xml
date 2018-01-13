@@ -19,9 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/view_padding"
+        android:layout_marginStart="@dimen/view_padding"
+        android:layout_toEndOf="@id/numberPicker"
         android:layout_toRightOf="@id/numberPicker"
-        android:paddingLeft="@dimen/view_padding"
-        android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
 </RelativeLayout>

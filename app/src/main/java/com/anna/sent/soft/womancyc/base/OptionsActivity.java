@@ -1,9 +1,7 @@
 package com.anna.sent.soft.womancyc.base;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,8 +9,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -105,16 +103,10 @@ public abstract class OptionsActivity extends DataKeeperActivity {
 
         switch (itemId) {
             case R.id.backupData:
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                 requestCode = REQUEST_WRITE_EXTERNAL_STORAGE;
-                requestPermissionTitle = R.string.request_write_external_storage_permission_title;
-                requestPermissionMessage = R.string.request_write_external_storage_permission_message;
                 break;
             case R.id.restoreData:
-                permission = Manifest.permission.READ_EXTERNAL_STORAGE;
                 requestCode = REQUEST_READ_EXTERNAL_STORAGE;
-                requestPermissionTitle = R.string.request_read_external_storage_permission_title;
-                requestPermissionMessage = R.string.request_read_external_storage_permission_message;
                 break;
             default:
                 return;
@@ -123,6 +115,24 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             doAction(requestCode);
             return;
+        }
+
+        switch (requestCode) {
+            case REQUEST_WRITE_EXTERNAL_STORAGE:
+                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+                requestPermissionTitle = R.string.request_write_external_storage_permission_title;
+                requestPermissionMessage = R.string.request_write_external_storage_permission_message;
+                break;
+            case REQUEST_READ_EXTERNAL_STORAGE:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    return;
+                }
+                permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                requestPermissionTitle = R.string.request_read_external_storage_permission_title;
+                requestPermissionMessage = R.string.request_read_external_storage_permission_message;
+                break;
+            default:
+                return;
         }
 
         if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -147,7 +157,9 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             doAction(requestCode);
         } else {
@@ -190,7 +202,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     private List<String> getFilesList() {
         List<String> list = new ArrayList<>();
         File dir = new File(getAppDirName());
-        dir.mkdirs();
+        boolean result = dir.mkdirs();
+        log("mkdirs = " + result);
         File[] files = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String filename) {
@@ -242,12 +255,10 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         }
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressWarnings("InflateParams")
     private void backupToNewFile() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_export, null);
-        final AutoCompleteTextView textView = (AutoCompleteTextView) view
-                .findViewById(R.id.fileName);
+        View view = getLayoutInflater().inflate(R.layout.dialog_export, null);
+        final AutoCompleteTextView textView = view.findViewById(R.id.fileName);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, R.id.spinnerItemTextView, getFilesList());
         textView.setAdapter(adapter);
@@ -283,9 +294,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                 filename.lastIndexOf(EXT));
                     }
 
-                    if (filename.equals("")) {
-                        Toast.makeText(OptionsActivity.this,
-                                R.string.enterFileNameToWrite,
+                    if (TextUtils.isEmpty(filename)) {
+                        Toast.makeText(OptionsActivity.this, R.string.enterFileNameToWrite,
                                 Toast.LENGTH_LONG).show();
                         return false;
                     }

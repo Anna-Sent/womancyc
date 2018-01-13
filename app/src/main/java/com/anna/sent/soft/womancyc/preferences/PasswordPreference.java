@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -61,12 +62,11 @@ public class PasswordPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        mEditTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
+        mEditTextPassword = view.findViewById(R.id.editTextPassword);
         mEditTextPassword.setText(mPassword);
-        mEditTextConfirmedPassword = (EditText) view
-                .findViewById(R.id.editTextConfirmedPassword);
+        mEditTextConfirmedPassword = view.findViewById(R.id.editTextConfirmedPassword);
 
-        Button clearPass = (Button) view.findViewById(R.id.buttonClearPassword);
+        Button clearPass = view.findViewById(R.id.buttonClearPassword);
         clearPass.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +74,7 @@ public class PasswordPreference extends DialogPreference {
             }
         });
 
-        Button clearConfirmedPass = (Button) view
-                .findViewById(R.id.buttonClearConfirmedPassword);
+        Button clearConfirmedPass = view.findViewById(R.id.buttonClearConfirmedPassword);
         clearConfirmedPass.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,15 +88,11 @@ public class PasswordPreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            String confirmedPassword = mEditTextConfirmedPassword.getText()
-                    .toString();
-            confirmedPassword = confirmedPassword == null ? ""
-                    : confirmedPassword;
+            String confirmedPassword = mEditTextConfirmedPassword.getText().toString();
             String newPassword = mEditTextPassword.getText().toString();
-            newPassword = newPassword == null ? "" : newPassword;
             String message;
             if (confirmedPassword.equals(newPassword)) {
-                if (newPassword.equals("")) {
+                if (TextUtils.isEmpty(newPassword)) {
                     message = getContext().getString(R.string.passwordIsNotSet);
                 } else {
                     message = getContext().getString(R.string.passwordIsSet);

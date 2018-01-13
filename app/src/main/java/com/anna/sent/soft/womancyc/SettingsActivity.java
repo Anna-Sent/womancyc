@@ -11,15 +11,14 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.utils.ActionBarUtils;
+import com.anna.sent.soft.utils.ActivityUtils;
 import com.anna.sent.soft.utils.LanguageUtils;
 import com.anna.sent.soft.utils.NavigationUtils;
-import com.anna.sent.soft.utils.TaskStackBuilderUtils;
 import com.anna.sent.soft.utils.ThemeUtils;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.utils.MyLog;
 
-@SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity implements
         OnSharedPreferenceChangeListener {
     private final static String KEY_PREF_UI_SETTINGS = "pref_ui_settings";
@@ -36,8 +35,7 @@ public class SettingsActivity extends PreferenceActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setupThemeBeforeOnActivityCreate(this,
-                Settings.settingsTheme.getStyle(this, R.array.style,
-                        R.style.AppTheme));
+                Settings.settingsTheme.getStyle(this, R.array.style, R.style.AppTheme));
 
         super.onCreate(savedInstanceState);
 
@@ -103,11 +101,9 @@ public class SettingsActivity extends PreferenceActivity implements
         Preference pref = findPreference(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN);
         String mcl = String.valueOf(Settings.getDefaultMenstrualCycleLen(this));
         if (Settings.useAverage(this)) {
-            pref.setSummary(getString(
-                    R.string.pref_default_menstrual_cycle_len_summary_on, mcl));
+            pref.setSummary(getString(R.string.pref_default_menstrual_cycle_len_summary_on, mcl));
         } else {
-            pref.setSummary(getString(
-                    R.string.pref_default_menstrual_cycle_len_summary_off, mcl));
+            pref.setSummary(getString(R.string.pref_default_menstrual_cycle_len_summary_off, mcl));
         }
     }
 
@@ -125,8 +121,8 @@ public class SettingsActivity extends PreferenceActivity implements
         String[] keys = new String[]{KEY_PREF_SEND_PASSWORD_TO_EMAIL,
                 Settings.KEY_PREF_LOCK_AUTOMATICALLY,
                 Settings.KEY_PREF_HIDE_WIDGET};
-        for (int i = 0; i < keys.length; ++i) {
-            Preference pref_i = findPreference(keys[i]);
+        for (String key : keys) {
+            Preference pref_i = findPreference(key);
             pref_i.setEnabled(isPasswordSet);
         }
     }
@@ -154,11 +150,9 @@ public class SettingsActivity extends PreferenceActivity implements
         } else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
             setupLockAutomaticallyPreference();
         } else if (key.equals(Settings.settingsLanguage.getLanguageKey(this))) {
-            TaskStackBuilderUtils.restartFromSettings(this, MainActivity.class,
-                    MainActivity.EXTRA_CONFIGURATION_CHANGED);
+            ActivityUtils.restartActivity(this);
         } else if (key.equals(Settings.settingsTheme.getThemeKey(this))) {
-            TaskStackBuilderUtils.restartFromSettings(this, MainActivity.class,
-                    MainActivity.EXTRA_CONFIGURATION_CHANGED);
+            ActivityUtils.restartActivity(this);
         }
     }
 

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:ignore="UnusedAttribute">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/spinnerItemTextView"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:drawablePadding="@dimen/view_padding"
-        android:gravity="center_vertical|left"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/view_padding"
+        android:paddingRight="@dimen/view_padding"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/spinnerItemTextColor"
         android:textIsSelectable="false"
         android:textSize="12sp" />
-
 </LinearLayout>

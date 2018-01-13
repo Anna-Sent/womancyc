@@ -21,6 +21,7 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/prevDay"
+            android:drawableEnd="?attr/prevItemIcon"
             android:drawableRight="?attr/prevItemIcon" />
 
         <Button
@@ -32,6 +33,7 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/currentDay"
             android:drawableLeft="?attr/goToTodayIcon"
+            android:drawableStart="?attr/goToTodayIcon"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/blue" />
@@ -44,7 +46,8 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/nextDay"
-            android:drawableLeft="?attr/nextItemIcon" />
+            android:drawableLeft="?attr/nextItemIcon"
+            android:drawableStart="?attr/nextItemIcon" />
     </LinearLayout>
 
     <ScrollView
@@ -122,7 +125,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/view_padding"
+                android:paddingEnd="@dimen/view_padding"
+                android:paddingStart="@dimen/view_padding"
                 android:text="@string/note"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?attr/textViewTextColor" />
@@ -136,8 +140,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/buttonViewAsList"
+                    android:layout_toStartOf="@+id/buttonViewAsList"
                     android:inputType="textMultiLine"
                     android:textAppearance="?android:attr/textAppearance"
                     android:textColor="?attr/editableTextViewTextColor" />
@@ -147,10 +153,11 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:drawableLeft="?attr/listIcon"
-                    android:text="" />
+                    android:drawableStart="?attr/listIcon" />
             </RelativeLayout>
 
             <Button
@@ -159,9 +166,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawableLeft="?attr/removeContentIcon"
+                android:drawableStart="?attr/removeContentIcon"
                 android:text="@string/clear"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

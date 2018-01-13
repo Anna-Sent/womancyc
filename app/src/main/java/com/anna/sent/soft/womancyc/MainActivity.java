@@ -1,7 +1,6 @@
 package com.anna.sent.soft.womancyc;
 
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -22,7 +21,6 @@ import org.joda.time.LocalDate;
 
 public class MainActivity extends OptionsActivity implements CalendarListener,
         OnDateSetListener {
-    public final static String EXTRA_CONFIGURATION_CHANGED = "extra_configuration_changed";
     private final static String TAG_DAY_VIEW = "day_view_dialog";
     private final static String TAG_DATE_PICKER = "date_picker_dialog";
 
@@ -93,20 +91,6 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
     protected void onRestart() {
         log("onRestart");
         super.onRestart();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        log("onNewIntent");
-        super.onNewIntent(intent);
-        Bundle extras = intent.getExtras();
-        if (extras != null && extras.containsKey(EXTRA_CONFIGURATION_CHANGED)) {
-            Bundle state = new Bundle();
-            saveState(state);
-            finish();
-            intent.putExtras(state);
-            startActivity(intent);
-        }
     }
 
     @Override

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dayOfMonth"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height"
-    android:orientation="vertical"
-    tools:ignore="UnusedAttribute">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/dayOfMonthTextView"
@@ -20,10 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:paddingRight="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:textIsSelectable="false"
         android:textSize="12sp"
         android:textStyle="bold" />
-
 </RelativeLayout>

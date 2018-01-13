@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.anna.sent.soft.settings.SettingsLanguage;
 import com.anna.sent.soft.settings.SettingsTheme;
@@ -84,7 +85,7 @@ public class Settings {
 
     public static boolean isPasswordSet(Context context) {
         String password = getPassword(context);
-        return !password.equals("");
+        return !TextUtils.isEmpty(password);
     }
 
     public static boolean isApplicationLocked(Context context) {

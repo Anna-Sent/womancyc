@@ -1,10 +1,7 @@
 package com.anna.sent.soft.womancyc.utils;
 
-import android.content.Context;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.crash.FirebaseCrash;
 
 public class MyLog {
@@ -12,7 +9,6 @@ public class MyLog {
 
     private static MyLog sInstance;
     private boolean mIsInitialized;
-    private boolean mIsGooglePlayServicesAvailable;
 
     public static MyLog getInstance() {
         if (sInstance == null) {
@@ -48,18 +44,16 @@ public class MyLog {
         }
     }
 
-    public void init(Context context) {
+    public void init() {
         if (mIsInitialized) {
             return;
         }
 
         mIsInitialized = true;
-        mIsGooglePlayServicesAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
-        logcat(Log.INFO, "GooglePlayServices is" + (mIsGooglePlayServicesAvailable ? "" : "n't") + " available");
     }
 
     public void logcat(int level, String msg) {
-        if (mIsInitialized && mIsGooglePlayServicesAvailable) {
+        if (mIsInitialized) {
             FirebaseCrash.logcat(level, DEFAULT_TAG, msg);
         } else {
             noFirebaseLogcat(level, DEFAULT_TAG, msg);
@@ -67,7 +61,7 @@ public class MyLog {
     }
 
     public void report(Throwable throwable) {
-        if (mIsInitialized && mIsGooglePlayServicesAvailable) {
+        if (mIsInitialized) {
             FirebaseCrash.logcat(Log.WARN, DEFAULT_TAG, Log.getStackTraceString(throwable));
             FirebaseCrash.report(throwable);
         } else {

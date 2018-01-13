@@ -5,6 +5,7 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.anna.sent.soft.womancyc.R;
@@ -169,8 +170,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     private class StartProgressTask extends TimerTask {
         private String mTitle;
 
-        public StartProgressTask(String title) {
-            super();
+        StartProgressTask(String title) {
             mTitle = title;
         }
 
@@ -199,8 +199,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
         private boolean mShowProgress;
         private String mProgressMessage;
 
-        public DataTask(boolean showProgress, String progressMessage) {
-            super();
+        DataTask(boolean showProgress, String progressMessage) {
             mShowProgress = showProgress;
             mProgressMessage = progressMessage;
         }
@@ -233,10 +232,10 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
             if (mIsStopped) {
                 closeDataSource();
             } else {
-                if (result != null && !result.equals("")) {
-                    Toast.makeText(DataKeeperActivity.this, result,
-                            Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(result)) {
+                    return;
                 }
+                Toast.makeText(DataKeeperActivity.this, result, Toast.LENGTH_LONG).show();
             }
         }
     }

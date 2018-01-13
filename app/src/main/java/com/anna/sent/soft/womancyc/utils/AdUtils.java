@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.utils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.provider.Settings;
@@ -10,8 +9,6 @@ import com.anna.sent.soft.womancyc.BuildConfig;
 import com.anna.sent.soft.womancyc.R;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -23,16 +20,11 @@ public class AdUtils {
         return context.getPackageName().endsWith(".pro");
     }
 
-    public static AdView setupAd(Activity activity, int adViewId) {
+    public static void setupAd(Activity activity, int adViewId) {
         if (!isAdFreeVersion(activity)) {
             MyLog.getInstance().logcat(Log.INFO, "ad: Device id is " + getTestDeviceId(activity));
-            AdView adView = (AdView) activity.findViewById(adViewId);
+            AdView adView = activity.findViewById(adViewId);
             if (adView != null) {
-                if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity) != ConnectionResult.SUCCESS) {
-                    MyLog.getInstance().logcat(Log.INFO, "ad: GooglePlayServices not available");
-                    return null;
-                }
-
                 MobileAds.initialize(activity.getApplicationContext(), activity.getString(R.string.adUnitId));
                 com.google.android.gms.ads.AdRequest.Builder adRequestBuilder = new com.google.android.gms.ads.AdRequest.Builder()
                         .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE);
@@ -52,15 +44,12 @@ public class AdUtils {
                 MyLog.getInstance().logcat(Log.INFO, "ad: isTestDevice = " + adRequest.isTestDevice(activity));
 
                 adView.loadAd(adRequest);
-                return adView;
             }
         }
-
-        return null;
     }
 
     private static String getTestDeviceId(Context context) {
-        @SuppressLint("HardwareIds")
+        @SuppressWarnings("HardwareIds")
         String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         return getMD5(androidId);
     }

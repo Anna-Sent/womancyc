@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
-                android:text=""
+                android:paddingRight="@dimen/view_padding"
                 android:textSize="12sp" />
 
             <TextView
@@ -33,6 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/menstrualCycleLength"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -45,6 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/bleedingLength"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -55,7 +57,9 @@
             android:id="@+id/tableRow2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/rowAvgValue"
@@ -64,6 +68,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/avgValue"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -75,8 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/rowAvgBLValue"
@@ -84,15 +88,16 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/rowMinValue"
@@ -101,6 +106,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/minValue"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -112,8 +118,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/rowMinBLValue"
@@ -121,15 +126,16 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/rowMaxValue"
@@ -138,6 +144,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/maxValue"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -149,8 +156,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/rowMaxBLValue"
@@ -158,8 +164,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
@@ -174,6 +179,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/firstDayOfCycle"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -184,16 +190,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="" />
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
@@ -208,9 +212,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="center_vertical|left"
-                android:text="" />
+                android:gravity="center_vertical" />
         </TableRow>
     </TableLayout>
-
 </ScrollView>

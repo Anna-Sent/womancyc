@@ -19,10 +19,6 @@ public class DatePickerDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
     private OnDateSetListener mListener = null;
 
-    public DatePickerDialogFragment() {
-        super();
-    }
-
     public void setOnDateSetListener(OnDateSetListener listener) {
         mListener = listener;
     }

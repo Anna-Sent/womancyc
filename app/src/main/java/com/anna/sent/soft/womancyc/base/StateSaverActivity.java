@@ -12,8 +12,7 @@ import com.anna.sent.soft.womancyc.utils.MyLog;
 
 public abstract class StateSaverActivity extends StateSaverBaseActivity {
     private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + '@'
-                + Integer.toHexString(hashCode()) + ": " + msg;
+        return getClass().getSimpleName() + '@' + Integer.toHexString(hashCode()) + ": " + msg;
     }
 
     @Override
@@ -23,15 +22,14 @@ public abstract class StateSaverActivity extends StateSaverBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MyLog.getInstance().init(this);
+        MyLog.getInstance().init();
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void setupTheme() {
         ThemeUtils.setupThemeBeforeOnActivityCreate(this,
-                Settings.settingsTheme.getStyle(this, R.array.style,
-                        R.style.AppTheme));
+                Settings.settingsTheme.getStyle(this, R.array.style, R.style.AppTheme));
     }
 
     protected void setupLanguage() {

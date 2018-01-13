@@ -3,7 +3,6 @@ package com.anna.sent.soft.womancyc.adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
     private String[] mStrings;
@@ -25,14 +23,6 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
         mStrings = strings;
         mDrawables = drawables;
         mCount = Math.min(mStrings.length, mDrawables.length);
-    }
-
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
     }
 
     @Override
@@ -53,16 +43,14 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
 
     private View getView(int position, View contentView, boolean isDropDownView) {
         View view;
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (contentView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(
-                    isDropDownView ? R.layout.spinner_item
-                            : R.layout.spinner_selected_item, null);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            view = inflater.inflate(isDropDownView
+                    ? R.layout.spinner_item
+                    : R.layout.spinner_selected_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.textView = (TextView) view
-                    .findViewById(R.id.spinnerItemTextView);
+            viewHolder.textView = view.findViewById(R.id.spinnerItemTextView);
             view.setTag(viewHolder);
         } else {
             view = contentView;

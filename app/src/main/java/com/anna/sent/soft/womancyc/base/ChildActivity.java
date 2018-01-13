@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.base;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,6 +11,7 @@ public abstract class ChildActivity extends DataKeeperActivity {
     @Override
     public void setViews(Bundle savedInstanceState) {
         ActionBarUtils.setupActionBar(this);
+
         super.setViews(savedInstanceState);
     }
 

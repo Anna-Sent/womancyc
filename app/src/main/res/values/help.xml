@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-
+<resources>
     <string-array name="helpTitles">
         <item>Export and import</item>
         <item>Password</item>
@@ -102,5 +101,4 @@ today is 30th day of cycle while specified or average length of cycle is 28 days
 ]]>
         </item>
     </string-array>
-
 </resources>

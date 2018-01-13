@@ -8,9 +8,9 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.anna.sent.soft.numberpickerlibrary.NumberPicker;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.utils.MyLog;
 
@@ -73,10 +73,10 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        TextView unit = (TextView) view.findViewById(R.id.textViewUnit);
+        TextView unit = view.findViewById(R.id.textViewUnit);
         unit.setText(mUnit);
 
-        mNumberPicker = (NumberPicker) view.findViewById(R.id.numberPicker);
+        mNumberPicker = view.findViewById(R.id.numberPicker);
         mNumberPicker.setMinValue(mMinValue);
         mNumberPicker.setMaxValue(mMaxValue);
         mNumberPicker.setValue(mValue);

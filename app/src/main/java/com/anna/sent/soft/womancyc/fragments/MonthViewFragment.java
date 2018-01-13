@@ -1,7 +1,7 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,18 +25,9 @@ import java.util.Locale;
 public class MonthViewFragment extends Fragment implements
         MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
     private CalendarListener mListener = null;
-    /**
-     * must be not null! fragment gets it when onAttach() is called by parent
-     * activity
-     */
-    private DataKeeper mDataKeeper = null;
+    private DataKeeper mDataKeeper;
     private Button currentMonth;
-    private GridView calendarView;
     private MonthViewAdapter adapter;
-
-    public MonthViewFragment() {
-        super();
-    }
 
     private String wrapMsg(String msg) {
         return getClass().getSimpleName() + ": " + msg;
@@ -55,12 +46,11 @@ public class MonthViewFragment extends Fragment implements
         mDataKeeper = dataKeeper;
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressWarnings("InflateParams")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.view_month, null);
-        return v;
+        return inflater.inflate(R.layout.view_month, null);
     }
 
     @Override
@@ -69,17 +59,16 @@ public class MonthViewFragment extends Fragment implements
         log("onActivityCreated");
         adapter = new MonthViewAdapter(getActivity(), mDataKeeper, this);
 
-        Button prevMonth = (Button) getActivity().findViewById(R.id.prevMonth);
+        Button prevMonth = getActivity().findViewById(R.id.prevMonth);
         prevMonth.setOnClickListener(this);
 
-        currentMonth = (Button) getActivity().findViewById(R.id.currentMonth);
+        currentMonth = getActivity().findViewById(R.id.currentMonth);
         currentMonth.setOnClickListener(this);
 
-        Button nextMonth = (Button) getActivity().findViewById(R.id.nextMonth);
+        Button nextMonth = getActivity().findViewById(R.id.nextMonth);
         nextMonth.setOnClickListener(this);
 
-        calendarView = (GridView) getActivity().findViewById(
-                R.id.calendarGridView);
+        GridView calendarView = getActivity().findViewById(R.id.calendarGridView);
         calendarView.setAdapter(adapter);
         calendarView
                 .setOnTouchListener(new OnSwipeTouchListener(getActivity()) {

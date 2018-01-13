@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--uses-permission android:name="android.permission.GET_ACCOUNTS" /-->
 
     <permission
         android:name="com.anna.sent.soft.womancyc.unlocker.Unlocker.permissionToClearPassword"
@@ -18,12 +17,13 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher_womancyc"
         android:label="@string/app_name"
         android:requiredAccountType="com.google"
         android:supportsRtl="false"
         android:theme="@android:style/Theme.Black.NoTitleBar"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <receiver
             android:name="com.anna.sent.soft.womancyc.widget.MyCycleWidgetSmall"
             android:label="@string/widget_small_name">
@@ -37,7 +37,6 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/my_cycle_widget_provider_info_small" />
@@ -55,7 +54,6 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/my_cycle_widget_provider_info_medium" />
@@ -74,15 +72,13 @@
             android:windowSoftInputMode="stateAlwaysVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.anna.sent.soft.womancyc.StatisticActivity"
             android:label="@string/statistic"
-            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
-            tools:ignore="UnusedAttribute">
+            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.anna.sent.soft.womancyc.MainActivity" />
@@ -90,8 +86,7 @@
         <activity
             android:name="com.anna.sent.soft.womancyc.SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
-            tools:ignore="UnusedAttribute">
+            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.anna.sent.soft.womancyc.MainActivity" />
@@ -99,8 +94,7 @@
         <activity
             android:name="com.anna.sent.soft.womancyc.HelpActivity"
             android:label="@string/help"
-            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity"
-            tools:ignore="UnusedAttribute">
+            android:parentActivityName="com.anna.sent.soft.womancyc.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.anna.sent.soft.womancyc.MainActivity" />
@@ -108,35 +102,30 @@
         <activity android:name="com.anna.sent.soft.womancyc.actions.MarketChildbirthDateActionActivity">
             <intent-filter>
                 <action android:name="com.anna.sent.soft.womancyc.actions.MarketChildbirthDateActionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.anna.sent.soft.womancyc.actions.EmailSupportActionActivity">
             <intent-filter>
                 <action android:name="com.anna.sent.soft.womancyc.actions.EmailSupportActionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.anna.sent.soft.womancyc.actions.EmailPasswordActionActivity">
             <intent-filter>
                 <action android:name="com.anna.sent.soft.womancyc.actions.EmailPasswordActionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.anna.sent.soft.womancyc.actions.MarketWomanCycActionActivity">
             <intent-filter>
                 <action android:name="com.anna.sent.soft.womancyc.actions.MarketWomanCycActionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            tools:ignore="MissingRegistered" />
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
         <receiver
             android:name="com.anna.sent.soft.womancyc.unlocker.Unlocker"
@@ -146,5 +135,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

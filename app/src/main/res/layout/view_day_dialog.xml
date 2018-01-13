@@ -21,6 +21,7 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/prevDay"
+            android:drawableEnd="?attr/dialog_prevItemIcon"
             android:drawableRight="?attr/dialog_prevItemIcon" />
 
         <Button
@@ -32,6 +33,7 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/currentDay"
             android:drawableLeft="?attr/dialog_goToTodayIcon"
+            android:drawableStart="?attr/dialog_goToTodayIcon"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/blue" />
@@ -44,7 +46,8 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/nextDay"
-            android:drawableLeft="?attr/dialog_nextItemIcon" />
+            android:drawableLeft="?attr/dialog_nextItemIcon"
+            android:drawableStart="?attr/dialog_nextItemIcon" />
     </LinearLayout>
 
     <ScrollView
@@ -73,6 +76,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/view_padding"
+                        android:paddingRight="@dimen/view_padding"
                         android:text="@string/menstruation"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?attr/dialog_textViewTextColor" />
@@ -83,6 +87,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/view_padding"
+                        android:paddingRight="@dimen/view_padding"
                         android:text="@string/sex"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?attr/dialog_textViewTextColor" />
@@ -123,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/view_padding"
+                android:paddingRight="@dimen/view_padding"
                 android:text="@string/note"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?attr/dialog_textViewTextColor" />
@@ -136,8 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/buttonViewAsList"
+                    android:layout_toStartOf="@+id/buttonViewAsList"
                     android:inputType="textMultiLine"
                     android:textAppearance="?android:attr/textAppearance"
                     android:textColor="?attr/dialog_editableTextViewTextColor" />
@@ -147,10 +155,11 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:drawableLeft="?attr/dialog_listIcon"
-                    android:text="" />
+                    android:drawableStart="?attr/dialog_listIcon" />
             </RelativeLayout>
 
             <LinearLayout
@@ -165,6 +174,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawableLeft="?attr/dialog_removeContentIcon"
+                    android:drawableStart="?attr/dialog_removeContentIcon"
                     android:text="@string/clear"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -178,5 +188,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
