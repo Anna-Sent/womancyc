@@ -7,9 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,18 +23,17 @@ import android.widget.Spinner;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.SpinnerItemArrayAdapter;
 import com.anna.sent.soft.womancyc.base.DataKeeperClient;
+import com.anna.sent.soft.womancyc.base.WcDialogFragment;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.joda.time.LocalDate;
 
 import java.util.Date;
 import java.util.List;
 
-public class DayViewFragment extends DialogFragment implements OnClickListener,
+public class DayViewFragment extends WcDialogFragment implements OnClickListener,
         DataKeeperClient, OnItemSelectedListener {
     private CalendarListener mListener = null;
     /**
@@ -53,14 +50,6 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
     private CalendarData mValue;
     private boolean mIsEmbedded;
 
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
-    }
-
     public void setListener(CalendarListener listener) {
         mListener = listener;
     }
@@ -70,10 +59,11 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
         mDataKeeper = dataKeeper;
     }
 
+    @SuppressWarnings("InflateParams")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = null;
+        View v;
         mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
         if (mIsEmbedded) {
             v = inflater.inflate(R.layout.view_day_embedded, null);
@@ -138,7 +128,7 @@ public class DayViewFragment extends DialogFragment implements OnClickListener,
         fillSpinner(R.array.menstruationTypes, drawablesId,
                 spinnerHadMenstruation);
 
-        drawablesId = Settings.settingsTheme.isDefaultTheme(getContext()) ? R.array.sexDrawablesDark
+        drawablesId = settingsTheme.isDefaultTheme() ? R.array.sexDrawablesDark
                 : R.array.sexDrawablesLight;
         fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 

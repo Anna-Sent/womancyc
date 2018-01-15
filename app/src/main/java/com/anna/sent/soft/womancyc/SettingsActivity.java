@@ -1,47 +1,26 @@
 package com.anna.sent.soft.womancyc;
 
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.utils.ActionBarUtils;
 import com.anna.sent.soft.utils.ActivityUtils;
-import com.anna.sent.soft.utils.LanguageUtils;
 import com.anna.sent.soft.utils.NavigationUtils;
-import com.anna.sent.soft.utils.ThemeUtils;
+import com.anna.sent.soft.womancyc.base.WcSettingsActivity;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
-public class SettingsActivity extends PreferenceActivity implements
-        OnSharedPreferenceChangeListener {
+public class SettingsActivity extends WcSettingsActivity {
     private final static String KEY_PREF_UI_SETTINGS = "pref_ui_settings";
     private final static String KEY_PREF_SEND_PASSWORD_TO_EMAIL = "pref_send_password_to_email";
 
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ThemeUtils.setupThemeBeforeOnActivityCreate(this,
-                Settings.settingsTheme.getStyle(this, R.array.style, R.style.AppTheme));
-
         super.onCreate(savedInstanceState);
-
-        LanguageUtils.setupLanguageAfterOnActivityCreate(this,
-                Settings.settingsLanguage.isLanguageSetByUser(this),
-                Settings.settingsLanguage.getLocale(this));
 
         setTitle(R.string.settings);
 
@@ -73,27 +52,25 @@ public class SettingsActivity extends PreferenceActivity implements
         log("create language preference");
         PreferenceCategory category = (PreferenceCategory) findPreference(KEY_PREF_UI_SETTINGS);
         final ListPreference pref = new ListPreference(this);
-        pref.setKey(Settings.settingsLanguage.getLanguageKey(this));
+        pref.setKey(settingsLanguage.getLanguageKey());
         String[] entries = getResources().getStringArray(R.array.language);
         pref.setEntries(entries);
-        String[] entryValues = getResources().getStringArray(
-                R.array.language_values);
+        String[] entryValues = getResources().getStringArray(R.array.language_ids);
         pref.setEntryValues(entryValues);
         String title = getString(R.string.pref_language_title);
         pref.setDialogTitle(title);
         pref.setTitle(title);
-        int value = Settings.settingsLanguage.getLanguage(this);
+        int value = settingsLanguage.getLanguageId();
         pref.setDefaultValue(String.valueOf(value));
         pref.setValue(String.valueOf(value));
-        Settings.settingsLanguage.setLanguage(this, value);
+        settingsLanguage.setLanguageId(value);
         log(pref.getValue() + " " + pref.getEntry());
         pref.setSummary(pref.getEntry());
         category.addPreference(pref);
     }
 
     private void setupThemePreference() {
-        ListPreference pref = (ListPreference) findPreference(Settings.settingsTheme
-                .getThemeKey(this));
+        ListPreference pref = (ListPreference) findPreference(settingsTheme.getThemeKey());
         pref.setSummary(pref.getEntry());
     }
 
@@ -139,8 +116,12 @@ public class SettingsActivity extends PreferenceActivity implements
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                          String key) {
+    public boolean onPreferenceChange(Preference preference, Object o) {
+        return false;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(Settings.KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN)) {
             setupDefaultMenstrualCycleLenPreference();
         } else if (key.equals(Settings.KEY_PREF_USE_AVG)) {
@@ -149,9 +130,9 @@ public class SettingsActivity extends PreferenceActivity implements
             setupPasswordPreference();
         } else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
             setupLockAutomaticallyPreference();
-        } else if (key.equals(Settings.settingsLanguage.getLanguageKey(this))) {
+        } else if (key.equals(settingsLanguage.getLanguageKey())) {
             ActivityUtils.restartActivity(this);
-        } else if (key.equals(Settings.settingsTheme.getThemeKey(this))) {
+        } else if (key.equals(settingsTheme.getThemeKey())) {
             ActivityUtils.restartActivity(this);
         }
     }

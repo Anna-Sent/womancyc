@@ -18,11 +18,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.shared.Settings;
+import com.anna.sent.soft.womancyc.shared.SettingsThemeImpl;
 import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.joda.time.LocalDate;
@@ -47,11 +48,13 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener, On
     private Listener mListener;
     private SparseArray<Drawable> mDrawablesFromTheme = new SparseArray<>();
     private SparseArray<Drawable> mDrawables = new SparseArray<>();
+    private SettingsTheme mSettingsTheme;
 
     public MonthViewAdapter(Context context, @NonNull DataKeeper dataKeeper, Listener listener) {
         mContext = context;
+        mSettingsTheme = new SettingsThemeImpl(context);
         mLayoutInflater = LayoutInflater.from(context);
-        mThemeId = Settings.settingsTheme.getTheme(mContext);
+        mThemeId = mSettingsTheme.getThemeId();
         mDataKeeper = dataKeeper;
         mListener = listener;
         mCalculator = new Calculator(context, mDataKeeper);
@@ -258,13 +261,13 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener, On
         }
 
         if (item.getMonthOfYear() == mMonth) {
-            if (Settings.settingsTheme.isDefaultTheme(mContext, mThemeId)) {
+            if (mSettingsTheme.isDefaultTheme(mThemeId)) {
                 dayOfMonthTextView.setTextColor(Color.WHITE);
             } else {
                 dayOfMonthTextView.setTextColor(Color.BLACK);
             }
         } else {
-            if (Settings.settingsTheme.isDefaultTheme(mContext, mThemeId)) {
+            if (mSettingsTheme.isDefaultTheme(mThemeId)) {
                 dayOfMonthTextView.setTextColor(Color.DKGRAY);
             } else {
                 dayOfMonthTextView.setTextColor(Color.LTGRAY);

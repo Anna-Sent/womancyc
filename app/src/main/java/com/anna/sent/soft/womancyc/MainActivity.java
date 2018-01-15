@@ -3,6 +3,7 @@ package com.anna.sent.soft.womancyc;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +20,7 @@ import com.anna.sent.soft.womancyc.utils.AdUtils;
 
 import org.joda.time.LocalDate;
 
-public class MainActivity extends OptionsActivity implements CalendarListener,
-        OnDateSetListener {
+public class MainActivity extends OptionsActivity implements CalendarListener, OnDateSetListener {
     private final static String TAG_DAY_VIEW = "day_view_dialog";
     private final static String TAG_DATE_PICKER = "date_picker_dialog";
 
@@ -41,17 +41,21 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
     }
 
     @Override
-    public void setViews(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
-        super.setViews(savedInstanceState);
 
         AdUtils.setupAd(this, R.id.adView);
 
         mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
         Settings.isBlocked(this, false);
         mFragmentManager = getSupportFragmentManager();
+
+        mDateToShow = savedInstanceState == null
+                ? null
+                : (LocalDate) savedInstanceState.getSerializable(Shared.DATE_TO_SHOW);
     }
 
     @Override
@@ -94,29 +98,10 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
     }
 
     @Override
-    public void restoreState(Bundle state) {
-        mDateToShow = (LocalDate) state.getSerializable(Shared.DATE_TO_SHOW);
-        log("restore " + (mDateToShow == null ? "null" : mDateToShow.toString()));
-    }
-
-    @Override
-    public void saveActivityState(Bundle state) {
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         log("save " + mMonthView.getSelectedDate().toString());
-        state.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
-    }
-
-    @Override
-    public void beforeOnSaveInstanceState() {
-        DayViewFragment dayView = getDayView();
-        if (dayView != null) {
-            mFragmentManager.beginTransaction().remove(dayView).commit();
-        }
-
-        DatePickerDialogFragment datePickerDialog = getDatePickerDialog();
-        if (datePickerDialog != null) {
-            mFragmentManager.beginTransaction().remove(datePickerDialog)
-                    .commit();
-        }
+        outState.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
     }
 
     @Override
@@ -161,11 +146,6 @@ public class MainActivity extends OptionsActivity implements CalendarListener,
         dialog.setArguments(args);
         dialog.setOnDateSetListener(this);
         dialog.show(mFragmentManager, TAG_DATE_PICKER);
-    }
-
-    private DatePickerDialogFragment getDatePickerDialog() {
-        return (DatePickerDialogFragment) mFragmentManager
-                .findFragmentByTag(TAG_DATE_PICKER);
     }
 
     @Override

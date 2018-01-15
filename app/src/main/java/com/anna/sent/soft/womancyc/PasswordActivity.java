@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,21 +13,22 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.anna.sent.soft.womancyc.base.StateSaverActivity;
+import com.anna.sent.soft.womancyc.base.WcActivity;
 import com.anna.sent.soft.womancyc.shared.Settings;
 
-public class PasswordActivity extends StateSaverActivity implements
+public class PasswordActivity extends WcActivity implements
         OnClickListener, OnEditorActionListener {
     private EditText mEditTextPassword;
 
     @Override
-    public void setViews(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (Settings.isApplicationLocked(this)) {
             setTitle(R.string.app_name);
             setContentView(R.layout.activity_password);
-            mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
+            mEditTextPassword = findViewById(R.id.editTextPassword);
             mEditTextPassword.setOnEditorActionListener(this);
-            Button buttonOk = (Button) findViewById(R.id.buttonOk);
+            Button buttonOk = findViewById(R.id.buttonOk);
             buttonOk.setOnClickListener(this);
         } else {
             startProtectedActivity();

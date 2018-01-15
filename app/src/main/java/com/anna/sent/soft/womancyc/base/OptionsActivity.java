@@ -211,8 +211,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
             }
         });
         if (files != null) {
-            for (int i = 0; i < files.length; ++i) {
-                String filename = files[i].getName();
+            for (File file : files) {
+                String filename = file.getName();
                 filename = filename.substring(0, filename.lastIndexOf(EXT));
                 list.add(filename);
             }

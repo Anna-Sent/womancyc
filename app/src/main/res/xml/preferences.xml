@@ -39,10 +39,10 @@
         android:key="pref_ui_settings"
         android:title="@string/pref_ui_settings_title">
         <ListPreference
-            android:defaultValue="@integer/defaultTheme"
+            android:defaultValue="@integer/defaultThemeId"
             android:dialogTitle="@string/pref_theme_title"
             android:entries="@array/theme"
-            android:entryValues="@array/theme_values"
+            android:entryValues="@array/theme_ids"
             android:key="pref_theme"
             android:title="@string/pref_theme_title" />
     </PreferenceCategory>

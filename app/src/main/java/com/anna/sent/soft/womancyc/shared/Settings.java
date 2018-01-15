@@ -6,8 +6,6 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.anna.sent.soft.settings.SettingsLanguage;
-import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.settings.SharedPreferencesWrapper;
 import com.anna.sent.soft.womancyc.R;
 
@@ -18,10 +16,8 @@ public class Settings {
     public static final String KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN = "pref_default_menstrual_cycle_len";
     public static final String KEY_PREF_USE_AVG = "pref_use_average";
     private static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
-    public static SettingsLanguageImpl settingsLanguage = new SettingsLanguageImpl();
-    public static SettingsThemeImpl settingsTheme = new SettingsThemeImpl();
 
-    private static SharedPreferences getSettings(Context context) {
+    public static SharedPreferences getSettings(Context context) {
         return new SharedPreferencesWrapper(
                 PreferenceManager.getDefaultSharedPreferences(context));
     }
@@ -36,7 +32,7 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putBoolean(KEY_PREF_LOCK_AUTOMATICALLY, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean hideWidget(Context context) {
@@ -49,7 +45,7 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putBoolean(KEY_PREF_HIDE_WIDGET, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean isBlocked(Context context) {
@@ -61,7 +57,7 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putBoolean(KEY_PREF_IS_BLOCKED, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getPassword(Context context) {
@@ -73,14 +69,14 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putString(KEY_PREF_PASSWORD, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static void clearPassword(Context context) {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.remove(KEY_PREF_PASSWORD);
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean isPasswordSet(Context context) {
@@ -103,7 +99,7 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean useAverage(Context context) {
@@ -116,65 +112,6 @@ public class Settings {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putBoolean(KEY_PREF_USE_AVG, value);
-        editor.commit();
-    }
-
-    public static class SettingsLanguageImpl extends SettingsLanguage {
-        private static final String KEY_PREF_LANGUAGE = "pref_language";
-        private static final String KEY_PREF_IS_LANGUAGE_SET_BY_USER = "pref_is_language_set_by_user";
-
-        @Override
-        protected SharedPreferences getSettings(Context context) {
-            return Settings.getSettings(context);
-        }
-
-        @Override
-        public String getLanguageKey(Context context) {
-            return KEY_PREF_LANGUAGE;
-        }
-
-        @Override
-        protected String getIsLanguageSetByUserKey(Context context) {
-            return KEY_PREF_IS_LANGUAGE_SET_BY_USER;
-        }
-
-        @Override
-        protected int getLocaleArrayResourceId() {
-            return R.array.locale;
-        }
-
-        @Override
-        protected int getLanguageValuesArrayResourceId() {
-            return R.array.language_values;
-        }
-
-        @Override
-        protected int getDefaultLanguageId(Context context) {
-            return context.getResources().getInteger(R.integer.defaultLanguage);
-        }
-    }
-
-    public static class SettingsThemeImpl extends SettingsTheme {
-        private static final String KEY_PREF_THEME = "pref_theme";
-
-        @Override
-        protected SharedPreferences getSettings(Context context) {
-            return Settings.getSettings(context);
-        }
-
-        @Override
-        public String getThemeKey(Context context) {
-            return KEY_PREF_THEME;
-        }
-
-        @Override
-        protected int getThemeValuesArrayResourceId() {
-            return R.array.theme_values;
-        }
-
-        @Override
-        protected int getDefaultThemeId(Context context) {
-            return context.getResources().getInteger(R.integer.defaultTheme);
-        }
+        editor.apply();
     }
 }

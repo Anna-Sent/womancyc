@@ -2,6 +2,7 @@ package com.anna.sent.soft.womancyc;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,10 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
     private View mSelectedRow = null;
 
     @Override
-    public void setViews(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setTitle(R.string.statistic);
         setContentView(R.layout.activity_statistic);
-        super.setViews(savedInstanceState);
     }
 
     @Override
@@ -41,6 +42,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
         }
     }
 
+    @SuppressWarnings("InflateParams")
     @Override
     protected void dataChanged() {
         TableRow tableRow2 = findViewById(R.id.tableRow2);

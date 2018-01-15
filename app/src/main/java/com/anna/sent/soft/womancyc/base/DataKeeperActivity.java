@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -21,8 +22,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class DataKeeperActivity extends StateSaverActivity implements
-        DataKeeper {
+public abstract class DataKeeperActivity extends WcActivity implements DataKeeper {
     private boolean mIsDataTaskCompleted;
     private ProgressDialog mProgressDialog = null;
     private Timer mTimer = null;
@@ -55,7 +55,8 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     @Override
-    public void setViews(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mDataKeeper = new DataKeeperImpl(this);
     }
 
@@ -241,7 +242,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     private class OpenDataSourceTask extends DataTask {
-        public OpenDataSourceTask() {
+        OpenDataSourceTask() {
             super(true, getString(R.string.openDataSourceTask));
         }
 
@@ -273,7 +274,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     private class ClearAllDataTask extends DataTask {
-        public ClearAllDataTask() {
+        ClearAllDataTask() {
             super(true, getString(R.string.clearAllData));
         }
 
@@ -295,7 +296,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     private class BackupTask extends DataTask {
-        public BackupTask() {
+        BackupTask() {
             super(false, null);
         }
 
@@ -315,7 +316,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     private class RestoreTask extends DataTask {
-        public RestoreTask() {
+        RestoreTask() {
             super(true, getString(R.string.restoreDataTask));
         }
 
@@ -346,7 +347,7 @@ public abstract class DataKeeperActivity extends StateSaverActivity implements
     }
 
     private class Test25YearsTask extends DataTask {
-        public Test25YearsTask() {
+        Test25YearsTask() {
             super(true, getString(R.string.test25));
         }
 

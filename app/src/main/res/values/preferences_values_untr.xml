@@ -7,7 +7,10 @@
     <bool name="useAverage">true</bool>
     <bool name="lockAutomatically">false</bool>
     <bool name="hideWidget">false</bool>
-    <string-array name="theme_values" translatable="false">
+
+    <!-- theme array is translatable-->
+
+    <string-array name="theme_ids" translatable="false">
         <item>0</item>
         <item>1</item>
     </string-array>
@@ -15,12 +18,13 @@
         <item>@style/AppTheme</item>
         <item>@style/AppThemeLight</item>
     </array>
-    <integer name="defaultTheme">0</integer>
+    <integer name="defaultThemeId">0</integer>
+
     <string-array name="language" translatable="false">
         <item>Русский</item>
         <item>English</item>
     </string-array>
-    <string-array name="language_values" translatable="false">
+    <string-array name="language_ids" translatable="false">
         <item>0</item>
         <item>2</item>
     </string-array>
@@ -28,5 +32,5 @@
         <item>ru</item>
         <item>en</item>
     </string-array>
-    <integer name="defaultLanguage">2</integer>
+    <integer name="defaultLanguageId">2</integer>
 </resources>
