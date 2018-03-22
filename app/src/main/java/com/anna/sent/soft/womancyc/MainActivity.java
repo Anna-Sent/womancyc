@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.DatePicker;
 
+import com.anna.sent.soft.ad.AdUtils;
 import com.anna.sent.soft.womancyc.base.OptionsActivity;
 import com.anna.sent.soft.womancyc.fragments.CalendarListener;
 import com.anna.sent.soft.womancyc.fragments.DatePickerDialogFragment;
@@ -16,7 +17,7 @@ import com.anna.sent.soft.womancyc.fragments.DayViewFragment;
 import com.anna.sent.soft.womancyc.fragments.MonthViewFragment;
 import com.anna.sent.soft.womancyc.shared.Settings;
 import com.anna.sent.soft.womancyc.shared.Shared;
-import com.anna.sent.soft.womancyc.utils.AdUtils;
+import com.google.android.gms.ads.AdView;
 
 import org.joda.time.LocalDate;
 
@@ -27,7 +28,8 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     private MonthViewFragment mMonthView;
     private boolean mIsLargeLayout;
     private FragmentManager mFragmentManager;
-    private LocalDate mDateToShow = null;
+    private LocalDate mDateToShow;
+    private AdView mAdView;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -47,7 +49,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
 
-        AdUtils.setupAd(this, R.id.adView);
+        mAdView = AdUtils.setupAd(this, R.id.adView, R.string.adUnitId, true);
 
         mIsLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
         Settings.isBlocked(this, false);
@@ -83,12 +85,26 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     protected void onPause() {
         log("onPause");
         super.onPause();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         log("onResume");
         super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
     }
 
     @Override

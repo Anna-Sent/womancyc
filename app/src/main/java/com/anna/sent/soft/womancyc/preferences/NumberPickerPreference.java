@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 public class NumberPickerPreference extends DialogPreference {
     private static final int DEFAULT_MIN_VALUE = 0;

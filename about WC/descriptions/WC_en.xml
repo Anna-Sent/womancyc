@@ -2,8 +2,8 @@
 <resources>
 
     <string name="google_app_name">WomanCyc</string>
-    <string name="yandex_app_name">"WomanCyc: calendar of woman's cycle"</string>
-    <string name="google_marketing_message">"WomanCyc: calendar of woman's cycle"</string>
+    <string name="yandex_app_name">WomanCyc: calendar of woman's cycle</string>
+    <string name="google_marketing_message">WomanCyc: calendar of woman's cycle</string>
     <string name="description">
         <![CDATA[
 WomanCyc is a simple period tracker application, you can mark in calendar:

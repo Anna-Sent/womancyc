@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.BuildConfig;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.joda.time.LocalDate;
 
@@ -132,7 +132,7 @@ public class DataKeeperImpl implements DataKeeper {
     }
 
     private void checkSync() {
-        if (DEBUG_SYNC&& BuildConfig.DEBUG) {
+        if (DEBUG_SYNC && BuildConfig.DEBUG) {
             List<CalendarData> dbValues = new ArrayList<>();
             mDataSource.getAllRows(dbValues);
             int count = mValues.size();
@@ -162,7 +162,7 @@ public class DataKeeperImpl implements DataKeeper {
     }
 
     private void printValues(List<CalendarData> values) {
-        if (DEBUG_SYNC&& BuildConfig.DEBUG) {
+        if (DEBUG_SYNC && BuildConfig.DEBUG) {
             String result = "";
             int size = values.size() - 1;
             for (int i = 0; i <= size; ++i) {

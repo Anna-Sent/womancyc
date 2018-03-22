@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.base.DataKeeperClient;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 import org.joda.time.LocalDate;
@@ -24,7 +25,7 @@ import java.util.Locale;
 
 public class MonthViewFragment extends Fragment implements
         MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
-    private CalendarListener mListener = null;
+    private CalendarListener mListener;
     private DataKeeper mDataKeeper;
     private Button currentMonth;
     private MonthViewAdapter adapter;
@@ -53,6 +54,7 @@ public class MonthViewFragment extends Fragment implements
         return inflater.inflate(R.layout.view_month, null);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -70,20 +72,19 @@ public class MonthViewFragment extends Fragment implements
 
         GridView calendarView = getActivity().findViewById(R.id.calendarGridView);
         calendarView.setAdapter(adapter);
-        calendarView
-                .setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
-                    @Override
-                    public boolean onSwipeRight() {
-                        toPrevMonth();
-                        return true;
-                    }
+        calendarView.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+            @Override
+            public boolean onSwipeRight() {
+                toPrevMonth();
+                return true;
+            }
 
-                    @Override
-                    public boolean onSwipeLeft() {
-                        toNextMonth();
-                        return true;
-                    }
-                });
+            @Override
+            public boolean onSwipeLeft() {
+                toNextMonth();
+                return true;
+            }
+        });
     }
 
     public LocalDate getSelectedDate() {

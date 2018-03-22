@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.anna.sent.soft.womancyc.utils.MyLog;
+import com.anna.sent.soft.logging.MyLog;
 
 public class UpdateWidgetService extends IntentService {
     public UpdateWidgetService() {

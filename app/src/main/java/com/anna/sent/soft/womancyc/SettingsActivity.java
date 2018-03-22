@@ -15,8 +15,8 @@ import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
 
 public class SettingsActivity extends WcSettingsActivity {
-    private final static String KEY_PREF_UI_SETTINGS = "pref_ui_settings";
-    private final static String KEY_PREF_SEND_PASSWORD_TO_EMAIL = "pref_send_password_to_email";
+    private static final String KEY_PREF_UI_SETTINGS = "pref_ui_settings";
+    private static final String KEY_PREF_SEND_PASSWORD_TO_EMAIL = "pref_send_password_to_email";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class SettingsActivity extends WcSettingsActivity {
     private void createLanguagePreference() {
         log("create language preference");
         PreferenceCategory category = (PreferenceCategory) findPreference(KEY_PREF_UI_SETTINGS);
-        final ListPreference pref = new ListPreference(this);
+        ListPreference pref = new ListPreference(this);
         pref.setKey(settingsLanguage.getLanguageKey());
         String[] entries = getResources().getStringArray(R.array.language);
         pref.setEntries(entries);

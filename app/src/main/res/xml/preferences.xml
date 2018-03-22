@@ -16,7 +16,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_safety_settings_title">
         <com.anna.sent.soft.womancyc.preferences.PasswordPreference
-            android:defaultValue=""
+            android:defaultValue="@string/emptyString"
             android:key="pref_password"
             android:title="@string/pref_password_title" />
         <Preference

@@ -24,8 +24,8 @@ import java.util.TimerTask;
 
 public abstract class DataKeeperActivity extends WcActivity implements DataKeeper {
     private boolean mIsDataTaskCompleted;
-    private ProgressDialog mProgressDialog = null;
-    private Timer mTimer = null;
+    private ProgressDialog mProgressDialog;
+    private Timer mTimer;
     private DataKeeperImpl mDataKeeper;
     private boolean mIsStopped;
 

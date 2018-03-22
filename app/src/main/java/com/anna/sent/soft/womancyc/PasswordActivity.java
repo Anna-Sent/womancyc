@@ -62,15 +62,13 @@ public class PasswordActivity extends WcActivity implements
         if (password.equals(Settings.getPassword(this))) {
             startProtectedActivity();
         } else {
-            Toast.makeText(this, getString(R.string.incorrectPassword),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.incorrectPassword), Toast.LENGTH_LONG).show();
         }
     }
 
     private void startProtectedActivity() {
         finish();
         startActivity(new Intent(this, MainActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 }

@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 public class PasswordPreference extends DialogPreference {
     private String mPassword;
@@ -136,7 +136,7 @@ public class PasswordPreference extends DialogPreference {
     protected void onRestoreInstanceState(Parcelable state) {
         log("restore");
         if (state == null || !state.getClass().equals(SavedState.class)) {
-            log("restore " + state == null ? "null" : state.getClass().getName());
+            log("restore " + (state == null ? "null" : state.getClass().getName()));
             super.onRestoreInstanceState(state);
             return;
         }

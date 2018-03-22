@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="240dp"
@@ -22,7 +23,8 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/prevDay"
             android:drawableEnd="?attr/dialog_prevItemIcon"
-            android:drawableRight="?attr/dialog_prevItemIcon" />
+            android:drawableRight="?attr/dialog_prevItemIcon"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/currentDay"
@@ -36,7 +38,8 @@
             android:drawableStart="?attr/dialog_goToTodayIcon"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/nextDay"
@@ -47,7 +50,8 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/nextDay"
             android:drawableLeft="?attr/dialog_nextItemIcon"
-            android:drawableStart="?attr/dialog_nextItemIcon" />
+            android:drawableStart="?attr/dialog_nextItemIcon"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <ScrollView
@@ -176,7 +180,8 @@
                     android:drawableLeft="?attr/dialog_removeContentIcon"
                     android:drawableStart="?attr/dialog_removeContentIcon"
                     android:text="@string/clear"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/buttonClose"
@@ -184,7 +189,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/close"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    tools:ignore="ButtonStyle" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

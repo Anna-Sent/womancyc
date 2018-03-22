@@ -13,7 +13,6 @@
         android:stretchColumns="*">
 
         <TableRow
-            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,7 +26,6 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/rowMCLValues"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -40,7 +38,6 @@
                 android:typeface="serif" />
 
             <TextView
-                android:id="@+id/rowBLValues"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -62,7 +59,6 @@
             android:focusableInTouchMode="true">
 
             <TextView
-                android:id="@+id/rowAvgValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -100,7 +96,6 @@
             android:focusableInTouchMode="true">
 
             <TextView
-                android:id="@+id/rowMinValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -138,7 +133,6 @@
             android:focusableInTouchMode="true">
 
             <TextView
-                android:id="@+id/rowMaxValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -168,7 +162,6 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/view_padding">
@@ -201,7 +194,6 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/view_padding">

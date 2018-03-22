@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,7 +18,9 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/prevMonth"
-            android:drawableRight="?attr/prevItemIcon" />
+            android:drawableEnd="?attr/prevItemIcon"
+            android:drawableRight="?attr/prevItemIcon"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/currentMonth"
@@ -28,9 +31,11 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/currentMonth"
             android:drawableLeft="?attr/goToTodayIcon"
+            android:drawableStart="?attr/goToTodayIcon"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/nextMonth"
@@ -40,7 +45,9 @@
             android:layout_weight="0.2"
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/nextMonth"
-            android:drawableLeft="?attr/nextItemIcon" />
+            android:drawableLeft="?attr/nextItemIcon"
+            android:drawableStart="?attr/nextItemIcon"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <GridView

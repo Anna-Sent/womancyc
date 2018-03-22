@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+    <string name="emptyString" />
     <string name="sendto_app_not_available">Почтовый клиент недоступен</string>
     <string name="market_app_not_available">Приложение market недоступно</string>
     <string name="days">д.</string>

@@ -35,12 +35,12 @@ import java.util.List;
 
 public class DayViewFragment extends WcDialogFragment implements OnClickListener,
         DataKeeperClient, OnItemSelectedListener {
-    private CalendarListener mListener = null;
+    private CalendarListener mListener;
     /**
      * must be not null! fragment gets it when onAttach() is called by parent
      * activity
      */
-    private DataKeeper mDataKeeper = null;
+    private DataKeeper mDataKeeper;
     private Spinner spinnerHadMenstruation, spinnerHadSex;
     private CheckBox checkBoxTookPill;
     private AutoCompleteTextView textViewNote;
@@ -110,6 +110,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
         log("onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         if (mIsEmbedded) {
+            //noinspection ConstantConditions
             spinnerHadMenstruation = getActivity().findViewById(R.id.spinnerHadMenstruation);
             spinnerHadSex = getActivity().findViewById(R.id.spinnerSex);
             checkBoxTookPill = getActivity().findViewById(R.id.checkBoxTookPill);
@@ -134,6 +135,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
 
         checkBoxTookPill.setOnClickListener(this);
 
+        //noinspection ConstantConditions
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 R.layout.spinner_item, R.id.spinnerItemTextView, mDataKeeper.getNotes());
         textViewNote.setAdapter(adapter);
@@ -261,8 +263,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
                     builder.setItems(list.toArray(new String[list.size()]),
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
+                                public void onClick(DialogInterface dialog, int which) {
                                     textViewNote.setText(list.get(which));
                                 }
                             }).setNegativeButton(android.R.string.cancel, null);

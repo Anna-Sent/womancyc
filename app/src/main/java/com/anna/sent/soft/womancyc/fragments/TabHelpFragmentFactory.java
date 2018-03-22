@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.utils.HtmlUtils;
 import com.anna.sent.soft.womancyc.R;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 public class TabHelpFragmentFactory {
     public static Fragment newInstance(int position) {

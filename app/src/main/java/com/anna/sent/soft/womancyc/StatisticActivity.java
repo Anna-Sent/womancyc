@@ -20,7 +20,7 @@ import com.anna.sent.soft.womancyc.data.Calculator.Value;
 import java.util.Date;
 
 public class StatisticActivity extends ChildActivity implements OnClickListener {
-    private View mSelectedRow = null;
+    private View mSelectedRow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +36,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
                 mSelectedRow.setBackgroundDrawable(null);
             }
 
-            v.setBackgroundDrawable(getResources().getDrawable(
-                    R.drawable.bg_selected_view));
+            v.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_selected_view));
             mSelectedRow = v;
         }
     }
@@ -85,8 +84,7 @@ public class StatisticActivity extends ChildActivity implements OnClickListener 
             TextView column3 = row.findViewById(R.id.column3);
 
             Date date = stat.rows.get(i).firstDayOfCycle.toDate();
-            String formattedString = DateFormat.getDateFormat(this)
-                    .format(date);
+            String formattedString = DateFormat.getDateFormat(this).format(date);
             column1.setText(formattedString);
             int mcl = stat.rows.get(i).menstrualCycleLen;
             column2.setText(String.valueOf(mcl));

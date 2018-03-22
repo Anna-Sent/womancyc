@@ -17,7 +17,7 @@ import org.joda.time.LocalDate;
 
 public class DatePickerDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
-    private OnDateSetListener mListener = null;
+    private OnDateSetListener mListener;
 
     public void setOnDateSetListener(OnDateSetListener listener) {
         mListener = listener;
@@ -27,17 +27,13 @@ public class DatePickerDialogFragment extends DialogFragment implements
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final LocalDate c = (LocalDate) getArguments().getSerializable(
-                Shared.DATE_TO_SHOW);
+        final LocalDate c = (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
                 mListener, c.getYear(), c.getMonthOfYear() - 1,
                 c.getDayOfMonth());
-        dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
-                getString(R.string.today), this);
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.today), this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            dialog.getDatePicker().setCalendarViewShown(false);
-        }
+        dialog.getDatePicker().setCalendarViewShown(false);
 
         return dialog;
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="240dp"
@@ -22,7 +23,8 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/prevDay"
             android:drawableEnd="?attr/prevItemIcon"
-            android:drawableRight="?attr/prevItemIcon" />
+            android:drawableRight="?attr/prevItemIcon"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/currentDay"
@@ -36,7 +38,8 @@
             android:drawableStart="?attr/goToTodayIcon"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/nextDay"
@@ -47,7 +50,8 @@
             android:background="@drawable/bg_transparent_button"
             android:contentDescription="@string/nextDay"
             android:drawableLeft="?attr/nextItemIcon"
-            android:drawableStart="?attr/nextItemIcon" />
+            android:drawableStart="?attr/nextItemIcon"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <ScrollView
@@ -74,8 +78,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/view_padding"
+                        android:layout_marginStart="@dimen/view_padding"
                         android:layout_weight="1"
-                        android:paddingLeft="@dimen/view_padding"
                         android:text="@string/menstruation"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?attr/textViewTextColor" />
@@ -84,8 +89,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/view_padding"
+                        android:layout_marginStart="@dimen/view_padding"
                         android:layout_weight="1"
-                        android:paddingLeft="@dimen/view_padding"
                         android:text="@string/sex"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?attr/textViewTextColor" />

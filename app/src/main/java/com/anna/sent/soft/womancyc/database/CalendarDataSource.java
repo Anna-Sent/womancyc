@@ -5,27 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import java.util.List;
 
 public class CalendarDataSource {
-    private SQLiteDatabase mDatabase = null;
+    private SQLiteDatabase mDatabase;
     private CalendarHelper mHelper;
 
     public CalendarDataSource(Context context) {
         mHelper = new CalendarHelper(context);
-    }
-
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
     }
 
     public void open() throws SQLException {
@@ -58,9 +48,7 @@ public class CalendarDataSource {
             values.put(CalendarHelper.COLUMN_SEX, value.getSex());
             values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
             values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
-            long id = mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null,
-                    values);
-            // log("Insert calendar: " + value);
+            long id = mDatabase.insert(CalendarHelper.TABLE_CALENDAR, null, values);
             return id != -1;
         }
 
@@ -71,7 +59,6 @@ public class CalendarDataSource {
         if (isOpen()) {
             int rows = mDatabase.delete(CalendarHelper.TABLE_CALENDAR,
                     CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-            // log("Delete calendar: " + value);
             return rows > 0;
         }
 

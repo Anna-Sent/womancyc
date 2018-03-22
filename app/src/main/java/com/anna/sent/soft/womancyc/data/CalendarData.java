@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 public class CalendarData implements Serializable, Cloneable {
     private static final String DATE_FORMAT = "dd-MM-yyyy";
-    private static final long serialVersionUID = -4217182666477849206L;
     private static final String MENSTRUATION_YES = "yes";
     private static final String MENSTRUATION_ONE_DROP = "one_drop";
     private static final String MENSTRUATION_TWO_DROPS = "two_drops";
@@ -21,10 +20,10 @@ public class CalendarData implements Serializable, Cloneable {
     private final static String TOOK_PILL_YES = "yes";
     private final static String TOOK_PILL_NO = "no";
     private LocalDate date;
-    private int menstruation = 0;
-    private int sex = 0;
-    private boolean tookPill = false;
-    private String note = null;
+    private int menstruation;
+    private int sex;
+    private boolean tookPill;
+    private String note;
 
     public CalendarData() {
         this(LocalDate.now());
@@ -43,14 +42,6 @@ public class CalendarData implements Serializable, Cloneable {
         return date;
     }
 
-    public void setDate(int value) {
-        int year = value / 10000;
-        value = value % 10000;
-        int month = value / 100;
-        int day = value % 100;
-        date = new LocalDate(year, month, day);
-    }
-
     public void setDate(String value) {
         String[] strings = value.split("-");
         if (strings.length == 3) {
@@ -61,6 +52,14 @@ public class CalendarData implements Serializable, Cloneable {
         }
     }
 
+    public void setDate(int value) {
+        int year = value / 10000;
+        value = value % 10000;
+        int month = value / 100;
+        int day = value % 100;
+        date = new LocalDate(year, month, day);
+    }
+
     public String getDateString() {
         return date.toString(DATE_FORMAT);
     }
@@ -69,22 +68,28 @@ public class CalendarData implements Serializable, Cloneable {
         return menstruation;
     }
 
-    public void setMenstruation(String value) {
-        if (value.equals(MENSTRUATION_YES)) {
-            menstruation = 1;
-        } else if (value.equals(MENSTRUATION_ONE_DROP)) {
-            menstruation = 2;
-        } else if (value.equals(MENSTRUATION_TWO_DROPS)) {
-            menstruation = 3;
-        } else if (value.equals(MENSTRUATION_THREE_DROPS)) {
-            menstruation = 4;
-        } else {
-            menstruation = 0;
-        }
-    }
-
     public void setMenstruation(int value) {
         menstruation = value;
+    }
+
+    public void setMenstruation(String value) {
+        switch (value) {
+            case MENSTRUATION_YES:
+                menstruation = 1;
+                break;
+            case MENSTRUATION_ONE_DROP:
+                menstruation = 2;
+                break;
+            case MENSTRUATION_TWO_DROPS:
+                menstruation = 3;
+                break;
+            case MENSTRUATION_THREE_DROPS:
+                menstruation = 4;
+                break;
+            default:
+                menstruation = 0;
+                break;
+        }
     }
 
     public String getMenstruationString() {
@@ -106,20 +111,25 @@ public class CalendarData implements Serializable, Cloneable {
         return sex;
     }
 
-    public void setSex(String value) {
-        if (value.equals(SEX_UNPROTECTED)) {
-            sex = 1;
-        } else if (value.equals(SEX_PROTECTED)) {
-            sex = 2;
-        } else if (value.equals(SEX_YES)) {
-            sex = 3;
-        } else {
-            sex = 0;
-        }
-    }
-
     public void setSex(int value) {
         sex = value;
+    }
+
+    public void setSex(String value) {
+        switch (value) {
+            case SEX_UNPROTECTED:
+                sex = 1;
+                break;
+            case SEX_PROTECTED:
+                sex = 2;
+                break;
+            case SEX_YES:
+                sex = 3;
+                break;
+            default:
+                sex = 0;
+                break;
+        }
     }
 
     public String getSexString() {
@@ -150,12 +160,12 @@ public class CalendarData implements Serializable, Cloneable {
         return tookPill;
     }
 
-    public void setTookPill(String value) {
-        tookPill = value.equals(TOOK_PILL_YES);
-    }
-
     public void setTookPill(boolean value) {
         tookPill = value;
+    }
+
+    public void setTookPill(String value) {
+        tookPill = value.equals(TOOK_PILL_YES);
     }
 
     public String getTookPillString() {

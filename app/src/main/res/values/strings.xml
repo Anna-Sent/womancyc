@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="emptyString" />
     <string name="sendto_app_not_available">Mail application is not available</string>
     <string name="market_app_not_available">Market application is not available</string>
     <string name="days">days</string>
@@ -82,7 +83,7 @@
     <string name="minValue">Minimum value</string>
     <string name="maxValue">Maximum value</string>
     <string name="firstDayOfCycle">First day of cycle</string>
-    <string name="statisticRemark">
+    <string name="statisticRemark" tools:ignore="PluralsCandidate">
 <![CDATA[
 <i>Note.</i> Table contains data about all cycles except the last (i.e., all full cycles).<br/>
 Calculation of the average, maximum and minimum length of the menstrual cycle is carried out only in cycles not exceeding %1$d days.<br/>

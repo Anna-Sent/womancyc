@@ -3,10 +3,10 @@ package com.anna.sent.soft.womancyc.data;
 import android.content.Context;
 import android.util.Log;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -177,7 +177,7 @@ public class Calculator {
     private int getAvgLenOfLastMenstrualCycles(LocalDate firstDayOfCycle) {
         if (useAvg) {
             int sum = 0;
-            final int count = 3;
+            int count = 3;
             int actualCount = 0;
             int countOfCycles = 0;
             LocalDate firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);

@@ -18,13 +18,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.data.CalendarData;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.SettingsThemeImpl;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.joda.time.LocalDate;
 

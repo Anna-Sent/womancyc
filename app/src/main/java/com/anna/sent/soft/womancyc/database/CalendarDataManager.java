@@ -2,12 +2,11 @@ package com.anna.sent.soft.womancyc.database;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
+import android.support.annotation.NonNull;
 import android.util.Xml;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.data.CalendarData;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -22,7 +21,7 @@ import java.io.IOException;
 public class CalendarDataManager {
     private static String TAG_ROW = "row";
     private Context mContext;
-    private String mErrorMessage = null;
+    private String mErrorMessage;
 
     public CalendarDataManager(Context context) {
         mContext = context;
@@ -70,31 +69,30 @@ public class CalendarDataManager {
                                          DataKeeper dataKeeper) throws XmlPullParserException, IOException {
         if (eventType == XmlPullParser.START_TAG
                 && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
-            // log("start of " + xpp.getName());
             eventType = xpp.nextTag();
             while (eventType == XmlPullParser.START_TAG
                     && xpp.getName().equals(TAG_ROW)) {
-                // log("start of " + xpp.getName());
                 CalendarData data = new CalendarData();
 
                 for (int i = 0; i < xpp.getAttributeCount(); ++i) {
                     String name = xpp.getAttributeName(i);
                     String value = xpp.getAttributeValue(i);
-                    if (name.equals(CalendarHelper.COLUMN_ID)) {
-                        // log(name + " " + value);
-                        data.setDate(value);
-                    } else if (name.equals(CalendarHelper.COLUMN_MENSTRUATION)) {
-                        // log(name + " " + value);
-                        data.setMenstruation(value);
-                    } else if (name.equals(CalendarHelper.COLUMN_SEX)) {
-                        // log(name + " " + value);
-                        data.setSex(value);
-                    } else if (name.equals(CalendarHelper.COLUMN_TOOK_PILL)) {
-                        // log(name + " " + value);
-                        data.setTookPill(value);
-                    } else if (name.equals(CalendarHelper.COLUMN_NOTE)) {
-                        // log(name + " \"" + value + "\"");
-                        data.setNote(value);
+                    switch (name) {
+                        case CalendarHelper.COLUMN_ID:
+                            data.setDate(value);
+                            break;
+                        case CalendarHelper.COLUMN_MENSTRUATION:
+                            data.setMenstruation(value);
+                            break;
+                        case CalendarHelper.COLUMN_SEX:
+                            data.setSex(value);
+                            break;
+                        case CalendarHelper.COLUMN_TOOK_PILL:
+                            data.setTookPill(value);
+                            break;
+                        case CalendarHelper.COLUMN_NOTE:
+                            data.setNote(value);
+                            break;
                     }
                 }
 
@@ -119,24 +117,11 @@ public class CalendarDataManager {
         return eventType;
     }
 
-    private static String wrapMsg(String msg) {
-        return CalendarDataManager.class.getSimpleName() + ": " + msg;
-    }
-
-    private static void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
-    }
-
     public String getErrorMessage() {
         return mErrorMessage;
     }
 
-    /**
-     * @param dataKeeper not null
-     * @param filename
-     * @return
-     */
-    public boolean backup(DataKeeper dataKeeper, String filename) {
+    public boolean backup(@NonNull DataKeeper dataKeeper, String filename) {
         if (isExternalStorageWritable()) {
             try {
                 File xmlfile = new File(filename);
@@ -175,12 +160,7 @@ public class CalendarDataManager {
         return false;
     }
 
-    /**
-     * @param dataKeeper not null
-     * @param filename
-     * @return
-     */
-    public boolean restore(DataKeeper dataKeeper, String filename) {
+    public boolean restore(@NonNull DataKeeper dataKeeper, String filename) {
         if (isExternalStorageReadable()) {
             try {
                 File xmlfile = new File(filename);

@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.anna.sent.soft.womancyc.utils.MyLog;
+import com.anna.sent.soft.logging.MyLog;
 
 public class CalendarHelper extends SQLiteOpenHelper {
     public static final String TABLE_CALENDAR = "calendar";

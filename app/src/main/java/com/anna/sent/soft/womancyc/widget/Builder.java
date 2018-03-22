@@ -7,14 +7,14 @@ import android.database.SQLException;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.PasswordActivity;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.database.DataKeeperImpl;
 import com.anna.sent.soft.womancyc.shared.Settings;
-import com.anna.sent.soft.womancyc.utils.MyLog;
 
-public abstract class Builder {
+abstract class Builder {
     protected static final String THERE_IS_NO_DATA = "";
     private static final String APP_IS_LOCKED = "?";
 

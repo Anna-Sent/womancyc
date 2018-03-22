@@ -15,7 +15,4 @@ allprojects {
         maven { url "https://jitpack.io" }
         google()
     }
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation"
-    }
 }
