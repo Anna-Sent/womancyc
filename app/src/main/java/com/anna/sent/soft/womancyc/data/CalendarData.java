@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 
 import java.io.Serializable;
 
-public class CalendarData implements Serializable, Cloneable {
+public class CalendarData implements Serializable {
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String MENSTRUATION_YES = "yes";
     private static final String MENSTRUATION_ONE_DROP = "one_drop";
@@ -31,6 +31,14 @@ public class CalendarData implements Serializable, Cloneable {
 
     public CalendarData(LocalDate date) {
         this.date = date;
+    }
+
+    public CalendarData(CalendarData calendarData) {
+        date = calendarData.date;
+        menstruation = calendarData.menstruation;
+        sex = calendarData.sex;
+        tookPill = calendarData.tookPill;
+        note = calendarData.note;
     }
 
     public long getId() {
@@ -211,15 +219,5 @@ public class CalendarData implements Serializable, Cloneable {
         result = prime * result + date.hashCode();
         result = prime * result + getNote().hashCode();
         return result;
-    }
-
-    @Override
-    public CalendarData clone() {
-        CalendarData obj = new CalendarData(date);
-        obj.menstruation = menstruation;
-        obj.sex = sex;
-        obj.tookPill = tookPill;
-        obj.note = note;
-        return obj;
     }
 }

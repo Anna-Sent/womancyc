@@ -192,7 +192,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
         if (mValue == null) {
             mValue = new CalendarData(mDateToShow);
         } else {
-            mValue = mValue.clone(); // to update properly
+            mValue = new CalendarData(mValue); // to update properly
         }
 
         log(mValue.toString());

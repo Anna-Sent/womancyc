@@ -21,7 +21,7 @@ public class Calculator {
     /**
      * Must be not null.
      */
-    private DataKeeper mDataKeeper;
+    private final DataKeeper mDataKeeper;
     private int defaultMenstrualCycleLen;
     private boolean useAvg;
 
@@ -157,9 +157,7 @@ public class Calculator {
             return null;
         } else {
             int len = getLenOfCurrentMenstrualCycle(firstDayOfCycle);
-            LocalDate expectedFirstDayOfNextCycle = firstDayOfCycle
-                    .plusDays(len);
-            return expectedFirstDayOfNextCycle;
+            return firstDayOfCycle.plusDays(len);
         }
     }
 
@@ -169,15 +167,14 @@ public class Calculator {
             return null;
         } else {
             LocalDate yesterday = firstDayOfCycle.minusDays(1);
-            LocalDate firstDayOfPrevCycle = getFirstDayOfCycle(yesterday);
-            return firstDayOfPrevCycle;
+            return getFirstDayOfCycle(yesterday);
         }
     }
 
     private int getAvgLenOfLastMenstrualCycles(LocalDate firstDayOfCycle) {
         if (useAvg) {
             int sum = 0;
-            int count = 3;
+            final int count = 3;
             int actualCount = 0;
             int countOfCycles = 0;
             LocalDate firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
@@ -210,14 +207,13 @@ public class Calculator {
 
         LocalDate firstDayOfNextCycle = getFirstDayOfNextCycle(current);
         if (firstDayOfNextCycle == null) {
-            int avgLen = getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
-            return avgLen;
+            return getAvgLenOfLastMenstrualCycles(firstDayOfCycle);
         } else {
-            int difference = getDifference(firstDayOfCycle, firstDayOfNextCycle);
-            return difference;
+            return getDifference(firstDayOfCycle, firstDayOfNextCycle);
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public Statistic getStatistic() {
         int lastIndex = mDataKeeper.getCount() - 1;
         CalendarData lastData = mDataKeeper.get(lastIndex);

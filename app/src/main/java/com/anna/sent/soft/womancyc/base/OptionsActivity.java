@@ -230,7 +230,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     android.R.string.ok, null);
             builder.create().show();
         } else {
-            List<String> list = getFilesList();
+            final List<String> list = getFilesList();
             if (list.size() == 0) {
                 backupToNewFile();
             } else {
@@ -258,7 +258,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     @SuppressWarnings("InflateParams")
     private void backupToNewFile() {
         View view = getLayoutInflater().inflate(R.layout.dialog_export, null);
-        AutoCompleteTextView textView = view.findViewById(R.id.fileName);
+        final AutoCompleteTextView textView = view.findViewById(R.id.fileName);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, R.id.spinnerItemTextView, getFilesList());
         textView.setAdapter(adapter);
@@ -281,7 +281,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                 backupWithConfirmation(filename);
                             }
                         }).setNegativeButton(android.R.string.cancel, null);
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
 
         textView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
@@ -314,11 +314,10 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     }
 
     private void backupWithConfirmation(String filename) {
-        String absoluteFileName = getAppDirName() + filename + EXT;
+        final String absoluteFileName = getAppDirName() + filename + EXT;
         File file = new File(absoluteFileName);
         if (file.exists()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    OptionsActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.backupConfirmation, filename))
                     .setMessage(R.string.backupConfirmationMessage)
                     .setPositiveButton(android.R.string.yes,
@@ -335,7 +334,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     }
 
     private void restoreAction() {
-        List<String> filenames = getFilesList();
+        final List<String> filenames = getFilesList();
         if (filenames.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.filesToReadNotFound).setPositiveButton(
@@ -348,8 +347,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    final String filename = filenames
-                                            .get(which);
+                                    String filename = filenames.get(which);
                                     restoreWithConfirmation(filename);
                                 }
                             }).setNegativeButton(android.R.string.cancel, null);
@@ -358,7 +356,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     }
 
     private void restoreWithConfirmation(String filename) {
-        String absoluteFileName = getAppDirName() + filename + EXT;
+        final String absoluteFileName = getAppDirName() + filename + EXT;
         if (getDataKeeper().getCount() > 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     OptionsActivity.this);

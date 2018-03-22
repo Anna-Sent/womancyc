@@ -27,10 +27,11 @@ public class DatePickerDialogFragment extends DialogFragment implements
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final LocalDate c = (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
-        DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-                mListener, c.getYear(), c.getMonthOfYear() - 1,
-                c.getDayOfMonth());
+        @SuppressWarnings("ConstantConditions") final LocalDate c =
+                (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
+        @SuppressWarnings("ConstantConditions") DatePickerDialog dialog =
+                new DatePickerDialog(getActivity(),
+                        mListener, c.getYear(), c.getMonthOfYear() - 1, c.getDayOfMonth());
         dialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.today), this);
 
         dialog.getDatePicker().setCalendarViewShown(false);

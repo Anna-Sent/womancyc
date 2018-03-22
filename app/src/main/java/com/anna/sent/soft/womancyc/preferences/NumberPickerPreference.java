@@ -133,10 +133,6 @@ public class NumberPickerPreference extends DialogPreference {
         log("save");
         final Parcelable superState = super.onSaveInstanceState();
 
-		/*
-         * if (isPersistent()) { return superState; }
-		 */
-
         final SavedState myState = new SavedState(superState);
         if (mNumberPicker != null) {
             myState.value = mNumberPicker.getValue();
@@ -150,7 +146,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onRestoreInstanceState(Parcelable state) {
         log("restore");
         if (state == null || !state.getClass().equals(SavedState.class)) {
-            log("restore " + state == null ? "null" : state.getClass().getName());
+            log("restore " + (state == null ? "null" : state.getClass().getName()));
             super.onRestoreInstanceState(state);
             return;
         }

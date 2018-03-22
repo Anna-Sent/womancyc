@@ -117,10 +117,6 @@ public class PasswordPreference extends DialogPreference {
         log("save");
         final Parcelable superState = super.onSaveInstanceState();
 
-		/*
-         * if (isPersistent()) { return superState; }
-		 */
-
         final SavedState myState = new SavedState(superState);
         if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
             myState.password = mEditTextPassword.getText().toString();

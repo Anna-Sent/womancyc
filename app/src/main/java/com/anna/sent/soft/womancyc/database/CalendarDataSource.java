@@ -75,7 +75,6 @@ public class CalendarDataSource {
             values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
             int rows = mDatabase.update(CalendarHelper.TABLE_CALENDAR, values,
                     CalendarHelper.COLUMN_ID + " = " + value.getId(), null);
-            // log("Update calendar: " + value);
             return rows > 0;
         }
 
@@ -89,12 +88,10 @@ public class CalendarDataSource {
                     CalendarHelper.AllColumns, null, null, null, null,
                     CalendarHelper.COLUMN_ID);
             cursor.moveToFirst();
-            // log("Load calendar data:");
             while (!cursor.isAfterLast()) {
                 CalendarData row = cursorToCalendar(cursor);
                 list.add(row);
                 cursor.moveToNext();
-                // log(row.toString());
             }
 
             cursor.close();
@@ -111,12 +108,10 @@ public class CalendarDataSource {
                     new String[]{CalendarHelper.COLUMN_NOTE}, selection,
                     null, null, null, CalendarHelper.COLUMN_NOTE, null);
             cursor.moveToFirst();
-            // log("Load notes:");
             while (!cursor.isAfterLast()) {
                 String row = cursorToNote(cursor);
                 list.add(row);
                 cursor.moveToNext();
-                // log(row);
             }
 
             cursor.close();
@@ -136,7 +131,6 @@ public class CalendarDataSource {
     }
 
     private String cursorToNote(Cursor cursor) {
-        String result = cursor.getString(0);
-        return result;
+        return cursor.getString(0);
     }
 }

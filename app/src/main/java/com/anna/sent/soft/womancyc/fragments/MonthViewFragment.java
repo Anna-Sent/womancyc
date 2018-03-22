@@ -1,6 +1,5 @@
 package com.anna.sent.soft.womancyc.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.base.DataKeeperClient;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
-import com.anna.sent.soft.womancyc.utils.OnSwipeTouchListener;
 
 import org.joda.time.LocalDate;
 
@@ -54,13 +52,13 @@ public class MonthViewFragment extends Fragment implements
         return inflater.inflate(R.layout.view_month, null);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         log("onActivityCreated");
         adapter = new MonthViewAdapter(getActivity(), mDataKeeper, this);
 
+        //noinspection ConstantConditions
         Button prevMonth = getActivity().findViewById(R.id.prevMonth);
         prevMonth.setOnClickListener(this);
 
@@ -72,19 +70,6 @@ public class MonthViewFragment extends Fragment implements
 
         GridView calendarView = getActivity().findViewById(R.id.calendarGridView);
         calendarView.setAdapter(adapter);
-        calendarView.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
-            @Override
-            public boolean onSwipeRight() {
-                toPrevMonth();
-                return true;
-            }
-
-            @Override
-            public boolean onSwipeLeft() {
-                toNextMonth();
-                return true;
-            }
-        });
     }
 
     public LocalDate getSelectedDate() {

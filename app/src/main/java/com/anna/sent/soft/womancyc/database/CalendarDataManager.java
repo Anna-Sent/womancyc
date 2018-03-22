@@ -100,7 +100,6 @@ public class CalendarDataManager {
                 eventType = xpp.nextTag();
                 if (eventType == XmlPullParser.END_TAG
                         && xpp.getName().equals(TAG_ROW)) {
-                    // log("end of " + xpp.getName());
                     eventType = xpp.nextTag();
                 } else {
                     break;
@@ -109,7 +108,6 @@ public class CalendarDataManager {
 
             if (eventType == XmlPullParser.END_TAG
                     && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
-                // log("end of " + xpp.getName());
                 eventType = xpp.next();
             }
         }
