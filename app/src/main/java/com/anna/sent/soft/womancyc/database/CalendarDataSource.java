@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CalendarDataSource {
     private SQLiteDatabase mDatabase;
-    private CalendarHelper mHelper;
+    private final CalendarHelper mHelper;
 
     public CalendarDataSource(Context context) {
         mHelper = new CalendarHelper(context);

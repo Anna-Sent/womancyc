@@ -19,8 +19,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CalendarDataManager {
-    private static String TAG_ROW = "row";
-    private Context mContext;
+    private static final String TAG_ROW = "row";
+    private final Context mContext;
     private String mErrorMessage;
 
     public CalendarDataManager(Context context) {

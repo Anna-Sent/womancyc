@@ -24,10 +24,6 @@ public class NumberPickerPreference extends DialogPreference {
     private String mUnit;
     private NumberPicker mNumberPicker;
 
-    public NumberPickerPreference(Context context) {
-        this(context, null);
-    }
-
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -82,26 +78,14 @@ public class NumberPickerPreference extends DialogPreference {
         mNumberPicker.setValue(mValue);
     }
 
-    public int getMinValue() {
-        return mMinValue;
-    }
-
     public void setMinValue(int minValue) {
         mMinValue = minValue;
         setValue(Math.max(mValue, mMinValue));
     }
 
-    public int getMaxValue() {
-        return mMaxValue;
-    }
-
     public void setMaxValue(int maxValue) {
         mMaxValue = maxValue;
         setValue(Math.min(mValue, mMaxValue));
-    }
-
-    public int getValue() {
-        return mValue;
     }
 
     public void setValue(int value) {
@@ -160,6 +144,7 @@ public class NumberPickerPreference extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
+        @SuppressWarnings("unused")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
@@ -171,7 +156,8 @@ public class NumberPickerPreference extends DialogPreference {
                 return new SavedState[size];
             }
         };
-        public int value;
+
+        int value;
 
         public SavedState(Parcelable superState) {
             super(superState);

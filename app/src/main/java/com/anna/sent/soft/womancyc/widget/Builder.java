@@ -34,7 +34,7 @@ abstract class Builder {
         views.setOnClickPendingIntent(R.id.widget, pendingIntent);
     }
 
-    public RemoteViews buildViews(Context context, int appWidgetId) {
+    public RemoteViews buildViews(Context context) {
         log("build views");
         RemoteViews views = new RemoteViews(context.getPackageName(),
                 R.layout.widget_layout);

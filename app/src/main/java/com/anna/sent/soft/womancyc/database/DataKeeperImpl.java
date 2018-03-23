@@ -16,14 +16,12 @@ import java.util.List;
 public class DataKeeperImpl implements DataKeeper {
     private static final boolean DEBUG_SYNC = false;
 
-    private Context mContext;
-    private CalendarDataSource mDataSource;
-    private List<CalendarData> mValues = new ArrayList<>();
-    private List<String> mNotes = new ArrayList<>();
+    private final CalendarDataSource mDataSource;
+    private final List<CalendarData> mValues = new ArrayList<>();
+    private final List<String> mNotes = new ArrayList<>();
 
     public DataKeeperImpl(Context context) {
-        mContext = context;
-        mDataSource = new CalendarDataSource(mContext);
+        mDataSource = new CalendarDataSource(context);
     }
 
     private String wrapMsg(String msg) {
@@ -62,19 +60,13 @@ public class DataKeeperImpl implements DataKeeper {
 
     @Override
     public synchronized int indexOf(LocalDate date) {
-        //log("search " + date);
         int low = 0;
         int high = mValues.size() - 1;
-        //log("low " + low + " high " + high);
 
         while (low <= high) {
-            //log("low " + low + " high " + high);
             int mid = (low + high) >>> 1;
-            //log("mid " + mid);
             LocalDate midVal = mValues.get(mid).getDate();
             int compare = midVal.compareTo(date);
-            //log("miv val " + midVal);
-            //log("compare is " + compare);
 
             if (compare < 0) {
                 low = mid + 1;
@@ -127,6 +119,7 @@ public class DataKeeperImpl implements DataKeeper {
         checkSync();
     }
 
+    @SuppressWarnings("UnusedAssignment")
     private void checkSync() {
         if (DEBUG_SYNC && BuildConfig.DEBUG) {
             List<CalendarData> dbValues = new ArrayList<>();
@@ -158,14 +151,13 @@ public class DataKeeperImpl implements DataKeeper {
     }
 
     private void printValues(List<CalendarData> values) {
-        if (DEBUG_SYNC && BuildConfig.DEBUG) {
-            String result = "";
-            int size = values.size() - 1;
-            for (int i = 0; i <= size; ++i) {
-                result += values.get(i) + (i == size ? "" : "; ");
+        if (BuildConfig.DEBUG) {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < values.size(); ++i) {
+                result.append(values.get(i)).append(i == values.size() - 1 ? "" : "; ");
             }
 
-            log(result);
+            log(result.toString());
         }
     }
 

@@ -47,7 +47,7 @@ public class UpdateWidgetService extends IntentService {
                 Builder builder = MyCycleWidget.getBuilder(className);
                 log("update widget " + className);
                 if (builder != null) {
-                    RemoteViews views = builder.buildViews(this, appWidgetId);
+                    RemoteViews views = builder.buildViews(this);
                     manager.updateAppWidget(appWidgetId, views);
                 }
             }

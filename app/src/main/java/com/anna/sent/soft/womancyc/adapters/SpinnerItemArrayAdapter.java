@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.anna.sent.soft.womancyc.R;
 
 public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
-    private String[] mStrings;
-    private Drawable[] mDrawables;
-    private int mCount;
+    private final String[] mStrings;
+    private final Drawable[] mDrawables;
+    private final int mCount;
 
     public SpinnerItemArrayAdapter(Context context, String[] strings,
                                    Drawable[] drawables) {

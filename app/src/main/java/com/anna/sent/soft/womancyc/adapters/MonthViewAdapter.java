@@ -36,19 +36,20 @@ import java.util.List;
 public class MonthViewAdapter extends BaseAdapter implements OnClickListener, OnLongClickListener {
     private final Context mContext;
     private final List<LocalDate> mMonthCalendarValues = new ArrayList<>();
-    private LayoutInflater mLayoutInflater;
+    private final LayoutInflater mLayoutInflater;
     private int mMonth, mYear;
-    private int[] mDayOfWeekValues = new int[7];
-    private String[] mDayOfWeekNames;
-    private LocalDate mSelectedDate, mToday;
+    private final int[] mDayOfWeekValues = new int[7];
+    private final String[] mDayOfWeekNames;
+    private LocalDate mSelectedDate;
+    private final LocalDate mToday;
     private View mSelectedView = null;
-    private int mThemeId;
-    private DataKeeper mDataKeeper;
+    private final int mThemeId;
+    private final DataKeeper mDataKeeper;
     private Calculator mCalculator;
-    private Listener mListener;
-    private SparseArray<Drawable> mDrawablesFromTheme = new SparseArray<>();
-    private SparseArray<Drawable> mDrawables = new SparseArray<>();
-    private SettingsTheme mSettingsTheme;
+    private final Listener mListener;
+    private final SparseArray<Drawable> mDrawablesFromTheme = new SparseArray<>();
+    private final SparseArray<Drawable> mDrawables = new SparseArray<>();
+    private final SettingsTheme mSettingsTheme;
 
     public MonthViewAdapter(Context context, @NonNull DataKeeper dataKeeper, Listener listener) {
         mContext = context;
@@ -189,22 +190,22 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener, On
         View cell = null;
 
         if (position < 7) {
-            if (convertView != null && convertView.getId() == getDayOfWeekViewId()) {
+            if (convertView != null && convertView.getId() == R.id.dayOfWeek) {
                 cell = convertView;
             }
 
             if (cell == null) {
-                cell = mLayoutInflater.inflate(getDayOfWeekLayoutResource(), parent, false);
+                cell = mLayoutInflater.inflate(R.layout.grid_cell_day_of_week, parent, false);
             }
 
             initDayOfWeekItem(cell, position);
         } else {
-            if (convertView != null && convertView.getId() == getDayOfMonthViewId()) {
+            if (convertView != null && convertView.getId() == R.id.dayOfMonth) {
                 cell = convertView;
             }
 
             if (cell == null) {
-                cell = mLayoutInflater.inflate(getDayOfMonthLayoutResource(), parent, false);
+                cell = mLayoutInflater.inflate(R.layout.grid_cell_day_of_month, parent, false);
             }
 
             LocalDate item = mMonthCalendarValues.get(position - 7);
@@ -214,25 +215,9 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener, On
         return cell;
     }
 
-    private int getDayOfWeekLayoutResource() {
-        return R.layout.grid_cell_day_of_week;
-    }
-
-    private int getDayOfWeekViewId() {
-        return R.id.dayOfWeek;
-    }
-
     private void initDayOfWeekItem(View cell, int position) {
         TextView dayOfWeekTextView = cell.findViewById(R.id.dayOfWeekTextView);
         dayOfWeekTextView.setText(mDayOfWeekNames[mDayOfWeekValues[position]]);
-    }
-
-    private int getDayOfMonthLayoutResource() {
-        return R.layout.grid_cell_day_of_month;
-    }
-
-    private int getDayOfMonthViewId() {
-        return R.id.dayOfMonth;
     }
 
     private void initDayOfMonth(View cell, LocalDate item) {

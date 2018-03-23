@@ -148,6 +148,7 @@ public class PasswordPreference extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
+        @SuppressWarnings("unused")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
@@ -159,7 +160,8 @@ public class PasswordPreference extends DialogPreference {
                 return new SavedState[size];
             }
         };
-        public String password, confirmedPassword;
+
+        String password, confirmedPassword;
 
         public SavedState(Parcelable superState) {
             super(superState);

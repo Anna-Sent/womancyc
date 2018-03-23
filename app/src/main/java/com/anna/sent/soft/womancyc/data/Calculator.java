@@ -1,9 +1,7 @@
 package com.anna.sent.soft.womancyc.data;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 import com.anna.sent.soft.womancyc.shared.Settings;
@@ -15,23 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private final int MAX_MENSTRUAL_CYCLE_LEN;
-    private final int MIN_MENSTRUAL_CYCLE_LEN;
+    private final int maxMenstrualCycleLen;
 
     /**
      * Must be not null.
      */
     private final DataKeeper mDataKeeper;
-    private int defaultMenstrualCycleLen;
-    private boolean useAvg;
+    private final int defaultMenstrualCycleLen;
+    private final boolean useAvg;
 
     public Calculator(Context context, DataKeeper dataKeeper) {
         mDataKeeper = dataKeeper;
         defaultMenstrualCycleLen = Settings
                 .getDefaultMenstrualCycleLen(context);
         useAvg = Settings.useAverage(context);
-        MAX_MENSTRUAL_CYCLE_LEN = getMaxMenstrualCycleLen(context);
-        MIN_MENSTRUAL_CYCLE_LEN = getMinMenstrualCycleLen(context);
+        maxMenstrualCycleLen = getMaxMenstrualCycleLen(context);
     }
 
     public static int getMaxMenstrualCycleLen(Context context) {
@@ -39,17 +35,10 @@ public class Calculator {
                 .getInteger(R.integer.maxMenstrualCycleLen);
     }
 
+    @SuppressWarnings("unused")
     public static int getMinMenstrualCycleLen(Context context) {
         return context.getResources()
                 .getInteger(R.integer.minMenstrualCycleLen);
-    }
-
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
     }
 
     public int getDayOfCycle(LocalDate current) {
@@ -182,7 +171,7 @@ public class Calculator {
             while (countOfCycles < count && firstDayOfPrevCycle != null) {
                 int difference = getDifference(firstDayOfPrevCycle,
                         firstDayOfCycle);
-                if (difference <= MAX_MENSTRUAL_CYCLE_LEN && difference > 0) {
+                if (difference <= maxMenstrualCycleLen && difference > 0) {
                     sum += difference;
                     ++actualCount;
                 }
@@ -266,7 +255,7 @@ public class Calculator {
                 int cycleLen = getDifference(firstDayOfPrevCycle,
                         firstDayOfCycle);
 
-                if (cycleLen <= MAX_MENSTRUAL_CYCLE_LEN) {
+                if (cycleLen <= maxMenstrualCycleLen) {
                     mcSum += cycleLen;
                     ++mcActualCount;
 

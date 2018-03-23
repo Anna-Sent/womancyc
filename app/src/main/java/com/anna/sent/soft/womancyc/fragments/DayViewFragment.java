@@ -44,8 +44,11 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
     private Spinner spinnerHadMenstruation, spinnerHadSex;
     private CheckBox checkBoxTookPill;
     private AutoCompleteTextView textViewNote;
-    private Button buttonCurrentDay, buttonClear, buttonClose, buttonPrevDay,
-            buttonNextDay, buttonViewAsList;
+    private Button buttonCurrentDay;
+    private Button buttonClear;
+    private Button buttonPrevDay;
+    private Button buttonNextDay;
+    private Button buttonViewAsList;
     private LocalDate mDateToShow;
     private CalendarData mValue;
     private boolean mIsEmbedded;
@@ -91,7 +94,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
             checkBoxTookPill = v.findViewById(R.id.checkBoxTookPill);
             textViewNote = v.findViewById(R.id.textViewNote);
             buttonClear = v.findViewById(R.id.buttonClear);
-            buttonClose = v.findViewById(R.id.buttonClose);
+            Button buttonClose = v.findViewById(R.id.buttonClose);
             buttonClose.setOnClickListener(this);
             buttonCurrentDay = v.findViewById(R.id.currentDay);
             buttonPrevDay = v.findViewById(R.id.prevDay);

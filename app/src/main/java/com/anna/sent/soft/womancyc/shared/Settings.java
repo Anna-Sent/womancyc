@@ -28,24 +28,10 @@ public class Settings {
                 .getResources().getBoolean(R.bool.lockAutomatically));
     }
 
-    public static void lockAutomatically(Context context, boolean value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putBoolean(KEY_PREF_LOCK_AUTOMATICALLY, value);
-        editor.apply();
-    }
-
     public static boolean hideWidget(Context context) {
         SharedPreferences settings = getSettings(context);
         return settings.getBoolean(KEY_PREF_HIDE_WIDGET, context.getResources()
                 .getBoolean(R.bool.hideWidget));
-    }
-
-    public static void hideWidget(Context context, boolean value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putBoolean(KEY_PREF_HIDE_WIDGET, value);
-        editor.apply();
     }
 
     public static boolean isBlocked(Context context) {
@@ -63,13 +49,6 @@ public class Settings {
     public static String getPassword(Context context) {
         SharedPreferences settings = getSettings(context);
         return settings.getString(KEY_PREF_PASSWORD, "");
-    }
-
-    public static void setPassword(Context context, String value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putString(KEY_PREF_PASSWORD, value);
-        editor.apply();
     }
 
     public static void clearPassword(Context context) {
@@ -95,23 +74,9 @@ public class Settings {
                 .getResources().getInteger(R.integer.defaultMenstrualCycleLen));
     }
 
-    public static void setDefaultMenstrualCycleLen(Context context, int value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN, value);
-        editor.apply();
-    }
-
     public static boolean useAverage(Context context) {
         SharedPreferences settings = getSettings(context);
         return settings.getBoolean(KEY_PREF_USE_AVG, context.getResources()
                 .getBoolean(R.bool.useAverage));
-    }
-
-    public static void useAverage(Context context, boolean value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putBoolean(KEY_PREF_USE_AVG, value);
-        editor.apply();
     }
 }

@@ -1,5 +1,6 @@
 package com.anna.sent.soft.womancyc.base;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@SuppressLint("StaticFieldLeak")
 public abstract class DataKeeperActivity extends WcActivity implements DataKeeper {
     private boolean mIsDataTaskCompleted;
     private ProgressDialog mProgressDialog;
@@ -169,7 +171,7 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
     }
 
     private class StartProgressTask extends TimerTask {
-        private String mTitle;
+        private final String mTitle;
 
         StartProgressTask(String title) {
             mTitle = title;
@@ -197,8 +199,8 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
     }
 
     private abstract class DataTask extends AsyncTask<String, String, String> {
-        private boolean mShowProgress;
-        private String mProgressMessage;
+        private final boolean mShowProgress;
+        private final String mProgressMessage;
 
         DataTask(boolean showProgress, String progressMessage) {
             mShowProgress = showProgress;

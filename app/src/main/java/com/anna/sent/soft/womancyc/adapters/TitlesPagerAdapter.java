@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public abstract class TitlesPagerAdapter extends FragmentPagerAdapter {
-    private String[] mTitles;
+    private final String[] mTitles;
 
     protected TitlesPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -13,6 +13,7 @@ public abstract class TitlesPagerAdapter extends FragmentPagerAdapter {
                 getTitlesArrayResourceId());
     }
 
+    @SuppressWarnings("SameReturnValue")
     protected abstract int getTitlesArrayResourceId();
 
     @Override

@@ -100,21 +100,11 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        super.onDeleted(context, appWidgetIds);
-    }
-
-    @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
         AlarmManager alarmManager = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
         //noinspection ConstantConditions
         alarmManager.cancel(getPendingIntent(context, getClass()));
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
     }
 }
