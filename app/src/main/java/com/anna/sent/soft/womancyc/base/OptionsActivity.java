@@ -42,8 +42,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     private static final int REQUEST_READ_EXTERNAL_STORAGE = 2;
 
     private static String getAppDirName() {
-        String dir = Environment.getExternalStorageDirectory()
-                .getAbsolutePath();
+        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
         if (dir.charAt(dir.length() - 1) != File.separatorChar) {
             dir += File.separator;
         }
@@ -56,8 +55,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         menu.clear();
         getMenuInflater().inflate(R.menu.main, menu);
         menu.findItem(R.id.lockAndExit).setVisible(
-                Settings.isPasswordSet(this)
-                        && !Settings.lockAutomatically(this));
+                Settings.isPasswordSet(this) && !Settings.lockAutomatically(this));
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -146,7 +144,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         ActivityCompat.requestPermissions(OptionsActivity.this, new String[]{permission}, requestCode);
                                     }
-                                }).setNegativeButton(android.R.string.cancel, null);
+                                })
+                        .setNegativeButton(android.R.string.cancel, null);
                 builder.create().show();
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
@@ -181,8 +180,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     private void clearAllDataAction() {
         if (getDataKeeper().getCount() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-                    android.R.string.ok, null);
+            builder.setMessage(R.string.thereIsNoData).setPositiveButton(android.R.string.ok, null);
             builder.create().show();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -194,7 +192,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     clearAllData();
                                 }
-                            }).setNegativeButton(android.R.string.cancel, null);
+                            })
+                    .setNegativeButton(android.R.string.cancel, null);
             builder.create().show();
         }
     }
@@ -226,8 +225,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     private void backupAction() {
         if (getDataKeeper().getCount() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-                    android.R.string.ok, null);
+            builder.setMessage(R.string.thereIsNoData).setPositiveButton(android.R.string.ok, null);
             builder.create().show();
         } else {
             final List<String> list = getFilesList();
@@ -262,8 +260,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, R.id.spinnerItemTextView, getFilesList());
         textView.setAdapter(adapter);
-        textView.setText(getString(R.string.backupFileName, LocalDate.now()
-                .toString()));
+        textView.setText(getString(R.string.backupFileName, LocalDate.now().toString()));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.enterFileNameToWrite)
@@ -274,13 +271,13 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 String filename = textView.getText().toString();
                                 if (filename.endsWith(EXT)) {
-                                    filename = filename.substring(0,
-                                            filename.lastIndexOf(EXT));
+                                    filename = filename.substring(0, filename.lastIndexOf(EXT));
                                 }
 
                                 backupWithConfirmation(filename);
                             }
-                        }).setNegativeButton(android.R.string.cancel, null);
+                        })
+                .setNegativeButton(android.R.string.cancel, null);
         final AlertDialog dialog = builder.create();
 
         textView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -290,8 +287,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String filename = textView.getText().toString();
                     if (filename.endsWith(EXT)) {
-                        filename = filename.substring(0,
-                                filename.lastIndexOf(EXT));
+                        filename = filename.substring(0, filename.lastIndexOf(EXT));
                     }
 
                     if (TextUtils.isEmpty(filename)) {
@@ -326,7 +322,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     backup(absoluteFileName);
                                 }
-                            }).setNegativeButton(android.R.string.cancel, null);
+                            })
+                    .setNegativeButton(android.R.string.cancel, null);
             builder.create().show();
         } else {
             backup(absoluteFileName);
@@ -337,8 +334,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
         final List<String> filenames = getFilesList();
         if (filenames.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.filesToReadNotFound).setPositiveButton(
-                    android.R.string.ok, null);
+            builder.setMessage(R.string.filesToReadNotFound).setPositiveButton(android.R.string.ok, null);
             builder.create().show();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -350,7 +346,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                     String filename = filenames.get(which);
                                     restoreWithConfirmation(filename);
                                 }
-                            }).setNegativeButton(android.R.string.cancel, null);
+                            })
+                    .setNegativeButton(android.R.string.cancel, null);
             builder.create().show();
         }
     }
@@ -358,8 +355,7 @@ public abstract class OptionsActivity extends DataKeeperActivity {
     private void restoreWithConfirmation(String filename) {
         final String absoluteFileName = getAppDirName() + filename + EXT;
         if (getDataKeeper().getCount() > 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    OptionsActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.restoreConfirmation, filename))
                     .setMessage(R.string.restoreConfirmationMessage)
                     .setPositiveButton(android.R.string.yes,
@@ -368,7 +364,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     restore(absoluteFileName);
                                 }
-                            }).setNegativeButton(android.R.string.cancel, null);
+                            })
+                    .setNegativeButton(android.R.string.cancel, null);
             builder.create().show();
         } else {
             restore(absoluteFileName);

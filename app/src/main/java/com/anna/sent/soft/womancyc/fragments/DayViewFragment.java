@@ -258,7 +258,8 @@ public class DayViewFragment extends WcDialogFragment
                                 public void onClick(DialogInterface dialog, int which) {
                                     textViewNote.setText(list.get(which));
                                 }
-                            }).setNegativeButton(android.R.string.cancel, null);
+                            })
+                            .setNegativeButton(android.R.string.cancel, null);
                     builder.create().show();
                 }
 

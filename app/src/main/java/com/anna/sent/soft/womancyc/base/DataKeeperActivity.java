@@ -190,7 +190,10 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
                     log("ShowProgressTask on ui thread");
                     if (mProgressDialog == null) {
                         mProgressDialog = ProgressDialog.show(
-                                DataKeeperActivity.this, mTitle, "", false,
+                                DataKeeperActivity.this,
+                                mTitle,
+                                "",
+                                false,
                                 false);
                     }
                 }
@@ -220,8 +223,7 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if (mShowProgress && !mIsStopped && mProgressDialog != null) {
-                String progress = values.length > 0 && values[0] != null ? values[0]
-                        : "";
+                String progress = values.length > 0 && values[0] != null ? values[0] : "";
                 mProgressDialog.setMessage(progress);
             }
         }
@@ -253,7 +255,7 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
             try {
                 mDataKeeper.openDataSource();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log(e);
                 return getString(R.string.errorWhileOpeningDatabase);
             }
 
@@ -300,10 +302,8 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
 
         @Override
         protected String doInBackground(String... params) {
-            String filename = params.length > 0 && params[0] != null ? params[0]
-                    : "";
-            CalendarDataManager cdm = new CalendarDataManager(
-                    DataKeeperActivity.this);
+            String filename = params.length > 0 && params[0] != null ? params[0] : "";
+            CalendarDataManager cdm = new CalendarDataManager(DataKeeperActivity.this);
             boolean result = cdm.backup(mDataKeeper, filename);
             if (result) {
                 return getString(R.string.dataExportSuccessful, filename);
@@ -320,11 +320,9 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
 
         @Override
         protected String doInBackground(String... params) {
-            String filename = params.length > 0 && params[0] != null ? params[0]
-                    : "";
+            String filename = params.length > 0 && params[0] != null ? params[0] : "";
             mDataKeeper.clearAllData();
-            CalendarDataManager cdm = new CalendarDataManager(
-                    DataKeeperActivity.this);
+            CalendarDataManager cdm = new CalendarDataManager(DataKeeperActivity.this);
             boolean result = cdm.restore(mDataKeeper, filename);
             if (result) {
                 return getString(R.string.dataImportSuccessful, filename);
