@@ -21,8 +21,7 @@ public class Calculator {
 
     public Calculator(Context context, DataKeeper dataKeeper) {
         mDataKeeper = dataKeeper;
-        defaultMenstrualCycleLen = Settings
-                .getDefaultMenstrualCycleLen(context);
+        defaultMenstrualCycleLen = Settings.getDefaultMenstrualCycleLen(context);
         useAvg = Settings.useAverage(context);
         maxMenstrualCycleLen = getMaxMenstrualCycleLen(context);
     }
@@ -56,8 +55,7 @@ public class Calculator {
                     expectedFirstDayOfCycle = firstDayOfCycle;
                 }
 
-                dayOfCycle = getDifference(expectedFirstDayOfCycle, current)
-                        % avgLen + 1;
+                dayOfCycle = getDifference(expectedFirstDayOfCycle, current) % avgLen + 1;
             } else {
                 dayOfCycle = getDifference(firstDayOfCycle, current) + 1;
             }
@@ -67,7 +65,8 @@ public class Calculator {
     }
 
     private int getDifference(LocalDate start, LocalDate end) {
-        return Days.daysBetween(start.toDateTimeAtStartOfDay(),
+        return Days.daysBetween(
+                start.toDateTimeAtStartOfDay(),
                 end.toDateTimeAtStartOfDay()).getDays();
     }
 
@@ -166,8 +165,7 @@ public class Calculator {
             LocalDate firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
 
             while (countOfCycles < count && firstDayOfPrevCycle != null) {
-                int difference = getDifference(firstDayOfPrevCycle,
-                        firstDayOfCycle);
+                int difference = getDifference(firstDayOfPrevCycle, firstDayOfCycle);
                 if (difference <= maxMenstrualCycleLen && difference > 0) {
                     sum += difference;
                     ++actualCount;
@@ -178,7 +176,8 @@ public class Calculator {
                 firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
             }
 
-            return actualCount == 0 || sum <= 0 ? defaultMenstrualCycleLen
+            return actualCount == 0 || sum <= 0
+                    ? defaultMenstrualCycleLen
                     : (int) Math.round((double) sum / actualCount);
         } else {
             return defaultMenstrualCycleLen;
@@ -203,8 +202,7 @@ public class Calculator {
     public Statistic getStatistic() {
         int lastIndex = mDataKeeper.getCount() - 1;
         CalendarData lastData = mDataKeeper.get(lastIndex);
-        LocalDate firstDayOfLastCycle = lastData == null ? null
-                : getFirstDayOfCycle(lastData.getDate());
+        LocalDate firstDayOfLastCycle = lastData == null ? null : getFirstDayOfCycle(lastData.getDate());
 
         if (firstDayOfLastCycle == null) {
             Value mcl = new Value(0, 0, 0);
@@ -227,8 +225,7 @@ public class Calculator {
                 int bleedingLen = 0;
                 LocalDate current = firstDayOfPrevCycle;
                 CalendarData dayOfBleedingData = mDataKeeper.get(current);
-                while (dayOfBleedingData != null
-                        && dayOfBleedingData.getMenstruation() != 0) {
+                while (dayOfBleedingData != null && dayOfBleedingData.getMenstruation() != 0) {
                     ++bleedingLen;
                     current = current.plusDays(1);
                     dayOfBleedingData = mDataKeeper.get(current);
@@ -249,8 +246,7 @@ public class Calculator {
                     bMin = bleedingLen;
                 }
 
-                int cycleLen = getDifference(firstDayOfPrevCycle,
-                        firstDayOfCycle);
+                int cycleLen = getDifference(firstDayOfPrevCycle, firstDayOfCycle);
 
                 if (cycleLen <= maxMenstrualCycleLen) {
                     mcSum += cycleLen;
@@ -274,10 +270,8 @@ public class Calculator {
                 firstDayOfPrevCycle = getFirstDayOfPrevCycle(firstDayOfCycle);
             }
 
-            int mcAvg = mcActualCount == 0 ? 0 : (int) Math.round(mcSum
-                    / mcActualCount);
-            int bAvg = bActualCount == 0 ? 0 : (int) Math.round(bSum
-                    / bActualCount);
+            int mcAvg = mcActualCount == 0 ? 0 : (int) Math.round(mcSum / mcActualCount);
+            int bAvg = bActualCount == 0 ? 0 : (int) Math.round(bSum / bActualCount);
             Value mcl = new Value(mcAvg, mcMin, mcMax);
             Value bl = new Value(bAvg, bMin, bMax);
             return new Statistic(mcl, bl, rows);

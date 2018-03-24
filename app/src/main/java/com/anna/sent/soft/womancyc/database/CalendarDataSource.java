@@ -43,8 +43,7 @@ public class CalendarDataSource {
         if (isOpen()) {
             ContentValues values = new ContentValues();
             values.put(CalendarHelper.COLUMN_ID, value.getId());
-            values.put(CalendarHelper.COLUMN_MENSTRUATION,
-                    value.getMenstruation());
+            values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
             values.put(CalendarHelper.COLUMN_SEX, value.getSex());
             values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
             values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
@@ -68,8 +67,7 @@ public class CalendarDataSource {
     public boolean update(CalendarData value) {
         if (isOpen()) {
             ContentValues values = new ContentValues();
-            values.put(CalendarHelper.COLUMN_MENSTRUATION,
-                    value.getMenstruation());
+            values.put(CalendarHelper.COLUMN_MENSTRUATION, value.getMenstruation());
             values.put(CalendarHelper.COLUMN_SEX, value.getSex());
             values.put(CalendarHelper.COLUMN_TOOK_PILL, value.getTookPill());
             values.put(CalendarHelper.COLUMN_NOTE, value.getNote());
@@ -120,11 +118,9 @@ public class CalendarDataSource {
     private CalendarData cursorToCalendar(Cursor cursor) {
         CalendarData calendar = new CalendarData();
         calendar.setDate(cursor.getInt(CalendarHelper.COLUMN_INDEX_ID));
-        calendar.setMenstruation(cursor
-                .getInt(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
+        calendar.setMenstruation(cursor.getInt(CalendarHelper.COLUMN_INDEX_MENSTRUATION));
         calendar.setSex(cursor.getInt(CalendarHelper.COLUMN_INDEX_SEX));
-        calendar.setTookPill(cursor
-                .getInt(CalendarHelper.COLUMN_INDEX_TOOK_PILL) != 0);
+        calendar.setTookPill(cursor.getInt(CalendarHelper.COLUMN_INDEX_TOOK_PILL) != 0);
         calendar.setNote(cursor.getString(CalendarHelper.COLUMN_INDEX_NOTE));
         return calendar;
     }

@@ -19,16 +19,20 @@ public class CalendarHelper extends SQLiteOpenHelper {
     public static final int COLUMN_INDEX_TOOK_PILL = 3;
     public static final String COLUMN_NOTE = "note";
     public static final int COLUMN_INDEX_NOTE = 4;
-    public static final String[] AllColumns = {CalendarHelper.COLUMN_ID,
-            CalendarHelper.COLUMN_MENSTRUATION, CalendarHelper.COLUMN_SEX,
-            CalendarHelper.COLUMN_TOOK_PILL, CalendarHelper.COLUMN_NOTE};
+    public static final String[] AllColumns = {
+            CalendarHelper.COLUMN_ID,
+            CalendarHelper.COLUMN_MENSTRUATION,
+            CalendarHelper.COLUMN_SEX,
+            CalendarHelper.COLUMN_TOOK_PILL,
+            CalendarHelper.COLUMN_NOTE};
 
     private static final String DATABASE_NAME = "WomanCycCalendar.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_CREATE = "create table "
-            + TABLE_CALENDAR + "(" + COLUMN_ID + " integer primary key, "
-            + COLUMN_MENSTRUATION + " integer null, " + COLUMN_SEX
-            + " integer null, " + COLUMN_TOOK_PILL + " integer null, "
+    private static final String DATABASE_CREATE = "create table " + TABLE_CALENDAR
+            + "(" + COLUMN_ID + " integer primary key, "
+            + COLUMN_MENSTRUATION + " integer null, "
+            + COLUMN_SEX + " integer null, "
+            + COLUMN_TOOK_PILL + " integer null, "
             + COLUMN_NOTE + " text null);";
 
     public CalendarHelper(Context context) {
@@ -50,8 +54,7 @@ public class CalendarHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion,
-                          int newVersion) {
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         log("Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         recreateDatabase(database);
     }

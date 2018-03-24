@@ -29,14 +29,12 @@ public class CalendarDataManager {
     private static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
-
     }
 
     private static boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state)
                 || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-
     }
 
     private static void writeCalendarTable(XmlSerializer xmlSerializer, DataKeeper dataKeeper)
@@ -65,11 +63,9 @@ public class CalendarDataManager {
 
     private static int readCalendarTable(XmlPullParser xpp, int eventType, DataKeeper dataKeeper)
             throws XmlPullParserException, IOException {
-        if (eventType == XmlPullParser.START_TAG
-                && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
+        if (eventType == XmlPullParser.START_TAG && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
             eventType = xpp.nextTag();
-            while (eventType == XmlPullParser.START_TAG
-                    && xpp.getName().equals(TAG_ROW)) {
+            while (eventType == XmlPullParser.START_TAG && xpp.getName().equals(TAG_ROW)) {
                 CalendarData data = new CalendarData();
 
                 for (int i = 0; i < xpp.getAttributeCount(); ++i) {
@@ -96,16 +92,14 @@ public class CalendarDataManager {
 
                 dataKeeper.insertOrUpdate(data);
                 eventType = xpp.nextTag();
-                if (eventType == XmlPullParser.END_TAG
-                        && xpp.getName().equals(TAG_ROW)) {
+                if (eventType == XmlPullParser.END_TAG && xpp.getName().equals(TAG_ROW)) {
                     eventType = xpp.nextTag();
                 } else {
                     break;
                 }
             }
 
-            if (eventType == XmlPullParser.END_TAG
-                    && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
+            if (eventType == XmlPullParser.END_TAG && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
                 eventType = xpp.next();
             }
         }
@@ -125,10 +119,9 @@ public class CalendarDataManager {
 
                 XmlSerializer xmlSerializer = Xml.newSerializer();
                 xmlSerializer.setOutput(output, "UTF-8");
-                xmlSerializer
-                        .setFeature(
-                                "http://xmlpull.org/v1/doc/features.html#indent-output",
-                                true);
+                xmlSerializer.setFeature(
+                        "http://xmlpull.org/v1/doc/features.html#indent-output",
+                        true);
 
                 xmlSerializer.startDocument(null, true);
                 writeCalendarTable(xmlSerializer, dataKeeper);
