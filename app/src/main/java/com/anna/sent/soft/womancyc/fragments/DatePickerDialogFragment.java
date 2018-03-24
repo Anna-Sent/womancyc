@@ -15,8 +15,7 @@ import com.anna.sent.soft.womancyc.shared.Shared;
 
 import org.joda.time.LocalDate;
 
-public class DatePickerDialogFragment extends DialogFragment implements
-        DialogInterface.OnClickListener {
+public class DatePickerDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
     private OnDateSetListener mListener;
 
     public void setOnDateSetListener(OnDateSetListener listener) {
@@ -30,8 +29,8 @@ public class DatePickerDialogFragment extends DialogFragment implements
         @SuppressWarnings("ConstantConditions") final LocalDate c =
                 (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
         @SuppressWarnings("ConstantConditions") DatePickerDialog dialog =
-                new DatePickerDialog(getActivity(),
-                        mListener, c.getYear(), c.getMonthOfYear() - 1, c.getDayOfMonth());
+                new DatePickerDialog(getActivity(), mListener,
+                        c.getYear(), c.getMonthOfYear() - 1, c.getDayOfMonth());
         dialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.today), this);
 
         dialog.getDatePicker().setCalendarViewShown(false);
@@ -44,8 +43,8 @@ public class DatePickerDialogFragment extends DialogFragment implements
         if (which == DialogInterface.BUTTON_NEUTRAL) {
             LocalDate today = LocalDate.now();
             if (mListener != null) {
-                mListener.onDateSet(null, today.getYear(),
-                        today.getMonthOfYear() - 1, today.getDayOfMonth());
+                mListener.onDateSet(null,
+                        today.getYear(), today.getMonthOfYear() - 1, today.getDayOfMonth());
             }
         }
     }

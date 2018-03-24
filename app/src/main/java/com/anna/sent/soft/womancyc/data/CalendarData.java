@@ -153,9 +153,6 @@ public class CalendarData implements Serializable {
         return SEX_NO;
     }
 
-    /**
-     * @return always not null. empty or non-empty string
-     */
     public String getNote() {
         return note == null ? "" : note;
     }

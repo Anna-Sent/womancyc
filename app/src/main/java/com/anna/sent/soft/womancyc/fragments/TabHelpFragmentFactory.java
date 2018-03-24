@@ -58,14 +58,9 @@ public class TabHelpFragmentFactory {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
 
-            if (getActivity() == null) {
-                log("activity is null");
-                return;
-            }
-
+            //noinspection ConstantConditions
             textViewHelp = getActivity().findViewById(getTextViewResourceId());
-            String[] helpParts = getResources().getStringArray(
-                    R.array.helpParts);
+            String[] helpParts = getResources().getStringArray(R.array.helpParts);
             int position = getPosition();
             if (position >= 0 && position < helpParts.length) {
                 textViewHelp.setText(HtmlUtils.fromHtml(helpParts[position]));

@@ -101,8 +101,7 @@ public class CalendarDataSource {
     public void getAllNotes(List<String> list) {
         list.clear();
         if (isOpen()) {
-            String selection = CalendarHelper.COLUMN_NOTE + " IS NOT NULL AND "
-                    + CalendarHelper.COLUMN_NOTE + " != ''";
+            String selection = CalendarHelper.COLUMN_NOTE + " IS NOT NULL AND " + CalendarHelper.COLUMN_NOTE + " != ''";
             Cursor cursor = mDatabase.query(true,
                     CalendarHelper.TABLE_CALENDAR,
                     new String[]{CalendarHelper.COLUMN_NOTE}, selection,

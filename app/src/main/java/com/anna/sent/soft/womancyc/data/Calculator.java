@@ -15,9 +15,6 @@ import java.util.List;
 public class Calculator {
     private final int maxMenstrualCycleLen;
 
-    /**
-     * Must be not null.
-     */
     private final DataKeeper mDataKeeper;
     private final int defaultMenstrualCycleLen;
     private final boolean useAvg;

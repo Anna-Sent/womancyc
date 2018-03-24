@@ -36,10 +36,6 @@ import java.util.List;
 public class DayViewFragment extends WcDialogFragment implements OnClickListener,
         DataKeeperClient, OnItemSelectedListener {
     private CalendarListener mListener;
-    /**
-     * must be not null! fragment gets it when onAttach() is called by parent
-     * activity
-     */
     private DataKeeper mDataKeeper;
     private Spinner spinnerHadMenstruation, spinnerHadSex;
     private CheckBox checkBoxTookPill;
