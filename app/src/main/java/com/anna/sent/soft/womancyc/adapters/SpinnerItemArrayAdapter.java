@@ -16,10 +16,8 @@ public class SpinnerItemArrayAdapter extends ArrayAdapter<String> {
     private final Drawable[] mDrawables;
     private final int mCount;
 
-    public SpinnerItemArrayAdapter(Context context, String[] strings,
-                                   Drawable[] drawables) {
-        super(context, R.layout.spinner_selected_item,
-                R.id.spinnerItemTextView, strings);
+    public SpinnerItemArrayAdapter(Context context, String[] strings, Drawable[] drawables) {
+        super(context, R.layout.spinner_selected_item, R.id.spinnerItemTextView, strings);
         mStrings = strings;
         mDrawables = drawables;
         mCount = Math.min(mStrings.length, mDrawables.length);

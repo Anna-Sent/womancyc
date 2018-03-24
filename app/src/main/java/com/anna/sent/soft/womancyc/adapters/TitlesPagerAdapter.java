@@ -9,8 +9,7 @@ public abstract class TitlesPagerAdapter extends FragmentPagerAdapter {
 
     protected TitlesPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        mTitles = context.getResources().getStringArray(
-                getTitlesArrayResourceId());
+        mTitles = context.getResources().getStringArray(getTitlesArrayResourceId());
     }
 
     @SuppressWarnings("SameReturnValue")
