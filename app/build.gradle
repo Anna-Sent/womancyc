@@ -8,8 +8,8 @@ android {
         applicationId "com.anna.sent.soft.womancyc"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 115
-        versionName "1.1.5"
+        versionCode 150
+        versionName "1.5.0"
     }
 
     buildTypes {

@@ -2,8 +2,6 @@ package com.anna.sent.soft.womancyc.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,30 +9,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 
-import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.adapters.MonthViewAdapter;
 import com.anna.sent.soft.womancyc.base.DataKeeperClient;
+import com.anna.sent.soft.womancyc.base.WcFragment;
 import com.anna.sent.soft.womancyc.database.DataKeeper;
 
 import org.joda.time.LocalDate;
 
 import java.util.Locale;
 
-public class MonthViewFragment extends Fragment implements
-        MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
+public class MonthViewFragment extends WcFragment
+        implements MonthViewAdapter.Listener, OnClickListener, DataKeeperClient {
     private CalendarListener mListener;
     private DataKeeper mDataKeeper;
     private Button currentMonth;
     private MonthViewAdapter adapter;
-
-    private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + ": " + msg;
-    }
-
-    private void log(String msg) {
-        MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
-    }
 
     public void setListener(CalendarListener listener) {
         mListener = listener;
@@ -107,16 +97,16 @@ public class MonthViewFragment extends Fragment implements
 
     private void toPrevMonth() {
         if (mListener != null) {
-            LocalDate dateToShow = new LocalDate(adapter.getYear(),
-                    adapter.getMonth(), 1).minusMonths(1);
+            LocalDate dateToShow = new LocalDate(
+                    adapter.getYear(), adapter.getMonth(), 1).minusMonths(1);
             mListener.navigateToDate(dateToShow);
         }
     }
 
     private void toNextMonth() {
         if (mListener != null) {
-            LocalDate dateToShow = new LocalDate(adapter.getYear(),
-                    adapter.getMonth(), 1).plusMonths(1);
+            LocalDate dateToShow = new LocalDate(
+                    adapter.getYear(), adapter.getMonth(), 1).plusMonths(1);
             mListener.navigateToDate(dateToShow);
         }
     }

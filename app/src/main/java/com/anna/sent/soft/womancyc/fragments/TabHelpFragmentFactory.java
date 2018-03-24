@@ -3,15 +3,14 @@ package com.anna.sent.soft.womancyc.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.anna.sent.soft.logging.MyLog;
 import com.anna.sent.soft.utils.HtmlUtils;
 import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.base.WcFragment;
 
 public class TabHelpFragmentFactory {
     public static Fragment newInstance(int position) {
@@ -31,16 +30,8 @@ public class TabHelpFragmentFactory {
         return new Fragment();
     }
 
-    public abstract static class TabHelpFragment extends Fragment {
+    public abstract static class TabHelpFragment extends WcFragment {
         private TextView textViewHelp;
-
-        private String wrapMsg(String msg) {
-            return getClass().getSimpleName() + ": " + msg;
-        }
-
-        protected void log(String msg) {
-            MyLog.getInstance().logcat(Log.DEBUG, wrapMsg(msg));
-        }
 
         protected abstract int getLayoutResourceId();
 

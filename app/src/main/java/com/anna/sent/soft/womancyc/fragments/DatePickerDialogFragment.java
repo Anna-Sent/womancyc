@@ -8,14 +8,15 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 
 import com.anna.sent.soft.womancyc.R;
+import com.anna.sent.soft.womancyc.base.WcDialogFragment;
 import com.anna.sent.soft.womancyc.shared.Shared;
 
 import org.joda.time.LocalDate;
 
-public class DatePickerDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
+public class DatePickerDialogFragment extends WcDialogFragment
+        implements DialogInterface.OnClickListener {
     private OnDateSetListener mListener;
 
     public void setOnDateSetListener(OnDateSetListener listener) {

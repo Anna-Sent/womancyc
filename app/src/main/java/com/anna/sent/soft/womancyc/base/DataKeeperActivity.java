@@ -92,8 +92,8 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
 
     @Override
     protected void onDestroy() {
-        closeDataSource();
         super.onDestroy();
+        closeDataSource();
     }
 
     private void closeDataSource() {

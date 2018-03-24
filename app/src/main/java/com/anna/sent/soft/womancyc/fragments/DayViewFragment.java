@@ -33,8 +33,8 @@ import org.joda.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class DayViewFragment extends WcDialogFragment implements OnClickListener,
-        DataKeeperClient, OnItemSelectedListener {
+public class DayViewFragment extends WcDialogFragment
+        implements OnClickListener, DataKeeperClient, OnItemSelectedListener {
     private CalendarListener mListener;
     private DataKeeper mDataKeeper;
     private Spinner spinnerHadMenstruation, spinnerHadSex;
@@ -66,10 +66,10 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
         mIsEmbedded = getResources().getBoolean(R.bool.isLargeLayout);
         if (mIsEmbedded) {
             v = inflater.inflate(R.layout.view_day_embedded, null);
-            log("onCreateView");
+            log("onCreateView: show as embedded");
         } else {
             v = super.onCreateView(inflater, container, savedInstanceState);
-            log("onCreateView returns null");
+            log("onCreateView: returns null");
         }
 
         return v;
@@ -125,11 +125,10 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
 
     private void setupView() {
         int drawablesId = R.array.menstruationDrawables;
-        fillSpinner(R.array.menstruationTypes, drawablesId,
-                spinnerHadMenstruation);
+        fillSpinner(R.array.menstruationTypes, drawablesId, spinnerHadMenstruation);
 
-        drawablesId = settingsTheme.isDefaultTheme() ? R.array.sexDrawablesDark
-                : R.array.sexDrawablesLight;
+        drawablesId = settingsTheme.isDefaultTheme()
+                ? R.array.sexDrawablesDark : R.array.sexDrawablesLight;
         fillSpinner(R.array.sexTypes, drawablesId, spinnerHadSex);
 
         checkBoxTookPill.setOnClickListener(this);
@@ -146,8 +145,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
         buttonViewAsList.setOnClickListener(this);
 
         if (getArguments() != null) {
-            mDateToShow = (LocalDate) getArguments().getSerializable(
-                    Shared.DATE_TO_SHOW);
+            mDateToShow = (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
         }
 
         if (mDateToShow == null) {
@@ -171,8 +169,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
 
         ta.recycle();
 
-        ArrayAdapter<String> adapter = new SpinnerItemArrayAdapter(
-                getActivity(), strings, drawables);
+        ArrayAdapter<String> adapter = new SpinnerItemArrayAdapter(getActivity(), strings, drawables);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -196,8 +193,7 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
 
         log(mValue.toString());
         Date date = mDateToShow.toDate();
-        String formattedString = DateFormat.getDateFormat(getActivity())
-                .format(date);
+        String formattedString = DateFormat.getDateFormat(getActivity()).format(date);
         buttonCurrentDay.setText(formattedString);
         int menstruation = spinnerHadMenstruation.getSelectedItemPosition();
         if (menstruation != mValue.getMenstruation()) {
@@ -251,14 +247,11 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
             case R.id.buttonViewAsList:
                 final List<String> list = mDataKeeper.getNotes();
                 if (list.size() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            getActivity());
-                    builder.setMessage(R.string.thereIsNoData).setPositiveButton(
-                            android.R.string.ok, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.thereIsNoData).setPositiveButton(android.R.string.ok, null);
                     builder.create().show();
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            getActivity());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setItems(list.toArray(new String[list.size()]),
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -297,7 +290,8 @@ public class DayViewFragment extends WcDialogFragment implements OnClickListener
         String note = textViewNote.getText().toString();
 
         boolean isDataChanged = menstruation != mValue.getMenstruation()
-                || sex != mValue.getSex() || tookPill != mValue.getTookPill()
+                || sex != mValue.getSex()
+                || tookPill != mValue.getTookPill()
                 || !mValue.getNote().equals(note);
         if (isDataChanged) {
             mValue.setMenstruation(menstruation);
