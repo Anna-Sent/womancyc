@@ -29,20 +29,17 @@ abstract class Builder {
     private void setOnClickPendingIntent(Context context, RemoteViews views) {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, PasswordActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_CLEAR_TOP), 0);
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP), 0);
         views.setOnClickPendingIntent(R.id.widget, pendingIntent);
     }
 
     public RemoteViews buildViews(Context context) {
         log("build views");
-        RemoteViews views = new RemoteViews(context.getPackageName(),
-                R.layout.widget_layout);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         setOnClickPendingIntent(context, views);
 
         String result;
-        if (Settings.hideWidget(context)
-                && Settings.isApplicationLocked(context)) {
+        if (Settings.hideWidget(context) && Settings.isApplicationLocked(context)) {
             result = APP_IS_LOCKED;
         } else {
             DataKeeperImpl dataKeeper = new DataKeeperImpl(context);

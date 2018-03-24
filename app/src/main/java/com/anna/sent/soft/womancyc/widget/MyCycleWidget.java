@@ -9,6 +9,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import com.anna.sent.soft.logging.MyLog;
+
 import org.joda.time.DateTime;
 
 public abstract class MyCycleWidget extends AppWidgetProvider {
@@ -42,13 +44,12 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
         try {
             getPendingIntent(context, cls).send();
         } catch (CanceledException e) {
-            e.printStackTrace();
+            MyLog.getInstance().report(new RuntimeException("failed to update widgets", e));
         }
     }
 
     public static void installAlarms(Context context, Class<?> cls) {
-        AlarmManager alarmManager = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         DateTime midnight = DateTime.now().withTimeAtStartOfDay().plusDays(1);
         PendingIntent operation = getPendingIntent(context, cls);
         //noinspection ConstantConditions
@@ -67,10 +68,8 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
                     || action.equals(Intent.ACTION_TIMEZONE_CHANGED)
                     || action.equals(Intent.ACTION_DATE_CHANGED)
                     || action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-                AppWidgetManager appWidgetManager = AppWidgetManager
-                        .getInstance(context);
-                int[] appWidgetIds = appWidgetManager
-                        .getAppWidgetIds(new ComponentName(context, getClass()));
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
                 if (appWidgetIds.length > 0) {
                     onUpdate(context, appWidgetManager, appWidgetIds);
 
@@ -88,8 +87,7 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             Intent service = new Intent(context, UpdateWidgetService.class);
             service.putExtra(EXTRA_APP_WIDGET_ID, appWidgetId);
@@ -102,8 +100,7 @@ public abstract class MyCycleWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        AlarmManager alarmManager = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         //noinspection ConstantConditions
         alarmManager.cancel(getPendingIntent(context, getClass()));
     }

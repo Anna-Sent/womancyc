@@ -18,7 +18,7 @@ public final class BuilderMedium extends Builder {
             avgLen = calc.getLenOfCurrentMenstrualCycle(today);
         }
 
-        return dayOfCycle > 0 ? String.valueOf(dayOfCycle) + " ("
-                + String.valueOf(avgLen) + ")" : THERE_IS_NO_DATA;
+        return dayOfCycle > 0 ? String.valueOf(dayOfCycle)
+                + " (" + String.valueOf(avgLen) + ")" : THERE_IS_NO_DATA;
     }
 }

@@ -250,10 +250,6 @@ public abstract class DataKeeperActivity extends WcActivity implements DataKeepe
 
         @Override
         protected String doInBackground(String... params) {
-            /*
-             * try { Thread.sleep(1000); } catch (InterruptedException e1) {
-			 * e1.printStackTrace(); }
-			 */
             try {
                 mDataKeeper.openDataSource();
             } catch (SQLException e) {

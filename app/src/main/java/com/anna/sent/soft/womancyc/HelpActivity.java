@@ -14,6 +14,7 @@ public final class HelpActivity extends WcActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setTitle(R.string.help);
         setContentView(R.layout.activity_help);
         ActionBarUtils.setupActionBar(this);

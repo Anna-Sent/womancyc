@@ -43,8 +43,7 @@ public class PasswordPreference extends DialogPreference {
     }
 
     @Override
-    protected void onSetInitialValue(boolean restorePersistedValue,
-                                     Object defaultValue) {
+    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
             mPassword = getPersistedString("");
         } else {
@@ -121,8 +120,7 @@ public class PasswordPreference extends DialogPreference {
         if (mEditTextPassword != null && mEditTextConfirmedPassword != null) {
             myState.password = mEditTextPassword.getText().toString();
             log("save password \"" + myState.password + "\"");
-            myState.confirmedPassword = mEditTextConfirmedPassword.getText()
-                    .toString();
+            myState.confirmedPassword = mEditTextConfirmedPassword.getText().toString();
         }
 
         return myState;
@@ -161,7 +159,7 @@ public class PasswordPreference extends DialogPreference {
             }
         };
 
-        String password, confirmedPassword;
+        private String password, confirmedPassword;
 
         public SavedState(Parcelable superState) {
             super(superState);

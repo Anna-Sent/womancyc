@@ -45,6 +45,7 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
@@ -62,13 +63,12 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
 
     @Override
     public void onStart() {
-        log("onStart");
         super.onStart();
         if (mDateToShow == null) {
             mDateToShow = LocalDate.now();
         }
 
-        log("date is " + mDateToShow.toString());
+        log("date is " + mDateToShow);
         mMonthView.setSelectedDate(mDateToShow);
         if (mIsLargeLayout) {
             showAsEmbeddedFragment();
@@ -76,14 +76,20 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     }
 
     public void onStop() {
-        log("onStop");
         mDateToShow = mMonthView.getSelectedDate();
         super.onStop();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
     protected void onPause() {
-        log("onPause");
         super.onPause();
         if (mAdView != null) {
             mAdView.pause();
@@ -91,12 +97,10 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     }
 
     @Override
-    protected void onResume() {
-        log("onResume");
-        super.onResume();
-        if (mAdView != null) {
-            mAdView.resume();
-        }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        log("save " + mMonthView.getSelectedDate().toString());
+        outState.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
     }
 
     @Override
@@ -105,19 +109,6 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
         if (mAdView != null) {
             mAdView.destroy();
         }
-    }
-
-    @Override
-    protected void onRestart() {
-        log("onRestart");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        log("save " + mMonthView.getSelectedDate().toString());
-        outState.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
     }
 
     @Override
@@ -201,11 +192,9 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
     }
 
     private DayViewFragment getDayView() {
-        DayViewFragment dayView = (DayViewFragment) mFragmentManager
-                .findFragmentByTag(TAG_DAY_VIEW);
+        DayViewFragment dayView = (DayViewFragment) mFragmentManager.findFragmentByTag(TAG_DAY_VIEW);
         if (dayView == null) {
-            dayView = (DayViewFragment) mFragmentManager
-                    .findFragmentById(R.id.dayView);
+            dayView = (DayViewFragment) mFragmentManager.findFragmentById(R.id.dayView);
         }
 
         return dayView;

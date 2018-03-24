@@ -11,8 +11,8 @@ import com.anna.sent.soft.womancyc.data.CalendarData;
 import java.util.List;
 
 public class CalendarDataSource {
-    private SQLiteDatabase mDatabase;
     private final CalendarHelper mHelper;
+    private SQLiteDatabase mDatabase;
 
     public CalendarDataSource(Context context) {
         mHelper = new CalendarHelper(context);

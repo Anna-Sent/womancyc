@@ -2,7 +2,6 @@ package com.anna.sent.soft.womancyc.database;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Xml;
 
 import com.anna.sent.soft.womancyc.R;
@@ -40,9 +39,8 @@ public class CalendarDataManager {
 
     }
 
-    private static void writeCalendarTable(XmlSerializer xmlSerializer,
-                                           DataKeeper dataKeeper) throws IllegalArgumentException,
-            IllegalStateException, IOException {
+    private static void writeCalendarTable(XmlSerializer xmlSerializer, DataKeeper dataKeeper)
+            throws IllegalArgumentException, IllegalStateException, IOException {
         xmlSerializer.startTag(null, CalendarHelper.TABLE_CALENDAR);
 
         for (int i = 0; i < dataKeeper.getCount(); ++i) {
@@ -65,8 +63,8 @@ public class CalendarDataManager {
         xmlSerializer.endTag(null, CalendarHelper.TABLE_CALENDAR);
     }
 
-    private static int readCalendarTable(XmlPullParser xpp, int eventType,
-                                         DataKeeper dataKeeper) throws XmlPullParserException, IOException {
+    private static int readCalendarTable(XmlPullParser xpp, int eventType, DataKeeper dataKeeper)
+            throws XmlPullParserException, IOException {
         if (eventType == XmlPullParser.START_TAG
                 && xpp.getName().equals(CalendarHelper.TABLE_CALENDAR)) {
             eventType = xpp.nextTag();
@@ -119,7 +117,7 @@ public class CalendarDataManager {
         return mErrorMessage;
     }
 
-    public boolean backup(@NonNull DataKeeper dataKeeper, String filename) {
+    public boolean backup(DataKeeper dataKeeper, String filename) {
         if (isExternalStorageWritable()) {
             try {
                 File xmlfile = new File(filename);
@@ -158,7 +156,7 @@ public class CalendarDataManager {
         return false;
     }
 
-    public boolean restore(@NonNull DataKeeper dataKeeper, String filename) {
+    public boolean restore(DataKeeper dataKeeper, String filename) {
         if (isExternalStorageReadable()) {
             try {
                 File xmlfile = new File(filename);

@@ -18,20 +18,19 @@ public class Settings {
     private static final String KEY_PREF_IS_BLOCKED = "pref_is_blocked";
 
     public static SharedPreferences getSettings(Context context) {
-        return new SharedPreferencesWrapper(
-                PreferenceManager.getDefaultSharedPreferences(context));
+        return new SharedPreferencesWrapper(PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     public static boolean lockAutomatically(Context context) {
         SharedPreferences settings = getSettings(context);
-        return settings.getBoolean(KEY_PREF_LOCK_AUTOMATICALLY, context
-                .getResources().getBoolean(R.bool.lockAutomatically));
+        return settings.getBoolean(KEY_PREF_LOCK_AUTOMATICALLY,
+                context.getResources().getBoolean(R.bool.lockAutomatically));
     }
 
     public static boolean hideWidget(Context context) {
         SharedPreferences settings = getSettings(context);
-        return settings.getBoolean(KEY_PREF_HIDE_WIDGET, context.getResources()
-                .getBoolean(R.bool.hideWidget));
+        return settings.getBoolean(KEY_PREF_HIDE_WIDGET,
+                context.getResources().getBoolean(R.bool.hideWidget));
     }
 
     public static boolean isBlocked(Context context) {
@@ -76,7 +75,7 @@ public class Settings {
 
     public static boolean useAverage(Context context) {
         SharedPreferences settings = getSettings(context);
-        return settings.getBoolean(KEY_PREF_USE_AVG, context.getResources()
-                .getBoolean(R.bool.useAverage));
+        return settings.getBoolean(KEY_PREF_USE_AVG,
+                context.getResources().getBoolean(R.bool.useAverage));
     }
 }

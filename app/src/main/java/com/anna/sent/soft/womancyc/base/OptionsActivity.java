@@ -295,8 +295,8 @@ public abstract class OptionsActivity extends DataKeeperActivity {
                     }
 
                     if (TextUtils.isEmpty(filename)) {
-                        Toast.makeText(OptionsActivity.this, R.string.enterFileNameToWrite,
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(OptionsActivity.this, R.string.enterFileNameToWrite, Toast.LENGTH_LONG)
+                                .show();
                         return false;
                     }
 

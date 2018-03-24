@@ -16,8 +16,7 @@ import android.widget.Toast;
 import com.anna.sent.soft.womancyc.base.WcActivity;
 import com.anna.sent.soft.womancyc.shared.Settings;
 
-public class PasswordActivity extends WcActivity implements
-        OnClickListener, OnEditorActionListener {
+public class PasswordActivity extends WcActivity implements OnClickListener, OnEditorActionListener {
     private EditText mEditTextPassword;
 
     @Override
@@ -48,6 +47,7 @@ public class PasswordActivity extends WcActivity implements
         }
     }
 
+    @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             checkPassword();

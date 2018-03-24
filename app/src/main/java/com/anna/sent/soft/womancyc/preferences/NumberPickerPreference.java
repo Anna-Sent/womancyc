@@ -32,8 +32,7 @@ public class NumberPickerPreference extends DialogPreference {
         try {
             setMinValue(a.getInteger(R.styleable.NumberPickerPreference_min,
                     DEFAULT_MIN_VALUE));
-            setMaxValue(a.getInteger(
-                    R.styleable.NumberPickerPreference_android_max,
+            setMaxValue(a.getInteger(R.styleable.NumberPickerPreference_android_max,
                     DEFAULT_MAX_VALUE));
             mUnit = a.getString(R.styleable.NumberPickerPreference_unit);
         } finally {
@@ -56,8 +55,7 @@ public class NumberPickerPreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restore, Object defaultValue) {
-        setValue(restore ? getPersistedInt(DEFAULT_VALUE)
-                : (Integer) defaultValue);
+        setValue(restore ? getPersistedInt(DEFAULT_VALUE) : (Integer) defaultValue);
     }
 
     @Override
@@ -157,7 +155,7 @@ public class NumberPickerPreference extends DialogPreference {
             }
         };
 
-        int value;
+        private int value;
 
         public SavedState(Parcelable superState) {
             super(superState);

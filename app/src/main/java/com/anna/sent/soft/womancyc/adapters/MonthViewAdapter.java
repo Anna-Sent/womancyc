@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -37,21 +36,21 @@ public class MonthViewAdapter extends BaseAdapter implements OnClickListener, On
     private final Context mContext;
     private final List<LocalDate> mMonthCalendarValues = new ArrayList<>();
     private final LayoutInflater mLayoutInflater;
-    private int mMonth, mYear;
     private final int[] mDayOfWeekValues = new int[7];
     private final String[] mDayOfWeekNames;
-    private LocalDate mSelectedDate;
     private final LocalDate mToday;
-    private View mSelectedView = null;
     private final int mThemeId;
     private final DataKeeper mDataKeeper;
-    private Calculator mCalculator;
     private final Listener mListener;
     private final SparseArray<Drawable> mDrawablesFromTheme = new SparseArray<>();
     private final SparseArray<Drawable> mDrawables = new SparseArray<>();
     private final SettingsTheme mSettingsTheme;
+    private int mMonth, mYear;
+    private LocalDate mSelectedDate;
+    private View mSelectedView = null;
+    private Calculator mCalculator;
 
-    public MonthViewAdapter(Context context, @NonNull DataKeeper dataKeeper, Listener listener) {
+    public MonthViewAdapter(Context context, DataKeeper dataKeeper, Listener listener) {
         mContext = context;
         mSettingsTheme = new SettingsThemeImpl(context);
         mLayoutInflater = LayoutInflater.from(context);

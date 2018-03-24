@@ -13,8 +13,8 @@ public class Unlocker extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if ("com.anna.sent.soft.womancyc.unlocker.Unlocker.clearPassword".equals(intent.getAction())) {
             Settings.clearPassword(context);
-            Toast.makeText(context, getClass().getSimpleName() + ": " + context.getString(R.string.passwordIsNotSet),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(context, getClass().getSimpleName() + ": " + context.getString(R.string.passwordIsNotSet), Toast.LENGTH_LONG)
+                    .show();
         }
     }
 }
