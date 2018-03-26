@@ -136,6 +136,9 @@
         </receiver>
 
         <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="${enableCrashlytics}" />
+        <meta-data
             android:name="test_device_ids"
             android:value="2600D922057328C48F2E6DBAB33639C1,9181DC11966389868E60DE66CAC818A3,0A2245B8887D4B05DF59EB37AD741C46,47D9C39F51DAC2173986C7832B6CAB57,2F2B82AD62F209D48AFC29A0C88065FA" />
     </application>

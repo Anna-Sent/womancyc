@@ -17,22 +17,20 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            ext.enableCrashlytics = false
-            buildConfigField "boolean", "ENABLE_CRASHLYTICS", "false"
+            manifestPlaceholders += [enableCrashlytics: "false"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         release {
             debuggable false
             minifyEnabled false
-            ext.enableCrashlytics = true
-            buildConfigField "boolean", "ENABLE_CRASHLYTICS", "true"
+            manifestPlaceholders += [enableCrashlytics: "true"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }
 
 dependencies {
-    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.21'
+    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.22'
 
     implementation 'joda-time:joda-time:2.9.9'
 }
