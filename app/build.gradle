@@ -5,27 +5,60 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
 
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def formattedDate = new Date().format("yyyy.MM.dd")
+            outputFileName = "${APPLICATION_NAME}_${formattedDate}_v${VERSION_NAME}(${variant.versionCode})_${variant.name}.apk"
+        }
+    }
+
     defaultConfig {
         applicationId "com.anna.sent.soft.womancyc"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 150
-        versionName "1.5.0"
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+            // 20:FB:F4:CD:2E:1B:66:22:7A:BA:68:27:91:AB:5E:AE:E0:FE:FF:97
+        }
+        release {
+            storeFile file(getSecret('KEYSTORE_FILE'))
+            storePassword getSecret('KEYSTORE_PASSWORD')
+            keyAlias getSecret('KEY_ALIAS')
+            keyPassword getSecret('KEY_PASSWORD')
+        }
+    }
     buildTypes {
         debug {
+            versionNameSuffix '-DEBUG'
             debuggable true
+            signingConfig signingConfigs.debug
             minifyEnabled false
             manifestPlaceholders += [enableCrashlytics: "false"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         release {
+            versionNameSuffix ''
             debuggable false
+            signingConfig signingConfigs.release
             minifyEnabled false
             manifestPlaceholders += [enableCrashlytics: "true"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+}
+
+def getSecret(String propertyKey) {
+    try {
+        Properties secretProperties = new Properties()
+        file("secret.properties").withInputStream { secretProperties.load(it) }
+        return secretProperties[propertyKey]
+    } catch (ignored) {
+        throw new InvalidUserDataException("You should define KEYSTORE_FILE, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD in secret.properties.")
     }
 }
 
