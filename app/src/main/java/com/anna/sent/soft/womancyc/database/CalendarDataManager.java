@@ -114,8 +114,8 @@ public class CalendarDataManager {
     public boolean backup(DataKeeper dataKeeper, String filename) {
         if (isExternalStorageWritable()) {
             try {
-                File xmlfile = new File(filename);
-                FileOutputStream output = new FileOutputStream(xmlfile);
+                File xmlFile = new File(filename);
+                FileOutputStream output = new FileOutputStream(xmlFile);
 
                 XmlSerializer xmlSerializer = Xml.newSerializer();
                 xmlSerializer.setOutput(output, "UTF-8");
@@ -152,8 +152,8 @@ public class CalendarDataManager {
     public boolean restore(DataKeeper dataKeeper, String filename) {
         if (isExternalStorageReadable()) {
             try {
-                File xmlfile = new File(filename);
-                FileReader input = new FileReader(xmlfile);
+                File xmlFile = new File(filename);
+                FileReader input = new FileReader(xmlFile);
 
                 XmlPullParser xpp = Xml.newPullParser();
                 xpp.setInput(input);
