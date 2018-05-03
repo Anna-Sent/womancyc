@@ -63,7 +63,7 @@ def getSecret(String propertyKey) {
 }
 
 dependencies {
-    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.23'
+    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.27'
 
     implementation 'joda-time:joda-time:2.9.9'
 }

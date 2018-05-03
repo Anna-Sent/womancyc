@@ -8,8 +8,8 @@ import android.preference.PreferenceCategory;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.utils.ActionBarUtils;
-import com.anna.sent.soft.utils.ActivityUtils;
 import com.anna.sent.soft.utils.NavigationUtils;
+import com.anna.sent.soft.utils.TaskStackBuilderUtils;
 import com.anna.sent.soft.womancyc.base.WcSettingsActivity;
 import com.anna.sent.soft.womancyc.data.Calculator;
 import com.anna.sent.soft.womancyc.shared.Settings;
@@ -63,7 +63,6 @@ public class SettingsActivity extends WcSettingsActivity {
         int value = settingsLanguage.getLanguageId();
         pref.setDefaultValue(String.valueOf(value));
         pref.setValue(String.valueOf(value));
-        settingsLanguage.setLanguageId(value);
         log(pref.getValue() + " " + pref.getEntry());
         pref.setSummary(pref.getEntry());
         category.addPreference(pref);
@@ -131,9 +130,10 @@ public class SettingsActivity extends WcSettingsActivity {
         } else if (key.equals(Settings.KEY_PREF_LOCK_AUTOMATICALLY)) {
             setupLockAutomaticallyPreference();
         } else if (key.equals(settingsLanguage.getLanguageKey())) {
-            ActivityUtils.restartActivity(this);
+            settingsLanguage.setByUser();
+            TaskStackBuilderUtils.restartFromSettings(this);
         } else if (key.equals(settingsTheme.getThemeKey())) {
-            ActivityUtils.restartActivity(this);
+            TaskStackBuilderUtils.restartFromSettings(this);
         }
     }
 
