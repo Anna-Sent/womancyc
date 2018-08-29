@@ -49,6 +49,14 @@ public class CalendarData implements Serializable {
         return date;
     }
 
+    public void setDate(int value) {
+        int year = value / 10000;
+        value = value % 10000;
+        int month = value / 100;
+        int day = value % 100;
+        date = new LocalDate(year, month, day);
+    }
+
     public void setDate(String value) {
         String[] strings = value.split("-");
         if (strings.length == 3) {
@@ -59,24 +67,12 @@ public class CalendarData implements Serializable {
         }
     }
 
-    public void setDate(int value) {
-        int year = value / 10000;
-        value = value % 10000;
-        int month = value / 100;
-        int day = value % 100;
-        date = new LocalDate(year, month, day);
-    }
-
     public String getDateString() {
         return date.toString(DATE_FORMAT);
     }
 
     public int getMenstruation() {
         return menstruation;
-    }
-
-    public void setMenstruation(int value) {
-        menstruation = value;
     }
 
     public void setMenstruation(String value) {
@@ -99,6 +95,10 @@ public class CalendarData implements Serializable {
         }
     }
 
+    public void setMenstruation(int value) {
+        menstruation = value;
+    }
+
     public String getMenstruationString() {
         switch (menstruation) {
             case 1:
@@ -118,10 +118,6 @@ public class CalendarData implements Serializable {
         return sex;
     }
 
-    public void setSex(int value) {
-        sex = value;
-    }
-
     public void setSex(String value) {
         switch (value) {
             case SEX_UNPROTECTED:
@@ -137,6 +133,10 @@ public class CalendarData implements Serializable {
                 sex = 0;
                 break;
         }
+    }
+
+    public void setSex(int value) {
+        sex = value;
     }
 
     public String getSexString() {
@@ -164,12 +164,12 @@ public class CalendarData implements Serializable {
         return tookPill;
     }
 
-    public void setTookPill(boolean value) {
-        tookPill = value;
-    }
-
     public void setTookPill(String value) {
         tookPill = value.equals(TOOK_PILL_YES);
+    }
+
+    public void setTookPill(boolean value) {
+        tookPill = value;
     }
 
     public String getTookPillString() {
