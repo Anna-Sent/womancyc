@@ -177,7 +177,7 @@ public class CalendarData implements Serializable {
     }
 
     public boolean isEmpty() {
-        return menstruation == 0 && sex == 0 && !tookPill && !TextUtils.isEmpty(getNote());
+        return menstruation == 0 && sex == 0 && !tookPill && TextUtils.isEmpty(getNote());
     }
 
     @Override
