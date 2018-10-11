@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.anna.sent.soft.womancyc.R;
 import com.anna.sent.soft.womancyc.base.WcDialogFragment;
@@ -26,7 +27,7 @@ public class DatePickerDialogFragment extends WcDialogFragment
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     @NonNull
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         @SuppressWarnings("ConstantConditions") final LocalDate c =
                 (LocalDate) getArguments().getSerializable(Shared.DATE_TO_SHOW);
         @SuppressWarnings("ConstantConditions") DatePickerDialog dialog =

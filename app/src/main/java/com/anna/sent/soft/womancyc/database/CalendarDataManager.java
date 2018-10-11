@@ -142,8 +142,7 @@ public class CalendarDataManager {
                 mErrorMessage = mContext.getString(R.string.errorFileWriting);
             }
         } else {
-            mErrorMessage = mContext
-                    .getString(R.string.errorExternalStorageWriting);
+            mErrorMessage = mContext.getString(R.string.errorExternalStorageWriting);
         }
 
         return false;
@@ -174,8 +173,7 @@ public class CalendarDataManager {
                 mErrorMessage = mContext.getString(R.string.errorFileImport);
             }
         } else {
-            mErrorMessage = mContext
-                    .getString(R.string.errorExternalStorageReading);
+            mErrorMessage = mContext.getString(R.string.errorExternalStorageReading);
         }
 
         return false;

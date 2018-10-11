@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.anna.sent.soft.utils.ActionBarUtils;
@@ -19,7 +20,7 @@ public class SettingsActivity extends WcSettingsActivity {
     private static final String KEY_PREF_SEND_PASSWORD_TO_EMAIL = "pref_send_password_to_email";
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setTitle(R.string.settings);

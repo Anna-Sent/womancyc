@@ -2,8 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
 
     applicationVariants.all { variant ->
         variant.outputs.all {
@@ -15,7 +14,7 @@ android {
     defaultConfig {
         applicationId "com.anna.sent.soft.womancyc"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode Integer.parseInt(VERSION_CODE)
         versionName VERSION_NAME
     }
@@ -63,7 +62,7 @@ def getSecret(String propertyKey) {
 }
 
 dependencies {
-    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.28'
+    implementation 'com.github.Anna-Sentyakova:CommonLibrary:1.0.29'
 
     implementation 'joda-time:joda-time:2.9.9'
 }

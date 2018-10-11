@@ -69,8 +69,8 @@ public class Settings {
 
     public static int getDefaultMenstrualCycleLen(Context context) {
         SharedPreferences settings = getSettings(context);
-        return settings.getInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN, context
-                .getResources().getInteger(R.integer.defaultMenstrualCycleLen));
+        return settings.getInt(KEY_PREF_DEFAULT_MENSTRUAL_CYCLE_LEN,
+                context.getResources().getInteger(R.integer.defaultMenstrualCycleLen));
     }
 
     public static boolean useAverage(Context context) {
