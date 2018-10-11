@@ -98,6 +98,14 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        DatePickerDialogFragment datePicker = getDatePicker();
+        if (datePicker != null) {
+            mFragmentManager.beginTransaction().remove(datePicker).commit();
+        }
+        DayViewFragment dayView = getDayView();
+        if (dayView != null) {
+            mFragmentManager.beginTransaction().remove(dayView).commit();
+        }
         super.onSaveInstanceState(outState);
         log("save " + mMonthView.getSelectedDate());
         outState.putSerializable(Shared.DATE_TO_SHOW, mMonthView.getSelectedDate());
@@ -189,6 +197,10 @@ public class MainActivity extends OptionsActivity implements CalendarListener, O
         if (dayView != null) {
             dayView.setSelectedDate(mMonthView.getSelectedDate());
         }
+    }
+
+    private DatePickerDialogFragment getDatePicker() {
+        return (DatePickerDialogFragment) mFragmentManager.findFragmentByTag(TAG_DATE_PICKER);
     }
 
     private DayViewFragment getDayView() {
