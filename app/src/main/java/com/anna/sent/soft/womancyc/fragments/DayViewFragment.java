@@ -253,7 +253,7 @@ public class DayViewFragment extends WcDialogFragment
                     builder.create().show();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setItems(list.toArray(new String[list.size()]),
+                    builder.setItems(list.toArray(new String[0]),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
